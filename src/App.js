@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import ThemeWrapper from '../src/components/hoc/styledTheme'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Splash from './components/splash'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <ThemeWrapper>
+        <Router>
+          <Switch>
+            <Route path='/' component={Splash} />
+          </Switch>
+        </Router>
+      </ThemeWrapper>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

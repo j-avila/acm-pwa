@@ -8,18 +8,22 @@ import { Helmet } from 'react-helmet'
 
 const bodyStyles = css`
   ${reset}
-  h1,h2,h3,h4 {
+  background-color: ${theme.background};
+  color: ${theme.text};
+  font-family: 'Open Sans', 'Sans-serif';
+  h1,h2,h3,h4, button {
+    font-family: 'Open Sans', 'Sans-serif';
     &:first-letter {
       text-transform: capitalize;
     }
+  }
+  p {
+    font-family: 'Open Sans', 'Sans-serif';
   }
 `
 
 export const GlobalStyles = createGlobalStyle`
   body{
-    background-color: ${theme.background};
-    color: ${theme.text};
-    font-family: 'Open Sans', 'Sans-serif';
     ${bodyStyles}
   }
 `

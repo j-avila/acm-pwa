@@ -1,6 +1,6 @@
 # notes for testing and development
 
-to run storybook and test components library run `npm run storynook` and check the port 6006
+to run storybook and test components library run `npm run storybook` and check the port 6006
 
 for run the test suite use `npm run test`
 

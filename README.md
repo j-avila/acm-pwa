@@ -1,3 +1,9 @@
+# notes for testing and development
+
+to run storybook and test components library run `npm run storynook` and check the port 6006
+
+for run the test suite use `npm run test`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -1,8 +1,8 @@
 {
-  "primary": "rgba(58,131,213,1)",
-  "secondary": "rgba(24,90,165,1)",
+  "primary": "#3a83d5",
+  "secondary": "#185aa5",
   "error": "rgba(220,62,62,1)",
-  "background": "rgba(255, 255, 255, 0.7)",
+  "background": "rgba(255, 255, 255, 1)",
   "text": "rgba(68,68,68,1)",
   "shadow": "1px 2px 5px #C9CFD8",
   "blueGradient": "linear-gradient(270deg, #64AEDF 0%, #3A83D5 100%)",

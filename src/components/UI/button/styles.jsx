@@ -7,7 +7,7 @@ export const Wrapper = styled.button`
   font-size: 16px;
   border: 0;
   outline: 0;
-  width: ${({ theme, width }) => width};
+  width: ${({ width }) => width};
   color: ${({ theme, color }) => checkThemeProp(theme, color)};
   background: ${({ theme, background }) => checkThemeProp(theme, background)};
   padding: 14px;

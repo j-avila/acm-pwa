@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   }
   input,
   select {
-    width: 100%;
+    width: ${({ width }) => width};
     outline: 0;
     border: 0;
     padding: 16px;
@@ -19,5 +19,8 @@ export const Wrapper = styled.div`
     font-weight: regular;
     background: ${({ theme }) => theme.greygradient};
     box-shadow: ${({ theme }) => theme.shadow};
+    &:invalid {
+      border-color: red;
+    }
   }
 `

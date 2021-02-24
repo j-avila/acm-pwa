@@ -14,7 +14,7 @@ time, mark, audio, video {
     padding:0;
     border:0;
     outline:0;
-    font-size:100%;
+    font-size: 13px;
     vertical-align:baseline;
     background:transparent;
 }
@@ -42,6 +42,8 @@ a {
     font-size:100%;
     vertical-align:baseline;
     background:transparent;
+    text-decoration: none;
+    color: inherit; 
 }
 /* change colours to suit your needs */
 ins {
@@ -75,6 +77,10 @@ hr {
     border-top:1px solid #cccccc;
     margin:1em 0;
     padding:0;
+}
+label{
+    font-size: 12px;
+    font-weigth: bold;
 }
 input, select {
     vertical-align:middle;

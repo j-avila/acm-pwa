@@ -1,9 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Logo from '../../assets/logo-acm_.png'
+import Logo from '../../assets/logo.png'
 import { Wrapper } from './styles'
 
 const Splash = props => {
+  const history = useHistory()
+
+  useEffect(() => {
+    setTimeout(() => history.push('/inicio'), 2000)
+  }, [])
+
   return (
     <Wrapper>
       <div id='brand'>

@@ -2,8 +2,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ActionZone, Overlay } from './styles'
-import Card from '../card/index.'
-import Button from '../button/Button'
+import Card from '../card'
+import Button from '../button'
 
 const Modal = ({ children, action, closeAction }) => {
   // const [show, setShow] = useContext(ModalContext)
@@ -12,8 +12,10 @@ const Modal = ({ children, action, closeAction }) => {
       <Card id='card'>
         {children}
         <ActionZone>
-          {closeAction && <Button onClick={closeAction}>cerrar</Button>}
-          {action && <Button onClick={action}>cerrar</Button>}
+          {closeAction && (
+            <Button onClick={() => closeAction(false)}>cerrar</Button>
+          )}
+          {action && <Button onClick={action}>aceptar</Button>}
         </ActionZone>
       </Card>
     </Overlay>

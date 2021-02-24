@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Wrapper } from './styles'
-import Theme from '../../hoc/styledTheme/'
+import Theme from '../../hoc/styledTheme'
 
 const Button = props => {
   const {

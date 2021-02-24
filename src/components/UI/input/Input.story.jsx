@@ -1,5 +1,5 @@
 import React from 'react'
-import FormInput from './Input'
+import FormInput from '.'
 import { action } from '@storybook/addon-actions'
 
 const options = {

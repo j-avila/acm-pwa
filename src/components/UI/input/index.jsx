@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { Wrapper } from './styles'
 
 const FormInput = props => {
-  const { label, children, display } = props
+  const { label, children, display, width, className } = props
   return (
-    <Wrapper display={display}>
+    <Wrapper display={display} width={width} className={className}>
       <label htmlFor=''>{label}</label>
       {children}
     </Wrapper>
@@ -20,6 +20,7 @@ FormInput.propTypes = {
 FormInput.defaultProps = {
   display: 'block',
   children: '',
+  width: 'calc(100% - 36px)',
   label: ''
 }
 

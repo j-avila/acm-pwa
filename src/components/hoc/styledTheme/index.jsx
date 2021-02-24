@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import Fondo from '../../../assets/background.png'
 
 import { ThemeProvider, createGlobalStyle, css } from 'styled-components'
 import theme from './theme.json'
@@ -8,10 +9,15 @@ import { Helmet } from 'react-helmet'
 
 const bodyStyles = css`
   ${reset}
-  background-color: ${theme.background};
+  background: url(${Fondo});
+  background-size: cover;
   color: ${theme.text};
   font-family: 'Open Sans', 'Sans-serif';
-  h1,h2,h3,h4, button {
+  h1,
+  h2,
+  h3,
+  h4,
+  button {
     font-family: 'Open Sans', 'Sans-serif';
     &:first-letter {
       text-transform: capitalize;

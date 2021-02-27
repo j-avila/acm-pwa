@@ -11,13 +11,7 @@ const Login = props => {
     <IndexWrapper>
       <Card>
         <img src={Logo} alt='Canal del maule' />
-        <Button
-          width='100%'
-          background='blueGradient'
-          onClick={() => console.log('registrate')}
-        >
-          <Link to='/registro'>Registrate</Link>
-        </Button>
+
         <Button
           width='100%'
           background='indigoGradient'

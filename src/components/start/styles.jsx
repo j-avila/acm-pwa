@@ -5,11 +5,8 @@ export const IndexWrapper = styled.div`
   #card {
     max-width: 80%;
     margin: 10vh auto;
-    img {
-      margin-bottom: 4rem;
-    }
     button {
-      margin: 1rem 0;
+      margin: 4rem 0;
     }
   }
 `

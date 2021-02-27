@@ -23,3 +23,18 @@ export const Wrapper = styled.div`
     }
   }
 `
+
+export const Error = styled.div`
+  i {
+    padding: 12px;
+    background: ${({ theme }) => theme.error};
+    border-radius: 50%;
+    font-size: 24px;
+    color: white;
+  }
+
+  p {
+    margin: 1rem auto;
+    font-weight: 900;
+  }
+`

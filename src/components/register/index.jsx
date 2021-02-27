@@ -6,7 +6,6 @@ import FormInput from '../UI/input'
 import Button from '../UI/button'
 import Modal from '../UI/modal'
 import { Wrapper } from './styles'
-import ActivateForm from './activateForm'
 
 const Register = props => {
   const history = useHistory()
@@ -59,11 +58,7 @@ const Register = props => {
         </Card>
       </Wrapper>
 
-      {modalOn && (
-        <Modal closeAction={setModalOn}>
-          {<ActivateForm type={modalOn} />}
-        </Modal>
-      )}
+      {modalOn && <Modal closeAction={setModalOn}></Modal>}
     </>
   )
 }

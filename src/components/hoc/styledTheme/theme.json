@@ -1,7 +1,7 @@
 {
   "primary": "#3a83d5",
   "secondary": "#185aa5",
-  "error": "rgba(220,62,62,1)",
+  "error": "#dc3e3e",
   "background": "rgba(255, 255, 255, 1)",
   "text": "rgba(68,68,68,1)",
   "shadow": "1px 2px 5px #C9CFD8",

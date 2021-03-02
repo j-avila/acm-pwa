@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import Card from '../UI/card'
 import FormInput from '../UI/input'
 import Button from '../UI/button'
@@ -8,8 +9,20 @@ import { Wrapper, Error } from './styles'
 import Modal from '../UI/modal'
 
 const Login = props => {
+  const history = useHistory()
   const [visiblePassword, viewPassword] = useState(false)
   const [error, setError] = useState(false)
+  const [valid, setValid] = useState(true)
+  const [firstLog, setFisrt] = useState(true)
+
+  const handleLogin = () => {
+    valid && firstLog
+      ? history.push('/tour')
+      : valid
+      ? history.push('/tablero')
+      : setError(true)
+  }
+
   return (
     <>
       <Wrapper>
@@ -32,7 +45,9 @@ const Login = props => {
               onClick={() => viewPassword(!visiblePassword)}
             ></i>
           </FormInput>
-          <Button width='100%'>Ingresar</Button>
+          <Button width='100%' onClick={() => handleLogin()}>
+            Ingresar
+          </Button>
           <p>
             ¿Tienes problemas para iniciar sesión?
             <a href='telf:+56500 600 400'>

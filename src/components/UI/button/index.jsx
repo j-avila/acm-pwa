@@ -12,12 +12,14 @@ const Button = props => {
     width,
     display,
     shadow,
-    disabled
+    disabled,
+    className
   } = props
 
   return (
     <Theme>
       <Wrapper
+        className={className}
         background={background}
         color={color}
         onClick={onClick}
@@ -33,6 +35,7 @@ const Button = props => {
 }
 
 Button.propTypes = {
+  className: PropTypes.string,
   background: PropTypes.string,
   color: PropTypes.string,
   action: PropTypes.func,
@@ -43,6 +46,7 @@ Button.propTypes = {
 }
 
 Button.defaultProps = {
+  className: '',
   background: 'primary',
   color: 'white',
   onClick: e => console.log(e),

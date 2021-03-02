@@ -18,26 +18,30 @@ const Wrapper = styled.div`
       padding: 0.8rem 2rem;
       font-weight: 500;
       margin: 0;
-      margin-bottom: 1rem;
       margin-right: 2px;
       background: ${({ theme }) => darken(0.2, theme.background)};
       color: #a0a0a0;
       cursor: pointer;
       transition: 0.5s all ease;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
       flex-basis: ${({ fullWidth }) => (!fullWidth ? 'unset' : '45%')};
       flex-grow: ${({ fullWidth }) => (!fullWidth ? 'unset' : 1)};
-      padding-top: 30px;
-      top: -20px;
+      padding-top: 20px;
+      top: 0px;
       position: relative;
       z-index: 0;
-      box-shadow: ${({ theme }) => theme.shadow};
+      /* box-shadow: ${({ theme }) => theme.shadow}; */
       &.selected {
-        background: ${({ theme }) => theme.secondary};
-        color: white;
+        background: white;
+        color: ${({ theme }) => theme.secondary};
+        font-weight: bold;
       }
     }
+  }
+  .content{
+    background: white;
+    padding: 8px;
   }
 `
 export default Wrapper

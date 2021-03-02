@@ -4,11 +4,11 @@ export const MenuWrapper = styled.div`
   display: inline-block;
   position: relative;
   button {
-    padding: 20px;
-    border-bottom-left-radius: 12px;
+    padding: 18px;
     outline: none;
     border: 0;
     color: white;
+    font-size: large;
     background: ${({ theme }) => theme.primary};
   }
 `
@@ -30,5 +30,15 @@ export const List = styled.ul`
     &:last-child {
       border-bottom: 0;
     }
+    a {
+      text-decoration: none;
+    }
+  }
+  .user {
+    z-index: 1;
+    margin-top: -10px;
+    padding: 15px;
+    color: white;
+    background: ${({ theme }) => theme.secondary};
   }
 `

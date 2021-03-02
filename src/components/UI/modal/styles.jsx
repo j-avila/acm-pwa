@@ -9,7 +9,7 @@ export const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.5);
   #card {
     position: absolute;
-    top: 25%;
+    top: 80px;
     left: 50%;
     transform: translateX(-50%);
     max-width: 80%;

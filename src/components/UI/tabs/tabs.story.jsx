@@ -1,6 +1,6 @@
 import React from 'react'
 import Tabs, { Panel } from './index'
-import Button from '../button/Button'
+import Button from '../button'
 
 const options = {
   title: 'tabs',

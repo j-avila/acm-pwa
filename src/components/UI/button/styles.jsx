@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { checkThemeProp } from '../../hoc/utils'
 
 export const Wrapper = styled.button`
-  display: inline-block;
+  display: ${({ display }) => display};
   border-radius: 15px;
   font-size: 16px;
   border: 0;

@@ -49,7 +49,9 @@ const Tabs = props => {
   return (
     <Wrapper role='tabpanel' fullWidth={fullWidth}>
       <ul className='inline'>{tabs}</ul>
-      {children.length ? children[selectedTab] : children}
+      <div class='content'>
+        {children.length ? children[selectedTab] : children}
+      </div>
     </Wrapper>
   )
 }

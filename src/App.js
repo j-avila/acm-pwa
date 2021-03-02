@@ -15,7 +15,7 @@ function App() {
             <Route exact path='/' component={Splash} />
             <Route path='/inicio' component={Index} />
             <Route path='/ingreso' component={Login} />
-            <Route path='/welcome' component={OnBoarding} />
+            <Route path='/tour' component={OnBoarding} />
           </Switch>
         </Router>
       </ThemeWrapper>

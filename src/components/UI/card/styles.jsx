@@ -3,8 +3,8 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   background: white;
   border-radius: 5px;
-  padding: 27px;
+  padding: 2rem 1rem;
   box-shadow: ${({ theme }) => theme.shadow};
   display: block;
-  width: 95%;
+  width: calc(100% - 15vw);
 `

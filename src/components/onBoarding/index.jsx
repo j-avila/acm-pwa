@@ -16,7 +16,7 @@ export const OnBoarding = () => {
   const [modalOn, setModal] = useState(false)
 
   const handleLog = () => {
-    history.push('/inicio')
+    history.push('/panel-de-control')
   }
 
   return (

@@ -4,6 +4,7 @@ import { darken } from 'polished'
 const Wrapper = styled.div`
   width: ${({ fullWidth }) => (!fullWidth ? 'unset' : fullWidth)};
   margin: 0px auto;
+  margin-top: 12px;
   > ul + form {
     border-top-left-radius: 0px !important;
   }

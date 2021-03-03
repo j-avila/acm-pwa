@@ -21,7 +21,13 @@ const dummyItems = [
 export const BasicUse = () => <Header title='test header' user={userData} />
 export const WithTabs = () => (
   <>
-    <Header title='test header' user={userData} menuItems={dummyItems} menu />
+    <Header
+      title='test header'
+      user={userData}
+      menuItems={dummyItems}
+      notifications={3}
+      menu
+    />
     <Tabs>
       <Panel title='first'>one</Panel>
       <Panel title='second'>two</Panel>

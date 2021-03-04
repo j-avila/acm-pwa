@@ -8,8 +8,14 @@ const Wrapper = styled.div`
   > ul + form {
     border-top-left-radius: 0px !important;
   }
-  ul {
-    display: flex;
+  .content {
+    background: white;
+    padding: 8px;
+  }
+`
+
+export const TabList = styled.ul`
+   display: flex;
     flex-flow: row;
     padding: 0;
     margin: 0;
@@ -39,10 +45,6 @@ const Wrapper = styled.div`
         font-weight: bold;
       }
     }
-  }
-  .content{
-    background: white;
-    padding: 8px;
-  }
 `
+
 export default Wrapper

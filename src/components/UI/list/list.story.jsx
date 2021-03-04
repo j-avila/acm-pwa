@@ -7,8 +7,8 @@ const options = {
 }
 
 const dummy = [
-  { id: 1, title: 'alugn titulo', status: 'read' },
-  { id: 2, title: 'alugn otro titulo dos', status: 'not-read' }
+  { id: 1, title: 'algun titulo', status: 'read' },
+  { id: 2, title: 'algun otro titulo dos', status: 'not-read' }
 ]
 
 export const basicUse = () => <List items={dummy} />

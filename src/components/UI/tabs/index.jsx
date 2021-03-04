@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
-import Wrapper from './styles'
+import Wrapper, { TabList } from './styles'
 const Tabs = props => {
   const { selected, children, fullWidth } = props
   const [tabs, setTabs] = useState()
@@ -48,7 +48,7 @@ const Tabs = props => {
 
   return (
     <Wrapper role='tabpanel' fullWidth={fullWidth}>
-      <ul className='inline'>{tabs}</ul>
+      <TabList className='inline'>{tabs}</TabList>
       <div class='content'>
         {children.length ? children[selectedTab] : children}
       </div>

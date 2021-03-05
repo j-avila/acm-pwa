@@ -13,12 +13,14 @@ const Button = props => {
     display,
     shadow,
     disabled,
-    className
+    className,
+    type
   } = props
 
   return (
     <Theme>
       <Wrapper
+        type={type}
         className={className}
         background={background}
         color={color}
@@ -35,6 +37,7 @@ const Button = props => {
 }
 
 Button.propTypes = {
+  type: PropTypes.string,
   className: PropTypes.string,
   background: PropTypes.string,
   color: PropTypes.string,
@@ -46,6 +49,7 @@ Button.propTypes = {
 }
 
 Button.defaultProps = {
+  type: 'button',
   className: '',
   background: 'primary',
   color: 'white',

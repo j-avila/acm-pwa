@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import Card from '../card'
 import Button from '../button'
 import ChatBubble from './ChatBubble'
@@ -46,6 +47,14 @@ const ChatCard = props => {
       </Message>
     </Card>
   )
+}
+
+ChatCard.propTypes = {
+  items: PropTypes.array
+}
+
+ChatCard.defaultProps = {
+  items: []
 }
 
 export default ChatCard

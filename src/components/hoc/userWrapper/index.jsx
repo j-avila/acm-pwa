@@ -13,7 +13,7 @@ const UserLayout = props => {
   const history = useHistory()
 
   useEffect(() => {
-    console.log(history)
+    // console.log(history)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (

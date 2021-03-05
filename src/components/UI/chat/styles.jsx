@@ -1,8 +1,20 @@
 import styled from 'styled-components'
-
+import { darken } from 'polished'
 export const ChatWrapper = styled.div`
   overflow-x: auto;
   max-height: 400px;
+  min-height: 40vh;
+  span {
+    display: block;
+    margin: 1rem 0;
+    position: relative;
+    background: ${({ theme }) => {
+      const bg = darken(0.2, theme.background)
+      return bg
+    }};
+    padding: 12px;
+    border-radius: 8px;
+  }
 `
 
 export const Row = styled.div`

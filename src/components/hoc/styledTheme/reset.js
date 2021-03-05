@@ -79,7 +79,7 @@ hr {
     padding:0;
 }
 label{
-    font-size: 12px;
+    font-size: 14px;
     font-weigth: bold;
 }
 input, select {

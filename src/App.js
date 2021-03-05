@@ -7,6 +7,8 @@ import Login from './components/login'
 import { OnBoarding } from './components/onBoarding'
 import Dashboard from './components/dashboard'
 import Requests from './components/requests'
+import RequestForm from './components/requestForm'
+import RequestDetail from './components/requestDetail'
 
 function App() {
   return (
@@ -19,7 +21,9 @@ function App() {
             <Route path='/ingreso' component={Login} />
             <Route path='/tour' component={OnBoarding} />
             <Route path='/panel-de-control' component={Dashboard} />
-            <Route path='/solicitudes' component={Requests} />
+            <Route path='/solicitudes' component={Requests} exact />
+            <Route path='/solicitudes/new' component={RequestForm} />
+            <Route path='/detail' component={RequestDetail} />
           </Switch>
         </Router>
       </ThemeWrapper>

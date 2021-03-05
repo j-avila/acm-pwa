@@ -15,10 +15,19 @@ export const Wrapper = styled.div`
     }
     .field {
       margin-bottom: 1rem;
-      i {
-        padding: 0.2rem;
-        margin-left: 0.4rem;
-        font-size: large;
+      &.append {
+        .wrapper {
+          display: flex;
+          align-items: center;
+        }
+        i {
+          background: ${({ theme }) => theme.greygradient};
+          padding: 16px;
+          margin-left: 0;
+          font-size: large;
+          border-radius: 0 8px 8px 0;
+          box-shadow: ${({ theme }) => theme.shadow};
+        }
       }
     }
   }

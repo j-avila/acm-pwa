@@ -34,16 +34,18 @@ const Login = props => {
           >
             <input type='text' />
           </FormInput>
-          <FormInput className='field' label='Crea tu contraseña'>
-            <input
-              type={visiblePassword ? 'text' : 'password'}
-              style={{ display: 'inline-block', width: 'calc(88% - 36px)' }}
-              onChange={e => console.log(e)}
-            />
-            <i
-              className={`fas ${visiblePassword ? 'fa-eye-slash' : 'fa-eye'}`}
-              onClick={() => viewPassword(!visiblePassword)}
-            ></i>
+          <FormInput className='field append' label='Crea tu contraseña'>
+            <span className='wrapper'>
+              <input
+                type={visiblePassword ? 'text' : 'password'}
+                style={{ display: 'inline-block', width: 'calc(80% - 36px)' }}
+                onChange={e => console.log(e)}
+              />
+              <i
+                className={`fas ${visiblePassword ? 'fa-eye-slash' : 'fa-eye'}`}
+                onClick={() => viewPassword(!visiblePassword)}
+              ></i>
+            </span>
           </FormInput>
           <Button width='100%' onClick={() => handleLogin()}>
             Ingresar

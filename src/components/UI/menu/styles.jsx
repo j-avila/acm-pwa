@@ -18,15 +18,15 @@ export const List = styled.ul`
   top: 100%;
   right: 0;
   list-style: none;
-  width: calc(100vw - 62px);
+  width: 100vw;
   border-radius: 0 0 10px 10px;
   overflow: hidden;
-  background: ${({ theme }) => theme.background};
+  background: ${({ theme }) => theme.primary};
   box-shadow: ${({ theme }) => theme.shadow};
   li {
-    padding: 10px;
-    border-bottom: 1px solid grey;
-    color: grey;
+    padding: 1rem 10px;
+    border-bottom: 1px solid #c7c7c7;
+    color: white;
     &:last-child {
       border-bottom: 0;
     }

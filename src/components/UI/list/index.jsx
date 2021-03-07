@@ -14,7 +14,11 @@ const List = props => {
       {items && items.length >= 1 ? (
         items.map(item => (
           <li key={item.id} onClick={() => handleAction(item.id)}>
-            {item.title} <i className={`fas ${item.status}`}></i>
+            <span>
+              <strong>{item.title}</strong>
+              {item.subtitle && item.subtitle}
+            </span>
+            <i className={`fas fa-chevron-right`}></i>
           </li>
         ))
       ) : (

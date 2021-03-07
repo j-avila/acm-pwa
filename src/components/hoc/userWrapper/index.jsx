@@ -8,6 +8,14 @@ const userData = {
   role: 'celador'
 }
 
+const dummyItems = [
+  { name: 'inicio', path: '/panel-de-control' },
+  { name: 'visitas', path: '/visitas' },
+  { name: 'solicitudes', path: '/solicitudes' },
+  { name: 'deudas', path: '/deudas' },
+  { name: 'información del canal', path: '/informacion' }
+]
+
 const UserLayout = props => {
   const { children } = props
   const history = useHistory()
@@ -18,7 +26,13 @@ const UserLayout = props => {
   }, [])
   return (
     <>
-      <Header title={history.location.pathname} user={userData} menu back />
+      <Header
+        title={history.location.pathname}
+        menuItems={dummyItems}
+        user={userData}
+        menu
+        back
+      />
       <section>{children}</section>
     </>
   )

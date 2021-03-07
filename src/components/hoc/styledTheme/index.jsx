@@ -23,7 +23,18 @@ const bodyStyles = css`
       text-transform: capitalize;
     }
   }
+  h1{
+    font-size: 22px;
+    letter-spacing: 0.25px;
+  }
+  h2{
+    font-size: 18px;
+  }
+  h3{
+    font-size: 16px;
+  }
   p {
+    font-size: 16px;
     font-family: 'Open Sans', 'Sans-serif';
   }
 `

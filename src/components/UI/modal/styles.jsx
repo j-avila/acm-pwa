@@ -5,6 +5,7 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
+  z-index: 99;
   position: fixed;
   background: rgba(0, 0, 0, 0.5);
   #card {

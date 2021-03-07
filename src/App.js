@@ -9,6 +9,12 @@ import Dashboard from './components/dashboard'
 import Requests from './components/requests'
 import RequestForm from './components/requestForm'
 import RequestDetail from './components/requestDetail'
+import Debts from './components/debts'
+import DebtDetail from './components/debtDetail'
+import ActionsIndex from './components/actions'
+import InfoChannel from './components/infoChannel'
+import Visits from './components/visits'
+import VisitDetail from './components/visitsDetail'
 
 function App() {
   return (
@@ -22,8 +28,14 @@ function App() {
             <Route path='/tour' component={OnBoarding} />
             <Route path='/panel-de-control' component={Dashboard} />
             <Route path='/solicitudes' component={Requests} exact />
+            <Route path='/acciones' component={ActionsIndex} exact />
             <Route path='/solicitudes/new' component={RequestForm} />
-            <Route path='/detail' component={RequestDetail} />
+            <Route path='/solicitudes/:id' component={RequestDetail} />
+            <Route path='/deudas' component={Debts} exact />
+            <Route path='/deudas/:id' component={DebtDetail} />
+            <Route path='/informacion' component={InfoChannel} />
+            <Route path='/visitas' component={Visits} exact />
+            <Route path='/visitas/:id' component={VisitDetail} />
           </Switch>
         </Router>
       </ThemeWrapper>

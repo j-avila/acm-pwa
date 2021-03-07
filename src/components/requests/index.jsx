@@ -10,7 +10,7 @@ const Requests = props => {
   const history = useHistory()
 
   const handleItem = id => {
-    history.push(`/request/${id}`)
+    history.push(`/solicitudes/${id}`)
   }
 
   return (

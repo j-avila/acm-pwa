@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { List, MenuWrapper } from './styles'
+import { useHistory } from 'react-router'
 
 const Menu = props => {
   const { items } = props
+  const history = useHistory()
   const [open, setOpen] = useState(null)
   return (
     <MenuWrapper>
@@ -13,8 +15,10 @@ const Menu = props => {
       ></button>
       {items && open && (
         <List>
-          {items.map(item => (
-            <li>{item.name}</li>
+          {items.map((item, index) => (
+            <li key={index} onClick={() => history.push(item.path)}>
+              {item.name}
+            </li>
           ))}
         </List>
       )}

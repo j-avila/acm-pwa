@@ -20,6 +20,9 @@ export const TabList = styled.ul`
     padding: 0;
     margin: 0;
     li {
+      display: flex;
+      justify-content: center;
+      width: 45%;
       text-transform: capitalize;
       list-style: none;
       padding: 0.8rem 2rem;

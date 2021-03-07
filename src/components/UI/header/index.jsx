@@ -11,7 +11,12 @@ const Header = props => {
   return (
     <Wrapper menu={menu}>
       <div className='head'>
-        {back && <i className='fas fa-arrow-left back'></i>}
+        {back && (
+          <i
+            className='fas fa-arrow-left back'
+            onClick={() => history.goBack()}
+          ></i>
+        )}
         <h2 className='title'>{title}</h2>
         <div className='action-zone'>
           {notifications && (

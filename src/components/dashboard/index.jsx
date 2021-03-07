@@ -11,7 +11,7 @@ const Dashboard = () => {
     <UserWrapper>
       <Dash>
         <Card className='stat-card'>
-          <header>
+          <header onClick={() => history.push('/informacion')}>
             <h3>Información del canal</h3>
             <i className='fa fa-chevron-right' />
           </header>
@@ -31,15 +31,15 @@ const Dashboard = () => {
             <h3>Solicitudes/Reclamos</h3>
             <i className='fa fa-chevron-right' />
           </header>
-          <section>
+          <section onClick={() => history.push('/visitas')}>
             <strong>Próxima visita programada:</strong>
-            <h1>Celador: Jorge Ortiz</h1>
+            <h1>14 de abril 14:00</h1>
           </section>
-          <footer>Actualizado al 28 de octubre 2020</footer>
+          <footer>Celador: Jorge Ortiz</footer>
         </Card>
 
         <Card className='stat-card'>
-          <header>
+          <header onClick={() => history.push('/deudas')}>
             <h3>Deuda</h3>
             <i className='fa fa-chevron-right' />
           </header>
@@ -51,7 +51,7 @@ const Dashboard = () => {
         </Card>
 
         <Card className='stat-card'>
-          <header>
+          <header onClick={() => history.push('/acciones')}>
             <h3>Acciones</h3>
             <i className='fa fa-chevron-right' />
           </header>

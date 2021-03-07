@@ -12,6 +12,23 @@ export const Wrapper = styled.div`
       font-size: xx-large;
     }
   }
+  .slick-slider {
+    .slick-next {
+      right: 2vh;
+    }
+    .slick-prev {
+      left: 2vh;
+      z-index: 10;
+    }
+    .slick-dots {
+      bottom: 2vh;
+      li button {
+        &:before {
+          font-size: 15px;
+        }
+      }
+    }
+  }
 `
 
 export const Slide = styled.div`

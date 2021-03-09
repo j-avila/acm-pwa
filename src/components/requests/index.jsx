@@ -14,7 +14,7 @@ const Requests = props => {
   }
 
   return (
-    <UserWrapper>
+    <UserWrapper pathName='Solicitudes/Reclamos'>
       <Wrapper>
         <Tabs selected={0}>
           <Panel title='Finalizados'>

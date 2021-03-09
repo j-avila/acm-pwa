@@ -27,30 +27,30 @@ export const OnBoarding = () => {
     const itemId = `desc-${index}`
     const item = document.getElementById(itemId)
     console.log(item)
-    setSlidePos(index)
+    // setSlidePos(index)
     return item[type]()
   }
 
   const settings = {
     dots: true,
-    infinite: false,
-    beforeChange: i => handleAudio(i, 'pause'),
-    afterChange: i => handleAudio(i, 'play')
+    infinite: false
+    // beforeChange: i => handleAudio(i, 'pause'),
+    // afterChange: i => handleAudio(i, 'play')
   }
 
-  useEffect(() => {
-    handleAudio(0, 'play')
-  }, [])
+  // useEffect(() => {
+  //   handleAudio(0, 'play')
+  // }, [])
 
-  const pauseAudio = () => {
-    const state = volume ? 'pause' : 'play'
-    handleAudio(slidePos, state)
-  }
+  // const pauseAudio = () => {
+  //   const state = volume ? 'pause' : 'play'
+  //   handleAudio(slidePos, state)
+  // }
 
-  useEffect(() => {
-    // pauseAudio()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [volume])
+  // useEffect(() => {
+  //   // pauseAudio()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [volume])
 
   return (
     <Wrapper>

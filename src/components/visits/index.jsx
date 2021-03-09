@@ -12,7 +12,7 @@ const Visits = () => {
     history.push(`/visitas/${id}`)
   }
   return (
-    <UserWrapper>
+    <UserWrapper pathName='Visitas programadas'>
       <VisitsWrapper>
         <Tabs selected={0}>
           <Panel title='Asignadas'>

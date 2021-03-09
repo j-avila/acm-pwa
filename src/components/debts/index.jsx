@@ -15,7 +15,7 @@ const Debts = () => {
   }
 
   return (
-    <UserWrapper>
+    <UserWrapper pathName='Deudas'>
       <DebtWrapper>
         <Tabs selected={0}>
           <Panel title='por pagar'>

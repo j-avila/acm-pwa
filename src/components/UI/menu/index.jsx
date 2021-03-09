@@ -10,13 +10,21 @@ const Menu = props => {
   return (
     <MenuWrapper>
       <button
-        className='fas fa-align-left'
+        className={`fa ${open ? 'fa-times' : 'fa-bars'}`}
         onClick={() => setOpen(!open)}
       ></button>
       {items && open && (
         <List>
           {items.map((item, index) => (
-            <li key={index} onClick={() => history.push(item.path)}>
+            <li
+              key={index}
+              onClick={() =>
+                history.push({
+                  pathname: item.path,
+                  state: { routename: item.name }
+                })
+              }
+            >
               {item.name}
             </li>
           ))}

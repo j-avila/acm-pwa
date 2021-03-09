@@ -26,7 +26,7 @@ const RequestDetail = () => {
   }
 
   return (
-    <UserWrapper>
+    <UserWrapper pathName='Detalle de Solicitud'>
       <DetailsWrapper>
         <CeladorSection>
           <h1>problema con la presión</h1>

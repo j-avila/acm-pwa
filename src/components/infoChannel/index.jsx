@@ -3,11 +3,11 @@ import UserWrapper from '../hoc/userWrapper'
 import Card from '../UI/card'
 import { Content, InfoWrapper } from './styles'
 
-const InfoChannel = () => {
+const InfoChannel = props => {
   const [alert, setAlert] = useState(true)
 
   return (
-    <UserWrapper>
+    <UserWrapper pathName='Información'>
       <InfoWrapper>
         {alert && (
           <Card className='alert'>
@@ -21,7 +21,7 @@ const InfoChannel = () => {
                   recolector del canal vergara debemos suspender mañana el
                   servicio de 08:00 a 13:00 Disculpe las milestias
                 </p>
-                <p>actializado el 20/12/2021</p>
+                <p>actualizado el 20/12/2021</p>
               </span>
             </Content>
           </Card>
@@ -41,7 +41,7 @@ const InfoChannel = () => {
           <Content>
             <span>
               <h3>
-                Caudal Diario: <br /> Canal Vergagra
+                Caudal Diario: <br /> Canal Vergara
               </h3>
               <p>Actualizadio el 12/11/2020</p>
             </span>
@@ -67,7 +67,7 @@ const InfoChannel = () => {
           <Content>
             <span>
               <h3>Tiempo: soleado</h3>
-              <p>actializado el 20/12/2021</p>
+              <p>actualizado el 20/12/2021</p>
             </span>
             <span>
               <i className='fas fa-sun'></i>

@@ -6,7 +6,7 @@ import { DetailWrapper } from './styles'
 const VisitDetail = props => {
   const { title, body, id, date, inCharge, ended } = props
   return (
-    <UserWrapper>
+    <UserWrapper pathName='Detalle de visita'>
       <DetailWrapper>
         <h1>
           {ended && <i className='fas fa-check-circle'></i>}

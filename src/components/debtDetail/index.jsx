@@ -12,7 +12,7 @@ const DebtDetail = props => {
   const [modal, showModal] = useState(false)
   return (
     <>
-      <UserWrapper>
+      <UserWrapper pathName='Detalle Deuda'>
         <DeatilWrapper>
           <h1>{debt.title}</h1>
           <Detail>

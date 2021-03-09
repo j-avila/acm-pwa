@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Dash } from './styles'
 import Card from '../UI/card'
 import UserWrapper from '../hoc/userWrapper'
 
-const Dashboard = () => {
+const Dashboard = props => {
   const history = useHistory()
-
+  useEffect(() => {
+    console.log(props.location)
+  }, [])
   return (
     <UserWrapper>
       <Dash>

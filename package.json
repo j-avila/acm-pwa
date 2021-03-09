@@ -1,6 +1,5 @@
 {
   "name": "canal-maule",
-  "homepage": "https://purpuradigital.com/canalmaule",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

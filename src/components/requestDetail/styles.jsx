@@ -22,9 +22,9 @@ export const CeladorSection = styled.div`
   img {
     overflow: hidden;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    padding: 8px;
+    width: 60px;
+    height: 60px;
+    padding: 2px;
     background: ${({ theme }) => theme.background};
   }
 `

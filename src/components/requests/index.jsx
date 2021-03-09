@@ -37,8 +37,8 @@ const Requests = props => {
 }
 
 const dummy = [
-  { id: 1, title: 'algun titulo', status: 'fa-check' },
-  { id: 2, title: 'algun otro titulo dos', status: 'fa-times' }
+  { id: 1, title: 'Fallo en el suministro', status: 'fa-check' },
+  { id: 2, title: 'Problemas con el regado', status: 'fa-times' }
 ]
 
 export default Requests

@@ -64,7 +64,7 @@ export const OnBoarding = () => {
       <Slider {...settings}>
         <Slide bgImg={slide1}>
           <p>
-            Bienvenido a la APP de la asociación Canal Maule Descubre lo que
+            Bienvenido a la APP de la asociación Canal Maule, descubre lo que
             puedes hacer con ella
             <audio id='desc-0'>
               <source
@@ -87,7 +87,7 @@ export const OnBoarding = () => {
         </Slide>
         <Slide bgImg={slide3}>
           <p>
-            Revisa tus Cuentas y cuotas de agua
+            Revisa tus cuentas y cuotas de agua
             <audio id='desc-2'>
               <source
                 src='https://previews.customer.envatousercontent.com/files/306825723/preview.mp3'
@@ -132,7 +132,7 @@ export const OnBoarding = () => {
             >
               <input type='text' />
             </FormImput>
-            <FormImput className='form-input' label='Correo electronico'>
+            <FormImput className='form-input' label='Correo electrónico'>
               <input type='mail' />
             </FormImput>
           </FormWrapp>

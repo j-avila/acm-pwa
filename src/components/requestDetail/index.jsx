@@ -31,7 +31,7 @@ const RequestDetail = () => {
         <CeladorSection>
           <h1>problema con la presión</h1>
           <img
-            src='https://ra.ac.ae/wp-content/uploads/2017/02/user-icon-placeholder.png'
+            src='https://images.pexels.com/photos/2078265/pexels-photo-2078265.jpeg?cs=srgb&dl=pexels-martin-p%C3%A9chy-2078265.jpg&fm=jpg'
             alt='celador'
           />
         </CeladorSection>

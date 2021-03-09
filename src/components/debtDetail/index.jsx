@@ -33,11 +33,11 @@ const DebtDetail = props => {
             <i className='fas fa-info-circle' />
             <p>
               Acércate a nuestras oficinas para realizar el pago de tu cuota o
-              realiza una transferencia bancaría
+              realiza una transferencia bancaria
             </p>
           </Card>
           <Button width='80%' display='block' onClick={() => showModal(!modal)}>
-            datos para trasnferencias
+            datos para transferencias
           </Button>
           <Button
             width='80%'
@@ -62,7 +62,7 @@ const DebtDetail = props => {
               <strong>RUT: </strong>7.345.567-3
             </p>
             <p>
-              <strong>correo electronico: </strong>pagos@canaldelmaule.cl
+              <strong>correo electrónico: </strong>pagos@canaldelmaule.cl
             </p>
           </ModalContent>
         </Modal>

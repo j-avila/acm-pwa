@@ -19,9 +19,9 @@ const InfoChannel = props => {
                 <p>
                   Hola sr. xxxxxxx le informamos que debido a una falla en un
                   recolector del canal vergara debemos suspender mañana el
-                  servicio de 08:00 a 13:00 Disculpe las milestias
+                  servicio de 08:00 a 13:00 Disculpe las molestias
                 </p>
-                <p>actualizado el 20/12/2021</p>
+                <p>Actualizado el 20/12/2021</p>
               </span>
             </Content>
           </Card>
@@ -29,8 +29,8 @@ const InfoChannel = props => {
         <Card>
           <Content>
             <span>
-              <h3>Regucalión ACM</h3>
-              <p>Actualizadio el 12/11/2020</p>
+              <h3>Regualción ACM</h3>
+              <p>Actualizado el 12/11/2020</p>
             </span>
             <span>
               <h1>45L.</h1>
@@ -43,7 +43,7 @@ const InfoChannel = props => {
               <h3>
                 Caudal Diario: <br /> Canal Vergara
               </h3>
-              <p>Actualizadio el 12/11/2020</p>
+              <p>Actualizado el 12/11/2020</p>
             </span>
             <span>
               <h1>1209 l/s</h1>
@@ -67,7 +67,7 @@ const InfoChannel = props => {
           <Content>
             <span>
               <h3>Tiempo: soleado</h3>
-              <p>actualizado el 20/12/2021</p>
+              <p>Actualizado el 20/12/2021</p>
             </span>
             <span>
               <i className='fas fa-sun'></i>

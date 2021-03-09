@@ -32,16 +32,18 @@ export default Visits
 const dummy = [
   {
     id: 1,
-    title: 'algun titulo',
+    title: 'Celador',
     date: '23-10-2022',
+    subtitle: 'programada para el: 12/12/2021',
     inCharge: 'esteban quito',
     body:
       'Estimado señor xxxxx. Se ha agendado una visita a su domicilio ubicado en xxxx, xxxxx. El celador , señor ]xxxxx, se presentará el día 23/12/2020 con el objetivo de revisar  su solicitud : problema con la presión.'
   },
   {
     id: 2,
-    title: 'algun otro titulo dos',
+    title: 'Administración',
     date: '23-10-2025',
+    subtitle: 'programada para el: 12/12/2021',
     inCharge: 'alan brito',
     body:
       'Estimado señor xxxxx. Se ha agendado una visita a su domicilio ubicado en xxxx, xxxxx. El celador , señor ]xxxxx, se presentará el día 23/12/2020 con el objetivo de revisar  su solicitud : problema con la presión.'
@@ -50,16 +52,18 @@ const dummy = [
 const dummyEnded = [
   {
     id: 1,
-    title: 'algun titulo',
+    title: 'Administración',
     date: '23-10-2022',
+    subtitle: 'Finalizada el: 12/12/2020',
     inCharge: 'esteban quito',
     body:
       'Estimado señor xxxxx. Se ha agendado una visita a su domicilio ubicado en xxxx, xxxxx. El celador , señor ]xxxxx, se presentará el día 23/12/2020 con el objetivo de revisar  su solicitud : problema con la presión.'
   },
   {
     id: 2,
-    title: 'algun otro titulo mas',
+    title: 'Celador',
     date: '23-10-2021',
+    subtitle: 'Finalizada el: 12/12/2020',
     inCharge: 'alan brito',
     body:
       'Estimado señor xxxxx. Se ha agendado una visita a su domicilio ubicado en xxxx, xxxxx. El celador , señor ]xxxxx, se presentará el día 23/12/2020 con el objetivo de revisar  su solicitud : problema con la presión.'

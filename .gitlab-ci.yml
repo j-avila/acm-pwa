@@ -11,7 +11,6 @@ develop_deploy:
   script:
     - npm install
     - CI=false npm run build
-    #- cp ./public/.htaccess ./dist/.htaccess
     - tar -czvf ./frontend_deploy.tar.gz ./build --exclude=".git"
     - ssh-keyscan -t rsa $DEV_IP >> ~/.ssh/known_hosts
     - ssh-add <(echo "$DEV_PRIVATE_KEY")
@@ -21,6 +20,5 @@ develop_deploy:
     - ssh $DEVELOPER@$DEV_IP "tar -xzvf $DEV_PATH/frontend_deploy.tar.gz -C $DEV_PATH/."
     - ssh $DEVELOPER@$DEV_IP "rm -f $DEV_PATH/frontend_deploy.tar.gz"
     - ssh $DEVELOPER@$DEV_IP "mv $DEV_PATH/build/* $DEV_PATH/."
-    - ssh $DEVELOPER@$DEV_IP "mv $DEV_PATH/build/.htaccess $DEV_PATH/."
     - ssh $DEVELOPER@$DEV_IP "rm -rf $DEV_PATH/build"
     - echo "-Fin-"

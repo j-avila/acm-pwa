@@ -10,7 +10,7 @@ develop_deploy:
     - dev
   script:
     - npm install
-    - npm run build
+    - CI=false npm run build
     #- cp ./public/.htaccess ./dist/.htaccess
     - tar -czvf ./frontend_deploy.tar.gz ./build --exclude=".git"
     - ssh-keyscan -t rsa $DEV_IP >> ~/.ssh/known_hosts

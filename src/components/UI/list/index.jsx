@@ -18,7 +18,7 @@ const List = props => {
               <strong>{item.title}</strong>
               {item.subtitle && item.subtitle}
             </span>
-            <i className={`fas fa-chevron-right`}></i>
+            <i className={`fas ${item.status || 'fa-chevron-right'}`}></i>
           </li>
         ))
       ) : (

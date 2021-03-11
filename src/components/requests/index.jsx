@@ -21,7 +21,7 @@ const Requests = props => {
             <List items={dummy} action={handleItem} />
           </Panel>
           <Panel title='Finalizados'>
-            <List items={dummy} />
+            <List items={dummyEnded} />
           </Panel>
         </Tabs>
         <Button
@@ -37,8 +37,30 @@ const Requests = props => {
 }
 
 const dummy = [
-  { id: 1, title: 'Fallo en el suministro', status: 'fa-check' },
-  { id: 2, title: 'Problemas con el regado', status: 'fa-times' }
+  {
+    id: 1,
+    title: 'Fallo en el suministro',
+    subtitle: 'Creada el: 12/12/2021'
+  },
+  {
+    id: 2,
+    title: 'Problemas con el regado',
+    subtitle: 'Creada el: 12/12/2021'
+  }
+]
+const dummyEnded = [
+  {
+    id: 1,
+    title: 'Fallo en el suministro',
+    subtitle: 'Finalizada el: 12/12/2021',
+    status: 'fa-check'
+  },
+  {
+    id: 2,
+    title: 'Problemas con el regado',
+    subtitle: 'Finalizada el: 12/12/2021',
+    status: 'fa-check'
+  }
 ]
 
 export default Requests

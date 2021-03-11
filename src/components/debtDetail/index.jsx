@@ -37,17 +37,17 @@ const DebtDetail = props => {
             </Row>
             <Row>
               <strong>
-                {location.state.type === 'payed' ? 'estado:' : 'Estado:'}
-              </strong>{' '}
+                {location.state.type === 'payed' ? 'Estado:' : 'Fecha:'}
+              </strong>
               <span>
-                {location.state.type === 'payed' && debt.state
+                {location.state.type === 'payed' && debt.payed
                   ? 'finalizada'
-                  : location.state.type == 'payed' && !debt.state
-                  ? 'abierta'
                   : debt.dueDate}
               </span>
             </Row>
-            <h3>{`Total monto Cancelado: $${debt.amount}`}</h3>
+            {location.state.type === 'payed' && (
+              <h3>{`Total monto Cancelado: $${debt.amount}`}</h3>
+            )}
             <h2>{`Total a pagar: $${debt.amount}`}</h2>
           </Detail>
           <Card className='info'>
@@ -104,7 +104,7 @@ DebtDetail.defaultProps = {
     code: 123,
     channel: 'Vergara',
     dueDate: '12-12-2020',
-    payed: false,
+    payed: true,
     amount: '999.999'
   }
 }

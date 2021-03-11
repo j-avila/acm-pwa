@@ -8,6 +8,7 @@ import { ActionArea, RequestWrapper } from './styles'
 const RequestForm = () => {
   const hiddenFileInput = useRef(null)
   const [location, setLocation] = useState()
+  const [reqType, setType] = useState()
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -39,21 +40,23 @@ const RequestForm = () => {
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
           <FormInput label='¿Cuál es su problema o necesidad?' width='100%'>
-            <select>
+            <select onChange={e => setType(e.target.value)}>
               <option disabled>Selecciona una opción</option>
-              <option>¿Como puedo traspasar cuotas?</option>
-              <option>Convenios de pago</option>
-              <option>Solicitud</option>
-              <option>Otro</option>
+              <option value='0'>¿Como puedo traspasar cuotas?</option>
+              <option value='1'>Convenios de pago</option>
+              <option value='2'>Solicitud</option>
+              <option value='3'>Otro</option>
             </select>
           </FormInput>
-          <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
-            <input
-              type='text'
-              name='nombre'
-              placeholder='Describa su solicitud brevemente'
-            />
-          </FormInput>
+          {reqType === '3' && (
+            <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
+              <input
+                type='text'
+                name='nombre'
+                placeholder='Describa su solicitud brevemente'
+              />
+            </FormInput>
+          )}
           <FormInput label='Ingrese su solicitud'>
             <textarea
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
@@ -66,6 +69,7 @@ const RequestForm = () => {
               ref={hiddenFileInput}
             />
           </FormInput>
+
           <ActionArea className='actions'>
             <Button background='primary'>
               <i className='fas fa-camera'></i>

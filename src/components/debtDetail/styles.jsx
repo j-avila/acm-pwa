@@ -24,10 +24,10 @@ export const Detail = styled.div`
   padding: 1rem 2rem;
   h3 {
     text-align: left;
-    margin: 1rem 0;
+    padding: 1rem 0;
+    border-bottom: 1px solid grey;
   }
   h2 {
-    border-top: 1px solid grey;
     padding: 1rem 0;
     text-align: left;
     color: ${({ theme }) => theme.secondary};

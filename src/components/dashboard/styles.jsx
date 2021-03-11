@@ -32,4 +32,13 @@ export const Dash = styled.div`
       color: #858585;
     }
   }
+  @media all and (min-width: 1280px) {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    #card {
+      width: calc(100% - 3rem);
+    }
+  }
 `

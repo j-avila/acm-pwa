@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import UserWrapper from '../hoc/userWrapper'
 import Card from '../UI/card'
-import { Content, InfoWrapper } from './styles'
+import { Content, InfoWrapper, NotificationArea } from './styles'
 
 const InfoChannel = props => {
   const [alert, setAlert] = useState(true)
 
   return (
     <UserWrapper pathName='Información'>
-      <InfoWrapper>
-        {alert && (
+      {alert && (
+        <NotificationArea>
           <Card className='alert'>
             <i className='fas fa-times' onClick={() => setAlert(false)} />
             <Content>
@@ -17,19 +17,26 @@ const InfoChannel = props => {
               <span>
                 <h3>Aviso de corte programado</h3>
                 <p>
-                  Hola sr. xxxxxxx le informamos que debido a una falla en un
-                  recolector del canal vergara debemos suspender mañana el
-                  servicio de 08:00 a 13:00 Disculpe las molestias
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Cumque porro necessitatibus illum! Voluptatum officiis
+                  repudiandae, corrupti magnam deserunt quasi, perferendis
+                  dignissimos quibusdam quis laboriosam architecto iste
+                  provident labore commodi nulla?
                 </p>
-                <p>Actualizado el 20/12/2021</p>
+                <div className='meta'>
+                  <strong>Fecha: 20/12/2021</strong>
+                  <strong>Hora: 12:20</strong>
+                </div>
               </span>
             </Content>
           </Card>
-        )}
+        </NotificationArea>
+      )}
+      <InfoWrapper>
         <Card>
           <Content>
             <span>
-              <h3>Regualción ACM</h3>
+              <h3>Regulación ACM</h3>
               <p>Actualizado el 12/11/2020</p>
             </span>
             <span>
@@ -46,14 +53,25 @@ const InfoChannel = props => {
               <p>Actualizado el 12/11/2020</p>
             </span>
             <span>
-              <h1>1209 l/s</h1>
+              <h1>1209 L/S</h1>
             </span>
           </Content>
         </Card>
         <Card>
           <Content>
             <span>
-              <h3>Volumen Laguna Maule</h3>
+              <h3>Aporte de Laguna del Maule</h3>
+              <p>Fuente: DGA</p>
+            </span>
+            <span>
+              <h1>14 L/S</h1>
+            </span>
+          </Content>
+        </Card>
+        <Card>
+          <Content>
+            <span>
+              <h3>Volumen Laguna del Maule</h3>
               <p>
                 Fuente: <strong>Junta de vigilancia Río Maule</strong>
               </p>
@@ -98,17 +116,6 @@ const InfoChannel = props => {
               <h1>
                 1463mm <br /> acumulado
               </h1>
-            </span>
-          </Content>
-        </Card>
-        <Card>
-          <Content>
-            <span>
-              <h3>Aporte de laguna del maule</h3>
-              <p>Fuente: DGA</p>
-            </span>
-            <span>
-              <h1>14 l/s</h1>
             </span>
           </Content>
         </Card>

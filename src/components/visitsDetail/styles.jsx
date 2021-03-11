@@ -13,5 +13,8 @@ export const DetailWrapper = styled.div`
   }
   #card {
     margin: 1.5rem auto;
+    .info {
+      text-align: left;
+    }
   }
 `

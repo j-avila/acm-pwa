@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const DetailsWrapper = styled.div`
   #card {
-    margin: 1rem auto;
+    margin: 0.5rem auto;
   }
 `
 
@@ -18,28 +18,5 @@ export const CeladorSection = styled.div`
     &:first-letter {
       text-transform: uppercase;
     }
-  }
-  img {
-    overflow: hidden;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    padding: 2px;
-    background: ${({ theme }) => theme.background};
-  }
-`
-
-export const ActionArea = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-  button {
-    margin: 10px;
-    i {
-      font-size: x-large;
-    }
-  }
-  .btn-send {
-    padding: 12px 40px;
   }
 `

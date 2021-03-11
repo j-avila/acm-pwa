@@ -64,8 +64,7 @@ export const OnBoarding = () => {
       <Slider {...settings}>
         <Slide bgImg={slide1}>
           <p>
-            Bienvenido a la APP de la asociación Canal Maule, descubre lo que
-            puedes hacer con ella
+            Bienvenido a la App de la Asociación Canal del Maule.
             <audio id='desc-0'>
               <source
                 src='https://previews.customer.envatousercontent.com/files/306824419/preview.mp3'
@@ -87,7 +86,7 @@ export const OnBoarding = () => {
         </Slide>
         <Slide bgImg={slide3}>
           <p>
-            Revisa tus cuentas y cuotas de agua
+            Revisa el volumen de la Laguna del Maule y tus cuotas de agua.
             <audio id='desc-2'>
               <source
                 src='https://previews.customer.envatousercontent.com/files/306825723/preview.mp3'
@@ -98,8 +97,10 @@ export const OnBoarding = () => {
         </Slide>
         <Slide bgImg={slide4}>
           <p>
-            Conoce el estado de tus solicitudes <br />
+            Consulta el estado de tus solicitudes y reclamos
             <Button
+              display='block'
+              margin='0 auto'
               background='white'
               color='primary'
               onClick={() => setModal(true)}
@@ -119,21 +120,24 @@ export const OnBoarding = () => {
         <Modal closeAction={setModal} action={handleLog}>
           <h1>Antes de comenzar</h1>
           <p>
-            Necesitamos los siguientes datos para mejorar la experiencia de tu
-            app Asociación Canal Maule
+            Antes de comenzar, necesitamos los siguientes datos para mejorar tu
+            experiencia en la App Canal Maule
           </p>
           <FormWrapp>
-            <FormImput className='form-input' label='Número de contacto'>
-              <input type='phone' />
+            <FormImput
+              className='form-input'
+              label='Número de teléfono o celular'
+            >
+              <input type='phone' placeholder='+56x xxxx xxxx' />
             </FormImput>
             <FormImput
               className='form-input'
               label='Dirección para correspondencia'
             >
-              <input type='text' />
+              <input type='text' placeholder='Calle Nº XX, Comuna' />
             </FormImput>
             <FormImput className='form-input' label='Correo electrónico'>
-              <input type='mail' />
+              <input type='mail' placeholder='ejemplo@correo.cl' />
             </FormImput>
           </FormWrapp>
         </Modal>

@@ -29,12 +29,17 @@ export const Wrapper = styled.div`
       }
     }
   }
+  #card {
+    max-width: 350px;
+  }
 `
 
 export const Slide = styled.div`
   height: 100vh;
   background: ${({ bgImg }) => `url(${bgImg})`};
   p {
+    max-width: 60vw;
+    margin: 0 auto;
     text-align: center;
     position: relative;
     color: white;

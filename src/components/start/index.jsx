@@ -13,14 +13,15 @@ const Login = props => {
         <img src={Logo} alt='Canal del maule' />
 
         <Button
-          width='100%'
+          display='block'
+          margin='4rem auto'
           background='indigoGradient'
           onClick={() => console.log('ingresar')}
         >
-          <Link to='/ingreso'>Ingresa</Link>
+          <Link to='/ingreso'>Ingresar</Link>
         </Button>
         <p>
-          ¿Tienes problemas para iniciar sesión?
+          ¿Tienes problemas para iniciar sesión? <br />
           <a href='telf:+56500 600 400'>
             <strong>Contáctanos al 500 600 400</strong>
           </a>

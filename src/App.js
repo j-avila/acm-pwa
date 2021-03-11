@@ -15,6 +15,7 @@ import ActionsIndex from './components/actions'
 import InfoChannel from './components/infoChannel'
 import Visits from './components/visits'
 import VisitDetail from './components/visitsDetail'
+import DebtForm from './components/debtForm'
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path='/solicitudes/new' component={RequestForm} />
             <Route path='/solicitudes/:id' component={RequestDetail} />
             <Route path='/deudas' component={Debts} exact />
+            <Route path='/deudas/new' component={DebtForm} />
             <Route path='/deudas/:id' component={DebtDetail} />
             <Route path='/informacion' component={InfoChannel} />
             <Route path='/visitas' component={Visits} exact />

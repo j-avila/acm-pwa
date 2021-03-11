@@ -7,10 +7,11 @@ export const Wrapper = styled.button`
   font-size: 16px;
   border: 0;
   outline: 0;
+  margin: ${({ margin }) => margin};
   width: ${({ width }) => width};
   color: ${({ theme, color }) => checkThemeProp(theme, color)};
   background: ${({ theme, background }) => checkThemeProp(theme, background)};
-  padding: 14px;
+  padding: 14px 2rem;
   box-shadow: ${({ theme, shadow }) =>
     shadow ? checkThemeProp(theme, 'shadow') : ''};
   &:first-letter {

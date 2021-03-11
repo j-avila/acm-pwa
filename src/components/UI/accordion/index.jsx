@@ -10,7 +10,7 @@ const Accordion = props => {
     <AccordionWrapper>
       <header onClick={() => setOpen(!open)}>
         <h3>{title}</h3>
-        <i className={`fas ${open ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+        <i className={`fas ${open ? 'fa-minus' : 'fa-plus'}`}></i>
       </header>
       {open && <Content open={open}>{children}</Content>}
     </AccordionWrapper>

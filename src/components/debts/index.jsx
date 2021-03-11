@@ -11,7 +11,11 @@ const Debts = () => {
 
   const handleItem = id => {
     // alert(id)
-    history.push(`/deudas/${id}`)
+    history.push({ pathname: `/deudas/${id}`, state: { type: 'notpayed' } })
+  }
+  const handlePayed = id => {
+    // alert(id)
+    history.push({ pathname: `/deudas/${id}`, state: { type: 'payed' } })
   }
 
   return (
@@ -27,7 +31,7 @@ const Debts = () => {
             </Accordion>
           </Panel>
           <Panel title='pagado'>
-            <List items={dummy} action={handleItem} />
+            <List items={dummy} action={handlePayed} />
           </Panel>
         </Tabs>
       </DebtWrapper>
@@ -41,13 +45,13 @@ const dummy = [
   {
     id: 1,
     title: 'algun titulo',
-    subtitle: 'vence el 20/12/2020',
+    subtitle: 'Vence el 20/12/2020',
     payed: true
   },
   {
     id: 2,
     title: 'algun otro titulo dos',
-    subtitle: 'vence el 20/12/2020',
+    subtitle: 'Vence el 20/12/2020',
     payed: false
   }
 ]

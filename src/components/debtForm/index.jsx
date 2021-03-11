@@ -5,7 +5,7 @@ import Button from '../UI/button'
 import FormInput from '../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
 
-const RequestForm = () => {
+const DebtForm = () => {
   const hiddenFileInput = useRef(null)
   const [location, setLocation] = useState()
 
@@ -31,28 +31,16 @@ const RequestForm = () => {
   }, [location])
 
   return (
-    <UserWrapper
-      pathName='Nueva Solicitud/Reclamo
-    '
-    >
+    <UserWrapper pathName='Reporte de deuda'>
       <RequestWrapper>
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
           <FormInput label='¿Cuál es su problema o necesidad?' width='100%'>
             <select>
-              <option disabled>Selecciona una opción</option>
+              <option selected={true}>Solicitud de reporte de deudas</option>
               <option>¿Como puedo traspasar cuotas?</option>
               <option>Convenios de pago</option>
-              <option>Solicitud</option>
-              <option>Otro</option>
             </select>
-          </FormInput>
-          <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
-            <input
-              type='text'
-              name='nombre'
-              placeholder='Describa su solicitud brevemente'
-            />
           </FormInput>
           <FormInput label='Ingrese su solicitud'>
             <textarea
@@ -89,4 +77,4 @@ const RequestForm = () => {
   )
 }
 
-export default RequestForm
+export default DebtForm

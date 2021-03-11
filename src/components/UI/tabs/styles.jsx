@@ -27,10 +27,11 @@ export const TabList = styled.ul`
       list-style: none;
       padding: 0.8rem 2rem;
       font-weight: 500;
+      font-size: medium;
       margin: 0;
       margin-right: 2px;
       background: ${({ theme }) => darken(0.2, theme.background)};
-      color: #a0a0a0;
+      color: #3f3f3f;
       cursor: pointer;
       transition: 0.5s all ease;
       border-top-left-radius: 8px;

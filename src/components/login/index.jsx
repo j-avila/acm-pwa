@@ -28,17 +28,14 @@ const Login = props => {
       <Wrapper>
         <Card>
           <img src={Logo} alt='Canal del maule' />
-          <FormInput
-            className='field'
-            label='Ingresa tu Código de regante o Usuario'
-          >
+          <FormInput className='field' label='Ingresa tu Código de Regante'>
             <input type='text' />
           </FormInput>
-          <FormInput className='field append' label='Crea tu contraseña'>
+          <FormInput className='field append' label='Ingresa tu contraseña'>
             <span className='wrapper'>
               <input
                 type={visiblePassword ? 'text' : 'password'}
-                style={{ display: 'inline-block', width: 'calc(80% - 36px)' }}
+                style={{ display: 'inline-block', width: 'calc(90% - 36px)' }}
                 onChange={e => console.log(e)}
               />
               <i

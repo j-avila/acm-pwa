@@ -9,12 +9,31 @@ const VisitDetail = props => {
     <UserWrapper pathName='Detalle de visita'>
       <DetailWrapper>
         <h1>
-          {ended && <i className='fas fa-check-circle'></i>}
+          {/* {ended && <i className='fas fa-check-circle'></i>} */}
           {title}
         </h1>
-        <h2>{`fecha pautada: ${date}`}</h2>
-        <p>{`celador encargado: ${inCharge}`}</p>
-        <Card>{body}</Card>
+        <Card>
+          <div className='info'>
+            <p>
+              <strong>Fecha</strong> : 12/12/2021
+            </p>
+            <p>
+              <strong>Hora</strong> : 12:00
+            </p>
+            <p>
+              <strong>Visitante</strong> : Juan Perez
+            </p>
+            <p>
+              <strong>Motivo de la visita</strong> : Lorem ipsum dolor sit amet
+              consectetur adipisicing elit. Necessitatibus in, voluptatum et
+              accusantium deleniti doloremque veniam veritatis porro, eveniet ab
+              at quos facilis. Non id debitis doloremque vel quam nostrum.
+            </p>
+            <p>
+              <strong>Adjuntos</strong> :
+            </p>
+          </div>
+        </Card>
       </DetailWrapper>
     </UserWrapper>
   )

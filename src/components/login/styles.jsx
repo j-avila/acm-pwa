@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
   position: relative;
   #card {
-    max-width: 80%;
     margin: 10vh auto;
     img {
       width: 60%;
@@ -29,6 +28,9 @@ export const Wrapper = styled.div`
           box-shadow: ${({ theme }) => theme.shadow};
         }
       }
+    }
+    @media all and (min-width: 1280px) {
+      max-width: 350px;
     }
   }
 `

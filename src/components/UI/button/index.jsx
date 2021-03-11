@@ -10,6 +10,7 @@ const Button = props => {
     color,
     onClick,
     width,
+    margin,
     display,
     shadow,
     disabled,
@@ -26,6 +27,7 @@ const Button = props => {
         color={color}
         onClick={onClick}
         width={width}
+        margin={margin}
         display={display}
         shadow={shadow}
         disabled={disabled ? 'disabled' : ''}
@@ -43,6 +45,7 @@ Button.propTypes = {
   color: PropTypes.string,
   action: PropTypes.func,
   width: PropTypes.string,
+  margin: PropTypes.string,
   display: PropTypes.string,
   shadow: PropTypes.bool,
   disabled: PropTypes.bool
@@ -57,7 +60,8 @@ Button.defaultProps = {
   width: 'max-content',
   display: 'inline-block',
   shadow: false,
-  disabled: false
+  disabled: false,
+  margin: '0'
 }
 
 export default Button

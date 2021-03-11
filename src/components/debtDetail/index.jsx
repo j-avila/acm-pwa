@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import UserWrapper from '../hoc/userWrapper'
 import Card from '../UI/card'
 import Button from '../UI/button'
@@ -7,27 +7,48 @@ import { DeatilWrapper, Detail, Row, ModalContent } from './styles'
 import { useHistory } from 'react-router'
 
 const DebtDetail = props => {
-  const { debt } = props
+  const { debt, location } = props
   const history = useHistory()
   const [modal, showModal] = useState(false)
+
+  const copyBank = () => {
+    showModal(false)
+  }
+
+  useEffect(() => {
+    console.log(location.state)
+  })
+
   return (
     <>
-      <UserWrapper pathName='Detalle Deuda'>
+      <UserWrapper
+        pathName={`${
+          location.state.type === 'payed' ? 'Cuotas Pagadas' : 'Detalle Deuda'
+        }`}
+      >
         <DeatilWrapper>
           <h1>{debt.title}</h1>
           <Detail>
             <Row>
-              <strong>código de regante</strong> <span>{debt.code}</span>
+              <strong>Código de regante:</strong> <span>{debt.code}</span>
             </Row>
             <Row>
-              <strong>código de regante</strong> <span>{debt.channel}</span>
+              <strong>Celador:</strong> <span>{debt.channel}</span>
             </Row>
             <Row>
-              <strong>Plazo máximo</strong> <span>{debt.dueDate}</span>
+              <strong>
+                {location.state.type === 'payed' ? 'estado:' : 'Estado:'}
+              </strong>{' '}
+              <span>
+                {location.state.type === 'payed' && debt.state
+                  ? 'finalizada'
+                  : location.state.type == 'payed' && !debt.state
+                  ? 'abierta'
+                  : debt.dueDate}
+              </span>
             </Row>
-            <h2>{`Total ${debt.payed ? 'pagado' : 'a pagar'}: $${
-              debt.amount
-            }`}</h2>
+            <h3>{`Total monto Cancelado: $${debt.amount}`}</h3>
+            <h2>{`Total a pagar: $${debt.amount}`}</h2>
           </Detail>
           <Card className='info'>
             <i className='fas fa-info-circle' />
@@ -36,20 +57,26 @@ const DebtDetail = props => {
               realiza una transferencia bancaria
             </p>
           </Card>
-          <Button width='80%' display='block' onClick={() => showModal(!modal)}>
-            datos para transferencias
-          </Button>
+          {location.state.type !== 'payed' && (
+            <Button
+              width='80%'
+              display='block'
+              onClick={() => showModal(!modal)}
+            >
+              Datos para transferencia bancaria
+            </Button>
+          )}
           <Button
             width='80%'
             display='block'
-            onClick={() => history.push('/solicitudes/new')}
+            onClick={() => history.push({ pathname: '/deudas/new' })}
           >
-            ¿Dudas acerca de esta deuda?
+            Solicitar Reporte de Deuda
           </Button>
         </DeatilWrapper>
       </UserWrapper>
       {modal && (
-        <Modal closeAction={showModal}>
+        <Modal action={copyBank} actionTitle='copiar'>
           <ModalContent>
             <h1>Datos para transferir</h1>
             <p>
@@ -78,7 +105,7 @@ DebtDetail.defaultProps = {
     channel: 'Vergara',
     dueDate: '12-12-2020',
     payed: false,
-    amount: '999.99'
+    amount: '999.999'
   }
 }
 

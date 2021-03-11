@@ -11,7 +11,7 @@ export const DeatilWrapper = styled.div`
     i {
       font-size: 2.5rem;
       color: ${({ theme }) => theme.primary};
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
   }
   button {
@@ -21,10 +21,14 @@ export const DeatilWrapper = styled.div`
 
 export const Detail = styled.div`
   position: relative;
-  padding: 1rem;
+  padding: 1rem 2rem;
+  h3 {
+    text-align: left;
+    margin: 1rem 0;
+  }
   h2 {
-    padding: 1rem 0;
     border-top: 1px solid grey;
+    padding: 1rem 0;
     text-align: left;
     color: ${({ theme }) => theme.secondary};
   }
@@ -32,9 +36,11 @@ export const Detail = styled.div`
 
 export const Row = styled.div`
   display: grid;
+  padding: 1rem 0;
   grid-template-columns: 2fr 1fr;
   text-align: left;
   margin: 12px auto;
+  border-bottom: 1px solid grey;
 `
 export const ModalContent = styled.div`
   /* position: relative; */

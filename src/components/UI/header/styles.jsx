@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  /* max-width: calc(100% - 18px); */
   position: relative;
   color: white;
   z-index: 10;
@@ -27,13 +26,18 @@ export const Wrapper = styled.div`
     }
   }
   .user {
+    display: flex;
+    justify-content: flex-start;
     z-index: 1;
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
-    padding: 15px;
+    padding: 15px 4vw;
     padding-top: 60px;
     text-align: left;
     background: ${({ theme }) => theme.secondary};
+    figure {
+      margin-right: 1rem;
+    }
     h3 {
       font-size: 20px;
     }
@@ -41,7 +45,7 @@ export const Wrapper = styled.div`
   .action-zone {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-end;
     i.notification-but {
       margin-right: 12px;
       font-size: xx-large;

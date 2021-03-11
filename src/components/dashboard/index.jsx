@@ -18,7 +18,7 @@ const Dashboard = props => {
             <i className='fa fa-chevron-right' />
           </header>
           <section>
-            <strong>Caudal:</strong>
+            <strong>Caudal Diario: Canal Vergara</strong>
             <h1>123.456 1395 Litros/segundo</h1>
           </section>
           <footer>Actualizado al 28 de octubre 2020</footer>
@@ -53,9 +53,8 @@ const Dashboard = props => {
         </Card>
 
         <Card className='stat-card'>
-          <header onClick={() => history.push('/acciones')}>
+          <header>
             <h3>Acciones</h3>
-            <i className='fa fa-chevron-right' />
           </header>
           <section>
             <strong>Disponible:</strong>

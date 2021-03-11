@@ -17,6 +17,16 @@ export const DeatilWrapper = styled.div`
   button {
     margin: 20px auto !important;
   }
+  @media all and (min-width: 1280px) {
+    margin: 0 auto;
+    width: 80vw;
+    max-width: 1000px;
+    button {
+      display: inline-block;
+      margin: 1rem 8px !important;
+      width: fit-content;
+    }
+  }
 `
 
 export const Detail = styled.div`

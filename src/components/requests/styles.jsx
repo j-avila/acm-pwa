@@ -9,4 +9,9 @@ export const Wrapper = styled.div`
     left: 45%;
     transform: translateX(-45%);
   }
+  @media all and (min-width: 1280px) {
+    margin: 0 auto;
+    width: 80vw;
+    max-width: 1000px;
+  }
 `

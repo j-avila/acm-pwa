@@ -46,7 +46,7 @@ const DebtDetail = props => {
               </span>
             </Row>
             {location.state.type === 'payed' && (
-              <h3>{`Total monto Cancelado: $${debt.amount}`}</h3>
+              <h3>{`Monto Cancelado: $${debt.amount}`}</h3>
             )}
             <h2>{`Total a pagar: $${debt.amount}`}</h2>
           </Detail>

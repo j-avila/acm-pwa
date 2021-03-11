@@ -17,10 +17,10 @@ const Requests = props => {
     <UserWrapper pathName='Solicitudes/Reclamos'>
       <Wrapper>
         <Tabs selected={0}>
-          <Panel title='Finalizados'>
+          <Panel title='En Espera'>
             <List items={dummy} action={handleItem} />
           </Panel>
-          <Panel title='En espera'>
+          <Panel title='Finalizados'>
             <List items={dummy} />
           </Panel>
         </Tabs>

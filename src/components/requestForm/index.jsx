@@ -1,14 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react'
 import UserWrapper from '../hoc/userWrapper'
 import Card from '../UI/card'
 import Button from '../UI/button'
 import FormInput from '../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
+import { useDispatch } from 'react-redux'
 
 const RequestForm = () => {
+  const dispatch = useDispatch()
   const hiddenFileInput = useRef(null)
   const [location, setLocation] = useState()
-  const [reqType, setType] = useState()
+  const [form, setForm] = useState({
+    type: '',
+    other: '',
+    body: ''
+  })
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -28,8 +35,19 @@ const RequestForm = () => {
   }
 
   useEffect(() => {
-    console.log(location)
+    if (location) {
+      const geoLocation = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
+      console.log(geoLocation)
+      setForm({ ...form, location: geoLocation })
+    }
   }, [location])
+
+  useEffect(() => {
+    dispatch({ type: 'REQUEST_FORM', form })
+  }, [form])
 
   return (
     <UserWrapper
@@ -40,7 +58,7 @@ const RequestForm = () => {
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
           <FormInput label='¿Cuál es su problema o necesidad?' width='100%'>
-            <select onChange={e => setType(e.target.value)}>
+            <select onChange={e => setForm({ ...form, type: e.target.value })}>
               <option disabled>Selecciona una opción</option>
               <option value='0'>¿Como puedo traspasar cuotas?</option>
               <option value='1'>Convenios de pago</option>
@@ -48,11 +66,12 @@ const RequestForm = () => {
               <option value='3'>Otro</option>
             </select>
           </FormInput>
-          {reqType === '3' && (
+          {form.type === '3' && (
             <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
               <input
                 type='text'
                 name='nombre'
+                onChange={e => setForm({ ...form, other: e.target.value })}
                 placeholder='Describa su solicitud brevemente'
               />
             </FormInput>
@@ -62,11 +81,13 @@ const RequestForm = () => {
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
               cols='6'
               rows='6'
+              onChange={e => setForm({ ...form, body: e.target.value })}
             ></textarea>
             <input
               type='file'
               style={{ display: 'none' }}
               ref={hiddenFileInput}
+              onChange={e => setForm({ ...form, picture: e.target.value })}
             />
           </FormInput>
 

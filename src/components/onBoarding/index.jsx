@@ -119,7 +119,7 @@ export const OnBoarding = () => {
       </Slider>
       {modalOn && (
         <Modal closeAction={setModal} action={handleLog} txtAction='Guardar'>
-          <h1>Antes de comenzar</h1>
+          <h1>Actualiza tus datos</h1>
           <p>
             Antes de comenzar, necesitamos los siguientes datos para mejorar tu
             experiencia en la App Canal Maule

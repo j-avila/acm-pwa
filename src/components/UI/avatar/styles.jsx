@@ -2,10 +2,10 @@ import styled from 'styled-components'
 
 export const UserPicture = styled.figure`
   overflow: hidden;
-  /* border-radius: 50%; */
-  width: 60px;
-  height: 60px;
-  padding: 2px;
+  border-radius: 10%;
+  width: 65px;
+  height: 65px;
+  padding: 0px;
   border: 1px solid white;
   background: ${({ theme }) => theme.background};
   text-align: 'center';

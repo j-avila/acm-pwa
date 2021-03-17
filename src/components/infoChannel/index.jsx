@@ -48,23 +48,23 @@ const InfoChannel = props => {
           <Content>
             <span>
               <h3>
-                Caudal Diario: <br /> Canal Vergara
+                Caudal Diario: Canal Vergara
               </h3>
               <p>Actualizado el 12/11/2020</p>
             </span>
             <span>
-              <h1>1209 L/S</h1>
+              <h1>1209 l/s</h1>
             </span>
           </Content>
         </Card>
         <Card>
           <Content>
             <span>
-              <h3>Aporte de Laguna del Maule</h3>
+              <h3>Extracción Laguna del Maule</h3>
               <p>Fuente: DGA</p>
             </span>
             <span>
-              <h1>14 HM3</h1>
+              <h1>14 hm3</h1>
             </span>
           </Content>
         </Card>
@@ -75,7 +75,7 @@ const InfoChannel = props => {
               <p>Fuente: DGA</p>
             </span>
             <span>
-              <h1>10 HM3</h1>
+              <h1>10 hm3</h1>
             </span>
           </Content>
         </Card>
@@ -88,7 +88,7 @@ const InfoChannel = props => {
               </p>
             </span>
             <span>
-              <h1>263 HM3</h1>
+              <h1>263 hm3</h1>
             </span>
           </Content>
         </Card>

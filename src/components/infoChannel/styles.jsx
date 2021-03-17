@@ -17,13 +17,13 @@ export const InfoWrapper = styled.div`
 `
 export const Content = styled.article`
   display: grid;
-  grid-template-columns: 8fr 2fr;
+  grid-template-columns: 7.2fr 2.8fr;
   span {
     &:first-child {
       text-align: left;
     }
     &:nth-child(2) {
-      text-align: center;
+      text-align: right;
       i {
         font-size: x-large;
         color: ${({ theme }) => theme.secondary};
@@ -58,6 +58,10 @@ export const NotificationArea = styled.span`
       }
       display: block;
       color: white;
+
+      span{
+        text-align: center;
+      }
     }
     .fa-times {
       font-size: 20px;

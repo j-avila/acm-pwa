@@ -19,7 +19,7 @@ const Dashboard = props => {
           </header>
           <section>
             <strong>Caudal Diario: Canal Vergara</strong>
-            <h1>123.456 1395 Litros/segundo</h1>
+            <h1>1209 l/s</h1>
           </section>
           <footer>Actualizado al 28 de octubre 2020</footer>
         </Card>

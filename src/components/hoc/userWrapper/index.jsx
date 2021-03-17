@@ -9,11 +9,13 @@ const userData = {
 
 const dummyItems = [
   { name: 'inicio', path: '/panel-de-control' },
-  { name: 'visitas', path: '/visitas' },
-  { name: 'solicitudes', path: '/solicitudes' },
-  { name: 'deudas', path: '/deudas' },
   { name: 'información del canal', path: '/informacion' },
-  { name: 'opciones', path: '/opciones' }
+  { name: 'solicitudes y reclamos', path: '/solicitudes' },
+  { name: 'visitas', path: '/visitas' },
+  { name: 'deudas', path: '/deudas' },
+  { name: 'perfil', path: '/opciones' },
+  { name: 'ajustes', path: '/opciones' },
+  { name: 'cerrar sesión', path: '/opciones' }
 ]
 
 const UserLayout = props => {

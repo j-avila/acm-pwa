@@ -64,7 +64,7 @@ const InfoChannel = props => {
               <p>Fuente: DGA</p>
             </span>
             <span>
-              <h1>14 L/S</h1>
+              <h1>14 HM3</h1>
             </span>
           </Content>
         </Card>
@@ -75,7 +75,7 @@ const InfoChannel = props => {
               <p>Fuente: DGA</p>
             </span>
             <span>
-              <h1>10 L/S</h1>
+              <h1>10 HM3</h1>
             </span>
           </Content>
         </Card>

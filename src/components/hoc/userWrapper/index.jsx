@@ -8,12 +8,14 @@ const userData = {
 }
 
 const dummyItems = [
-  { name: 'inicio', path: '/panel-de-control' },
-  { name: 'visitas', path: '/visitas' },
-  { name: 'solicitudes', path: '/solicitudes' },
-  { name: 'deudas', path: '/deudas' },
+  { name: 'panel de control', path: '/panel-de-control' },
   { name: 'información del canal', path: '/informacion' },
-  { name: 'opciones', path: '/opciones' }
+  { name: 'solicitudes y reclamos', path: '/solicitudes' },
+  { name: 'visitas', path: '/visitas' },
+  { name: 'deudas', path: '/deudas' },
+  { name: 'perfil', path: '/perfil' },
+  { name: 'ajustes', path: '/opciones' },
+  { name: 'cerrar sesión', path: '/cerrar_sesion' }
 ]
 
 const UserLayout = props => {

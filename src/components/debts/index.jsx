@@ -2,6 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router'
 import UserWrapper from '../hoc/userWrapper'
 import Tabs, { Panel } from '../UI/tabs'
+import Button from '../UI/button'
 import Accordion from '../UI/accordion'
 import List from '../UI/list'
 import { DebtWrapper } from './styles'
@@ -34,6 +35,13 @@ const Debts = () => {
             <List items={dummy} action={handlePayed} />
           </Panel>
         </Tabs>
+        <Button
+          width='80%'
+          display='block'
+          onClick={() => history.push({ pathname: '/deudas/new' })}
+        >
+          Solicitar Reporte de Deuda
+        </Button>
       </DebtWrapper>
     </UserWrapper>
   )

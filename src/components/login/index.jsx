@@ -37,11 +37,11 @@ const Login = props => {
             <FormInput className='field' label='Ingresa tu Código de Regante'>
               <input
                 type='text'
-                placeHolder='Codigo de regante'
+                placeHolder='Código de Regante'
                 onChange={e => setForm({ ...form, user: e.target.value })}
               />
             </FormInput>
-            <FormInput className='field append' label='Ingresa tu contraseña'>
+            <FormInput className='field append' label='Ingresa tu Contraseña'>
               <span className='wrapper'>
                 <input
                   type={visiblePassword ? 'text' : 'password'}

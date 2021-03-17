@@ -127,7 +127,7 @@ export const OnBoarding = () => {
           <FormWrapp>
             <FormImput
               className='form-input'
-              label='Número de teléfono o celular'
+              label='Número de teléfono celular'
             >
               <input type='phone' placeholder='+56 xxxxx xxxx' />
             </FormImput>

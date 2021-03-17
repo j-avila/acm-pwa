@@ -57,9 +57,20 @@ const RequestForm = () => {
       <RequestWrapper>
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
+          <FormInput
+            label='¿A quién está dirigida tu solicitud de atención?'
+            width='100%'
+          >
+            <select onChange={e => setForm({ ...form, area: e.target.value })}>
+              <option disabled>Selecciona una opción</option>
+              <option value='0'>Mesa de Ayuda</option>
+              <option value='1'>Celador</option>
+              <option value='2'>Finanzas</option>
+            </select>
+          </FormInput>
           <FormInput label='¿Cuál es su problema o necesidad?' width='100%'>
             <select onChange={e => setForm({ ...form, type: e.target.value })}>
-              <option disabled>Selecciona una opción</option>
+              <option disabled>Selecciona un asunto recurrente</option>
               <option value='0'>¿Como puedo traspasar cuotas?</option>
               <option value='1'>Convenios de pago</option>
               <option value='2'>Solicitud</option>

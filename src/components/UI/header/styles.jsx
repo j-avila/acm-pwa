@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
   }
   .user {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     z-index: 1;
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -36,7 +36,7 @@ export const Wrapper = styled.div`
     text-align: left;
     background: ${({ theme }) => theme.secondary};
     figure {
-      margin-right: 1rem;
+      margin-left: 1rem;
     }
     h3 {
       font-size: 20px;

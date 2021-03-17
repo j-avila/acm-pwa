@@ -95,7 +95,7 @@ const InfoChannel = props => {
         <Card>
           <Content>
             <span>
-              <h3>Tiempo en amerillo: soleado</h3>
+              <h3>Tiempo en Amerillo: soleado</h3>
               <p>Actualizado el 20/12/2021</p>
             </span>
             <span>
@@ -119,7 +119,7 @@ const InfoChannel = props => {
         <Card>
           <Content>
             <span>
-              <h3>Pluvometría</h3>
+              <h3>Pluviometría</h3>
               <p>Fuente: DGA Est. Amerillo</p>
             </span>
             <span>

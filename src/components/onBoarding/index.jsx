@@ -64,7 +64,7 @@ export const OnBoarding = () => {
       <Slider {...settings}>
         <Slide bgImg={slide1}>
           <p>
-            Bienvenido a la App de la Asociación Canal del Maule.
+            Bienvenido a la App de la Asociación Canal Maule.
             <audio id='desc-0'>
               <source
                 src='https://previews.customer.envatousercontent.com/files/306824419/preview.mp3'
@@ -75,7 +75,7 @@ export const OnBoarding = () => {
         </Slide>
         <Slide bgImg={slide2}>
           <p>
-            Comunícate con tu celador de forma rápida y fácil
+            Comunícate con tu celador de forma rápida y directa
             <audio id='desc-1'>
               <source
                 src='https://previews.customer.envatousercontent.com/files/285087907/preview.mp3'
@@ -97,7 +97,8 @@ export const OnBoarding = () => {
         </Slide>
         <Slide bgImg={slide4}>
           <p>
-            Consulta el estado de tus solicitudes y reclamos
+            Consulta el estado de tus solicitudes, reclamos y/o solicita una
+            visita.
             <Button
               display='block'
               margin='0 auto'
@@ -117,7 +118,7 @@ export const OnBoarding = () => {
         </Slide>
       </Slider>
       {modalOn && (
-        <Modal closeAction={setModal} action={handleLog}>
+        <Modal closeAction={setModal} action={handleLog} txtAction='Guardar'>
           <h1>Antes de comenzar</h1>
           <p>
             Antes de comenzar, necesitamos los siguientes datos para mejorar tu
@@ -128,7 +129,7 @@ export const OnBoarding = () => {
               className='form-input'
               label='Número de teléfono o celular'
             >
-              <input type='phone' placeholder='+56x xxxx xxxx' />
+              <input type='phone' placeholder='+56 xxxxx xxxx' />
             </FormImput>
             <FormImput
               className='form-input'

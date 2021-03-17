@@ -10,12 +10,17 @@ import Modal from '../UI/modal'
 
 const Login = props => {
   const history = useHistory()
+  const [form, setForm] = useState({
+    user: '',
+    password: ''
+  })
   const [visiblePassword, viewPassword] = useState(false)
   const [error, setError] = useState(false)
   const [valid, setValid] = useState(true)
   const [firstLog, setFisrt] = useState(true)
 
   const handleLogin = () => {
+    console.log(form)
     valid && firstLog
       ? history.push('/tour')
       : valid
@@ -28,25 +33,34 @@ const Login = props => {
       <Wrapper>
         <Card>
           <img src={Logo} alt='Canal del maule' />
-          <FormInput className='field' label='Ingresa tu Código de Regante'>
-            <input type='text' />
-          </FormInput>
-          <FormInput className='field append' label='Ingresa tu contraseña'>
-            <span className='wrapper'>
+          <form onSubmit={() => handleLogin()}>
+            <FormInput className='field' label='Ingresa tu Código de Regante'>
               <input
-                type={visiblePassword ? 'text' : 'password'}
-                style={{ display: 'inline-block', width: 'calc(90% - 36px)' }}
-                onChange={e => console.log(e)}
+                type='text'
+                placeHolder='Codigo de regante'
+                onChange={e => setForm({ ...form, user: e.target.value })}
               />
-              <i
-                className={`fas ${visiblePassword ? 'fa-eye-slash' : 'fa-eye'}`}
-                onClick={() => viewPassword(!visiblePassword)}
-              ></i>
-            </span>
-          </FormInput>
-          <Button width='100%' onClick={() => handleLogin()}>
-            Ingresar
-          </Button>
+            </FormInput>
+            <FormInput className='field append' label='Ingresa tu contraseña'>
+              <span className='wrapper'>
+                <input
+                  type={visiblePassword ? 'text' : 'password'}
+                  placeHolder='Tu contraseña'
+                  style={{ display: 'inline-block', width: 'calc(90% - 36px)' }}
+                  onChange={e => setForm({ ...form, password: e.target.value })}
+                />
+                <i
+                  className={`fas ${
+                    visiblePassword ? 'fa-eye-slash' : 'fa-eye'
+                  }`}
+                  onClick={() => viewPassword(!visiblePassword)}
+                ></i>
+              </span>
+            </FormInput>
+            <Button width='100%' type='submit'>
+              Ingresar
+            </Button>
+          </form>
           <p>
             ¿Tienes problemas para iniciar sesión?
             <a href='telf:+56500 600 400'>

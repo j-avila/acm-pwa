@@ -5,7 +5,7 @@ import { ActionZone, Overlay } from './styles'
 import Card from '../card'
 import Button from '../button'
 
-const Modal = ({ children, action, actionTitle, closeAction }) => {
+const Modal = ({ children, action, closeAction, txtAction, txtClose }) => {
   // const [show, setShow] = useContext(ModalContext)
   return (
     <Overlay>
@@ -13,9 +13,11 @@ const Modal = ({ children, action, actionTitle, closeAction }) => {
         {children}
         <ActionZone>
           {closeAction && (
-            <Button onClick={() => closeAction(false)}>cerrar</Button>
+            <Button background='base' onClick={() => closeAction(false)}>
+              {txtClose}
+            </Button>
           )}
-          {action && <Button onClick={action}>{actionTitle}</Button>}
+          {action && <Button onClick={action}>{txtAction}</Button>}
         </ActionZone>
       </Card>
     </Overlay>
@@ -24,11 +26,14 @@ const Modal = ({ children, action, actionTitle, closeAction }) => {
 
 Modal.propTypes = {
   children: PropTypes.node,
-  actionTitle: PropTypes.string
+  actionTitle: PropTypes.string,
+  txtClose: PropTypes.string,
+  txtAction: PropTypes.string
 }
 
 Modal.defaultProps = {
-  actionTitle: 'Aceptar'
+  txtClose: 'Cerrar',
+  txtAction: 'aceptar'
 }
 
 export default Modal

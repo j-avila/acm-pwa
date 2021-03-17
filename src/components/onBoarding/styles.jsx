@@ -37,6 +37,7 @@ export const Wrapper = styled.div`
 export const Slide = styled.div`
   height: 100vh;
   background: ${({ bgImg }) => `url(${bgImg})`};
+  background-size: cover;
   p {
     max-width: 60vw;
     margin: 0 auto;

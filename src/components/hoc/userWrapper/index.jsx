@@ -12,7 +12,8 @@ const dummyItems = [
   { name: 'visitas', path: '/visitas' },
   { name: 'solicitudes', path: '/solicitudes' },
   { name: 'deudas', path: '/deudas' },
-  { name: 'información del canal', path: '/informacion' }
+  { name: 'información del canal', path: '/informacion' },
+  { name: 'opciones', path: '/opciones' }
 ]
 
 const UserLayout = props => {

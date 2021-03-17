@@ -40,7 +40,7 @@ const InfoChannel = props => {
               <p>Actualizado el 12/11/2020</p>
             </span>
             <span>
-              <h1>45L.</h1>
+              <h1>45%</h1>
             </span>
           </Content>
         </Card>
@@ -71,6 +71,17 @@ const InfoChannel = props => {
         <Card>
           <Content>
             <span>
+              <h3>Aporte Convenio Colbún</h3>
+              <p>Fuente: DGA</p>
+            </span>
+            <span>
+              <h1>10 L/S</h1>
+            </span>
+          </Content>
+        </Card>
+        <Card>
+          <Content>
+            <span>
               <h3>Volumen Laguna del Maule</h3>
               <p>
                 Fuente: <strong>Junta de vigilancia Río Maule</strong>
@@ -84,7 +95,7 @@ const InfoChannel = props => {
         <Card>
           <Content>
             <span>
-              <h3>Tiempo: soleado</h3>
+              <h3>Tiempo en amerillo: soleado</h3>
               <p>Actualizado el 20/12/2021</p>
             </span>
             <span>
@@ -109,7 +120,7 @@ const InfoChannel = props => {
           <Content>
             <span>
               <h3>Pluvometría</h3>
-              <p>Fuente: DGA</p>
+              <p>Fuente: DGA Est. Amerillo</p>
             </span>
             <span>
               <i className='fas fa-sun'></i>

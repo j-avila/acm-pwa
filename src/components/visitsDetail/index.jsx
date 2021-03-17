@@ -41,7 +41,7 @@ const VisitDetail = props => {
 
 VisitDetail.defaultProps = {
   id: 1,
-  title: 'algun titulo',
+  title: 'Celador: Alvaro Gomez',
   date: '23-10-2022',
   inCharge: 'esteban quito',
   ended: true,

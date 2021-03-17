@@ -76,7 +76,7 @@ const RequestForm = () => {
               />
             </FormInput>
           )}
-          <FormInput label='Ingrese su solicitud'>
+          <FormInput label='Descripción de la solicitud de atención'>
             <textarea
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
               cols='6'

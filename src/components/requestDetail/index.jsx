@@ -55,13 +55,13 @@ const dummy = [
     status: 'read',
     body:
       'est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et'
-  },
-  {
-    postId: 1,
-    id: null,
-    userId: null,
-    user: null,
-    status: 'fa-chevron-left',
-    body: 'Traspasado al area administrativa'
   }
+  // {
+  //   postId: 1,
+  //   id: null,
+  //   userId: null,
+  //   user: null,
+  //   status: 'fa-chevron-left',
+  //   body: 'Traspasado al area administrativa'
+  // }
 ]

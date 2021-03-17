@@ -33,6 +33,7 @@ export const Bubble = styled.span`
   height: auto;
   padding: 1rem;
   color: white;
+  font-size: 15px;
   &.rightSided {
     background: ${({ theme }) => theme.secondary};
     &:after {

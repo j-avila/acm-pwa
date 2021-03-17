@@ -36,19 +36,17 @@ const DebtDetail = props => {
               <strong>Celador:</strong> <span>{debt.channel}</span>
             </Row>
             <Row>
-              <strong>
-                {location.state.type === 'payed' ? 'Estado:' : 'Fecha:'}
-              </strong>
-              <span>
-                {location.state.type === 'payed' && debt.payed
-                  ? 'finalizada'
-                  : debt.dueDate}
-              </span>
+              <strong>Fecha:</strong>
+              <span>{debt.dueDate}</span>
             </Row>
             {location.state.type === 'payed' && (
               <h3>{`Monto Cancelado: $${debt.amount}`}</h3>
             )}
-            <h2>{`Total a pagar: $${debt.amount}`}</h2>
+            {location.state.type === 'payed' ? (
+              <h2>{`Estado: pagado`}</h2>
+            ) : (
+              <h2>{`Total a pagar: $${debt.amount}`}</h2>
+            )}
           </Detail>
           <Card className='info'>
             <i className='fas fa-info-circle' />
@@ -76,7 +74,7 @@ const DebtDetail = props => {
         </DeatilWrapper>
       </UserWrapper>
       {modal && (
-        <Modal action={copyBank} actionTitle='copiar'>
+        <Modal action={copyBank} txtAction='copiar'>
           <ModalContent>
             <h1>Datos para transferir</h1>
             <p>

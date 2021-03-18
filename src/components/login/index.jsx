@@ -62,7 +62,7 @@ const Login = props => {
             </Button>
           </form>
           <p>
-            ¿Tienes problemas para iniciar sesión?
+            ¿Tienes problemas para iniciar sesión? <br />
             <a href='telf:+56500 600 400'>
               <strong>Contáctanos al 500 600 400</strong>
             </a>

@@ -17,7 +17,7 @@ const Requests = props => {
     <UserWrapper pathName='Solicitudes/Reclamos'>
       <Wrapper>
         <Tabs selected={0}>
-          <Panel title='En Espera'>
+          <Panel title='Abiertas'>
             <List items={dummy} action={handleItem} />
           </Panel>
           <Panel title='Finalizados'>
@@ -52,14 +52,12 @@ const dummyEnded = [
   {
     id: 1,
     title: 'Fallo en el suministro',
-    subtitle: 'Finalizada el: 12/12/2021',
-    status: 'fa-check'
+    subtitle: 'Finalizada el: 12/12/2021'
   },
   {
     id: 2,
     title: 'Problemas con el regado',
-    subtitle: 'Finalizada el: 12/12/2021',
-    status: 'fa-check'
+    subtitle: 'Finalizada el: 12/12/2021'
   }
 ]
 

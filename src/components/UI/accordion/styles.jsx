@@ -17,6 +17,9 @@ export const AccordionWrapper = styled.div`
       color: grey;
       text-transform: uppercase;
     }
+    i{
+      font-size: 1rem;
+    }
   }
 `
 export const Content = styled.div`

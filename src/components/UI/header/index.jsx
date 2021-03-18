@@ -34,7 +34,7 @@ const Header = props => {
           <div className='content'>
             <h3>Bienvenido, {user.name}</h3>
             <p>
-              <strong>Tu celador es</strong> (Carlos Mata)
+              <strong>Tu celador es Carlos Mata</strong>
             </p>
           </div>
           <Avatar

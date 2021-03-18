@@ -15,10 +15,10 @@ const Visits = () => {
     <UserWrapper pathName='Visitas'>
       <VisitsWrapper>
         <Tabs selected={0}>
-          <Panel title='Visitas Asignadas'>
+          <Panel title='Agendadas'>
             <List items={dummy} action={handleItem} />
           </Panel>
-          <Panel title='Visitas Finalizadas'>
+          <Panel title='Finalizadas'>
             <List items={dummyEnded} action={handleItem} />
           </Panel>
         </Tabs>

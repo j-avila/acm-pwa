@@ -70,7 +70,7 @@ const Dashboard = props => {
             <strong>Deuda total:</strong>
             <h1>$ 0</h1>
           </section>
-          <footer>Último pago: 12 de abril</footer>
+          <footer>Cuotas impagas: 4</footer>
         </Card>
 
         <Card className='stat-card'>
@@ -78,7 +78,6 @@ const Dashboard = props => {
             <h3>Acciones</h3>
           </header>
           <section>
-            <strong>Disponible:</strong>
             <h1>13.4 Acciones</h1>
           </section>
         </Card>

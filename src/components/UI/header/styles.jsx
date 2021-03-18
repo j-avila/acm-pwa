@@ -32,7 +32,7 @@ export const Wrapper = styled.div`
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
     padding: 15px 4vw;
-    padding-top: 60px;
+    padding-top: 70px;
     text-align: left;
     background: ${({ theme }) => theme.secondary};
     figure {

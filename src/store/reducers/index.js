@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import * as types from './types'
 import { requests } from './requests'
+import { editProfile } from './editProfile'
 
 const errors = (state = {}, action) => {
   switch (action.type) {
@@ -15,5 +16,6 @@ const errors = (state = {}, action) => {
 
 export default combineReducers({
   errors,
+  editProfile,
   requests
 })

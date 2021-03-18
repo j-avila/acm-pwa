@@ -16,6 +16,7 @@ import InfoChannel from './components/infoChannel'
 import Visits from './components/visits'
 import VisitDetail from './components/visitsDetail'
 import DebtForm from './components/debtForm'
+import EditProfile from './components/editProfile'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path='/informacion' component={InfoChannel} />
             <Route path='/visitas' component={Visits} exact />
             <Route path='/visitas/:id' component={VisitDetail} />
+            <Route path='/perfil' component={EditProfile} />
           </Switch>
         </Router>
       </ThemeWrapper>

@@ -6,7 +6,7 @@ const FormInput = props => {
   const { label, children, display, width, className } = props
   return (
     <Wrapper display={display} width={width} className={className}>
-      <label htmlFor=''>{label}</label>
+      {label && <label htmlFor=''>{label}</label>}
       {children}
     </Wrapper>
   )

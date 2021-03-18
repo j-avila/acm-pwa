@@ -2,10 +2,10 @@ import React from 'react'
 import { UserPicture } from './styles'
 
 const Avatar = props => {
-  const { image, altTxt } = props
+  const { image, altTxt, onClick, onChange } = props
   return (
     <UserPicture>
-      <img src={image} alt={altTxt} />
+      <img src={image} onClick={onClick} onChange={onChange} alt={altTxt} />
     </UserPicture>
   )
 }

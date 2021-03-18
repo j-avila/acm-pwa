@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
     grid-template-columns: 2fr 0.5fr;
     border-bottom: 1px solid grey;
     margin-bottom: 1rem;
-    padding: 8px 0;
+    padding: 0 0 0.5rem 0;
     h3 {
       font-size: 18px;
       text-align: left;
@@ -29,6 +29,7 @@ export const Wrapper = styled.div`
       font-weight: bold;
     }
     i {
+      font-size: 18px;
       align-self: center;
       text-align: right;
       color: ${({ theme }) => theme.primary};

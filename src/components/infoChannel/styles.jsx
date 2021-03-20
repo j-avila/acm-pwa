@@ -42,6 +42,9 @@ export const Content = styled.article`
   h3 {
     color: ${({ theme }) => theme.secondary};
   }
+  p{
+    font-size: 14px;
+  }
 `
 export const NotificationArea = styled.span`
   .alert {

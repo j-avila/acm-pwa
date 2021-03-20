@@ -6,7 +6,7 @@ export const UserPicture = styled.figure`
   width: 65px;
   height: 65px;
   padding: 0px;
-  border: 1px solid white;
+  /* border: 1px solid white; */
   background: ${({ theme }) => theme.background};
   text-align: 'center';
   img {

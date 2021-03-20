@@ -56,7 +56,7 @@ Button.defaultProps = {
   className: '',
   background: 'primary',
   color: 'white',
-  onClick: e => console.log(e),
+  onClick: () => {},
   width: 'max-content',
   display: 'inline-block',
   shadow: false,

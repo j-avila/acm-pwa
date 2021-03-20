@@ -7,44 +7,48 @@ import Button from '../UI/button'
 import Logo from '../../assets/logo.png'
 import { Wrapper, Error } from './styles'
 import Modal from '../UI/modal'
+import { loginHandler } from '../../store/actions/login'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Login = props => {
+  const dispatch = useDispatch()
   const history = useHistory()
+  const login = useSelector(state => state.login)
   const [form, setForm] = useState({
     user: '',
     password: ''
   })
   const [visiblePassword, viewPassword] = useState(false)
+  const [validForm, setValid] = useState()
   const [error, setError] = useState(false)
-  const [valid, setValid] = useState(true)
-  const [firstLog, setFisrt] = useState(true)
+  const [firstLog, setFisrt] = useState(false)
 
   const handleLogin = () => {
     valid && firstLog
       ? history.push('/tour')
-      : valid
-      ? history.push('/tablero')
+      : login.user.jwt
+      ? history.push('/panel-de-control')
       : setError(true)
-  }
+  }, [login.user])
 
   return (
     <>
       <Wrapper>
         <Card>
           <img src={Logo} alt='Canal del maule' />
-          <form onSubmit={() => handleLogin()}>
+          <form onSubmit={e => handleLogin(e)}>
             <FormInput className='field' label='Ingresa tu Código de Regante'>
               <input
                 type='text'
-                placeHolder='Código de Regante'
-                onChange={e => setForm({ ...form, user: e.target.value })}
+                placeholder='Código de Regante'
+                onChange={e => setForm({ ...form, identifier: e.target.value })}
               />
             </FormInput>
             <FormInput className='field append' label='Ingresa tu Contraseña'>
               <span className='wrapper'>
                 <input
                   type={visiblePassword ? 'text' : 'password'}
-                  placeHolder='Tu contraseña'
+                  placeholder='Tu contraseña'
                   style={{ display: 'inline-block', width: 'calc(90% - 36px)' }}
                   onChange={e => setForm({ ...form, password: e.target.value })}
                 />
@@ -56,12 +60,12 @@ const Login = props => {
                 ></i>
               </span>
             </FormInput>
-            <Button width='100%' type='submit'>
+            <Button width='100%' type='submit' disabled={validForm}>
               Ingresar
             </Button>
           </form>
           <p>
-            ¿Tienes problemas para iniciar sesión?
+            ¿Tienes problemas para iniciar sesión? <br />
             <a href='telf:+56500 600 400'>
               <strong>Contáctanos al 500 600 400</strong>
             </a>

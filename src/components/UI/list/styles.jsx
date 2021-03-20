@@ -24,5 +24,11 @@ export const ItemsList = styled.ul`
         }
       }
     }
+    i {
+      font-size: 18px;
+      align-self: center;
+      text-align: right;
+      color: ${({ theme }) => theme.primary};
+    }
   }
 `

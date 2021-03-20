@@ -19,6 +19,7 @@ export const Wrapper = styled.div`
     padding: 16px;
     border-radius: 5px;
     font-weight: regular;
+    font-family: 'Open Sans','Sans-serif';
     background: ${({ theme }) => theme.greygradient};
     box-shadow: ${({ theme }) => theme.shadow};
     &:invalid {

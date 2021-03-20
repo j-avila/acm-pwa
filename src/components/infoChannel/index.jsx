@@ -7,7 +7,7 @@ const InfoChannel = props => {
   const [alert, setAlert] = useState(true)
 
   return (
-    <UserWrapper pathName='Información'>
+    <UserWrapper pathName='Información del canal'>
       {alert && (
         <NotificationArea>
           <Card className='alert'>
@@ -84,7 +84,7 @@ const InfoChannel = props => {
             <span>
               <h3>Volumen Laguna del Maule</h3>
               <p>
-                Fuente: <strong>Junta de vigilancia Río Maule</strong>
+                Fuente: Junta de vigilancia Río Maule
               </p>
             </span>
             <span>
@@ -125,7 +125,7 @@ const InfoChannel = props => {
             <span>
               <i className='fas fa-sun'></i>
               <h1>
-                1463mm <br /> acumulado
+                1463 mm <br /> acumulado
               </h1>
             </span>
           </Content>

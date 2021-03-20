@@ -29,6 +29,10 @@ export const Wrapper = styled.div`
       }
     }
   }
+  p{
+    font-size: 0.8rem;
+    padding-top: 1rem;
+  }
   #card {
     max-width: 350px;
   }

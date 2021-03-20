@@ -129,7 +129,7 @@ export const OnBoarding = () => {
               className='form-input'
               label='Número de teléfono celular'
             >
-              <input type='phone' placeholder='+56 xxxxx xxxx' />
+              <input type='phone' placeholder='+569 XXXX XXXX' />
             </FormImput>
             <FormImput
               className='form-input'

@@ -50,7 +50,7 @@ const Register = props => {
             <Button onClick={() => setModalOn('verify')}>Ingresar</Button>
           </div>
           <p>
-            ¿Tienes problemas para iniciar sesión?
+            ¿Tienes problemas para iniciar sesión? <br />
             <a href='telf:+56500 600 400'>
               <strong>Contáctanos al 500 600 400</strong>
             </a>

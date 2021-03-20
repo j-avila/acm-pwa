@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react'
 // import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import Card from '../UI/card'
@@ -14,8 +15,9 @@ const Login = props => {
   const dispatch = useDispatch()
   const history = useHistory()
   const login = useSelector(state => state.login)
+  const errorMsg = useSelector(state => state.errors)
   const [form, setForm] = useState({
-    user: '',
+    identifier: '',
     password: ''
   })
   const [visiblePassword, viewPassword] = useState(false)
@@ -23,13 +25,35 @@ const Login = props => {
   const [error, setError] = useState(false)
   const [firstLog, setFisrt] = useState(false)
 
-  const handleLogin = () => {
-    valid && firstLog
+  const handleLogin = event => {
+    dispatch(loginHandler(form))
+
+    event.preventDefault()
+  }
+
+  const isValid = () => {
+    const valid =
+      form.identifier.length >= 4 && form.password.length >= 4
+        ? false
+        : 'disabled'
+    setValid(valid)
+  }
+
+  useEffect(() => {
+    isValid()
+  }, [form])
+
+  useEffect(() => {
+    login.user.jwt && firstLog
       ? history.push('/tour')
       : login.user.jwt
       ? history.push('/panel-de-control')
       : setError(true)
   }, [login.user])
+
+  useEffect(() => {
+    setError(errorMsg.errors.message)
+  }, [errorMsg])
 
   return (
     <>
@@ -76,10 +100,7 @@ const Login = props => {
         <Modal>
           <Error>
             <i className='fas fa-exclamation-triangle'></i>
-            <p>
-              Ha ocurrido un problema. En este momento no podemos continuar con
-              tu ingreso. Inténtalo más tarde.
-            </p>
+            <p>{error}</p>
             <Button
               background='error'
               width='100%'

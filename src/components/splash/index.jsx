@@ -7,7 +7,6 @@ import { Wrapper } from './styles'
 
 const Splash = props => {
   const history = useHistory()
-
   const session = localStorage.getItem('session')
 
   useEffect(() => {

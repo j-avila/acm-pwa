@@ -1,6 +1,5 @@
 import axios from 'axios'
 import * as type from '../reducers/types'
-// import * type from '../reducers/types'
 
 const options = {
   mode: 'cors',
@@ -16,10 +15,11 @@ export const loginHandler = form => async dispatch => {
     .post(url, form, options)
     .then(({ data }) => {
       console.log(data)
+      localStorage.setItem('session', data.jwt)
       dispatch({
         type: type.LOGIN_FORM,
         form: data
       })
     })
-    .catch(err => console.log(err))
+    .catch(err => dispatch({ type: type.ERROR, error: err }))
 }

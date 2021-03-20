@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import Card from '../UI/card'
@@ -7,45 +8,64 @@ import Button from '../UI/button'
 import Logo from '../../assets/logo.png'
 import { Wrapper, Error } from './styles'
 import Modal from '../UI/modal'
+import { loginHandler } from '../../store/actions/login'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Login = props => {
+  const dispatch = useDispatch()
   const history = useHistory()
+  const login = useSelector(state => state.login)
   const [form, setForm] = useState({
     user: '',
     password: ''
   })
   const [visiblePassword, viewPassword] = useState(false)
+  const [validForm, setValid] = useState()
   const [error, setError] = useState(false)
-  const [valid, setValid] = useState(true)
-  const [firstLog, setFisrt] = useState(true)
+  const [firstLog, setFisrt] = useState(false)
 
-  const handleLogin = () => {
-    console.log(form)
-    valid && firstLog
-      ? history.push('/tour')
-      : valid
-      ? history.push('/tablero')
-      : setError(true)
+  const handleLogin = event => {
+    dispatch(loginHandler(form))
+
+    event.preventDefault()
   }
+
+  const isValid = () => {
+    setValid(
+      form.user.length >= 4 && form.password.length >= 4 ? false : 'disabled'
+    )
+  }
+
+  useEffect(() => {
+    isValid()
+  }, [form])
+
+  useEffect(() => {
+    login.user.jwt && firstLog
+      ? history.push('/tour')
+      : login.user.jwt
+      ? history.push('/panel-de-control')
+      : setError(true)
+  }, [login.user])
 
   return (
     <>
       <Wrapper>
         <Card>
           <img src={Logo} alt='Canal del maule' />
-          <form onSubmit={() => handleLogin()}>
+          <form onSubmit={e => handleLogin(e)}>
             <FormInput className='field' label='Ingresa tu Código de Regante'>
               <input
                 type='text'
-                placeHolder='Código de Regante'
-                onChange={e => setForm({ ...form, user: e.target.value })}
+                placeholder='Código de Regante'
+                onChange={e => setForm({ ...form, identifier: e.target.value })}
               />
             </FormInput>
             <FormInput className='field append' label='Ingresa tu Contraseña'>
               <span className='wrapper'>
                 <input
                   type={visiblePassword ? 'text' : 'password'}
-                  placeHolder='Tu contraseña'
+                  placeholder='Tu contraseña'
                   style={{ display: 'inline-block', width: 'calc(90% - 36px)' }}
                   onChange={e => setForm({ ...form, password: e.target.value })}
                 />
@@ -57,7 +77,7 @@ const Login = props => {
                 ></i>
               </span>
             </FormInput>
-            <Button width='100%' type='submit'>
+            <Button width='100%' type='submit' disabled={validForm}>
               Ingresar
             </Button>
           </form>

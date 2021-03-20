@@ -12,9 +12,8 @@ const RequestForm = () => {
   const hiddenFileInput = useRef(null)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({
-    type: '',
-    other: '',
-    body: ''
+    user: '',
+    password: ''
   })
 
   const getLocation = () => {
@@ -64,7 +63,9 @@ const RequestForm = () => {
             <select onChange={e => setForm({ ...form, area: e.target.value })}>
               <option disabled>Selecciona una opción</option>
               <option value='0'>Mesa de Ayuda</option>
-              <option value='1' selected>Celador</option>
+              <option value='1' selected>
+                Celador
+              </option>
               <option value='2'>Finanzas</option>
             </select>
           </FormInput>

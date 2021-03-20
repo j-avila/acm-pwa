@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react'
+// import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import Card from '../UI/card'
 import FormInput from '../UI/input'
@@ -20,7 +20,6 @@ const Login = props => {
   const [firstLog, setFisrt] = useState(true)
 
   const handleLogin = () => {
-    console.log(form)
     valid && firstLog
       ? history.push('/tour')
       : valid

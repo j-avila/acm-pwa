@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -7,8 +8,10 @@ import { Wrapper } from './styles'
 const Splash = props => {
   const history = useHistory()
 
+  const session = localStorage.getItem('session')
+
   useEffect(() => {
-    setTimeout(() => history.push('/inicio'), 2000)
+    session ? history.push('/panel-de-control') : history.push('/inicio')
   }, [])
 
   return (

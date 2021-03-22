@@ -1,13 +1,20 @@
 export const LOADING = 'LOADING'
 export const ERROR = 'ERROR'
 export const FORMDATA = 'FORMDATA'
+export const NOTIFICATIONS = 'NOTIFICATIONS'
 
 // LOGIN
 export const LOGIN_FORM = 'LOGIN_FORM'
+export const EDIT_INFO_FORM = 'EDIT_INFO_FORM'
+export const GET_USER = 'GET_USER'
 
 // EDIT PROFILE
 export const FETCH_PROFILE = 'FETCH_PROFILE'
 export const PROFILE_FORM = 'PROFILE_FORM'
+export const EDIT_PROFILE = 'EDIT_PROFILE'
+
+// INFORMATION SECTION
+export const GET_INFOCARDS = 'GET_INFOCARDS'
 
 // REQUESTS
 export const FETCH_REQUESTS = 'FETCH_REQUESTS'

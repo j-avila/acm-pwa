@@ -1,16 +1,20 @@
 import * as types from './types'
 
-export const login = (user = [], action) => {
+export const login = (session = {}, action) => {
   switch (action.type) {
     case types.LOGIN_FORM:
       return {
-        ...user,
-        user: action.form
+        session: action.form
+      }
+    case types.GET_USER:
+      return {
+        ...session,
+        user: action.user
       }
 
     default:
       return {
-        user
+        session
       }
   }
 }

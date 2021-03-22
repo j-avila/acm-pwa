@@ -12,7 +12,7 @@ const Card = ({ children, className, title, onClick, notifications }) => {
             {notifications >= 1 && (
               <span className='notification'>{notifications}</span>
             )}
-            <i className='fa fa-chevron-right' />
+            {onClick && <i className='fa fa-chevron-right' />}
           </span>
         </header>
       )}

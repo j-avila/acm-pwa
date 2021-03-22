@@ -5,7 +5,7 @@ export const requests = (state = [], action) => {
     case types.FETCH_REQUESTS:
       return {
         ...state,
-        requests: action.requests
+        requests: { ...action.requests }
       }
     case types.REQUEST_FORM:
       return {

@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Dash } from './styles'
 import Card from '../UI/card'
 import UserWrapper from '../hoc/userWrapper'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 const Dashboard = props => {
+  const dispatch = useDispatch()
   const history = useHistory()
-  useEffect(() => {
-    console.log(props.location)
-  }, [])
+
+  useEffect(() => {}, [])
+
   return (
     <UserWrapper>
       <Dash>

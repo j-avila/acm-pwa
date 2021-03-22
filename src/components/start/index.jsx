@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { IndexWrapper } from './styles'
 import Card from '../UI/card'
 import Button from '../UI/button'
@@ -30,7 +29,5 @@ const Login = props => {
     </IndexWrapper>
   )
 }
-
-Login.propTypes = {}
 
 export default Login

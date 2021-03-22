@@ -32,13 +32,15 @@ const Header = props => {
       {user && (
         <div className='user'>
           <div className='content'>
-            <h3>Bienvenido, {user.name}</h3>
+            <h3>Bienvenido, {user.acm.name}</h3>
             <p>
-              <strong>Tu celador es Carlos Mata</strong>
+              <strong>{`Tu celador es ${
+                user.watchman && user.watchman.name
+              }`}</strong>
             </p>
           </div>
           <Avatar
-            image='https://images.pexels.com/photos/2078265/pexels-photo-2078265.jpeg?cs=srgb&dl=pexels-martin-p%C3%A9chy-2078265.jpg&fm=jpg'
+            image={user.watchman && user.watchman.picture}
             alt='celador'
           />
         </div>

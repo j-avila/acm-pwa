@@ -30,7 +30,7 @@ const EditProfile = props => {
   }
 
   useEffect(() => {
-    dispatch({ type: 'PROFILE_FORM', form })
+    // dispatch({ type: 'PROFILE_FORM', form })
   }, [form])
 
   return (

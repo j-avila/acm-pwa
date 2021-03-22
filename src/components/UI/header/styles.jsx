@@ -35,8 +35,16 @@ export const Wrapper = styled.div`
     padding-top: 70px;
     text-align: left;
     background: ${({ theme }) => theme.secondary};
+    .content {
+      flex-basis: 120px;
+      flex-grow: 2;
+    }
     figure {
       margin-left: 1rem;
+      flex-basis: 60px;
+      flex-grow: 1;
+      max-width: 60px;
+      max-height: 80px;
     }
     h3 {
       font-size: 20px;

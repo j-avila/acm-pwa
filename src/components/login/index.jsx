@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
-// import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import Card from '../UI/card'
 import FormInput from '../UI/input'
@@ -8,7 +7,7 @@ import Button from '../UI/button'
 import Logo from '../../assets/logo.png'
 import { Wrapper, Error } from './styles'
 import Modal from '../UI/modal'
-import { loginHandler } from '../../store/actions/login'
+import { loginHandler, userDataHandler } from '../../store/actions/login'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Login = props => {
@@ -23,7 +22,6 @@ const Login = props => {
   const [visiblePassword, viewPassword] = useState(false)
   const [validForm, setValid] = useState()
   const [error, setError] = useState(false)
-  const [firstLog, setFisrt] = useState(false)
 
   const handleLogin = event => {
     dispatch(loginHandler(form))
@@ -44,15 +42,23 @@ const Login = props => {
   }, [form])
 
   useEffect(() => {
-    login.user.jwt && firstLog
-      ? history.push('/tour')
-      : login.user.jwt
-      ? history.push('/panel-de-control')
-      : setError(true)
+    login.session.jwt && dispatch(userDataHandler())
+  }, [login.session])
+
+  useEffect(() => {
+    if (login.session.hasOwnProperty('jwt') && login.hasOwnProperty('user')) {
+      if (login.session.jwt && !login.user.profile) {
+        history.push('/tour')
+      } else if (login.session.jwt && login.user.profile) {
+        history.push('/panel-de-control')
+      }
+    } else {
+      setError(true)
+    }
   }, [login.user])
 
   useEffect(() => {
-    setError(errorMsg.errors.message)
+    errorMsg.errors && setError(errorMsg.errors.message)
   }, [errorMsg])
 
   return (
@@ -96,7 +102,7 @@ const Login = props => {
           </p>
         </Card>
       </Wrapper>
-      {error && (
+      {error.length >= 4 && (
         <Modal>
           <Error>
             <i className='fas fa-exclamation-triangle'></i>
@@ -114,7 +120,5 @@ const Login = props => {
     </>
   )
 }
-
-Login.propTypes = {}
 
 export default Login

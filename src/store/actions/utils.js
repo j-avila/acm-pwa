@@ -1,6 +1,6 @@
 export const options = {
-  // mode: 'cors',
-  // cache: 'default',
+  mode: 'cors',
+  cache: 'default',
   'Content-Type': 'application/json'
 }
 
@@ -10,7 +10,10 @@ export const getAuth = () => {
   const token = () => localStorage.getItem('session')
 
   const auth = {
-    headers: { Authorization: `Bearer ${token()}` }
+    headers: {
+      ...options,
+      Authorization: `Bearer ${token()}`
+    }
   }
 
   return auth

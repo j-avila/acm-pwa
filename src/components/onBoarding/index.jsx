@@ -43,14 +43,14 @@ export const OnBoarding = () => {
     // afterChange: i => handleAudio(i, 'play')
   }
 
-  const handleForm = () => {
-    dispatch(editProfile(form))
+  const handleForm = async () => {
+    await dispatch(editProfile(form))
   }
 
   useEffect(() => {
-    setForm({ ...form, code: user.acm.code })
+    user && setForm({ ...form, code: user.acm.code })
     // handleAudio(0, 'play')
-  }, [])
+  }, [user])
 
   useEffect(() => {
     errorMsg.errors && setModal(false)

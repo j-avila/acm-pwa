@@ -46,16 +46,19 @@ const Login = props => {
   }, [login.session])
 
   useEffect(() => {
-    if (login.session.hasOwnProperty('jwt') && login.hasOwnProperty('user')) {
-      if (login.session.jwt && !login.user.profile) {
+    if (
+      login.session.hasOwnProperty('jwt') &&
+      login.session.hasOwnProperty('user')
+    ) {
+      if (login.session.jwt && !login.session.user.profile) {
         history.push('/tour')
-      } else if (login.session.jwt && login.user.profile) {
+      } else if (login.session.jwt && login.session.user.profile) {
         history.push('/panel-de-control')
       }
     } else {
       setError(true)
     }
-  }, [login.user])
+  }, [login.session.user])
 
   useEffect(() => {
     errorMsg.errors && setError(errorMsg.errors.message)

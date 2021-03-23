@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
+import { fetchInfoCards } from '../../store/actions/bookings'
 import UserWrapper from '../hoc/userWrapper'
 import Button from '../UI/button'
 import List from '../UI/list'
@@ -7,11 +9,16 @@ import Tabs, { Panel } from '../UI/tabs'
 import { Wrapper } from './styles'
 
 const Requests = props => {
+  const dispatch = useDispatch()
   const history = useHistory()
 
   const handleItem = id => {
     history.push(`/solicitudes/${id}`)
   }
+
+  useEffect(() => {
+    dispatch(fetchInfoCards())
+  }, [])
 
   return (
     <UserWrapper pathName='Solicitudes/Reclamos'>

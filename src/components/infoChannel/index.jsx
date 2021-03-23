@@ -32,7 +32,9 @@ const InfoChannel = props => {
 
   useEffect(() => {
     infoCards && setLoading(false)
-    loggedUser && loggedUser.user && handleDailyFlow()
+    if (loggedUser && loggedUser.user && infoCards) {
+      handleDailyFlow()
+    }
   }, [infoCards])
 
   return (
@@ -61,7 +63,7 @@ const InfoChannel = props => {
           </Card>
         </NotificationArea>
       )}
-      {loading ? (
+      {!infoCards ? (
         <p>Cargando...</p>
       ) : (
         <InfoWrapper>

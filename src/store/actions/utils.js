@@ -1,6 +1,6 @@
 export const options = {
-  mode: 'cors',
-  cache: 'default',
+  // mode: 'cors',
+  // cache: 'default',
   'Content-Type': 'application/json'
 }
 

@@ -6,6 +6,7 @@ import Button from '../UI/button'
 import FormInput from '../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch } from 'react-redux'
+import { getRoles } from '../../store/actions/bookings'
 
 const RequestForm = () => {
   const dispatch = useDispatch()
@@ -33,6 +34,10 @@ const RequestForm = () => {
     console.log(fileUploaded)
   }
 
+  // const handleForm = () => {
+  //   dispatch()
+  // }
+
   useEffect(() => {
     if (location) {
       const geoLocation = {
@@ -45,15 +50,15 @@ const RequestForm = () => {
   }, [location])
 
   useEffect(() => {
-    dispatch({ type: 'REQUEST_FORM', form })
-  }, [form])
+    dispatch(getRoles())
+  }, [])
 
   return (
     <UserWrapper
       pathName='Nueva Solicitud/Reclamo
     '
     >
-      <RequestWrapper>
+      <RequestWrapper onSubmit={() => {}}>
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
           <FormInput

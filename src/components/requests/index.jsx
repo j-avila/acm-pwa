@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
-import { fetchInfoCards } from '../../store/actions/bookings'
+import { fetchRequests } from '../../store/actions/bookings'
 import UserWrapper from '../hoc/userWrapper'
 import Button from '../UI/button'
 import List from '../UI/list'
@@ -11,14 +11,19 @@ import { Wrapper } from './styles'
 const Requests = props => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const openRequests = useSelector(state => state.requests.open)
+
+  const [openList, setOpenList] = useState([])
 
   const handleItem = id => {
     history.push(`/solicitudes/${id}`)
   }
 
   useEffect(() => {
-    dispatch(fetchInfoCards())
+    dispatch(fetchRequests())
   }, [])
+
+  useEffect(() => {}, [openRequests])
 
   return (
     <UserWrapper pathName='Solicitudes/Reclamos'>

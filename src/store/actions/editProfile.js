@@ -3,11 +3,10 @@ import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
 export const editProfile = form => async dispatch => {
-  const url = `${apiUrl}/update-irrigator-profiles`
+  const url = `${apiUrl}/create-irrigator-profiles`
 
-  console.log(form)
   return axios
-    .put(url, form, getAuth)
+    .post(url, form, getAuth())
     .then(({ data }) => {
       dispatch({
         type: type.EDIT_PROFILE,

@@ -2,8 +2,30 @@ import axios from 'axios'
 import { apiUrl, getAuth } from './utils'
 import * as type from '../reducers/types'
 
-export const fetchInfoCards = () => async dispatch => {
-  const url = `${apiUrl}/event-bboks`
+export const fetchRequests = () => async dispatch => {
+  const url = `${apiUrl}/event-books`
+
+  return axios.get(url, getAuth()).then(({ data }) => {
+    dispatch({
+      type: type.FETCH_REQUESTS,
+      requests: data
+    })
+  })
+}
+
+export const getRoles = () => async dispatch => {
+  const url = `${apiUrl}/association-areas`
+
+  return axios.get(url, getAuth()).then(({ data }) => {
+    dispatch({
+      type: type.GET_ROLES,
+      roles: data
+    })
+  })
+}
+
+export const createRequest = () => async dispatch => {
+  const url = `${apiUrl}/event-books`
 
   return axios.get(url, getAuth()).then(({ data }) => {
     dispatch({

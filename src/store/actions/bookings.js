@@ -24,12 +24,12 @@ export const getRoles = () => async dispatch => {
   })
 }
 
-export const createRequest = () => async dispatch => {
+export const createRequest = form => async dispatch => {
   const url = `${apiUrl}/event-books`
 
-  return axios.get(url, getAuth()).then(({ data }) => {
+  return axios.post(url, form, getAuth()).then(({ data }) => {
     dispatch({
-      type: type.FETCH_REQUESTS,
+      type: type.POST_REQUEST,
       requests: data
     })
   })

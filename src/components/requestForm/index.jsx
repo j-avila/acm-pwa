@@ -5,17 +5,16 @@ import Card from '../UI/card'
 import Button from '../UI/button'
 import FormInput from '../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getRoles } from '../../store/actions/bookings'
 
 const RequestForm = () => {
   const dispatch = useDispatch()
   const hiddenFileInput = useRef(null)
+  const requests = useSelector(({ requests }) => requests)
+  const user = useSelector(({ login }) => login.session.user)
   const [location, setLocation] = useState()
-  const [form, setForm] = useState({
-    user: '',
-    password: ''
-  })
+  const [form, setForm] = useState({})
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -25,7 +24,7 @@ const RequestForm = () => {
     }
   }
 
-  const handleFIleClick = () => {
+  const handleFileClick = () => {
     hiddenFileInput.current.click()
   }
 
@@ -34,61 +33,101 @@ const RequestForm = () => {
     console.log(fileUploaded)
   }
 
-  // const handleForm = () => {
-  //   dispatch()
-  // }
+  const subjectSelect = [
+    { label: '¿Como puedo traspasar cuotas?' },
+    { label: 'Convenios de pago' },
+    { label: 'Solicitud' },
+    { label: 'Otro' }
+  ]
 
-  useEffect(() => {
-    if (location) {
-      const geoLocation = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
-      }
-      console.log(geoLocation)
-      setForm({ ...form, location: geoLocation })
+  const handleImg = e => {
+    console.log('file to upload:', e.target.files[0])
+    let file = e.target.files[0]
+
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = _handleReaderLoaded.bind(this)
+      reader.readAsBinaryString(file)
     }
-  }, [location])
+  }
+
+  const _handleReaderLoaded = readerEvt => {
+    let binaryString = readerEvt.target.result
+    setForm({ ...form, file: btoa(binaryString) })
+  }
+
+  const handleForm = e => {
+    e.preventDefault()
+    console.log(form)
+  }
 
   useEffect(() => {
     dispatch(getRoles())
   }, [])
 
+  useEffect(() => {
+    if (location) {
+      /* const geoLocation = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }
+      console.log(geoLocation) */
+      setForm({ ...form, location: location })
+    }
+  }, [location, user])
+
+  useEffect(() => {
+    user &&
+      setForm({
+        ...form,
+        irrigator_code: user.code,
+        type: 'requestforattention'
+      })
+  }, [user])
+
   return (
-    <UserWrapper
-      pathName='Nueva Solicitud/Reclamo
-    '
-    >
-      <RequestWrapper onSubmit={() => {}}>
+    <UserWrapper pathName='Nueva Solicitud/Reclamo'>
+      <RequestWrapper onSubmit={e => handleForm(e)}>
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
           <FormInput
             label='¿A quién está dirigida tu solicitud de atención?'
             width='100%'
           >
-            <select onChange={e => setForm({ ...form, area: e.target.value })}>
+            <select
+              onChange={e =>
+                setForm({ ...form, association_area: e.target.value })
+              }
+            >
               <option disabled>Selecciona una opción</option>
-              <option value='0'>Mesa de Ayuda</option>
-              <option value='1' selected>
-                Celador
-              </option>
-              <option value='2'>Finanzas</option>
+              {requests.roles &&
+                requests.roles.map(option => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
             </select>
           </FormInput>
           <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
-            <select onChange={e => setForm({ ...form, type: e.target.value })}>
+            <select
+              onChange={e => setForm({ ...form, subject: e.target.value })}
+            >
               <option disabled>Selecciona un asunto recurrente</option>
-              <option value='0'>¿Como puedo traspasar cuotas?</option>
-              <option value='1'>Convenios de pago</option>
-              <option value='2'>Solicitud</option>
-              <option value='3'>Otro</option>
+              {subjectSelect.map(subject => (
+                <option key={subject.label} value={subject.label}>
+                  {subject.label}
+                </option>
+              ))}
             </select>
           </FormInput>
-          {form.type === '3' && (
+          {form.type === 'Otro' && (
             <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
               <input
                 type='text'
                 name='nombre'
-                onChange={e => setForm({ ...form, other: e.target.value })}
+                onChange={e =>
+                  setForm({ ...form, otherSubject: e.target.value })
+                }
                 placeholder='Describa su solicitud brevemente'
               />
             </FormInput>
@@ -98,13 +137,14 @@ const RequestForm = () => {
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
               cols='6'
               rows='6'
-              onChange={e => setForm({ ...form, body: e.target.value })}
+              onChange={e => setForm({ ...form, content: e.target.value })}
             ></textarea>
             <input
               type='file'
               style={{ display: 'none' }}
               ref={hiddenFileInput}
-              onChange={e => setForm({ ...form, picture: e.target.value })}
+              accept='.jpeg, .png, .jpg'
+              onChange={e => handleImg(e)}
             />
           </FormInput>
 
@@ -113,9 +153,9 @@ const RequestForm = () => {
               <i className='fas fa-camera'></i>
             </Button>
             <Button
-              ref={handleFIleClick}
+              ref={handleFileClick}
               background='rgba(87,162,198,1)'
-              onClick={() => handleFIleClick()}
+              onClick={() => handleFileClick()}
               onChange={e => getFile(e)}
             >
               <i className='fas fa-paperclip'></i>
@@ -123,7 +163,9 @@ const RequestForm = () => {
             <Button background='secondary' onClick={() => getLocation()}>
               <i className='fas fa-crosshairs'></i>
             </Button>
-            <Button className='btn-send'>Enviar</Button>
+            <Button className='btn-send' type='submit'>
+              Enviar
+            </Button>
           </ActionArea>
         </Card>
       </RequestWrapper>

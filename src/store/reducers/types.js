@@ -19,4 +19,5 @@ export const GET_INFOCARDS = 'GET_INFOCARDS'
 // REQUESTS
 export const FETCH_REQUESTS = 'FETCH_REQUESTS'
 export const REQUEST_FORM = 'REQUEST_FORM'
+export const POST_REQUEST = 'POST_REQUEST'
 export const GET_ROLES = 'GET_ROLES'

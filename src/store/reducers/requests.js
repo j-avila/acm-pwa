@@ -12,6 +12,7 @@ export const requests = (requests = [], action) => {
       }
     case types.GET_ROLES:
       return {
+        ...requests,
         roles: [...action.roles]
       }
 

@@ -21,7 +21,7 @@ const EditProfile = props => {
   const [pic, setPic] = useState()
   const [passValid, isValid] = useState(false)
   const [form, setForm] = useState({
-    name: '',
+    contact_name: '',
     contact_telephone: '',
     contact_address: '',
     email: '',
@@ -68,7 +68,7 @@ const EditProfile = props => {
     } else {
       formData = {
         code: form.code,
-        name: form.name,
+        contact_name: form.contact_name,
         contact_telephone: form.contact_telephone,
         contact_address: form.contact_address,
         email: form.email,
@@ -96,7 +96,7 @@ const EditProfile = props => {
       setForm({
         ...form,
         code: user.acm.code,
-        name: user.acm.name,
+        contact_name: user.acm.name,
         contact_address: user.profile.contact_address,
         contact_telephone: user.profile.contact_telephone,
         email: user.profile.email,
@@ -127,10 +127,14 @@ const EditProfile = props => {
             <FormInput className='inputForm' label='Nombre Completo'>
               <input
                 type='text'
-                defaultValue={form.name}
-                name='name'
+                defaultValue={form.contact_name}
+                name='contact_name'
                 onChange={e =>
-                  setForm({ ...form, name: e.target.value, type: 'userInfo' })
+                  setForm({
+                    ...form,
+                    contact_name: e.target.value,
+                    type: 'userInfo'
+                  })
                 }
                 placeholder=''
               />

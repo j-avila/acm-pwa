@@ -52,6 +52,7 @@ export const Row = styled.div`
   margin: 12px auto;
   border-bottom: 1px solid grey;
 `
+
 export const ModalContent = styled.div`
   /* position: relative; */
   p {

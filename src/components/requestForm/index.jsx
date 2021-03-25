@@ -15,6 +15,7 @@ const RequestForm = () => {
   const user = useSelector(({ login }) => login.session.user)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({})
+  const [listRequests, setList] = useState()
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -68,6 +69,11 @@ const RequestForm = () => {
   }, [])
 
   useEffect(() => {
+    console.log(requests)
+    requests.hasOwnProperty('roles') && setList(requests.roles)
+  }, [requests])
+
+  useEffect(() => {
     if (location) {
       /* const geoLocation = {
         latitude: location.coords.latitude,
@@ -102,8 +108,8 @@ const RequestForm = () => {
               }
             >
               <option disabled>Selecciona una opción</option>
-              {requests.roles &&
-                requests.roles.map(option => (
+              {listRequests &&
+                listRequests.map(option => (
                   <option key={option.id} value={option.id}>
                     {option.name}
                   </option>

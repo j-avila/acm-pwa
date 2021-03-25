@@ -27,7 +27,6 @@ export const Wrapper = styled.div`
       margin-right: 10px;
       background: ${({ theme }) => theme.error};
       color: white;
-      /* padding: 6px 8px; */
       border-radius: 50%;
       font-weight: bold;
     }

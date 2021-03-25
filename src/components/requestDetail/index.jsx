@@ -1,16 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { getChats } from '../../store/actions/requests'
 import UserWrapper from '../hoc/userWrapper'
 import Button from '../UI/button'
 import Chat from '../UI/chat'
 import { ActionArea, CeladorSection, DetailsWrapper } from './styles'
 
 const RequestDetail = () => {
+  const dispatch = useDispatch()
   const handleForm = form => {
     console.log(form)
   }
 
   // event handlers
-  useEffect(() => {}, [])
+  useEffect(() => {
+    dispatch(getChats('605b283df4b0620022fcce77'))
+  }, [])
 
   return (
     <UserWrapper pathName='Detalle de Solicitud'>

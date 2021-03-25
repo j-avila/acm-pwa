@@ -14,6 +14,7 @@ const Login = props => {
   const dispatch = useDispatch()
   const history = useHistory()
   const login = useSelector(state => state.login)
+  const user = useSelector(state => state.user)
   const errorMsg = useSelector(state => state.errors)
   const [form, setForm] = useState({
     identifier: '',
@@ -46,13 +47,10 @@ const Login = props => {
   }, [login.session])
 
   useEffect(() => {
-    if (
-      login.session.hasOwnProperty('jwt') &&
-      login.session.hasOwnProperty('user')
-    ) {
-      if (login.session.jwt && !login.session.user.profile) {
+    if (login.session.hasOwnProperty('jwt') && user) {
+      if (login.session.jwt && !login.session.user) {
         history.push('/tour')
-      } else if (login.session.jwt && login.session.user.profile) {
+      } else if (login.session.jwt && user) {
         history.push('/panel-de-control')
       }
     } else {

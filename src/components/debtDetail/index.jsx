@@ -33,7 +33,7 @@ const DebtDetail = props => {
               <strong>Código de regante:</strong> <span>{debt.code}</span>
             </Row>
             <Row>
-              <strong>Celador:</strong> <span>{debt.channel}</span>
+              <strong>Canal:</strong> <span>{debt.channel}</span>
             </Row>
             <Row>
               <strong>Fecha:</strong>

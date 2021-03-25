@@ -20,11 +20,14 @@ export const Wrapper = styled.div`
       text-align: left;
     }
     .notification {
+      height: 28px;
+      width: 28px;
+      line-height: 26px;
       display: inline-block;
       margin-right: 10px;
       background: ${({ theme }) => theme.error};
       color: white;
-      padding: 6px 8px;
+      /* padding: 6px 8px; */
       border-radius: 50%;
       font-weight: bold;
     }

@@ -97,7 +97,7 @@ const InfoChannel = props => {
               <span>
                 <h3>Extracción Laguna del Maule</h3>
                 <p>{`Fuente: ${infoCards.extraction.origin}`}</p>
-                <p>{`actualizado: ${infoCards.extraction.updated}`}</p>
+                <p>{`Actualizado: ${infoCards.extraction.updated}`}</p>
               </span>
               <span>
                 <h1>{infoCards.extraction.value}</h1>

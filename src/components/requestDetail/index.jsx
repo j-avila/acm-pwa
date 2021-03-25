@@ -11,7 +11,7 @@ const RequestDetail = () => {
         <CeladorSection>
           <h1>problema con la presión</h1>
         </CeladorSection>
-        <Chat items={dummy} />
+        <Chat items={undefined} />
       </DetailsWrapper>
     </UserWrapper>
   )

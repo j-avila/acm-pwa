@@ -83,7 +83,7 @@ export const Bubble = styled.span`
   }
 `
 
-export const Message = styled.div`
+export const Message = styled.form`
   width: calc(100% - 6px);
   padding: 6px;
   display: grid;

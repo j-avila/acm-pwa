@@ -6,7 +6,7 @@ import Button from '../UI/button'
 import FormInput from '../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRoles } from '../../store/actions/bookings'
+import { createRequest, getRoles } from '../../store/actions/bookings'
 
 const RequestForm = () => {
   const dispatch = useDispatch()
@@ -40,6 +40,7 @@ const RequestForm = () => {
     { label: 'Otro' }
   ]
 
+  // enconde img to base64
   const handleImg = e => {
     console.log('file to upload:', e.target.files[0])
     let file = e.target.files[0]
@@ -59,6 +60,7 @@ const RequestForm = () => {
   const handleForm = e => {
     e.preventDefault()
     console.log(form)
+    dispatch(createRequest(form))
   }
 
   useEffect(() => {

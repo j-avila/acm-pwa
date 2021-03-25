@@ -11,7 +11,8 @@ import { Wrapper } from './styles'
 const Requests = props => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const openRequests = useSelector(state => state.requests.open)
+  const openRequests = useSelector(({ requests }) => requests.open)
+  const closedRequests = useSelector(({ requests }) => requests.closed)
 
   const [openList, setOpenList] = useState([])
 
@@ -23,17 +24,29 @@ const Requests = props => {
     dispatch(fetchRequests())
   }, [])
 
-  useEffect(() => {}, [openRequests])
+  useEffect(() => {
+    let openFormatted
+
+    if (openRequests && openRequests.length >= 1) {
+      openFormatted = openRequests.map(item => ({
+        id: item.id,
+        title: item.subject,
+        subtitle: `creada el: ${item.createdAt}`
+      }))
+      setOpenList(openFormatted)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openRequests])
 
   return (
     <UserWrapper pathName='Solicitudes/Reclamos'>
       <Wrapper>
         <Tabs selected={0}>
           <Panel title='Abiertas'>
-            <List items={dummy} action={handleItem} />
+            <List items={openList} action={handleItem} />
           </Panel>
           <Panel title='Finalizados'>
-            <List items={dummyEnded} />
+            <List items={closedRequests} />
           </Panel>
         </Tabs>
         <Button

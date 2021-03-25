@@ -4,13 +4,21 @@ import Card from '../card'
 import Button from '../button'
 import ChatBubble from './ChatBubble'
 import { Row, Message, ChatWrapper, FileAdd, ActionArea } from './styles'
+import { useSelector } from 'react-redux'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
   const { items } = props
+  const loading = useSelector(({ loading }) => loading)
   const [user, setUser] = useState({ name: 'rigoberto', id: 1 })
-  const [location, setLocation] = useState()
+  const [location, setLocation] = useState('')
   const [actions, openActions] = useState()
+  const [message, setMessage] = useState({
+    event_book: '',
+    message: '',
+    coordinates: '',
+    attached: ''
+  })
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -29,8 +37,31 @@ const ChatCard = props => {
     console.log(fileUploaded)
   }
 
+  // enconde img to base64
+  const handleImg = e => {
+    console.log('file to upload:', e.target.files[0])
+    let file = e.target.files[0]
+
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = _handleReaderLoaded.bind(this)
+      reader.readAsBinaryString(file)
+    }
+  }
+
+  const _handleReaderLoaded = readerEvt => {
+    let binaryString = readerEvt.target.result
+    setMessage({ ...message, attached: btoa(binaryString) })
+  }
+
+  const handleMessage = e => {
+    e.prevent.default()
+    console.log(message)
+  }
+
   useEffect(() => {
-    console.log(location)
+    location.hasOwnProperty('coords') &&
+      setMessage({ ...message, coordinates: location.coords })
   }, [location])
 
   return (
@@ -61,11 +92,15 @@ const ChatCard = props => {
               </ChatBubble>
             </Row>
           ))
-        ) : (
+        ) : items.length <= 0 ? (
           <span>Comienza por escribir un mensaje</span>
+        ) : loading ? (
+          <i class='fas fa-spinner fa-spin fa-3x'></i>
+        ) : (
+          <i class='fas fa-spinner fa-spin'></i>
         )}
       </ChatWrapper>
-      <Message>
+      <Message onSubmit={e => handleMessage(e)}>
         {actions && (
           <ActionArea>
             <span>
@@ -84,8 +119,10 @@ const ChatCard = props => {
                 <i className='fas fa-paperclip'></i>
                 <input
                   type='file'
+                  typeof='.jepg, .png, .jpg'
                   style={{ display: 'none' }}
                   ref={hiddenFileInput}
+                  onChange={e => handleImg(e)}
                 />
               </Button>
               Agregar Archivo
@@ -105,7 +142,10 @@ const ChatCard = props => {
         <FileAdd onClick={() => openActions(!actions)}>
           <i className='fas fa-plus'></i>
         </FileAdd>
-        <input type='text' />
+        <input
+          type='text'
+          onChange={e => setMessage({ ...message, message: e.target.value })}
+        />
         <Button background='transparent'>
           <i className='fas fa-paper-plane'></i>
         </Button>

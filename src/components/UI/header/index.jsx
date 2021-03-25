@@ -4,8 +4,11 @@ import { Wrapper } from './styles'
 import PropTypes from 'prop-types'
 import Menu from '../menu'
 import Avatar from '../avatar'
+import { GhostLoader } from '../ghostLoader'
+import { useSelector } from 'react-redux'
 
 const Header = props => {
+  const loading = useSelector(({ loading }) => loading)
   const { title, user, menu, menuItems, notifications, back } = props
   const history = useHistory()
 
@@ -29,22 +32,28 @@ const Header = props => {
           {menu && <Menu items={menuItems} />}
         </div>
       </div>
-      {user && (
-        <div className='user'>
-          <div className='content'>
-            <h3>Bienvenido, {user.acm.name}</h3>
-            <p>
-              <strong>{`Tu celador es ${
-                user.watchman && user.watchman.name
-              }`}</strong>
-            </p>
-          </div>
-          <Avatar
-            image={user.watchman && user.watchman.picture}
-            alt='celador'
-          />
-        </div>
-      )}
+      <div className='user'>
+        {user && user.hasOwnProperty('acm') ? (
+          <>
+            <div className='content'>
+              <h3>Bienvenido, {user.acm.name}</h3>
+              <p>
+                <strong>{`Tu celador es ${
+                  user.watchman && user.watchman.name
+                }`}</strong>
+              </p>
+            </div>
+            <Avatar
+              image={user.watchman && user.watchman.picture}
+              alt='celador'
+            />
+          </>
+        ) : loading ? (
+          <GhostLoader />
+        ) : (
+          <p>No hay nada que mostrar</p>
+        )}
+      </div>
     </Wrapper>
   )
 }

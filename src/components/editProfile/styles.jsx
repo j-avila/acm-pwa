@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { ThemeConsumer } from 'styled-components'
 
 export const ProfileWrapper = styled.form`
   position: relative;
@@ -16,6 +16,15 @@ export const ProfileWrapper = styled.form`
   label {
     text-align: left;
   }
+`
+
+export const Alert = styled.div`
+  padding: 8px;
+  width: calc(100% - 40px);
+  border-radius: 10px;
+  background: ${({ theme }) => theme.error};
+  color: white;
+  margin: 0.5rem auto;
 `
 
 export const Title = styled.div`

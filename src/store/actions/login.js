@@ -18,6 +18,7 @@ export const loginHandler = form => async dispatch => {
 
 export const userDataHandler = form => async dispatch => {
   const url = `${apiUrl}/irrigator-info`
+  dispatch({ type: type.LOADING, load: true })
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
@@ -25,6 +26,10 @@ export const userDataHandler = form => async dispatch => {
         type: type.GET_USER,
         user: data
       })
+      dispatch({ type: type.LOADING, load: false })
     })
-    .catch(err => dispatch({ type: type.ERROR, error: err }))
+    .catch(err => {
+      dispatch({ type: type.ERROR, error: err })
+      dispatch({ type: type.LOADING, load: false })
+    })
 }

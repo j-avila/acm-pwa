@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ItemsList } from './styles'
+import { useSelector } from 'react-redux'
 
 const List = props => {
   const { items, action } = props
+  const loading = useSelector(({ loading }) => loading)
 
   const handleAction = id => {
     !action ? console.log(id) : action(id)
@@ -11,7 +13,9 @@ const List = props => {
 
   return (
     <ItemsList>
-      {items && items.length >= 1 ? (
+      {loading ? (
+        <i class='fas fa-spinner fa-spin fa-3x'></i>
+      ) : items && items.length >= 1 ? (
         items.map(item => (
           <li key={item.id} onClick={() => handleAction(item.id)}>
             <span>
@@ -22,7 +26,7 @@ const List = props => {
           </li>
         ))
       ) : (
-        <p>no hay items para mostrar</p>
+        <p>No hay nada que mostrar</p>
       )}
     </ItemsList>
   )

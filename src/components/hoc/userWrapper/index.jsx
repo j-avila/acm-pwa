@@ -43,7 +43,7 @@ const UserLayout = props => {
   const history = useHistory()
   const dispatch = useDispatch()
   const errorMsg = useSelector(state => state.errors)
-  const userData = useSelector(state => state.login)
+  const userData = useSelector(state => state.user)
   const { children, pathName } = props
   const [error, setError] = useState()
   const session = localStorage.getItem('session')
@@ -62,7 +62,7 @@ const UserLayout = props => {
       <Header
         title={pathName ? pathName : 'Canal del Maule'}
         menuItems={dummyItems}
-        user={userData.session.user || userData.user}
+        user={userData.user}
         menu
         back
       />

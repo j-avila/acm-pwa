@@ -6,12 +6,7 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import { userDataHandler } from '../../../store/actions/login'
-
-/* const userData = {
-  name: 'jhon doe',
-  id: '000000',
-  role: 'celador'
-} */
+import * as type from '../../../store/reducers/types'
 
 const dummyItems = [
   { name: 'panel de control', path: '/panel-de-control' },
@@ -42,8 +37,8 @@ export const Error = styled.div`
 const UserLayout = props => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const errorMsg = useSelector(state => state.errors)
-  const userData = useSelector(state => state.user)
+  const errorMsg = useSelector(({ errors }) => errors)
+  const userData = useSelector(({ user }) => user)
   const { children, pathName } = props
   const [error, setError] = useState()
   const session = localStorage.getItem('session')
@@ -54,8 +49,9 @@ const UserLayout = props => {
   }, [])
 
   useEffect(() => {
-    errorMsg.errors && setError(errorMsg.errors.messasge)
-  }, [errorMsg.errors])
+    console.log(errorMsg)
+    errorMsg && errorMsg.hasOwnProperty('message') && setError(errorMsg)
+  }, [errorMsg])
 
   return (
     <>
@@ -71,11 +67,14 @@ const UserLayout = props => {
         <Modal>
           <Error>
             <i className='fas fa-exclamation-triangle'></i>
-            <p>{error}</p>
+            <p>{error.message}</p>
             <Button
               background='error'
               width='100%'
-              onClick={() => setError(false)}
+              onClick={() => {
+                setError(false)
+                dispatch({ type: type.ERROR, error: '' })
+              }}
             >
               Volver
             </Button>

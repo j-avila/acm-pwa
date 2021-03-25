@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Alert } from '../hoc/uiStyles'
 import { useHistory } from 'react-router'
 import { editProfile } from '../../store/actions/editProfile'
+import Modal from '../UI/modal'
 
 const EditProfile = props => {
   const history = useHistory()
@@ -82,8 +83,8 @@ const EditProfile = props => {
 
   useEffect(() => {
     // dispatch({ type: 'PROFILE_FORM', form })
-    if (form.password === form.confirmPasssword) {
-      isValid(true)
+    if (form.password && form.password.length >= 6) {
+      form.password === form.confirmPasssword ? isValid(true) : isValid(false)
     } else {
       isValid(false)
     }
@@ -179,7 +180,9 @@ const EditProfile = props => {
               <Button onClick={() => history.push('/panel-de-control')}>
                 Cancelar
               </Button>
-              <Button background='secondary'>Guardar</Button>
+              <Button background='secondary' onClick={() => handleForm()}>
+                Guardar
+              </Button>
             </ActionArea>
           </ProfileWrapper>
         </Panel>
@@ -222,7 +225,10 @@ const EditProfile = props => {
               />
             </FormInput>
             {!passValid && (
-              <Alert>Las contraseñas deben ser exactamente iguales</Alert>
+              <Alert>
+                Las contraseñas deben ser exactamente iguales y tener 6 o más
+                caracteres
+              </Alert>
             )}
             <ActionArea>
               <Button onClick={() => history.push('/panel-de-control')}>
@@ -230,6 +236,7 @@ const EditProfile = props => {
               </Button>
               <Button
                 background='secondary'
+                onClick={() => handleForm()}
                 disabled={passValid ? '' : 'disabled'}
               >
                 Guardar

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
-  const { items } = props
+  const { items, msgAction } = props
   const loading = useSelector(({ loading }) => loading)
   const [user, setUser] = useState({ name: 'rigoberto', id: 1 })
   const [location, setLocation] = useState('')
@@ -54,9 +54,8 @@ const ChatCard = props => {
     setMessage({ ...message, attached: btoa(binaryString) })
   }
 
-  const handleMessage = e => {
-    e.prevent.default()
-    console.log(message)
+  const handleMessage = () => {
+    msgAction(message)
   }
 
   useEffect(() => {
@@ -100,7 +99,7 @@ const ChatCard = props => {
           <i class='fas fa-spinner fa-spin'></i>
         )}
       </ChatWrapper>
-      <Message onSubmit={e => handleMessage(e)}>
+      <Message>
         {actions && (
           <ActionArea>
             <span>
@@ -146,7 +145,7 @@ const ChatCard = props => {
           type='text'
           onChange={e => setMessage({ ...message, message: e.target.value })}
         />
-        <Button background='transparent'>
+        <Button background='transparent' onClick={() => handleMessage()}>
           <i className='fas fa-paper-plane'></i>
         </Button>
       </Message>

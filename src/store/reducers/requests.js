@@ -6,6 +6,10 @@ export const requests = (requests = [], action) => {
       return {
         open: action.requests
       }
+    case types.GET_REQUEST_DETAILS:
+      return {
+        details: action.request
+      }
     case types.REQUEST_FORM:
       return {
         form: action.form

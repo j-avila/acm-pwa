@@ -9,9 +9,7 @@ import { user } from './user'
 const errors = (state = {}, action) => {
   switch (action.type) {
     case types.ERROR:
-      return {
-        errors: action.error
-      }
+      return action.error
     default:
       return state
   }

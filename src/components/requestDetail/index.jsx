@@ -1,17 +1,24 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import UserWrapper from '../hoc/userWrapper'
 import Button from '../UI/button'
 import Chat from '../UI/chat'
 import { ActionArea, CeladorSection, DetailsWrapper } from './styles'
 
 const RequestDetail = () => {
+  const handleForm = form => {
+    console.log(form)
+  }
+
+  // event handlers
+  useEffect(() => {}, [])
+
   return (
     <UserWrapper pathName='Detalle de Solicitud'>
       <DetailsWrapper>
         <CeladorSection>
           <h1>problema con la presión</h1>
         </CeladorSection>
-        <Chat items={undefined} />
+        <Chat items={undefined} msgAction={handleForm} />
       </DetailsWrapper>
     </UserWrapper>
   )

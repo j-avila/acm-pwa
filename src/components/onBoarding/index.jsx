@@ -13,7 +13,7 @@ import slide1 from '../../assets/slide1.png'
 import slide2 from '../../assets/slide2.png'
 import slide3 from '../../assets/slide3.png'
 import slide4 from '../../assets/slide4.png'
-import { editProfile } from '../../store/actions/editProfile'
+import { createProfile } from '../../store/actions/editProfile'
 import { useDispatch, useSelector } from 'react-redux'
 import { Error } from '../hoc/userWrapper'
 
@@ -44,7 +44,7 @@ export const OnBoarding = () => {
   }
 
   const handleForm = async () => {
-    await dispatch(editProfile(form))
+    await dispatch(createProfile(form))
   }
 
   useEffect(() => {

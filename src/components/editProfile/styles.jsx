@@ -18,15 +18,6 @@ export const ProfileWrapper = styled.form`
   }
 `
 
-export const Alert = styled.div`
-  padding: 8px;
-  width: calc(100% - 40px);
-  border-radius: 10px;
-  background: ${({ theme }) => theme.error};
-  color: white;
-  margin: 0.5rem auto;
-`
-
 export const Title = styled.div`
   position: relative;
   margin: 0 auto;

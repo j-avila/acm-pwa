@@ -19,3 +19,9 @@ export const getChats = id => async dispatch => {
       dispatch({ type: type.LOADING, load: false })
     })
 }
+
+export const setMessage = form => async dispatch => {
+  const url = `${apiUrl}/event-book-messages?event_book${form.id}`
+
+  return axios.post(url, form, getAuth()).then(({ data }) => console.log(data))
+}

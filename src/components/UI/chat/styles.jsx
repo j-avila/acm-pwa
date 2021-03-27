@@ -7,13 +7,13 @@ export const ChatWrapper = styled.div`
   min-height: 56vh;
   span {
     display: block;
-    margin: 1rem 0;
+    /* margin: 1rem 0; */
     position: relative;
     background: ${({ theme }) => {
       const bg = darken(0.2, theme.background)
       return bg
     }};
-    padding: 12px;
+    /* padding: 12px; */
     border-radius: 8px;
   }
 `
@@ -26,7 +26,7 @@ export const Row = styled.div`
 
 export const Bubble = styled.span`
   position: relative;
-  margin: 40px;
+  margin: 40px 0;
   display: inline-block;
   position: relative;
   width: 200px;
@@ -36,6 +36,7 @@ export const Bubble = styled.span`
   font-size: 15px;
   &.rightSided {
     background: ${({ theme }) => theme.secondary};
+    text-align: right;
     &:after {
       content: ' ';
       position: absolute;
@@ -53,6 +54,7 @@ export const Bubble = styled.span`
   }
   &.leftSided {
     background: ${({ theme }) => theme.primary};
+    text-align: left;
     &:after {
       content: ' ';
       position: absolute;
@@ -80,6 +82,15 @@ export const Bubble = styled.span`
       border-radius: 50%;
       color: white;
     }
+  }
+  .meta {
+    font-size: xx-small;
+    color: #d6d6d6;
+    background: none;
+  }
+  h4 {
+    font-size: small;
+    font-weight: bold;
   }
 `
 

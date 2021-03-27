@@ -17,7 +17,7 @@ const Requests = props => {
   const [openList, setOpenList] = useState([])
 
   const handleItem = id => {
-    history.push(`/solicitudes/${id}`)
+    history.push({ pathname: `/solicitudes/${id}`, state: { id: id } })
   }
 
   useEffect(() => {

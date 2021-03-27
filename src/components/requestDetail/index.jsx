@@ -1,15 +1,21 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { getChats } from '../../store/actions/requests'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getChats, setMessage } from '../../store/actions/requests'
 import UserWrapper from '../hoc/userWrapper'
-import Button from '../UI/button'
 import Chat from '../UI/chat'
-import { ActionArea, CeladorSection, DetailsWrapper } from './styles'
+import { CeladorSection, DetailsWrapper } from './styles'
 
-const RequestDetail = () => {
+const RequestDetail = props => {
+  const { location } = props
   const dispatch = useDispatch()
+  const request = useSelector(({ requests }) => requests)
+  const [reqDetails, setDetails] = useState({
+    event_book: location.state.id,
+    title: '',
+    chats: []
+  })
   const handleForm = form => {
-    console.log(form)
+    dispatch(setMessage(form))
   }
 
   // event handlers
@@ -17,13 +23,27 @@ const RequestDetail = () => {
     dispatch(getChats('605b283df4b0620022fcce77'))
   }, [])
 
+  useEffect(() => {
+    console.log(request.details)
+    request.hasOwnProperty('details') &&
+      setDetails({
+        ...reqDetails,
+        title: request.details.event.subject,
+        messages: request.details.messages
+      })
+  }, [request.details])
+
   return (
     <UserWrapper pathName='Detalle de Solicitud'>
       <DetailsWrapper>
         <CeladorSection>
-          <h1>problema con la presión</h1>
+          <h1>{reqDetails.title}</h1>
         </CeladorSection>
-        <Chat items={undefined} msgAction={handleForm} />
+        <Chat
+          id={reqDetails.event_book}
+          items={reqDetails.messages}
+          msgAction={handleForm}
+        />
       </DetailsWrapper>
     </UserWrapper>
   )

@@ -8,16 +8,17 @@ import { useSelector } from 'react-redux'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
-  const { items, msgAction } = props
+  const { id, items, msgAction } = props
   const loading = useSelector(({ loading }) => loading)
+  const loggedUSer = useSelector(({ user }) => user.user)
   const [user, setUser] = useState({ name: 'rigoberto', id: 1 })
   const [location, setLocation] = useState('')
   const [actions, openActions] = useState()
   const [message, setMessage] = useState({
-    event_book: '',
+    event_book: id,
     message: '',
     coordinates: '',
-    attached: ''
+    attached: undefined
   })
 
   const getLocation = () => {
@@ -71,23 +72,26 @@ const ChatCard = props => {
             <Row
               key={message.id}
               direction={
-                message.userId !== user.id
+                message.user.code !== loggedUSer.code
                   ? 'flex-start'
-                  : !message.userId
+                  : !message.user.code
                   ? 'notification'
                   : 'flex-end'
               }
             >
               <ChatBubble
                 direction={
-                  !message.userId
+                  !message.user.code
                     ? 'notification'
-                    : message.userId !== user.id
+                    : message.user.code !== loggedUSer.code
                     ? 'flex-start'
                     : 'flex-end'
                 }
+                isUser={message.user.code === loggedUSer.code}
+                provName={message.user.name}
               >
-                {message.body}
+                {message.message}
+                <span className='meta'>{message.createdAt}</span>
               </ChatBubble>
             </Row>
           ))

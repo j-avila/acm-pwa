@@ -2,7 +2,7 @@ import React from 'react'
 import { Bubble } from './styles'
 
 const ChatBubble = props => {
-  const { direction, children } = props
+  const { direction, children, isUser, provName } = props
   return (
     <Bubble
       className={
@@ -13,6 +13,7 @@ const ChatBubble = props => {
           : 'rightSided'
       }
     >
+      <h4>{isUser ? `Tú` : provName}</h4>
       {direction === 'notification' && <i className='fa fa-chevron-right' />}
       {children}
     </Bubble>

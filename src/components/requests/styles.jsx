@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   min-height: 500px;
   .btn-new {
     position: fixed;
-    bottom: 10vh;
+    bottom: 5vh;
     left: 45%;
     transform: translateX(-45%);
   }

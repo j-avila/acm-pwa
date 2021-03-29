@@ -3,6 +3,7 @@ import { lighten } from 'polished'
 
 export const ItemsList = styled.ul`
   list-style: none;
+  padding-bottom: 18vh;
   li {
     margin-bottom: 0.5rem;
     padding: 1rem;

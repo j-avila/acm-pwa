@@ -67,7 +67,7 @@ const UserLayout = props => {
         back
       />
       <section>{children}</section>
-      {error && error.message.length >= 4 && (
+      {error && error.hasOwnProperty('message') && (
         <Modal>
           <Error>
             <i className='fas fa-exclamation-triangle'></i>
@@ -85,7 +85,7 @@ const UserLayout = props => {
           </Error>
         </Modal>
       )}
-      {notification && notification.message.length >= 4 && (
+      {notification && notification.hasOwnProperty('message') && (
         <Modal>
           <Error>
             <i className='fas fa-check'></i>

@@ -1,13 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react'
 import UserWrapper from '../hoc/userWrapper'
 import Card from '../UI/card'
 import Button from '../UI/button'
 import FormInput from '../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { createDebtRequest } from '../../store/actions/debts'
+import { getRoles } from '../../store/actions/bookings'
 
 const DebtForm = () => {
+  const dispatch = useDispatch()
   const hiddenFileInput = useRef(null)
+  const roles = useSelector(({ requests }) => requests.roles)
+  const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
+  const [form, setForm] = useState({
+    subject: 'Finanzas'
+  })
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -26,8 +36,43 @@ const DebtForm = () => {
     console.log(fileUploaded)
   }
 
+  // enconde img to base64
+  const handleImg = e => {
+    console.log('file to upload:', e.target.files[0])
+    let file = e.target.files[0]
+
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = _handleReaderLoaded.bind(this)
+      reader.readAsBinaryString(file)
+    }
+  }
+
+  const _handleReaderLoaded = readerEvt => {
+    let binaryString = readerEvt.target.result
+    setForm({ ...form, file: btoa(binaryString) })
+  }
+
+  const handleForm = e => {
+    // console.log(form)
+    dispatch(createDebtRequest(form))
+  }
+
   useEffect(() => {
-    console.log(location)
+    dispatch(getRoles())
+  }, [])
+
+  useEffect(() => {
+    user &&
+      setForm({
+        ...form,
+        irrigator_code: user.code,
+        type: 'requestforattention'
+      })
+  }, [user])
+
+  useEffect(() => {
+    setForm({ ...form, location: location })
   }, [location])
 
   return (
@@ -36,14 +81,18 @@ const DebtForm = () => {
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
           <FormInput label='¿Cuál es su problema o necesidad?' width='100%'>
-            <select>
-              <option selected={true}>Solicitud de reporte de deudas</option>
-              <option>¿Como puedo traspasar cuotas?</option>
-              <option>Convenios de pago</option>
+            <select
+              onChange={e => setForm({ ...form, subject: e.target.value })}
+            >
+              {roles &&
+                roles
+                  .filter(o => o.name === 'Finanzas')
+                  .map(o => <option selected={true}>{o.name}</option>)}
             </select>
           </FormInput>
           <FormInput label='Descripción de la solicitud de atención'>
             <textarea
+              onChange={e => setForm({ ...form, content: e.target.value })}
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
               cols='6'
               rows='6'
@@ -52,6 +101,8 @@ const DebtForm = () => {
               type='file'
               style={{ display: 'none' }}
               ref={hiddenFileInput}
+              accept='.jpeg, .png, .jpg'
+              onChange={e => handleImg(e)}
             />
           </FormInput>
           <ActionArea className='actions'>
@@ -69,7 +120,9 @@ const DebtForm = () => {
             <Button background='secondary' onClick={() => getLocation()}>
               <i className='fas fa-crosshairs'></i>
             </Button>
-            <Button className='btn-send'>Enviar</Button>
+            <Button className='btn-send' onClick={e => handleForm(e)}>
+              Enviar
+            </Button>
           </ActionArea>
         </Card>
       </RequestWrapper>

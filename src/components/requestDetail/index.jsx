@@ -24,7 +24,6 @@ const RequestDetail = props => {
   }, [])
 
   useEffect(() => {
-    console.log(request.details)
     request.hasOwnProperty('details') &&
       setDetails({
         ...reqDetails,

@@ -5,19 +5,30 @@ import Button from '../UI/button'
 import Modal from '../UI/modal'
 import { DeatilWrapper, Detail, Row, ModalContent } from './styles'
 import { useHistory } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
 
 const DebtDetail = props => {
   const { debt, location } = props
+  const dispatch = useDispatch()
   const history = useHistory()
+  const userData = useSelector(({ user }) => user)
   const [modal, showModal] = useState(false)
+  const [state, setState] = useState({})
+  const debtData = location.state.data
 
   const copyBank = () => {
     showModal(false)
   }
 
   useEffect(() => {
-    console.log(location.state)
-  })
+    if (debtData) {
+      setState(debtData)
+    }
+  }, [])
+
+  // useEffect(() => {
+  //   debtsFetched.hasOwnProperty('expiration') && setState(debtsFetched)
+  // }, [debtsFetched])
 
   return (
     <>
@@ -27,25 +38,25 @@ const DebtDetail = props => {
         }`}
       >
         <DeatilWrapper>
-          <h1>{debt.title}</h1>
+          <h1>{debtData.title}</h1>
           <Detail>
             <Row>
-              <strong>Código de regante:</strong> <span>{debt.code}</span>
+              <strong>Código de regante:</strong> <span>{debtData.code}</span>
             </Row>
             <Row>
-              <strong>Canal:</strong> <span>{debt.channel}</span>
+              <strong>Canal:</strong> <span>{userData.acm.channel}</span>
             </Row>
             <Row>
               <strong>Fecha:</strong>
-              <span>{debt.dueDate}</span>
+              <span>{debtData.expiration}</span>
             </Row>
             {location.state.type === 'payed' && (
-              <h3>{`Monto Cancelado: $${debt.amount}`}</h3>
+              <h3>{`Monto Cancelado: ${debtData.coin} ${debtData.amount}`}</h3>
             )}
             {location.state.type === 'payed' ? (
               <h2>{`Estado: pagado`}</h2>
             ) : (
-              <h2>{`Total a pagar: $${debt.amount}`}</h2>
+              <h2>{`Total a pagar: ${debtData.coin} ${debtData.amount}`}</h2>
             )}
           </Detail>
           <Card className='info'>

@@ -22,3 +22,7 @@ export const GET_REQUEST_DETAILS = 'GET_REQUEST_DETAILS'
 export const REQUEST_FORM = 'REQUEST_FORM'
 export const POST_REQUEST = 'POST_REQUEST'
 export const GET_ROLES = 'GET_ROLES'
+
+// DEBTS
+export const GET_DEBTS = 'GET_DEBTS'
+export const GET_PAYED_DEBTS = 'GET_PAYED_DEBTS'

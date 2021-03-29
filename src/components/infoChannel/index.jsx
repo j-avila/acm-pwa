@@ -7,8 +7,9 @@ import { Content, InfoWrapper, NotificationArea } from './styles'
 
 const InfoChannel = props => {
   const dispatch = useDispatch()
-  const infoCards = useSelector(state => state.information.infoCards)
-  const loggedUser = useSelector(state => state.login)
+  const infoCards = useSelector(({ information }) => information.infoCards)
+  const loggedUser = useSelector(({ user }) => user)
+  const user = useSelector(({ user }) => user)
   const [alert, setAlert] = useState(true)
   const [loading, setLoading] = useState(true)
   const [dailyFlow, setDailyFlow] = useState({})

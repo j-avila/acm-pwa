@@ -5,12 +5,13 @@ import Button from '../button'
 import ChatBubble from './ChatBubble'
 import { Row, Message, ChatWrapper, FileAdd, ActionArea } from './styles'
 import { useSelector } from 'react-redux'
+import { GhostLine } from '../ghostLoader'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
   const { id, items, msgAction } = props
   const loading = useSelector(({ loading }) => loading)
-  const loggedUSer = useSelector(({ user }) => user.user)
+  const loggedUser = useSelector(({ user }) => user)
   const [user, setUser] = useState({ name: 'rigoberto', id: 1 })
   const [location, setLocation] = useState('')
   const [actions, openActions] = useState()
@@ -60,6 +61,7 @@ const ChatCard = props => {
   }
 
   useEffect(() => {
+    console.log(items)
     location.hasOwnProperty('coords') &&
       setMessage({ ...message, coordinates: location.coords })
   }, [location])
@@ -67,12 +69,22 @@ const ChatCard = props => {
   return (
     <Card>
       <ChatWrapper>
-        {items.length >= 1 ? (
+        {loading ? (
+          <Row direction='flex-start'>
+            <ChatBubble direction='flex-start'>
+              <GhostLine />
+              <GhostLine width='60%' />
+              <GhostLine width='40%' />
+            </ChatBubble>
+          </Row>
+        ) : !items ? (
+          <span>Comienza por escribir un mensaje</span>
+        ) : (
           items.map(message => (
             <Row
               key={message.id}
               direction={
-                message.user.code !== loggedUSer.code
+                message.user.code !== loggedUser.code
                   ? 'flex-start'
                   : !message.user.code
                   ? 'notification'
@@ -83,11 +95,11 @@ const ChatCard = props => {
                 direction={
                   !message.user.code
                     ? 'notification'
-                    : message.user.code !== loggedUSer.code
+                    : message.user.code !== loggedUser.code
                     ? 'flex-start'
                     : 'flex-end'
                 }
-                isUser={message.user.code === loggedUSer.code}
+                isUser={message.user.code === loggedUser.code}
                 provName={message.user.name}
               >
                 {message.message}
@@ -95,12 +107,6 @@ const ChatCard = props => {
               </ChatBubble>
             </Row>
           ))
-        ) : items.length <= 0 ? (
-          <span>Comienza por escribir un mensaje</span>
-        ) : loading ? (
-          <i class='fas fa-spinner fa-spin fa-3x'></i>
-        ) : (
-          <i class='fas fa-spinner fa-spin'></i>
         )}
       </ChatWrapper>
       <Message>

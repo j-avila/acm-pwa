@@ -32,9 +32,11 @@ export const GhostBar = styled.span`
   width: ${({ width }) => width};
   position: relative;
   display: block;
+  opacity: ${({ opacity }) => opacity};
   height: ${({ height }) => height};
   background: #ffffff52;
   overflow: hidden;
+  margin-bottom: 0.6rem;
   border-radius: ${({ radius }) => radius};
   &:before {
     content: '';

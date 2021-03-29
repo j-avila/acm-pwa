@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Card from '../UI/card'
+import * as types from '../../store/reducers/types'
 import FormInput from '../UI/input'
 import Button from '../UI/button'
 import Logo from '../../assets/logo.png'
@@ -13,9 +14,9 @@ import { useDispatch, useSelector } from 'react-redux'
 const Login = props => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const login = useSelector(state => state.login)
-  const user = useSelector(state => state.user)
-  const errorMsg = useSelector(state => state.errors)
+  const login = useSelector(({ login }) => login)
+  const user = useSelector(({ user }) => user)
+  const errorMsg = useSelector(({ errors }) => errors)
   const [form, setForm] = useState({
     identifier: '',
     password: ''
@@ -43,23 +44,23 @@ const Login = props => {
   }, [form])
 
   useEffect(() => {
-    login.session.jwt && dispatch(userDataHandler())
-  }, [login.session])
+    login.jwt && dispatch(userDataHandler())
+  }, [login])
 
   useEffect(() => {
-    if (login.session.hasOwnProperty('jwt') && user) {
-      if (login.session.jwt && !login.session.user) {
+    if (login.hasOwnProperty('jwt') && user) {
+      if (login.jwt && !login.user) {
         history.push('/tour')
-      } else if (login.session.jwt && user) {
+      } else if (login.jwt && user) {
         history.push('/panel-de-control')
       }
     } else {
       setError(true)
     }
-  }, [login.session.user])
+  }, [login.user])
 
   useEffect(() => {
-    errorMsg.errors && setError(errorMsg.errors.message)
+    errorMsg && setError(errorMsg.message)
   }, [errorMsg])
 
   return (
@@ -103,7 +104,7 @@ const Login = props => {
           </p>
         </Card>
       </Wrapper>
-      {error.length >= 4 && (
+      {error && (
         <Modal>
           <Error>
             <i className='fas fa-exclamation-triangle'></i>
@@ -111,7 +112,10 @@ const Login = props => {
             <Button
               background='error'
               width='100%'
-              onClick={() => setError(false)}
+              onClick={() => {
+                dispatch({ type: types.ERROR, error: undefined })
+                setError(false)
+              }}
             >
               Volver
             </Button>

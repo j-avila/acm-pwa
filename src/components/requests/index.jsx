@@ -61,29 +61,4 @@ const Requests = props => {
   )
 }
 
-const dummy = [
-  {
-    id: 1,
-    title: 'Fallo en el suministro',
-    subtitle: 'Creada el: 12/12/2021'
-  },
-  {
-    id: 2,
-    title: 'Problemas con el regado',
-    subtitle: 'Creada el: 12/12/2021'
-  }
-]
-const dummyEnded = [
-  {
-    id: 1,
-    title: 'Fallo en el suministro',
-    subtitle: 'Finalizada el: 12/12/2021'
-  },
-  {
-    id: 2,
-    title: 'Problemas con el regado',
-    subtitle: 'Finalizada el: 12/12/2021'
-  }
-]
-
 export default Requests

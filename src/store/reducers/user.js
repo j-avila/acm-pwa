@@ -6,8 +6,6 @@ export const user = (user = {}, action) => {
       return action.user
 
     default:
-      return {
-        user
-      }
+      return user
   }
 }

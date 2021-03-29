@@ -3,9 +3,9 @@ import Header from '../../UI/header'
 import Modal from '../../UI/modal'
 import Button from '../../UI/button'
 import styled from 'styled-components'
+import { userDataHandler } from '../../../store/actions/login'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
-import { userDataHandler } from '../../../store/actions/login'
 import * as type from '../../../store/reducers/types'
 
 const dummyItems = [
@@ -38,6 +38,7 @@ const UserLayout = props => {
   const history = useHistory()
   const dispatch = useDispatch()
   const errorMsg = useSelector(({ errors }) => errors)
+  const notification = useSelector(({ notifications }) => notifications)
   const userData = useSelector(({ user }) => user)
   const { children, pathName } = props
   const [error, setError] = useState()
@@ -45,20 +46,23 @@ const UserLayout = props => {
 
   useEffect(() => {
     !session && history.push('/inicio')
-    dispatch(userDataHandler())
+    !userData && dispatch(userDataHandler())
   }, [])
 
   useEffect(() => {
-    console.log(errorMsg)
+    !userData.hasOwnProperty('acm') && dispatch(userDataHandler())
+  }, [userData])
+
+  useEffect(() => {
     errorMsg && errorMsg.hasOwnProperty('message') && setError(errorMsg)
-  }, [errorMsg])
+  }, [errorMsg, notification])
 
   return (
     <>
       <Header
         title={pathName ? pathName : 'Canal del Maule'}
         menuItems={dummyItems}
-        user={userData.user}
+        user={userData}
         menu
         back
       />
@@ -74,6 +78,24 @@ const UserLayout = props => {
               onClick={() => {
                 setError(false)
                 dispatch({ type: type.ERROR, error: '' })
+              }}
+            >
+              Volver
+            </Button>
+          </Error>
+        </Modal>
+      )}
+      {notification && notification.message.length >= 4 && (
+        <Modal>
+          <Error>
+            <i className='fas fa-check'></i>
+            <p>{notification.message}</p>
+            <Button
+              background='error'
+              width='100%'
+              onClick={() => {
+                setError(false)
+                dispatch({ type: type.NOTIFICATIONS, notification: false })
               }}
             >
               Volver

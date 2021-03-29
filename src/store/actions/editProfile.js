@@ -4,7 +4,7 @@ import { apiUrl, getAuth } from './utils'
 
 export const createProfile = form => async dispatch => {
   const url = `${apiUrl}/create-irrigator-profiles`
-  dispatch({ type: type.LOADING, loading: true })
+  dispatch({ type: type.LOADING, load: true })
   return axios
     .post(url, form, getAuth())
     .then(({ data }) => {
@@ -12,7 +12,7 @@ export const createProfile = form => async dispatch => {
         type: type.EDIT_PROFILE,
         profile: data
       })
-      dispatch({ type: type.LOADING, loading: false })
+      dispatch({ type: type.LOADING, load: false })
       dispatch({ type: type.NOTIFICATIONS, notification: 'guardado con exito' })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))

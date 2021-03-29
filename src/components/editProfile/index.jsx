@@ -93,13 +93,14 @@ const EditProfile = props => {
   useEffect(() => {
     user &&
       user.hasOwnProperty('acm') &&
+      user.profile &&
       setForm({
         ...form,
-        code: user.acm.code,
-        contact_name: user.acm.name,
-        contact_address: user.profile.contact_address,
-        contact_telephone: user.profile.contact_telephone,
-        email: user.profile.email,
+        code: user.acm.code || undefined,
+        contact_name: user.acm.name || undefined,
+        contact_address: user.profile.contact_address || undefined,
+        contact_telephone: user.profile.contact_telephone || undefined,
+        email: user.profile.email || undefined,
         picture: user.profile.picture || undefined
       })
     // handleAudio(0, 'play')

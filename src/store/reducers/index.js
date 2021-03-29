@@ -5,6 +5,7 @@ import { editProfile } from './editProfile'
 import { login } from './login'
 import { information } from './information'
 import { user } from './user'
+import { debts } from './debts'
 
 const errors = (state = {}, action) => {
   switch (action.type) {
@@ -15,7 +16,7 @@ const errors = (state = {}, action) => {
   }
 }
 
-const loading = (state = {}, action) => {
+const loading = (state = null, action) => {
   switch (action.type) {
     case types.LOADING:
       return action.load
@@ -27,10 +28,7 @@ const loading = (state = {}, action) => {
 const notifications = (state = {}, action) => {
   switch (action.type) {
     case types.NOTIFICATIONS:
-      return {
-        ...state,
-        notificacions: action.notification
-      }
+      return action.notification
     default:
       return state
   }
@@ -44,5 +42,6 @@ export default combineReducers({
   user,
   editProfile,
   information,
-  requests
+  requests,
+  debts
 })

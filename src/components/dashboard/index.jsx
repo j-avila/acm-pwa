@@ -5,12 +5,15 @@ import Card from '../UI/card'
 import UserWrapper from '../hoc/userWrapper'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { userDataHandler } from '../../store/actions/login'
 
 const Dashboard = props => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    dispatch(userDataHandler())
+  }, [])
 
   return (
     <UserWrapper>

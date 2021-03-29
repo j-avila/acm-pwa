@@ -9,6 +9,7 @@ export const GhostLine = props => (
     width={props.width}
     radius={props.radius}
     circle={props.circle}
+    opacity={props.opacity}
   />
 )
 
@@ -36,5 +37,6 @@ export const GhostLoader = () => {
 GhostLine.defaultProps = {
   width: '100%',
   height: '13px',
-  radius: '8px'
+  radius: '8px',
+  opacity: '0.4'
 }

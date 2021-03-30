@@ -16,7 +16,7 @@ const dummyItems = [
   { name: 'deudas', path: '/deudas' },
   { name: 'perfil', path: '/perfil' },
   { name: 'ajustes', path: '/opciones' },
-  { name: 'cerrar sesión', path: '/cerrar_sesion' }
+  { name: 'cerrar sesión', path: '/cerrar-sesion' }
 ]
 
 export const Error = styled.div`

@@ -17,6 +17,7 @@ import Visits from './components/visits'
 import VisitDetail from './components/visitsDetail'
 import DebtForm from './components/debtForm'
 import EditProfile from './components/editProfile'
+import { EndSession } from './components/end Session'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Switch>
             <Route exact path='/' component={Splash} />
             <Route path='/inicio' component={Index} />
+            <Route path='/cerrar-sesion' component={EndSession} />
             <Route path='/ingreso' component={Login} />
             <Route path='/tour' component={OnBoarding} />
             <Route path='/panel-de-control' component={Dashboard} />

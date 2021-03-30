@@ -167,7 +167,7 @@ const InfoChannel = props => {
               </span>
               <span>
                 <i className='fas fa-thermometer-half'></i>
-                <h1>${infoCards.pluviometry.value}</h1>
+                <h1>{infoCards.pluviometry.value}</h1>
               </span>
             </Content>
           </Card>

@@ -19,6 +19,8 @@ const DebtForm = () => {
     subject: 'Finanzas'
   })
 
+  const subjectSelect = [{ label: 'Convenios de pago' }]
+
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => setLocation(pos))
@@ -64,12 +66,14 @@ const DebtForm = () => {
 
   useEffect(() => {
     user &&
+      roles &&
       setForm({
         ...form,
         irrigator_code: user.code,
+        association_area: roles[0].id,
         type: 'requestforattention'
       })
-  }, [user])
+  }, [user, roles])
 
   useEffect(() => {
     setForm({ ...form, location: location })
@@ -82,12 +86,30 @@ const DebtForm = () => {
         <Card className='form-card'>
           <FormInput label='¿Cuál es su problema o necesidad?' width='100%'>
             <select
+              disabled
               onChange={e => setForm({ ...form, subject: e.target.value })}
             >
               {roles &&
                 roles
                   .filter(o => o.name === 'Finanzas')
-                  .map(o => <option selected={true}>{o.name}</option>)}
+                  .map(o => (
+                    <option value={roles.id} selected>
+                      {o.name}
+                    </option>
+                  ))}
+            </select>
+          </FormInput>
+          <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
+            <select
+              disabled
+              onChange={e => setForm({ ...form, subject: e.target.value })}
+            >
+              <option disabled>Selecciona un asunto recurrente</option>
+              {subjectSelect.map(subject => (
+                <option key={subject.label} value={subject.label} selected>
+                  {subject.label}
+                </option>
+              ))}
             </select>
           </FormInput>
           <FormInput label='Descripción de la solicitud de atención'>

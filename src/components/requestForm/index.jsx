@@ -12,7 +12,7 @@ const RequestForm = () => {
   const dispatch = useDispatch()
   const hiddenFileInput = useRef(null)
   const requests = useSelector(({ requests }) => requests)
-  const user = useSelector(({ login }) => login.session.user)
+  const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({})
   const [listRequests, setList] = useState()
@@ -66,6 +66,12 @@ const RequestForm = () => {
 
   useEffect(() => {
     dispatch(getRoles())
+    user &&
+      setForm({
+        ...form,
+        irrigator_code: user.code,
+        type: 'requestforattention'
+      })
   }, [])
 
   useEffect(() => {
@@ -82,16 +88,7 @@ const RequestForm = () => {
       console.log(geoLocation) */
       setForm({ ...form, location: location })
     }
-  }, [location, user])
-
-  useEffect(() => {
-    user &&
-      setForm({
-        ...form,
-        irrigator_code: user.code,
-        type: 'requestforattention'
-      })
-  }, [user])
+  }, [location])
 
   return (
     <UserWrapper pathName='Nueva Solicitud/Reclamo'>

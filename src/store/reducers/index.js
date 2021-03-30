@@ -6,6 +6,7 @@ import { login } from './login'
 import { information } from './information'
 import { user } from './user'
 import { debts } from './debts'
+import { dashboard } from './dashboard'
 
 const errors = (state = {}, action) => {
   switch (action.type) {
@@ -40,6 +41,7 @@ export default combineReducers({
   notifications,
   login,
   user,
+  dashboard,
   editProfile,
   information,
   requests,

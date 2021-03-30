@@ -44,6 +44,10 @@ export const createRequest = form => async dispatch => {
         requests: data
       })
       dispatch({ type: type.LOADING, load: false })
+      dispatch({
+        type: type.NOTIFICATIONS,
+        notification: { message: 'solicitud enviada con exito' }
+      })
     })
     .catch(err => {
       dispatch({ type: type.ERROR, error: err })

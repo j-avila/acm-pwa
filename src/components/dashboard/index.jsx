@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Dash } from './styles'
 import Card from '../UI/card'
 import UserWrapper from '../hoc/userWrapper'
-import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { userDataHandler } from '../../store/actions/login'
 import { fetchDashboard } from '../../store/actions/dashboard'
@@ -14,6 +13,7 @@ const Dashboard = props => {
   const history = useHistory()
   const dashData = useSelector(({ dashboard }) => dashboard)
   const loading = useSelector(({ loading }) => loading)
+  const [info, setInfo] = useState()
 
   useEffect(() => {
     dispatch(userDataHandler())
@@ -23,7 +23,10 @@ const Dashboard = props => {
   return (
     <UserWrapper>
       <Dash>
-        {dashData && dashData.hasOwnProperty('requests') ? (
+        {dashData &&
+        dashData.hasOwnProperty('requests') &&
+        dashData.hasOwnProperty('fees') &&
+        dashData.hasOwnProperty('number_of_actions') ? (
           <>
             <Card
               className='stat-card'

@@ -81,8 +81,14 @@ const Dashboard = props => {
             >
               <section>
                 <strong>Deuda total:</strong>
-                <h1>{`${dashData.fees.total[0]._id || ''} ${
-                  dashData.fees.total[0].totalSum || 0
+                <h1>{`${
+                  dashData.fees.total.length >= 1
+                    ? dashData.fees.total[0]._id
+                    : ''
+                } ${
+                  dashData.fees.total.length >= 1
+                    ? dashData.fees.total[0].totalSum
+                    : 0
                 }`}</h1>
               </section>
               <footer>{`Cuotas impagas: ${dashData.fees.count}`}</footer>

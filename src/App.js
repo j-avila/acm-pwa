@@ -18,6 +18,7 @@ import VisitDetail from './components/visitsDetail'
 import DebtForm from './components/debtForm'
 import EditProfile from './components/editProfile'
 import { EndSession } from './components/end Session'
+import VistisForm from './components/visits/vistisRequests'
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path='/visitas' component={Visits} exact />
             <Route path='/visitas/:id' component={VisitDetail} />
             <Route path='/perfil' component={EditProfile} />
+            <Route path='/solicitar-visita' component={VistisForm} />
           </Switch>
         </Router>
       </ThemeWrapper>

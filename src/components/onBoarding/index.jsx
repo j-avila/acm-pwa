@@ -15,7 +15,7 @@ import slide3 from '../../assets/slide3.png'
 import slide4 from '../../assets/slide4.png'
 import { createProfile } from '../../store/actions/editProfile'
 import { useDispatch, useSelector } from 'react-redux'
-import { Error } from '../hoc/userWrapper'
+import { Error, ModalContent } from '../hoc/userWrapper'
 
 export const OnBoarding = () => {
   const history = useHistory()
@@ -134,7 +134,7 @@ export const OnBoarding = () => {
       </Slider>
       {error && error.length >= 4 && (
         <Modal>
-          <Error>
+          <ModalContent type='error'>
             <i className='fas fa-exclamation-triangle'></i>
             <p>{error}</p>
             <Button
@@ -144,7 +144,7 @@ export const OnBoarding = () => {
             >
               Volver
             </Button>
-          </Error>
+          </ModalContent>
         </Modal>
       )}
       {modalOn && (

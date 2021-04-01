@@ -6,16 +6,16 @@ import Button from '../UI/button'
 import FormInput from '../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { createRequest, getRoles } from '../../store/actions/bookings'
+import { createVisitRequest, getRoles } from '../../store/actions/visits'
 
-const RequestForm = () => {
+const VistisForm = () => {
   const dispatch = useDispatch()
   const hiddenFileInput = useRef(null)
-  const requests = useSelector(({ requests }) => requests)
+  const visits = useSelector(({ visits }) => visits)
   const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({})
-  const [listRequests, setList] = useState()
+  const [visitsList, setList] = useState()
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -61,7 +61,7 @@ const RequestForm = () => {
   const handleForm = e => {
     e.preventDefault()
     console.log(form)
-    dispatch(createRequest(form))
+    dispatch(createVisitRequest(form))
   }
 
   useEffect(() => {
@@ -70,22 +70,19 @@ const RequestForm = () => {
       setForm({
         ...form,
         irrigator_code: user.code,
-        type: 'requestforattention'
+        type: 'visitreport',
+        subject: 'Solicitud',
+        association_area:
+          visitsList && visitsList.filter(e => e.code === 'helptable')[0].id
       })
   }, [])
 
   useEffect(() => {
-    console.log(requests)
-    requests.hasOwnProperty('roles') && setList(requests.roles)
-  }, [requests])
+    visits.hasOwnProperty('roles') && setList(visits.roles)
+  }, [visits])
 
   useEffect(() => {
     if (location) {
-      /* const geoLocation = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
-      }
-      console.log(geoLocation) */
       setForm({ ...form, location: location })
     }
   }, [location])
@@ -103,40 +100,33 @@ const RequestForm = () => {
               onChange={e =>
                 setForm({ ...form, association_area: e.target.value })
               }
+              disabled
             >
               <option disabled>Selecciona una opción</option>
-              {listRequests &&
-                listRequests.map(option => (
-                  <option key={option.id} value={option.id}>
-                    {option.name}
-                  </option>
-                ))}
+              {visitsList &&
+                visitsList
+                  .filter(e => e.name === 'Mesa de ayuda')
+                  .map(option => (
+                    <option key={option.id} value={option.id} selected>
+                      {option.name}
+                    </option>
+                  ))}
             </select>
           </FormInput>
           <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
             <select
               onChange={e => setForm({ ...form, subject: e.target.value })}
+              disabled
             >
-              <option disabled>Selecciona un asunto recurrente</option>
-              {subjectSelect.map(subject => (
-                <option key={subject.label} value={subject.label}>
-                  {subject.label}
-                </option>
-              ))}
+              {subjectSelect
+                .filter(e => e.label === 'Solicitud')
+                .map(subject => (
+                  <option key={subject.label} value={subject.label} selected>
+                    {subject.label}
+                  </option>
+                ))}
             </select>
           </FormInput>
-          {form.type === 'Otro' && (
-            <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
-              <input
-                type='text'
-                name='nombre'
-                onChange={e =>
-                  setForm({ ...form, otherSubject: e.target.value })
-                }
-                placeholder='Describa su solicitud brevemente'
-              />
-            </FormInput>
-          )}
           <FormInput label='Descripción de la solicitud de atención'>
             <textarea
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
@@ -178,4 +168,4 @@ const RequestForm = () => {
   )
 }
 
-export default RequestForm
+export default VistisForm

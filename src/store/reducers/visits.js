@@ -12,7 +12,7 @@ export const visits = (state = {}, action) => {
         ...state,
         details: action.visit
       }
-    case types.REQUEST_FORM:
+    case types.REQUEST_VISIT:
       return {
         ...state,
         form: action.form

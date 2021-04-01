@@ -40,8 +40,8 @@ export const createVisitRequest = form => async dispatch => {
     .post(url, form, getAuth())
     .then(({ data }) => {
       dispatch({
-        type: type.CREATE_VISIT_REQUEST,
-        vistis: data
+        type: type.REQUEST_VISIT,
+        vistisRequest: data
       })
       dispatch({ type: type.LOADING, load: false })
       dispatch({

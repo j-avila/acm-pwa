@@ -19,10 +19,11 @@ const dummyItems = [
   { name: 'cerrar sesión', path: '/cerrar-sesion' }
 ]
 
-export const Error = styled.div`
+export const ModalContent = styled.div`
   i {
     padding: 12px;
-    background: ${({ theme }) => theme.error};
+    background: ${({ theme, type }) =>
+      type === 'error' ? theme.error : theme.primary};
     border-radius: 50%;
     font-size: 24px;
     color: white;
@@ -69,7 +70,7 @@ const UserLayout = props => {
       <section>{children}</section>
       {error && error.hasOwnProperty('message') && (
         <Modal>
-          <Error>
+          <ModalContent type='error'>
             <i className='fas fa-exclamation-triangle'></i>
             <p>{error.message}</p>
             <Button
@@ -82,16 +83,16 @@ const UserLayout = props => {
             >
               Volver
             </Button>
-          </Error>
+          </ModalContent>
         </Modal>
       )}
       {notification && notification.hasOwnProperty('message') && (
         <Modal>
-          <Error>
+          <ModalContent type='success'>
             <i className='fas fa-check'></i>
             <p>{notification.message}</p>
             <Button
-              background='error'
+              background='primary'
               width='100%'
               onClick={() => {
                 setError(false)
@@ -100,7 +101,7 @@ const UserLayout = props => {
             >
               Volver
             </Button>
-          </Error>
+          </ModalContent>
         </Modal>
       )}
     </>

@@ -1,8 +1,10 @@
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import { fetchVisits } from '../../store/actions/visits'
 import UserWrapper from '../hoc/userWrapper'
+import Button from '../UI/button'
 import List from '../UI/list'
 import Tabs, { Panel } from '../UI/tabs'
 import { VisitsWrapper } from './styles'
@@ -34,7 +36,9 @@ const Visits = () => {
         arr.map(item => ({
           id: item.id,
           title: item.subject,
-          subtitle: `Agendada para el: ${item.createdAt}`
+          subtitle: `Agendada para el: ${moment(item.createdAt).format(
+            'DD/MM/YYYY'
+          )}`
         }))
 
       const bookedList = createList(visitsList.visitsListed)
@@ -56,6 +60,9 @@ const Visits = () => {
             <List items={visits.done} action={handleItem} />
           </Panel>
         </Tabs>
+        <Button onClick={() => history.push('/solicitar-visita')}>
+          Agendar Visita
+        </Button>
       </VisitsWrapper>
     </UserWrapper>
   )

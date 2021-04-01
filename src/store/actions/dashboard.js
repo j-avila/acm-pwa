@@ -3,7 +3,7 @@ import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
 export const fetchDashboard = form => async dispatch => {
-  const url = `${apiUrl}/dashboard-irrigators`
+  const url = `${apiUrl}/dashboard-irrigators?_sort=createdAt:desc`
 
   dispatch({ type: type.LOADING, load: true })
   return axios

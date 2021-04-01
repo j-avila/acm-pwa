@@ -29,3 +29,8 @@ export const GET_ROLES = 'GET_ROLES'
 // DEBTS
 export const GET_DEBTS = 'GET_DEBTS'
 export const GET_PAYED_DEBTS = 'GET_PAYED_DEBTS'
+
+// VISITS
+export const GET_VISITS = 'GET_VISITS'
+export const GET_VISITS_DETAILS = 'GET_VISITS_DETAILS'
+export const CREATE_VISIT_REQUEST = 'CREATE_VISIT_REQUEST'

@@ -70,7 +70,7 @@ const RequestForm = () => {
       setForm({
         ...form,
         irrigator_code: user.code,
-        type: 'requestforattention'
+        type: 'visitreport'
       })
   }, [])
 

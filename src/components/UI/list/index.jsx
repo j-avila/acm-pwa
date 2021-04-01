@@ -14,7 +14,7 @@ const List = props => {
   return (
     <ItemsList>
       {loading ? (
-        <i class='fas fa-spinner fa-spin fa-3x'></i>
+        <i className='fas fa-spinner fa-spin fa-3x'></i>
       ) : items && items.length >= 1 ? (
         items.map(item => (
           <li key={item.id} onClick={() => handleAction(item.id)}>

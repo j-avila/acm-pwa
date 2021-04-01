@@ -2,15 +2,15 @@ import axios from 'axios'
 import { apiUrl, getAuth } from './utils'
 import * as type from '../reducers/types'
 
-export const fetchRequests = () => async dispatch => {
-  const url = `${apiUrl}/event-books?type=requestforattention`
+export const fetchVisits = () => async dispatch => {
+  const url = `${apiUrl}/event-books?type=visitreport`
   dispatch({ type: type.LOADING, load: true })
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
       dispatch({
-        type: type.FETCH_REQUESTS,
-        requests: data
+        type: type.GET_VISITS,
+        visits: data
       })
       dispatch({ type: type.LOADING, load: false })
     })
@@ -33,15 +33,15 @@ export const getRoles = () => async dispatch => {
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
-export const createRequest = form => async dispatch => {
+export const createVisitRequest = form => async dispatch => {
   const url = `${apiUrl}/event-books`
   dispatch({ type: type.LOADING, load: true })
   return axios
     .post(url, form, getAuth())
     .then(({ data }) => {
       dispatch({
-        type: type.POST_REQUEST,
-        requests: data
+        type: type.CREATE_VISIT_REQUEST,
+        vistis: data
       })
       dispatch({ type: type.LOADING, load: false })
       dispatch({

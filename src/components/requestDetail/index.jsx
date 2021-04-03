@@ -24,8 +24,8 @@ const RequestDetail = props => {
     dispatch(getChats(location.state.id))
     socket.emit('open:chat', location.state.id)
     socket.on('message:chat', chats => {
-      // setDetails({ ...reqDetails, chats: chats })
       console.log('yayayajuu', chats)
+      setDetails({ ...reqDetails, chats: chats })
     })
   }, [])
 

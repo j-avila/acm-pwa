@@ -23,18 +23,23 @@ import { useEffect, useState } from 'react'
 import { socket } from './components/hoc/utils'
 
 const App = () => {
-  const [sessionId, setSession] = useState()
+  const [sessionUser, setSession] = useState()
 
   useEffect(() => {
     const sessionId = JSON.parse(localStorage.getItem('userActive'))
     setSession(sessionId.id)
+
+    socket.emit('join', sessionUser)
     socket.on('welcome', data =>
       console.log(
         `💻 welcome user ${data.username} 🔌 in the socket: ${data.socket}`
       )
     )
-    socket.emit('join', sessionId)
   }, [])
+
+  useEffect(() => {
+    console.log(sessionUser)
+  }, [sessionUser])
 
   return (
     <div className='App'>

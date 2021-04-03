@@ -7,7 +7,10 @@ export const loginHandler = form => async dispatch => {
   return axios
     .post(url, form)
     .then(({ data }) => {
+      const activeUser = JSON.stringify(data.user)
       localStorage.setItem('session', data.jwt)
+      localStorage.setItem('userActive', activeUser)
+      console.log(activeUser)
       dispatch({
         type: type.LOGIN_FORM,
         form: data

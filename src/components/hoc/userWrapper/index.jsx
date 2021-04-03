@@ -7,7 +7,7 @@ import { userDataHandler } from '../../../store/actions/login'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import * as type from '../../../store/reducers/types'
-
+import { socket } from '../utils'
 const dummyItems = [
   { name: 'panel de control', path: '/panel-de-control' },
   { name: 'información del canal', path: '/informacion' },
@@ -41,6 +41,7 @@ const UserLayout = props => {
   const errorMsg = useSelector(({ errors }) => errors)
   const notification = useSelector(({ notifications }) => notifications)
   const userData = useSelector(({ user }) => user)
+  const [sessionId, setSession] = useState()
   const { children, pathName } = props
   const [error, setError] = useState()
   const session = localStorage.getItem('session')
@@ -52,6 +53,7 @@ const UserLayout = props => {
 
   useEffect(() => {
     !userData.hasOwnProperty('acm') && dispatch(userDataHandler())
+    socket.on('error', err => dispatch({ type: type.ERROR, error: err }))
   }, [userData])
 
   useEffect(() => {

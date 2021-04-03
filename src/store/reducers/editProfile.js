@@ -12,8 +12,6 @@ export const editProfile = (profile = {}, action) => {
       }
 
     default:
-      return {
-        profile
-      }
+      return profile
   }
 }

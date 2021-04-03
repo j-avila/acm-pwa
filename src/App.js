@@ -19,8 +19,19 @@ import DebtForm from './components/debtForm'
 import EditProfile from './components/editProfile'
 import { EndSession } from './components/end Session'
 import VistisForm from './components/visits/vistisRequests'
+import { useEffect, useState } from 'react'
+import { socket } from './components/hoc/utils'
 
-function App() {
+const App = () => {
+  const [sessionId, setSession] = useState()
+
+  useEffect(() => {
+    const sessionId = JSON.parse(localStorage.getItem('userActive'))
+    setSession(sessionId.id)
+    socket.on('welcome', data => console.log(data))
+    socket.emit('join', sessionId)
+  }, [])
+
   return (
     <div className='App'>
       <ThemeWrapper>

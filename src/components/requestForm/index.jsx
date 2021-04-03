@@ -60,7 +60,6 @@ const RequestForm = () => {
 
   const handleForm = e => {
     e.preventDefault()
-    console.log(form)
     dispatch(createRequest(form))
   }
 

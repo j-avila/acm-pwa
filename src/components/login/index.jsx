@@ -113,7 +113,7 @@ const Login = props => {
               background='error'
               width='100%'
               onClick={() => {
-                dispatch({ type: types.ERROR, error: undefined })
+                dispatch({ type: types.ERROR, error: null })
                 setError(false)
               }}
             >

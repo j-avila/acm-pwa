@@ -61,7 +61,7 @@ const ChatCard = props => {
   }
 
   useEffect(() => {
-    console.log(items)
+    // console.log(items)
     location.hasOwnProperty('coords') &&
       setMessage({ ...message, coordinates: location.coords })
   }, [location])

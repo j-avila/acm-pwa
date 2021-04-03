@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { apiUrl, getAuth } from './utils'
 import * as type from '../reducers/types'
+import { socket } from '../../components/hoc/utils'
 
 export const fetchRequests = () => async dispatch => {
   const url = `${apiUrl}/event-books?type=requestforattention`
@@ -41,7 +42,7 @@ export const createRequest = form => async dispatch => {
     .then(({ data }) => {
       dispatch({
         type: type.POST_REQUEST,
-        requests: data
+        request: data
       })
       dispatch({ type: type.LOADING, load: false })
       dispatch({

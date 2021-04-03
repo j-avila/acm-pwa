@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getChats, setMessage } from '../../store/actions/requests'
 import UserWrapper from '../hoc/userWrapper'
+import { socket } from '../hoc/utils'
 import Chat from '../UI/chat'
 import { CeladorSection, DetailsWrapper } from './styles'
 
@@ -20,7 +21,12 @@ const RequestDetail = props => {
 
   // event handlers
   useEffect(() => {
-    dispatch(getChats('605b283df4b0620022fcce77'))
+    dispatch(getChats(location.state.id))
+    socket.emit('open:chat', location.state.id)
+    socket.on('message:chat', chats => {
+      // setDetails({ ...reqDetails, chats: chats })
+      console.log('yayayajuu', chats)
+    })
   }, [])
 
   useEffect(() => {
@@ -39,7 +45,7 @@ const RequestDetail = props => {
           <h1>{reqDetails.title}</h1>
         </CeladorSection>
         <Chat
-          id={reqDetails.event_book}
+          id={location.state.id}
           items={reqDetails.messages}
           msgAction={handleForm}
         />

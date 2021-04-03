@@ -28,7 +28,11 @@ const App = () => {
   useEffect(() => {
     const sessionId = JSON.parse(localStorage.getItem('userActive'))
     setSession(sessionId.id)
-    socket.on('welcome', data => console.log(data))
+    socket.on('welcome', data =>
+      console.log(
+        `💻 welcome user ${data.username} 🔌 in the socket: ${data.socket}`
+      )
+    )
     socket.emit('join', sessionId)
   }, [])
 

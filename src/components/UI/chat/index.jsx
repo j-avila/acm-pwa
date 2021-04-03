@@ -12,7 +12,6 @@ const ChatCard = props => {
   const { id, items, msgAction } = props
   const loading = useSelector(({ loading }) => loading)
   const loggedUser = useSelector(({ user }) => user)
-  const [user, setUser] = useState({ name: 'rigoberto', id: 1 })
   const [location, setLocation] = useState('')
   const [actions, openActions] = useState()
   const [message, setMessage] = useState({
@@ -58,6 +57,12 @@ const ChatCard = props => {
 
   const handleMessage = () => {
     msgAction(message)
+    setMessage({
+      ...message,
+      message: '',
+      coordinates: '',
+      attached: undefined
+    })
   }
 
   useEffect(() => {
@@ -77,7 +82,7 @@ const ChatCard = props => {
               <GhostLine width='40%' />
             </ChatBubble>
           </Row>
-        ) : !items ? (
+        ) : !items | (items.length <= 0) ? (
           <span>Comienza por escribir un mensaje</span>
         ) : (
           items.map(message => (
@@ -153,6 +158,7 @@ const ChatCard = props => {
         </FileAdd>
         <input
           type='text'
+          value={message.message}
           onChange={e => setMessage({ ...message, message: e.target.value })}
         />
         <Button background='transparent' onClick={() => handleMessage()}>

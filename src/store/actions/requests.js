@@ -24,7 +24,7 @@ export const getChats = id => async dispatch => {
 export const setMessage = form => async dispatch => {
   const url = `${apiUrl}/event-book-messages?event_book=${form.event_book}`
 
-  return axios
-    .post(url, form, getAuth())
-    .then(({ data }) => socket.emit('message:chat', data))
+  return axios.post(url, form, getAuth()).then(({ data }) => {
+    socket.emit('message:chat', data)
+  })
 }

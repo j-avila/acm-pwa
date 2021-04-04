@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.css'
 import ThemeWrapper from '../src/components/hoc/styledTheme'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -26,7 +27,6 @@ import { useSelector } from 'react-redux'
 const App = () => {
   const login = useSelector(({ login }) => login)
   const [sessionUser, setUserSession] = useState()
-  const [session, setSession] = useState()
 
   const setSockets = () => {
     socket.emit('join', sessionUser)
@@ -35,12 +35,6 @@ const App = () => {
         `💻 welcome user ${data.username} 🔌 in the socket: ${data.socket}`
       )
     )
-    console.log(sessionUser)
-  }
-
-  const setUser = () => {
-    const sessionId = JSON.parse(localStorage.getItem('userActive'))
-    setSession(sessionId.id)
   }
 
   useEffect(() => {

@@ -10,7 +10,6 @@ export const loginHandler = form => async dispatch => {
       const activeUser = JSON.stringify(data.user)
       localStorage.setItem('session', data.jwt)
       localStorage.setItem('userActive', activeUser)
-      console.log(activeUser)
       dispatch({
         type: type.LOGIN_FORM,
         form: data

@@ -23,7 +23,8 @@ import { useEffect, useState } from 'react'
 import { socket } from './components/hoc/utils'
 
 const App = () => {
-  const [sessionUser, setSession] = useState()
+  const [sessionUser, setUserSession] = useState()
+  const [session, setSession] = useState()
 
   const setSockets = () => {
     socket.emit('join', sessionUser)
@@ -37,12 +38,17 @@ const App = () => {
 
   const setUser = () => {
     const sessionId = JSON.parse(localStorage.getItem('userActive'))
-    setSession(sessionId.id)
+    setUserSession(sessionId.id)
   }
 
   useEffect(() => {
-    !sessionUser && setUser()
-    sessionUser && setSockets()
+    const active = localStorage.getItem('session')
+    setUserSession(active)
+  }, [])
+
+  useEffect(() => {
+    session && !sessionUser && setUser()
+    session && sessionUser && sessionUser.length >= 1 && setSockets()
   }, [sessionUser])
 
   return (

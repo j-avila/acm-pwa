@@ -21,8 +21,10 @@ import { EndSession } from './components/end Session'
 import VistisForm from './components/visits/vistisRequests'
 import { useEffect, useState } from 'react'
 import { socket } from './components/hoc/utils'
+import { useSelector } from 'react-redux'
 
 const App = () => {
+  const login = useSelector(({ login }) => login)
   const [sessionUser, setUserSession] = useState()
   const [session, setSession] = useState()
 
@@ -38,18 +40,17 @@ const App = () => {
 
   const setUser = () => {
     const sessionId = JSON.parse(localStorage.getItem('userActive'))
-    setUserSession(sessionId.id)
+    setSession(sessionId.id)
   }
 
   useEffect(() => {
-    const active = localStorage.getItem('session')
-    setUserSession(active)
-  }, [])
-
-  useEffect(() => {
-    session && !sessionUser && setUser()
-    session && sessionUser && sessionUser.length >= 1 && setSockets()
-  }, [sessionUser])
+    if (localStorage.getItem('session')) {
+      setUserSession(localStorage.getItem('session'))
+    }
+    if (localStorage.getItem('userActive')) {
+      setSockets()
+    }
+  }, [login])
 
   return (
     <div className='App'>

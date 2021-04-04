@@ -4,4 +4,4 @@ export const checkThemeProp = (theme, prop) =>
   theme.hasOwnProperty(prop) ? theme[prop] : prop
 
 // Socket connect
-export const socket = io('ws://api.acanalmaule.cl/')
+export const socket = io('wss://api.acanalmaule.cl/')

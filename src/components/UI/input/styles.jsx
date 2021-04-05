@@ -19,9 +19,25 @@ export const Wrapper = styled.div`
     padding: 16px;
     border-radius: 5px;
     font-weight: regular;
-    font-family: 'Open Sans','Sans-serif';
+    font-family: 'Open Sans', 'Sans-serif';
     background: ${({ theme }) => theme.greygradient};
     box-shadow: ${({ theme }) => theme.shadow};
+    color: ${({ theme }) => theme.text};
+    &:invalid {
+      border-color: red;
+    }
+  }
+  select {
+    width: ${({ width }) => width};
+    outline: 0;
+    border: 0;
+    padding: 16px;
+    border-radius: 5px;
+    font-weight: regular;
+    font-family: 'Open Sans', 'Sans-serif';
+    background: ${({ theme }) => theme.greygradient};
+    box-shadow: ${({ theme }) => theme.shadow};
+    color: ${({ theme }) => (theme.darkTheme ? '#828282' : theme.text)};
     &:invalid {
       border-color: red;
     }

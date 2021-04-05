@@ -19,6 +19,7 @@ export const Wrapper = styled.div`
     .title {
       text-align: center;
       padding: 12px 0;
+      color: white;
     }
     .back {
       padding: 8px;
@@ -46,8 +47,12 @@ export const Wrapper = styled.div`
       max-width: 60px;
       max-height: 80px;
     }
+    p {
+      color: white;
+    }
     h3 {
       font-size: 20px;
+      color: white;
     }
   }
   .action-zone {

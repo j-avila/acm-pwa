@@ -7,8 +7,8 @@ import { userDataHandler } from '../../../store/actions/login'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import * as type from '../../../store/reducers/types'
-
-const dummyItems = [
+import { socket } from '../utils'
+const menuItems = [
   { name: 'panel de control', path: '/panel-de-control' },
   { name: 'información del canal', path: '/informacion' },
   { name: 'solicitudes y reclamos', path: '/solicitudes' },
@@ -41,6 +41,7 @@ const UserLayout = props => {
   const errorMsg = useSelector(({ errors }) => errors)
   const notification = useSelector(({ notifications }) => notifications)
   const userData = useSelector(({ user }) => user)
+  const [sessionId, setSession] = useState()
   const { children, pathName } = props
   const [error, setError] = useState()
   const session = localStorage.getItem('session')
@@ -52,6 +53,7 @@ const UserLayout = props => {
 
   useEffect(() => {
     !userData.hasOwnProperty('acm') && dispatch(userDataHandler())
+    socket.on('error', err => dispatch({ type: type.ERROR, error: err }))
   }, [userData])
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const UserLayout = props => {
     <>
       <Header
         title={pathName ? pathName : 'Canal del Maule'}
-        menuItems={dummyItems}
+        menuItems={menuItems}
         user={userData}
         menu
         back

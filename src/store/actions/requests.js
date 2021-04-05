@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { socket } from '../../components/hoc/utils'
 import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
@@ -21,7 +22,12 @@ export const getChats = id => async dispatch => {
 }
 
 export const setMessage = form => async dispatch => {
-  const url = `${apiUrl}/event-book-messages?event_book${form.id}`
+  const url = `${apiUrl}/event-book-messages?event_book=${form.event_book}`
 
-  return axios.post(url, form, getAuth()).then(({ data }) => console.log(data))
+  return axios.post(url, form, getAuth()).then(({ data }) => {
+    dispatch({
+      type: type.REQUEST_FORM,
+      form: data
+    })
+  })
 }

@@ -70,10 +70,10 @@ const VistisForm = () => {
       setForm({
         ...form,
         irrigator_code: user.code,
-        type: 'visitreport',
-        subject: 'Solicitud',
-        association_area:
-          visitsList && visitsList.filter(e => e.code === 'helptable')[0].id
+        type: 'requestforattention',
+        subject: 'Solicitud'
+        // association_area:
+        //   visitsList && visitsList.filter(e => e.code === 'helptable')[0].id
       })
   }, [])
 
@@ -100,14 +100,13 @@ const VistisForm = () => {
               onChange={e =>
                 setForm({ ...form, association_area: e.target.value })
               }
-              disabled
             >
-              <option disabled>Selecciona una opción</option>
+              <option>Selecciona una opción</option>
               {visitsList &&
                 visitsList
-                  .filter(e => e.name === 'Mesa de ayuda')
+                  .filter(e => e.code !== 'administration')
                   .map(option => (
-                    <option key={option.id} value={option.id} selected>
+                    <option key={option.id} value={option.id}>
                       {option.name}
                     </option>
                   ))}

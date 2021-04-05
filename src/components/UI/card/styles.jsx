@@ -1,14 +1,16 @@
 import styled from 'styled-components'
+import { lighten } from 'polished'
 
 export const Wrapper = styled.div`
   position: relative;
-  background: white;
+  background: ${({ theme }) => (theme.darkTheme ? theme.background : 'white')};
   border-radius: 5px;
   padding: 1rem 1rem 1rem 1rem;
   box-shadow: ${({ theme }) => theme.shadow};
   display: block;
   width: calc(100% - 15vw);
   max-width: 80%;
+  color: ${({ theme }) => theme.text};
   header {
     display: grid;
     grid-template-columns: 2fr 0.5fr;
@@ -36,6 +38,12 @@ export const Wrapper = styled.div`
       text-align: right;
       color: ${({ theme }) => theme.primary};
     }
+  }
+  footer {
+    color: ${({ theme }) => {
+      let color = lighten(0.2, theme.text)
+      return color
+    }};
   }
   @media all and (min-width: 1280px) {
     max-width: 1000px;

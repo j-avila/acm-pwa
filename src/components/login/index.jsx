@@ -22,7 +22,7 @@ const Login = props => {
     password: ''
   })
   const [visiblePassword, viewPassword] = useState(false)
-  const [validForm, setValid] = useState()
+  const [validForm, setValid] = useState(false)
   const [error, setError] = useState(false)
 
   const handleLogin = event => {
@@ -113,7 +113,7 @@ const Login = props => {
               background='error'
               width='100%'
               onClick={() => {
-                dispatch({ type: types.ERROR, error: undefined })
+                dispatch({ type: types.ERROR, error: null })
                 setError(false)
               }}
             >

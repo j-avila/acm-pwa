@@ -6,13 +6,14 @@ import ChatBubble from './ChatBubble'
 import { Row, Message, ChatWrapper, FileAdd, ActionArea } from './styles'
 import { useSelector } from 'react-redux'
 import { GhostLine } from '../ghostLoader'
+import { socket } from '../../hoc/utils'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
   const { id, items, msgAction } = props
   const loading = useSelector(({ loading }) => loading)
   const loggedUser = useSelector(({ user }) => user)
-  const [user, setUser] = useState({ name: 'rigoberto', id: 1 })
+  const requests = useSelector(({ requests }) => requests)
   const [location, setLocation] = useState('')
   const [actions, openActions] = useState()
   const [message, setMessage] = useState({
@@ -58,13 +59,26 @@ const ChatCard = props => {
 
   const handleMessage = () => {
     msgAction(message)
+    setMessage({
+      ...message,
+      message: '',
+      coordinates: '',
+      attached: undefined
+    })
   }
 
   useEffect(() => {
-    console.log(items)
+    // console.log(items)
     location.hasOwnProperty('coords') &&
       setMessage({ ...message, coordinates: location.coords })
   }, [location])
+
+  useEffect(() => {
+    console.log(socket.connected)
+    requests.form &&
+      requests.form.length >= 1 &&
+      socket.emit('message:chat', JSON.stringify(requests.form))
+  }, [requests.form])
 
   return (
     <Card>
@@ -77,7 +91,7 @@ const ChatCard = props => {
               <GhostLine width='40%' />
             </ChatBubble>
           </Row>
-        ) : !items ? (
+        ) : !items | (items.length <= 0) ? (
           <span>Comienza por escribir un mensaje</span>
         ) : (
           items.map(message => (
@@ -153,6 +167,7 @@ const ChatCard = props => {
         </FileAdd>
         <input
           type='text'
+          value={message.message}
           onChange={e => setMessage({ ...message, message: e.target.value })}
         />
         <Button background='transparent' onClick={() => handleMessage()}>

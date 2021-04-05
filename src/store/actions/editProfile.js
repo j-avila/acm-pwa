@@ -32,3 +32,10 @@ export const editProfile = form => async dispatch => {
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
+
+export const editSettings = settings => async dispatch => {
+  dispatch({
+    type: type.EDIT_SETTINGS,
+    settings: settings
+  })
+}

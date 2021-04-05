@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.css'
 import ThemeWrapper from '../src/components/hoc/styledTheme'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -19,8 +20,33 @@ import DebtForm from './components/debtForm'
 import EditProfile from './components/editProfile'
 import { EndSession } from './components/end Session'
 import VistisForm from './components/visits/vistisRequests'
+import { useEffect, useState } from 'react'
+import { socket } from './components/hoc/utils'
+import { useSelector } from 'react-redux'
+import Settings from './components/settings'
 
-function App() {
+const App = () => {
+  const login = useSelector(({ login }) => login)
+  const [sessionUser, setUserSession] = useState()
+
+  const setSockets = () => {
+    socket.emit('join', sessionUser)
+    socket.on('welcome', data =>
+      console.log(
+        `💻 welcome user ${data.username} 🔌 in the socket: ${data.socket}`
+      )
+    )
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem('session')) {
+      setUserSession(localStorage.getItem('session'))
+    }
+    if (localStorage.getItem('userActive')) {
+      setSockets()
+    }
+  }, [login])
+
   return (
     <div className='App'>
       <ThemeWrapper>
@@ -43,6 +69,7 @@ function App() {
             <Route path='/visitas' component={Visits} exact />
             <Route path='/visitas/:id' component={VisitDetail} />
             <Route path='/perfil' component={EditProfile} />
+            <Route path='/opciones' component={Settings} />
             <Route path='/solicitar-visita' component={VistisForm} />
           </Switch>
         </Router>

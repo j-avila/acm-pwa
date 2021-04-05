@@ -31,7 +31,6 @@ const Visits = () => {
       visitsList.hasOwnProperty('visitsListed') &&
       visitsList.visitsListed.length >= 1
     ) {
-      console.log(visitsList)
       const createList = arr =>
         arr.map(item => ({
           id: item.id,
@@ -41,8 +40,12 @@ const Visits = () => {
           )}`
         }))
 
-      const bookedList = createList(visitsList.visitsListed)
-      const endedList = createList(visitsList.visitsListed)
+      const bookedList = createList(
+        visitsList.visitsListed.filter(e => e.closed === false)
+      )
+      const endedList = createList(
+        visitsList.visitsListed.filter(e => e.closed === true)
+      )
 
       setVisits({ ...visits, booked: bookedList, done: endedList })
     }
@@ -61,7 +64,7 @@ const Visits = () => {
           </Panel>
         </Tabs>
         <Button onClick={() => history.push('/solicitar-visita')}>
-          Agendar Visita
+          Solicitar Visita
         </Button>
       </VisitsWrapper>
     </UserWrapper>

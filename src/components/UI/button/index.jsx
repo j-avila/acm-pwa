@@ -48,7 +48,7 @@ Button.propTypes = {
   margin: PropTypes.string,
   display: PropTypes.string,
   shadow: PropTypes.bool,
-  disabled: PropTypes.string
+  disabled: PropTypes.bool
 }
 
 Button.defaultProps = {

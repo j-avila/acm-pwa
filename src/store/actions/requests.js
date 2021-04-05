@@ -25,6 +25,9 @@ export const setMessage = form => async dispatch => {
   const url = `${apiUrl}/event-book-messages?event_book=${form.event_book}`
 
   return axios.post(url, form, getAuth()).then(({ data }) => {
-    socket.emit('message:chat', data)
+    dispatch({
+      type: type.REQUEST_FORM,
+      form: data
+    })
   })
 }

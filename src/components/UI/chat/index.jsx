@@ -6,12 +6,14 @@ import ChatBubble from './ChatBubble'
 import { Row, Message, ChatWrapper, FileAdd, ActionArea } from './styles'
 import { useSelector } from 'react-redux'
 import { GhostLine } from '../ghostLoader'
+import { socket } from '../../hoc/utils'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
   const { id, items, msgAction } = props
   const loading = useSelector(({ loading }) => loading)
   const loggedUser = useSelector(({ user }) => user)
+  const requests = useSelector(({ requests }) => requests)
   const [location, setLocation] = useState('')
   const [actions, openActions] = useState()
   const [message, setMessage] = useState({
@@ -70,6 +72,13 @@ const ChatCard = props => {
     location.hasOwnProperty('coords') &&
       setMessage({ ...message, coordinates: location.coords })
   }, [location])
+
+  useEffect(() => {
+    console.log(socket.connected)
+    requests.form &&
+      requests.form.length >= 1 &&
+      socket.emit('message:chat', JSON.stringify(requests.form))
+  }, [requests.form])
 
   return (
     <Card>

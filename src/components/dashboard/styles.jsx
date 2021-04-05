@@ -13,7 +13,6 @@ export const Dash = styled.div`
     }
     footer {
       text-align: left;
-      color: #858585;
     }
     &.visits {
       section {

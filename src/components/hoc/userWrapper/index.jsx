@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import * as type from '../../../store/reducers/types'
 import { socket } from '../utils'
-const dummyItems = [
+const menuItems = [
   { name: 'panel de control', path: '/panel-de-control' },
   { name: 'información del canal', path: '/informacion' },
   { name: 'solicitudes y reclamos', path: '/solicitudes' },
@@ -64,7 +64,7 @@ const UserLayout = props => {
     <>
       <Header
         title={pathName ? pathName : 'Canal del Maule'}
-        menuItems={dummyItems}
+        menuItems={menuItems}
         user={userData}
         menu
         back

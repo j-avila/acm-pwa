@@ -10,6 +10,10 @@ export const editProfile = (profile = {}, action) => {
       return {
         form: action.form
       }
+    case types.EDIT_SETTINGS:
+      return {
+        settings: action.settings
+      }
 
     default:
       return profile

@@ -9,7 +9,10 @@ const Wrapper = styled.div`
     border-top-left-radius: 0px !important;
   }
   .content {
-    background: white;
+    background: ${({ theme }) => {
+      const color = theme.darkTheme ? darken(0.1, theme.background) : 'white'
+      return color
+    }};
     padding: 8px;
   }
 `
@@ -44,7 +47,12 @@ export const TabList = styled.ul`
       z-index: 0;
       /* box-shadow: ${({ theme }) => theme.shadow}; */
       &.selected {
-        background: white;
+        background:  ${({ theme }) => {
+          const color = theme.darkTheme
+            ? darken(0.1, theme.background)
+            : 'white'
+          return color
+        }};
         color: ${({ theme }) => theme.secondary};
         font-weight: bold;
       }

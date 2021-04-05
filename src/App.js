@@ -23,6 +23,7 @@ import VistisForm from './components/visits/vistisRequests'
 import { useEffect, useState } from 'react'
 import { socket } from './components/hoc/utils'
 import { useSelector } from 'react-redux'
+import Settings from './components/settings'
 
 const App = () => {
   const login = useSelector(({ login }) => login)
@@ -68,6 +69,7 @@ const App = () => {
             <Route path='/visitas' component={Visits} exact />
             <Route path='/visitas/:id' component={VisitDetail} />
             <Route path='/perfil' component={EditProfile} />
+            <Route path='/opciones' component={Settings} />
             <Route path='/solicitar-visita' component={VistisForm} />
           </Switch>
         </Router>

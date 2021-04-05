@@ -12,6 +12,7 @@ export const GET_USER = 'GET_USER'
 export const FETCH_PROFILE = 'FETCH_PROFILE'
 export const PROFILE_FORM = 'PROFILE_FORM'
 export const EDIT_PROFILE = 'EDIT_PROFILE'
+export const EDIT_SETTINGS = 'EDIT_SETTINGS'
 
 // DASHBOARD
 export const FETCH_DASHBOARD = 'FETCH_DASHBOARD'

@@ -1,0 +1,13 @@
+{
+  "primary": "#3a83d5",
+  "secondary": "#185aa5",
+  "error": "#dc3e3e",
+  "background": "#333333",
+  "base": "#595656",
+  "text": "aliceblue",
+  "shadow": "1px 2px 5px #C9CFD8",
+  "blueGradient": "linear-gradient(270deg, #64AEDF 0%, #3A83D5 100%)",
+  "greygradient": "linear-gradient(177deg,#323233 0%,#2f2f2f 100%)",
+  "indigoGradient": "linear-gradient(270deg, #3493D1 0%, #226CBE 71.36%)",
+  "darkTheme": true
+}

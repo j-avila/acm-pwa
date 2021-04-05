@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import * as type from '../../store/reducers/types'
+import * as types from '../../store/reducers/types'
 
 import Button from '../UI/button'
 import Modal from '../UI/modal'
@@ -15,7 +15,8 @@ import slide3 from '../../assets/slide3.png'
 import slide4 from '../../assets/slide4.png'
 import { createProfile } from '../../store/actions/editProfile'
 import { useDispatch, useSelector } from 'react-redux'
-import { Error, ModalContent } from '../hoc/userWrapper'
+import { ModalContent } from '../hoc/userWrapper'
+import { Error } from '../login/styles'
 
 export const OnBoarding = () => {
   const history = useHistory()
@@ -53,9 +54,9 @@ export const OnBoarding = () => {
   }, [user])
 
   useEffect(() => {
-    errorMsg.errors && setModal(false)
-    errorMsg.errors && setError(errorMsg.errors.message)
-  }, [errorMsg.errors])
+    errorMsg && setModal(false)
+    errorMsg && setError(errorMsg.message)
+  }, [errorMsg])
 
   /* const pauseAudio = () => {
     const state = volume ? 'pause' : 'play'
@@ -191,6 +192,24 @@ export const OnBoarding = () => {
               />
             </FormImput>
           </FormWrapp>
+        </Modal>
+      )}
+      {error && (
+        <Modal>
+          <Error>
+            <i className='fas fa-exclamation-triangle'></i>
+            <p>{error}</p>
+            <Button
+              background='error'
+              width='100%'
+              onClick={() => {
+                dispatch({ type: types.ERROR, error: false })
+                setError(false)
+              }}
+            >
+              Volver
+            </Button>
+          </Error>
         </Modal>
       )}
     </Wrapper>

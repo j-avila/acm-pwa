@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { editSettings } from '../../store/actions/editProfile'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { editProfile } from '../../store/actions/editProfile'
 import UserWrapper from '../hoc/userWrapper'
 import Button from '../UI/button'
 import FormInput from '../UI/input'
@@ -8,14 +8,27 @@ import { Wrapper, SettingsContainer } from './styles'
 
 const Settings = () => {
   const dispatch = useDispatch()
+  const user = useSelector(({ user }) => user)
   const [appSettings, setTheme] = useState({
     size: '',
     theme: ''
   })
 
   const handleOptions = () => {
-    dispatch(editSettings(appSettings))
+    const userSettings = {
+      ...user.profile,
+      app_setting: { ...appSettings }
+    }
+    dispatch(editProfile(userSettings))
   }
+
+  useEffect(() => {
+    user.hasOwnProperty('profile') &&
+      setTheme({
+        size: user.profile.app_setting.size,
+        theme: user.profile.app_setting.theme
+      })
+  }, [user])
 
   return (
     <UserWrapper>
@@ -30,6 +43,7 @@ const Settings = () => {
         <SettingsContainer>
           <FormInput label='Tamaño de letra'>
             <select
+              value={appSettings.size}
               onChange={e => setTheme({ ...appSettings, size: e.target.value })}
             >
               {txtSizes.map(i => (
@@ -39,6 +53,7 @@ const Settings = () => {
           </FormInput>
           <FormInput label='Tema de colores'>
             <select
+              value={appSettings.theme}
               onChange={e =>
                 setTheme({ ...appSettings, theme: e.target.value })
               }

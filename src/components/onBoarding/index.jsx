@@ -21,8 +21,9 @@ import { Error } from '../login/styles'
 export const OnBoarding = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const user = useSelector(state => state.login.user)
-  const errorMsg = useSelector(state => state.errors)
+  const user = useSelector(({ user }) => user)
+  const errorMsg = useSelector(({ errors }) => errors)
+  const notification = useSelector(({ notifications }) => notifications)
   const [volume, setVolume] = useState(true)
   const [modalOn, setModal] = useState(false)
   const [slidePos, setSlidePos] = useState(0)
@@ -49,14 +50,19 @@ export const OnBoarding = () => {
   }
 
   useEffect(() => {
-    user && setForm({ ...form, code: user.acm.code })
+    user.profile && history.push('/panel-de-control')
+    user.hasOwnProperty('acm') &&
+      setForm({ ...form, code: user.acm.code, app_setting: {} })
     // handleAudio(0, 'play')
   }, [user])
 
   useEffect(() => {
     errorMsg && setModal(false)
     errorMsg && setError(errorMsg.message)
-  }, [errorMsg])
+    if (notification.hasOwnProperty('message')) {
+      setModal(false)
+    }
+  }, [errorMsg, notification])
 
   /* const pauseAudio = () => {
     const state = volume ? 'pause' : 'play'
@@ -210,6 +216,24 @@ export const OnBoarding = () => {
               Volver
             </Button>
           </Error>
+        </Modal>
+      )}
+      {notification && notification.hasOwnProperty('message') && (
+        <Modal>
+          <ModalContent type='success'>
+            <i className='fas fa-check'></i>
+            <p>{notification.message}</p>
+            <Button
+              background='primary'
+              width='100%'
+              onClick={() => {
+                dispatch({ type: types.NOTIFICATIONS, notification: false })
+                history.push('/panel-de-control')
+              }}
+            >
+              Volver
+            </Button>
+          </ModalContent>
         </Modal>
       )}
     </Wrapper>

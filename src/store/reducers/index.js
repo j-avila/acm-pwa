@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 import * as types from './types'
 import { requests } from './requests'
-import { editProfile } from './editProfile'
 import { login } from './login'
 import { information } from './information'
 import { user } from './user'
@@ -43,7 +42,6 @@ export default combineReducers({
   login,
   user,
   dashboard,
-  editProfile,
   information,
   requests,
   debts,

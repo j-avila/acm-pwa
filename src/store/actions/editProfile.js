@@ -10,7 +10,7 @@ export const createProfile = form => async dispatch => {
     .then(({ data }) => {
       dispatch({
         type: type.EDIT_PROFILE,
-        profile: data
+        user: data
       })
       dispatch({ type: type.LOADING, load: false })
       dispatch({ type: type.NOTIFICATIONS, notification: 'guardado con exito' })
@@ -28,14 +28,10 @@ export const editProfile = form => async dispatch => {
         type: type.EDIT_PROFILE,
         profile: data
       })
-      dispatch({ type: type.NOTIFICATIONS, notification: 'guardado con exito' })
+      dispatch({
+        type: type.NOTIFICATIONS,
+        notification: { message: 'guardado con exito' }
+      })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
-}
-
-export const editSettings = settings => async dispatch => {
-  dispatch({
-    type: type.EDIT_SETTINGS,
-    settings: settings
-  })
 }

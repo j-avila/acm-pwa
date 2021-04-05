@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Fondo from '../../../assets/background.png'
 
@@ -50,7 +50,24 @@ export const GlobalStyles = createGlobalStyle`
   }
 `
 export const ThemeWrapper = ({ children }) => {
-  const profile = useSelector(({ editProfile }) => editProfile)
+  const user = useSelector(({ user }) => user)
+  const [userTheme, setTheme] = useState()
+
+  const genTheme = () => {
+    let UTheme =
+      user.profile.app_setting && user.profile.app_setting.theme === '1'
+        ? darkTheme
+        : theme
+    setTheme(UTheme)
+  }
+
+  useEffect(() => {
+    user.hasOwnProperty('profile') && genTheme()
+  }, [])
+
+  useEffect(() => {
+    user.hasOwnProperty('profile') && genTheme()
+  }, [user])
 
   return (
     <>
@@ -65,16 +82,20 @@ export const ThemeWrapper = ({ children }) => {
           crossorigin='anonymous'
         ></script>
       </Helmet>
-      <ThemeProvider
-        theme={
-          profile.settings && profile.settings.theme === '1' ? darkTheme : theme
-        }
-      >
+      <ThemeProvider theme={userTheme || theme}>
         <GlobalStyles
           dark={
-            profile.settings && profile.settings.theme === '1' ? true : false
+            user.hasOwnProperty('profile') &&
+            user.profile.app_setting &&
+            user.profile.app_setting.theme === '1'
+              ? true
+              : false
           }
-          txtSize={profile.settings ? profile.settings.size : '16px'}
+          txtSize={
+            user.hasOwnProperty('profile') && user.profile.app_setting
+              ? user.profile.app_setting.size
+              : '16px'
+          }
         />
         {children}
       </ThemeProvider>

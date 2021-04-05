@@ -49,9 +49,9 @@ const Login = props => {
 
   useEffect(() => {
     if (login.hasOwnProperty('jwt') && user) {
-      if (login.jwt && !login.user) {
+      if (login.jwt && !user.profile) {
         history.push('/tour')
-      } else if (login.jwt && user) {
+      } else if (login.jwt && user.profile) {
         history.push('/panel-de-control')
       }
     } else {

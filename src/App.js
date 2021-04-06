@@ -39,7 +39,7 @@ const App = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('userActive'))
-    if (user.hasOwnProperty('id')) {
+    if (user && user.hasOwnProperty('id')) {
       setUserSession(user.id)
     }
     return () => {

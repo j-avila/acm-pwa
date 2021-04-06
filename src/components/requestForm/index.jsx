@@ -7,6 +7,7 @@ import FormInput from '../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { createRequest, getRoles } from '../../store/actions/bookings'
+import * as type from '../../store/reducers/types'
 
 const RequestForm = () => {
   const dispatch = useDispatch()
@@ -104,6 +105,10 @@ const RequestForm = () => {
       }
       console.log(geoLocation) */
       setForm({ ...form, location: location })
+      dispatch({
+        type: type.NOTIFICATIONS,
+        notification: { message: 'localización copiada exitosamente' }
+      })
     }
   }, [location])
 
@@ -173,6 +178,7 @@ const RequestForm = () => {
               onChange={e => handleImg(e)}
             />
           </FormInput>
+          <span>(Debe tener minimo 30 caracteres)</span>
 
           <ActionArea className='actions'>
             <Button background='primary'>

@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
@@ -13,7 +14,6 @@ const Requests = props => {
   const history = useHistory()
   const openRequests = useSelector(({ requests }) => requests.open)
   const closedRequests = useSelector(({ requests }) => requests.closed)
-
   const [openList, setOpenList] = useState([])
 
   const handleItem = id => {
@@ -31,7 +31,7 @@ const Requests = props => {
       openFormatted = openRequests.map(item => ({
         id: item.id,
         title: item.subject,
-        subtitle: `creada el: ${item.createdAt}`
+        subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
       }))
       setOpenList(openFormatted)
     }

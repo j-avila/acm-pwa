@@ -89,6 +89,7 @@ export const Bubble = styled.span`
     background: none;
   }
   h4 {
+    color: white;
     font-size: small;
     font-weight: bold;
   }

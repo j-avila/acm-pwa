@@ -73,13 +73,6 @@ const ChatCard = props => {
       setMessage({ ...message, coordinates: location.coords })
   }, [location])
 
-  useEffect(() => {
-    console.log(socket.connected)
-    requests.form &&
-      requests.form.length >= 1 &&
-      socket.emit('message:chat', 'olo')
-  }, [requests.form])
-
   return (
     <Card>
       <ChatWrapper>

@@ -22,14 +22,13 @@ import { EndSession } from './components/end Session'
 import VistisForm from './components/visits/vistisRequests'
 import { useEffect, useState } from 'react'
 import { socket } from './components/hoc/utils'
-import { useSelector } from 'react-redux'
 import Settings from './components/settings'
 
 const App = () => {
-  const login = useSelector(({ login }) => login)
   const [sessionUser, setUserSession] = useState()
 
   const setSockets = () => {
+    console.log(typeof sessionUser)
     socket.emit('join', sessionUser)
     socket.on('welcome', data =>
       console.log(
@@ -39,13 +38,19 @@ const App = () => {
   }
 
   useEffect(() => {
-    if (localStorage.getItem('session')) {
-      setUserSession(localStorage.getItem('session'))
+    const user = JSON.parse(localStorage.getItem('userActive'))
+    console.log('id:', user.hasOwnProperty('id'))
+    if (user.hasOwnProperty('id')) {
+      setUserSession(user.id)
     }
-    if (localStorage.getItem('userActive')) {
-      setSockets()
+    return () => {
+      socket.close()
     }
-  }, [login])
+  }, [])
+
+  useEffect(() => {
+    sessionUser && setSockets()
+  }, [sessionUser])
 
   return (
     <div className='App'>

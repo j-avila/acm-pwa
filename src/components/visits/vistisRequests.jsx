@@ -7,6 +7,7 @@ import FormInput from '../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { createVisitRequest, getRoles } from '../../store/actions/visits'
+import * as type from '../../store/reducers/types'
 
 const VistisForm = () => {
   const dispatch = useDispatch()
@@ -84,6 +85,10 @@ const VistisForm = () => {
   useEffect(() => {
     if (location) {
       setForm({ ...form, location: location })
+      dispatch({
+        type: type.NOTIFICATIONS,
+        notification: { message: 'localización copiada exitosamente' }
+      })
     }
   }, [location])
 

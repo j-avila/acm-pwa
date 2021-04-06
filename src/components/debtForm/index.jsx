@@ -8,6 +8,7 @@ import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { createDebtRequest } from '../../store/actions/debts'
 import { getRoles } from '../../store/actions/bookings'
+import * as type from '../../store/reducers/types'
 
 const DebtForm = () => {
   const dispatch = useDispatch()
@@ -77,6 +78,10 @@ const DebtForm = () => {
 
   useEffect(() => {
     setForm({ ...form, location: location })
+    dispatch({
+      type: type.NOTIFICATIONS,
+      notification: { message: 'localización copiada exitosamente' }
+    })
   }, [location])
 
   return (

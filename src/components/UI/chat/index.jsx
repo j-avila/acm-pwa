@@ -10,7 +10,7 @@ import { socket } from '../../hoc/utils'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
-  const { id, items, msgAction } = props
+  const { id, items, msgAction, chatBar } = props
   const loading = useSelector(({ loading }) => loading)
   const loggedUser = useSelector(({ user }) => user)
   const requests = useSelector(({ requests }) => requests)
@@ -116,57 +116,59 @@ const ChatCard = props => {
           ))
         )}
       </ChatWrapper>
-      <Message>
-        {actions && (
-          <ActionArea>
-            <span>
-              <Button background='primary' display='block'>
-                <i className='fas fa-camera'></i>
-              </Button>
-              Agregar Foto
-            </span>
-            <span>
-              <Button
-                display='block'
-                background='rgba(87,162,198,1)'
-                onClick={() => handleFileClick()}
-                onChange={e => getFile(e)}
-              >
-                <i className='fas fa-paperclip'></i>
-                <input
-                  type='file'
-                  typeof='.jepg, .png, .jpg'
-                  style={{ display: 'none' }}
-                  ref={hiddenFileInput}
-                  onChange={e => handleImg(e)}
-                />
-              </Button>
-              Agregar Archivo
-            </span>
-            <span>
-              <Button
-                background='secondary'
-                onClick={() => getLocation()}
-                display='block'
-              >
-                <i className='fas fa-crosshairs'></i>
-              </Button>
-              Agregar Ubicación
-            </span>
-          </ActionArea>
-        )}
-        <FileAdd onClick={() => openActions(!actions)}>
-          <i className='fas fa-plus'></i>
-        </FileAdd>
-        <input
-          type='text'
-          value={message.message}
-          onChange={e => setMessage({ ...message, message: e.target.value })}
-        />
-        <Button background='transparent' onClick={() => handleMessage()}>
-          <i className='fas fa-paper-plane'></i>
-        </Button>
-      </Message>
+      {chatBar && (
+        <Message>
+          {actions && (
+            <ActionArea>
+              <span>
+                <Button background='primary' display='block'>
+                  <i className='fas fa-camera'></i>
+                </Button>
+                Agregar Foto
+              </span>
+              <span>
+                <Button
+                  display='block'
+                  background='rgba(87,162,198,1)'
+                  onClick={() => handleFileClick()}
+                  onChange={e => getFile(e)}
+                >
+                  <i className='fas fa-paperclip'></i>
+                  <input
+                    type='file'
+                    typeof='.jepg, .png, .jpg'
+                    style={{ display: 'none' }}
+                    ref={hiddenFileInput}
+                    onChange={e => handleImg(e)}
+                  />
+                </Button>
+                Agregar Archivo
+              </span>
+              <span>
+                <Button
+                  background='secondary'
+                  onClick={() => getLocation()}
+                  display='block'
+                >
+                  <i className='fas fa-crosshairs'></i>
+                </Button>
+                Agregar Ubicación
+              </span>
+            </ActionArea>
+          )}
+          <FileAdd onClick={() => openActions(!actions)}>
+            <i className='fas fa-plus'></i>
+          </FileAdd>
+          <input
+            type='text'
+            value={message.message}
+            onChange={e => setMessage({ ...message, message: e.target.value })}
+          />
+          <Button background='transparent' onClick={() => handleMessage()}>
+            <i className='fas fa-paper-plane'></i>
+          </Button>
+        </Message>
+      )}
     </Card>
   )
 }

@@ -39,7 +39,6 @@ const App = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('userActive'))
-    console.log('id:', user.hasOwnProperty('id'))
     if (user.hasOwnProperty('id')) {
       setUserSession(user.id)
     }

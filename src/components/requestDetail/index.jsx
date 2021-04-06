@@ -34,6 +34,7 @@ const RequestDetail = props => {
     request.hasOwnProperty('details') &&
       setDetails({
         ...reqDetails,
+        closed: request.details.event.closed,
         title: request.details.event.subject,
         messages: request.details.messages
       })
@@ -49,6 +50,7 @@ const RequestDetail = props => {
           id={location.state.id}
           items={reqDetails.messages}
           msgAction={handleForm}
+          chatBar={!request.details.event.closed}
         />
       </DetailsWrapper>
     </UserWrapper>

@@ -12,12 +12,16 @@ import { Wrapper } from './styles'
 const Requests = props => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const openRequests = useSelector(({ requests }) => requests.open)
-  const closedRequests = useSelector(({ requests }) => requests.closed)
+  const requests = useSelector(({ requests }) => requests.open)
   const [openList, setOpenList] = useState([])
+  const [closedList, setClosedList] = useState([])
 
   const handleItem = id => {
-    history.push({ pathname: `/solicitudes/${id}`, state: { id: id } })
+    // let closed = closedList.filter(i => i.id === id)[0].closed
+    history.push({
+      pathname: `/solicitudes/${id}`,
+      state: { id: id }
+    })
   }
 
   useEffect(() => {
@@ -25,18 +29,31 @@ const Requests = props => {
   }, [])
 
   useEffect(() => {
-    let openFormatted
+    let formatted
 
-    if (openRequests && openRequests.length >= 1) {
-      openFormatted = openRequests.map(item => ({
-        id: item.id,
-        title: item.subject,
-        subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
-      }))
-      setOpenList(openFormatted)
+    if (requests && requests.length >= 1) {
+      formatted = requests
+        .filter(i => i.closed === false)
+        .map(item => ({
+          id: item.id,
+          title: item.subject,
+          subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
+        }))
+      setOpenList(formatted)
+    }
+    if (requests && requests.length >= 1) {
+      formatted = requests
+        .filter(i => i.closed === true)
+        .map(item => ({
+          id: item.id,
+          title: item.subject,
+          closed: item.closed,
+          subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
+        }))
+      setClosedList(formatted)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openRequests])
+  }, [requests])
 
   return (
     <UserWrapper pathName='Solicitudes/Reclamos'>
@@ -46,7 +63,7 @@ const Requests = props => {
             <List items={openList} action={handleItem} />
           </Panel>
           <Panel title='Finalizados'>
-            <List items={closedRequests} />
+            <List items={closedList} action={handleItem} />
           </Panel>
         </Tabs>
         <Button

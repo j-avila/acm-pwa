@@ -12,10 +12,12 @@ const RequestForm = () => {
   const dispatch = useDispatch()
   const hiddenFileInput = useRef(null)
   const requests = useSelector(({ requests }) => requests)
+  const roles = useSelector(({ requests }) => requests.roles)
   const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({})
   const [listRequests, setList] = useState()
+  const [invalid, setValid] = useState(true)
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -74,9 +76,25 @@ const RequestForm = () => {
   }, [])
 
   useEffect(() => {
-    console.log(requests)
+    user &&
+      roles &&
+      setForm({
+        ...form,
+        irrigator_code: user.code,
+        association_area: roles[0].id,
+        type: 'requestforattention'
+      })
+  }, [user, roles])
+
+  useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
-  }, [requests])
+    // checking for form validation
+    form.association_area &&
+      form.subject &&
+      form.content &&
+      form.content.length >= 30 &&
+      setValid(false)
+  }, [requests, form])
 
   useEffect(() => {
     if (location) {
@@ -103,7 +121,9 @@ const RequestForm = () => {
                 setForm({ ...form, association_area: e.target.value })
               }
             >
-              <option disabled>Selecciona una opción</option>
+              <option disabled selected>
+                Selecciona una opción
+              </option>
               {listRequests &&
                 listRequests.map(option => (
                   <option key={option.id} value={option.id}>
@@ -116,7 +136,9 @@ const RequestForm = () => {
             <select
               onChange={e => setForm({ ...form, subject: e.target.value })}
             >
-              <option disabled>Selecciona un asunto recurrente</option>
+              <option disabled selected>
+                Selecciona un asunto recurrente
+              </option>
               {subjectSelect.map(subject => (
                 <option key={subject.label} value={subject.label}>
                   {subject.label}
@@ -124,7 +146,7 @@ const RequestForm = () => {
               ))}
             </select>
           </FormInput>
-          {form.type === 'Otro' && (
+          {form.subject === 'Otro' && (
             <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
               <input
                 type='text'
@@ -167,7 +189,7 @@ const RequestForm = () => {
             <Button background='secondary' onClick={() => getLocation()}>
               <i className='fas fa-crosshairs'></i>
             </Button>
-            <Button className='btn-send' type='submit'>
+            <Button className='btn-send' type='submit' disabled={invalid}>
               Enviar
             </Button>
           </ActionArea>

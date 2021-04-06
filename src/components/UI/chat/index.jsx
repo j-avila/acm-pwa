@@ -77,7 +77,7 @@ const ChatCard = props => {
     console.log(socket.connected)
     requests.form &&
       requests.form.length >= 1 &&
-      socket.emit('message:chat', JSON.stringify(requests.form))
+      socket.emit('message:chat', 'olo')
   }, [requests.form])
 
   return (

@@ -50,7 +50,7 @@ const RequestDetail = props => {
           id={location.state.id}
           items={reqDetails.messages}
           msgAction={handleForm}
-          chatBar={!request.details.event.closed}
+          chatBar={!reqDetails.closed}
         />
       </DetailsWrapper>
     </UserWrapper>

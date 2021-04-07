@@ -15,16 +15,15 @@ const InfoChannel = props => {
   const [dailyFlow, setDailyFlow] = useState({})
 
   const handleDailyFlow = () => {
-    const northchannel =
-      infoCards.daily_flow_channel['caudales-del-sistema-maule-norte']
+    const acmChannel = infoCards.daily_flow_channel.value
 
-    const userChannel = loggedUser.user.acm.channel
+    const userChannel = user.acm.channel
 
-    const result = northchannel.filter(
-      channel => channel.channel === userChannel
-    )
+    const result = acmChannel.filter(channel => channel.channel === userChannel)
     console.log(result)
-    setDailyFlow(result)
+    setDailyFlow(
+      result && result[0] ? result[0] : 'no hay informacióñ disponible'
+    )
   }
 
   useEffect(() => {
@@ -33,7 +32,7 @@ const InfoChannel = props => {
 
   useEffect(() => {
     infoCards && setLoading(false)
-    if (loggedUser && loggedUser.user && infoCards) {
+    if (user && infoCards) {
       handleDailyFlow()
     }
   }, [infoCards])

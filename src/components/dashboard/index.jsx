@@ -37,10 +37,10 @@ const Dashboard = props => {
               onClick={() => history.push('/informacion')}
             >
               <section>
-                <strong>Caudal Diario: Canal Vergara</strong>
-                <h1>1209 l/s</h1>
+                <strong>{`Caudal Diario: ${dashData.acm.daily_flow_channel.estacion}`}</strong>
+                <h1>{`${dashData.acm.daily_flow_channel.caudal}`}</h1>
               </section>
-              <footer>Actualizado al 28 de octubre 2020</footer>
+              <footer>{`Actualizado al ${dashData.acm.daily_flow_channel.updated}`}</footer>
             </Card>
 
             <Card

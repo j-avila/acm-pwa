@@ -32,58 +32,83 @@ const VisitDetail = props => {
               {details.closed && <i className='fas fa-check-circle'></i>}
               {details.subject}
             </h1>
-            <Card>
-              <div className='info'>
-                <p>
-                  <strong>Fecha :</strong>
-                  {moment(details.visitreport_data.date).format('DD/MM/YYYY')}
-                </p>
-                <p>
-                  <strong>Hora: </strong>
-                  {moment(details.visitreport_data.date).format('HH:HH')}
-                </p>
-                <p>
-                  <strong>Visitante</strong> : Juan Perez
-                </p>
-                <p>
-                  <strong>Motivo de la visita: </strong>
-                  {details.content}
-                </p>
-                <p>
-                  <strong>Adjuntos</strong> :
-                </p>
-              </div>
+            <Card className='info'>
+              <p>
+                <strong>Fecha :</strong>
+                {moment(details.visitreport_data.date).format('DD/MM/YYYY')}
+              </p>
+              <p>
+                <strong>Hora: </strong>
+                {moment(details.visitreport_data.date).format('HH:HH')}
+              </p>
+              <p>
+                <strong>Visitante</strong> : Juan Perez
+              </p>
+              <p>
+                <strong>Motivo de la visita: </strong>
+                {details.content}
+              </p>
+              <p>
+                <strong>Adjuntos</strong> :
+              </p>
             </Card>
             {bio && bio.messages.length >= 1 && <h2>Bitacora de celador</h2>}
             {bio &&
               bio.messages.length >= 1 &&
               bio.messages.map(message => (
-                <Card key={message.published_at}>
+                <Card key={message.published_at} className='bio'>
                   <p>
                     <strong>
-                      fecha:
+                      Publicado el:
                       {moment(message.published_at).format(
                         'DD/MM/YYYY - HH:HH'
                       )}
                     </strong>
                   </p>
                   <p>
-                    <strong>fecha: {message.published_at}</strong>
+                    <strong>
+                      Fecha: {moment(message.published_at).format('DD/MM/YYYY')}
+                    </strong>
                   </p>
-                  <p>{message.message}</p>
+                  <p>
+                    <strong>Bitacora: </strong>
+                    {message.message}
+                  </p>
                   {message.attached && message.attached.formats ? (
                     <>
-                      <label>Aduntos:</label>
-                      <img
-                        src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
-                        alt={message.attached.name}
-                      />
+                      <span className='attachment'>
+                        <p>
+                          <strong>Adjuntos:</strong>
+                        </p>
+                        <img
+                          src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
+                          alt={message.attached.name}
+                        />
+                      </span>
+                      <a
+                        href={`${apiUrl}${message.attached.url}`}
+                        rel='noreferrer'
+                        target='_blank'
+                      >
+                        <i className='fas fa-download'></i>
+                        Descargar archivo
+                      </a>
                     </>
                   ) : message.attached ? (
-                    <span>
-                      <i className='fas fa-file' />
-                      <strong>{message.attached.name}</strong>
-                    </span>
+                    <>
+                      <span className='attachment'>
+                        <i className='fas fa-file' />
+                        <strong>{message.attached.name}</strong>
+                      </span>
+                      <a
+                        href={`${apiUrl}${message.attached.url}`}
+                        rel='noreferrer'
+                        target='_blank'
+                      >
+                        <i className='fas fa-download'></i>
+                        Descargar archivo
+                      </a>
+                    </>
                   ) : (
                     ''
                   )}

@@ -7,6 +7,7 @@ import { Row, Message, ChatWrapper, FileAdd, ActionArea } from './styles'
 import { useSelector } from 'react-redux'
 import { GhostLine } from '../ghostLoader'
 import { socket } from '../../hoc/utils'
+import moment from 'moment'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
@@ -110,7 +111,9 @@ const ChatCard = props => {
                 provName={message.user.name}
               >
                 {message.message}
-                <span className='meta'>{message.createdAt}</span>
+                <span className='meta'>
+                  {moment(message.createdAt).format('MMMM DD YYYY')}
+                </span>
               </ChatBubble>
             </Row>
           ))

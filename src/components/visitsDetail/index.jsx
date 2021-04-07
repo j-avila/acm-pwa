@@ -80,10 +80,16 @@ const VisitDetail = props => {
                         <p>
                           <strong>Adjuntos:</strong>
                         </p>
-                        <img
-                          src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
-                          alt={message.attached.name}
-                        />
+                        <a
+                          href={`${apiUrl}${message.attached.url}`}
+                          rel='noreferrer'
+                          target='_blank'
+                        >
+                          <img
+                            src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
+                            alt={message.attached.name}
+                          />
+                        </a>
                       </span>
                       <a
                         href={`${apiUrl}${message.attached.url}`}

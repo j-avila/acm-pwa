@@ -27,9 +27,9 @@ export const setMessage = form => async dispatch => {
   return axios.post(url, form, getAuth()).then(({ data }) => {
     console.log(data)
     socket.emit('message:chat', data)
-    // dispatch({
-    //   type: type.REQUEST_FORM,
-    //   form: data
-    // })
+    dispatch({
+      type: type.REQUEST_FORM,
+      message: data
+    })
   })
 }

@@ -6,6 +6,7 @@ import UserWrapper from '../hoc/userWrapper'
 import { socket } from '../hoc/utils'
 import Chat from '../UI/chat'
 import { CeladorSection, DetailsWrapper } from './styles'
+import * as type from '../../store/reducers/types'
 
 const RequestDetail = props => {
   const { location } = props
@@ -24,9 +25,9 @@ const RequestDetail = props => {
   useEffect(() => {
     dispatch(getChats(location.state.id))
     socket.emit('open:chat', location.state.id)
-    socket.on('message:chat', chats => {
-      console.log('yayayajuu', chats)
-      setDetails({ ...reqDetails, chats: chats })
+    socket.on('message:chat', message => {
+      console.log('yayayajuu', message)
+      dispatch({ type: type.REQUEST_FORM, message: message })
     })
   }, [])
 
@@ -34,7 +35,7 @@ const RequestDetail = props => {
     request.hasOwnProperty('details') &&
       setDetails({
         ...reqDetails,
-        closed: request.details.event.closed,
+        closed: request.details.event.closed || false,
         title: request.details.event.subject,
         messages: request.details.messages
       })

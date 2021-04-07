@@ -13,9 +13,13 @@ export const requests = (state = [], action) => {
         details: action.request
       }
     case types.REQUEST_FORM:
+      let updated = action.message
       return {
         ...state,
-        form: action.form
+        details: {
+          ...state.details,
+          messages: [...state.details.messages, updated]
+        }
       }
     case types.GET_ROLES:
       return {

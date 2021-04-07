@@ -1,6 +1,7 @@
+import moment from 'moment'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchVisit } from '../../store/actions/visits'
+import { fetchVisit, getBio } from '../../store/actions/visits'
 import UserWrapper from '../hoc/userWrapper'
 import Card from '../UI/card'
 import { DetailWrapper } from './styles'
@@ -9,10 +10,12 @@ const VisitDetail = props => {
   const dispatch = useDispatch()
   const loading = useSelector(({ loading }) => loading)
   const details = useSelector(({ visits }) => visits.details)
+  const bio = useSelector(({ visits }) => visits.bio)
   const { location } = props
 
   useEffect(() => {
     dispatch(fetchVisit(location.state.id))
+    dispatch(getBio(location.state.id))
   }, [])
 
   return (
@@ -31,10 +34,12 @@ const VisitDetail = props => {
             <Card>
               <div className='info'>
                 <p>
-                  <strong>Fecha</strong> : 12/12/2021
+                  <strong>Fecha :</strong>
+                  {moment(details.visitreport_data.date).format('DD/MM/YYYY')}
                 </p>
                 <p>
-                  <strong>Hora</strong> : 12:00
+                  <strong>Hora: </strong>
+                  {moment(details.visitreport_data.date).format('HH:HH')}
                 </p>
                 <p>
                   <strong>Visitante</strong> : Juan Perez
@@ -48,6 +53,32 @@ const VisitDetail = props => {
                 </p>
               </div>
             </Card>
+            {bio && bio.messages.length >= 1 && <h2>Bitacora de celador</h2>}
+            {bio &&
+              bio.messages.length >= 1 &&
+              bio.messages.map(message => (
+                <Card key={message.published_at}>
+                  <p>
+                    <strong>
+                      fecha:
+                      {moment(message.published_at).format('DD/MM/YYYY : HHHH')}
+                    </strong>
+                  </p>
+                  <p>
+                    <strong>fecha: {message.published_at}</strong>
+                  </p>
+                  <p>{message.message}</p>
+                  {message.attached && (
+                    <>
+                      <label>Aduntos:</label>
+                      <img
+                        src={message.attached.url}
+                        alt={message.attached.name}
+                      />
+                    </>
+                  )}
+                </Card>
+              ))}
           </>
         )}
       </DetailWrapper>

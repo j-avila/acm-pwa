@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userDataHandler } from '../../store/actions/login'
 import { fetchDashboard } from '../../store/actions/dashboard'
 import { GhostLine } from '../UI/ghostLoader'
+import moment from 'moment'
 
 const Dashboard = props => {
   const dispatch = useDispatch()
   const history = useHistory()
   const dashData = useSelector(({ dashboard }) => dashboard)
+  const user = useSelector(({ user }) => user)
   const loading = useSelector(({ loading }) => loading)
   const [info, setInfo] = useState()
 
@@ -69,9 +71,13 @@ const Dashboard = props => {
             >
               <section>
                 <strong>Próxima visita programada:</strong>
-                <h1>14 de abril 14:00</h1>
+                <h1>
+                  {moment(dashData.next_visit.visitreport_data.date).format(
+                    'DD MMMM YYYY : HHHH'
+                  )}
+                </h1>
               </section>
-              <footer>Celador: Jorge Ortiz</footer>
+              <footer>{`Celador: ${user.watchman.name}`}</footer>
             </Card>
 
             <Card

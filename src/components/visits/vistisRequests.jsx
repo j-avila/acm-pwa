@@ -72,9 +72,9 @@ const VistisForm = () => {
         ...form,
         irrigator_code: user.code,
         type: 'requestforattention',
-        subject: 'Solicitud'
-        // association_area:
-        //   visitsList && visitsList.filter(e => e.code === 'helptable')[0].id
+        subject: 'Solicitud',
+        association_area:
+          visitsList && visitsList.filter(e => e.code === 'watchman')[0].id
       })
   }, [])
 
@@ -95,7 +95,7 @@ const VistisForm = () => {
   return (
     <UserWrapper pathName='Nueva Solicitud/Reclamo'>
       <RequestWrapper onSubmit={e => handleForm(e)}>
-        <h1>Crea una nueva solicitud de atención o reclamo</h1>
+        <h1>Crea una solicitud de visita</h1>
         <Card className='form-card'>
           <FormInput
             label='¿A quién está dirigida tu solicitud de atención?'
@@ -105,13 +105,14 @@ const VistisForm = () => {
               onChange={e =>
                 setForm({ ...form, association_area: e.target.value })
               }
+              disabled
             >
               <option>Selecciona una opción</option>
               {visitsList &&
                 visitsList
-                  .filter(e => e.code !== 'administration')
+                  .filter(e => e.code === 'watchman')
                   .map(option => (
-                    <option key={option.id} value={option.id}>
+                    <option key={option.id} value={option.id} selected>
                       {option.name}
                     </option>
                   ))}

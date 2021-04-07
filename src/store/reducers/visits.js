@@ -12,6 +12,11 @@ export const visits = (state = {}, action) => {
         ...state,
         details: action.visit
       }
+    case types.GET_VISIT_BIO:
+      return {
+        ...state,
+        bio: action.messages
+      }
     case types.REQUEST_VISIT:
       return {
         ...state,

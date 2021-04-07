@@ -32,6 +32,24 @@ export const fetchVisit = id => async dispatch => {
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
+export const getBio = id => async dispatch => {
+  const url = `${apiUrl}/get-messages/${id}`
+  dispatch({ type: type.LOADING, load: true })
+  return axios
+    .get(url, getAuth())
+    .then(({ data }) => {
+      dispatch({
+        type: type.GET_VISIT_BIO,
+        messages: data
+      })
+      dispatch({ type: type.LOADING, load: false })
+    })
+    .catch(err => {
+      dispatch({ type: type.ERROR, error: err })
+      dispatch({ type: type.LOADING, load: false })
+    })
+}
+
 export const getRoles = () => async dispatch => {
   const url = `${apiUrl}/association-areas`
   dispatch({ type: type.LOADING, load: true })

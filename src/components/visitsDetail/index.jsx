@@ -7,8 +7,8 @@ import { DetailWrapper } from './styles'
 
 const VisitDetail = props => {
   const dispatch = useDispatch()
-  const details = useSelector(({ visits }) => visits.details)
   const loading = useSelector(({ loading }) => loading)
+  const details = useSelector(({ visits }) => visits.details)
   const { location } = props
 
   useEffect(() => {
@@ -20,6 +20,8 @@ const VisitDetail = props => {
       <DetailWrapper>
         {loading ? (
           <p>cargando...</p>
+        ) : !details ? (
+          <p>nada que mostrar</p>
         ) : (
           <>
             <h1>

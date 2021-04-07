@@ -1,6 +1,7 @@
 import moment from 'moment'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { apiUrl } from '../../store/actions/utils'
 import { fetchVisit, getBio } from '../../store/actions/visits'
 import UserWrapper from '../hoc/userWrapper'
 import Card from '../UI/card'
@@ -61,21 +62,30 @@ const VisitDetail = props => {
                   <p>
                     <strong>
                       fecha:
-                      {moment(message.published_at).format('DD/MM/YYYY : HHHH')}
+                      {moment(message.published_at).format(
+                        'DD/MM/YYYY - HH:HH'
+                      )}
                     </strong>
                   </p>
                   <p>
                     <strong>fecha: {message.published_at}</strong>
                   </p>
                   <p>{message.message}</p>
-                  {message.attached && (
+                  {message.attached && message.attached.formats ? (
                     <>
                       <label>Aduntos:</label>
                       <img
-                        src={message.attached.url}
+                        src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
                         alt={message.attached.name}
                       />
                     </>
+                  ) : message.attached ? (
+                    <span>
+                      <i className='fas fa-file' />
+                      <strong>{message.attached.name}</strong>
+                    </span>
+                  ) : (
+                    ''
                   )}
                 </Card>
               ))}

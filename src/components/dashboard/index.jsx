@@ -73,7 +73,7 @@ const Dashboard = props => {
                 <strong>Próxima visita programada:</strong>
                 <h1>
                   {moment(dashData.next_visit.visitreport_data.date).format(
-                    'DD MMMM YYYY : HHHH'
+                    'DD MMMM YYYY - HH:HH'
                   )}
                 </h1>
               </section>

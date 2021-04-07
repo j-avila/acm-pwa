@@ -23,9 +23,11 @@ import VistisForm from './components/visits/vistisRequests'
 import { useEffect, useState } from 'react'
 import { socket } from './components/hoc/utils'
 import Settings from './components/settings'
+import { useSelector } from 'react-redux'
 
 const App = () => {
   const [sessionUser, setUserSession] = useState()
+  const user = useSelector(({ user }) => user)
 
   const setSockets = () => {
     console.log(typeof sessionUser)
@@ -49,7 +51,8 @@ const App = () => {
 
   useEffect(() => {
     sessionUser && setSockets()
-  }, [sessionUser])
+    user && setSockets()
+  }, [sessionUser, user])
 
   return (
     <div className='App'>

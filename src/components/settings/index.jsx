@@ -48,7 +48,9 @@ const Settings = () => {
               onChange={e => setTheme({ ...appSettings, size: e.target.value })}
             >
               {txtSizes.map(i => (
-                <option value={i.value}>{i.label}</option>
+                <option key={i.value} value={i.value}>
+                  {i.label}
+                </option>
               ))}
             </select>
           </FormInput>

@@ -96,7 +96,7 @@ const Dashboard = props => {
 
             <Card className='stat-card' title='Acciones'>
               <section>
-                <h1>{`${Math.floor(dashData.number_of_actions)} Acciones`}</h1>
+                <h1>{`${dashData.number_of_actions} Acciones`}</h1>
               </section>
             </Card>
           </>

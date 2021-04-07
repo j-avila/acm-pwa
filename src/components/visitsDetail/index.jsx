@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchVisit } from '../../store/actions/visits'
 import UserWrapper from '../hoc/userWrapper'
 import Card from '../UI/card'
 import { DetailWrapper } from './styles'
 
 const VisitDetail = props => {
-  const { title, body, id, date, inCharge, ended } = props
+  const dispatch = useDispatch()
+  const details = useSelector(({ visits }) => visits.details)
+  const { location } = props
+
+  useEffect(() => {
+    dispatch(fetchVisit(location.state.id))
+  }, [])
+
   return (
     <UserWrapper pathName='Detalle de visita'>
       <DetailWrapper>
         <h1>
-          {/* {ended && <i className='fas fa-check-circle'></i>} */}
-          {title}
+          {details.closed && <i className='fas fa-check-circle'></i>}
+          {details.subject}
         </h1>
         <Card>
           <div className='info'>
@@ -24,10 +33,8 @@ const VisitDetail = props => {
               <strong>Visitante</strong> : Juan Perez
             </p>
             <p>
-              <strong>Motivo de la visita</strong> : Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Necessitatibus in, voluptatum et
-              accusantium deleniti doloremque veniam veritatis porro, eveniet ab
-              at quos facilis. Non id debitis doloremque vel quam nostrum.
+              <strong>Motivo de la visita: </strong>
+              {details.content}
             </p>
             <p>
               <strong>Adjuntos</strong> :

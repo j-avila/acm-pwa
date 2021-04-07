@@ -8,6 +8,7 @@ import { DetailWrapper } from './styles'
 const VisitDetail = props => {
   const dispatch = useDispatch()
   const details = useSelector(({ visits }) => visits.details)
+  const loading = useSelector(({ loading }) => loading)
   const { location } = props
 
   useEffect(() => {
@@ -17,30 +18,36 @@ const VisitDetail = props => {
   return (
     <UserWrapper pathName='Detalle de visita'>
       <DetailWrapper>
-        <h1>
-          {details.closed && <i className='fas fa-check-circle'></i>}
-          {details.subject}
-        </h1>
-        <Card>
-          <div className='info'>
-            <p>
-              <strong>Fecha</strong> : 12/12/2021
-            </p>
-            <p>
-              <strong>Hora</strong> : 12:00
-            </p>
-            <p>
-              <strong>Visitante</strong> : Juan Perez
-            </p>
-            <p>
-              <strong>Motivo de la visita: </strong>
-              {details.content}
-            </p>
-            <p>
-              <strong>Adjuntos</strong> :
-            </p>
-          </div>
-        </Card>
+        {loading ? (
+          <p>cargando...</p>
+        ) : (
+          <>
+            <h1>
+              {details.closed && <i className='fas fa-check-circle'></i>}
+              {details.subject}
+            </h1>
+            <Card>
+              <div className='info'>
+                <p>
+                  <strong>Fecha</strong> : 12/12/2021
+                </p>
+                <p>
+                  <strong>Hora</strong> : 12:00
+                </p>
+                <p>
+                  <strong>Visitante</strong> : Juan Perez
+                </p>
+                <p>
+                  <strong>Motivo de la visita: </strong>
+                  {details.content}
+                </p>
+                <p>
+                  <strong>Adjuntos</strong> :
+                </p>
+              </div>
+            </Card>
+          </>
+        )}
       </DetailWrapper>
     </UserWrapper>
   )

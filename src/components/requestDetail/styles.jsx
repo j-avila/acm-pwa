@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const DetailsWrapper = styled.div`
   #card {
     margin: 0.5rem auto;
-    margin-bottom: 10vh;
+    margin-bottom: 12vh;
   }
 `
 

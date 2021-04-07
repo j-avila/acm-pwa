@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { GhostLine } from '../ghostLoader'
 import { socket } from '../../hoc/utils'
 import moment from 'moment'
+import { apiUrl } from '../../../store/actions/utils'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
@@ -103,14 +104,60 @@ const ChatCard = props => {
                 direction={
                   !message.user.code
                     ? 'notification'
-                    : message.user.code !== loggedUser.code
+                    : message.user.hasOwnProperty('role')
                     ? 'flex-start'
                     : 'flex-end'
                 }
-                isUser={message.user.code === loggedUser.code}
+                isUser={!message.user.hasOwnProperty('role')}
                 provName={message.user.name}
               >
                 {message.message}
+                <div>
+                  {message.attached && message.attached.formats ? (
+                    <>
+                      <span className='attachment'>
+                        <p>
+                          <strong>Adjuntos:</strong>
+                        </p>
+                        <a
+                          href={`${apiUrl}${message.attached.url}`}
+                          rel='noreferrer'
+                          target='_blank'
+                        >
+                          <img
+                            src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
+                            alt={message.attached.name}
+                          />
+                        </a>
+                      </span>
+                      <a
+                        href={`${apiUrl}${message.attached.url}`}
+                        rel='noreferrer'
+                        target='_blank'
+                      >
+                        <i className='fas fa-download'></i>
+                        Descargar archivo
+                      </a>
+                    </>
+                  ) : message.attached ? (
+                    <>
+                      <span className='attachment'>
+                        <i className='fas fa-file' />
+                        <strong>{message.attached.name}</strong>
+                      </span>
+                      <a
+                        href={`${apiUrl}${message.attached.url}`}
+                        rel='noreferrer'
+                        target='_blank'
+                      >
+                        <i className='fas fa-download'></i>
+                        Descargar archivo
+                      </a>
+                    </>
+                  ) : (
+                    ''
+                  )}
+                </div>
                 <span className='meta'>
                   {moment(message.createdAt).format('MMMM DD YYYY')}
                 </span>

@@ -35,6 +35,9 @@ export const DetailWrapper = styled.div`
           display: block;
           margin: 0 auto;
         }
+        i {
+          margin-right: 8px;
+        }
       }
       a {
         display: block;
@@ -42,7 +45,7 @@ export const DetailWrapper = styled.div`
         color: ${({ theme }) => theme.primary};
         text-decoration: underline;
         i {
-          margin-right: 12px;
+          margin-right: 8px;
         }
       }
     }

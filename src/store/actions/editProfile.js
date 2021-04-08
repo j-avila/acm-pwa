@@ -13,7 +13,10 @@ export const createProfile = form => async dispatch => {
         user: data
       })
       dispatch({ type: type.LOADING, load: false })
-      dispatch({ type: type.NOTIFICATIONS, notification: 'guardado con exito' })
+      dispatch({
+        type: type.NOTIFICATIONS,
+        notification: { message: 'guardado con exito' }
+      })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }

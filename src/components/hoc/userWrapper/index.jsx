@@ -9,7 +9,7 @@ import { useHistory } from 'react-router'
 import * as type from '../../../store/reducers/types'
 import { socket } from '../utils'
 const menuItems = [
-  { name: 'panel de control', path: '/panel-de-control' },
+  { name: 'Inicio', path: '/panel-de-control' },
   { name: 'información del canal', path: '/informacion' },
   { name: 'solicitudes y reclamos', path: '/solicitudes' },
   { name: 'visitas', path: '/visitas' },
@@ -41,8 +41,7 @@ const UserLayout = props => {
   const errorMsg = useSelector(({ errors }) => errors)
   const notification = useSelector(({ notifications }) => notifications)
   const userData = useSelector(({ user }) => user)
-  const [sessionId, setSession] = useState()
-  const { children, pathName } = props
+  const { children, pathName, action } = props
   const [error, setError] = useState()
   const session = localStorage.getItem('session')
 
@@ -58,7 +57,7 @@ const UserLayout = props => {
 
   useEffect(() => {
     errorMsg && errorMsg.hasOwnProperty('message') && setError(errorMsg)
-  }, [errorMsg, notification])
+  }, [errorMsg])
 
   return (
     <>
@@ -81,24 +80,6 @@ const UserLayout = props => {
               onClick={() => {
                 setError(false)
                 dispatch({ type: type.ERROR, error: '' })
-              }}
-            >
-              Volver
-            </Button>
-          </ModalContent>
-        </Modal>
-      )}
-      {notification && notification.hasOwnProperty('message') && (
-        <Modal>
-          <ModalContent type='success'>
-            <i className='fas fa-check'></i>
-            <p>{notification.message}</p>
-            <Button
-              background='primary'
-              width='100%'
-              onClick={() => {
-                setError(false)
-                dispatch({ type: type.NOTIFICATIONS, notification: false })
               }}
             >
               Volver

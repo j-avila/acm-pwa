@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react'
-import UserWrapper from '../hoc/userWrapper'
+import UserWrapper, { ModalContent } from '../hoc/userWrapper'
 import Card from '../UI/card'
 import Button from '../UI/button'
 import FormInput from '../UI/input'
@@ -9,11 +9,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createDebtRequest } from '../../store/actions/debts'
 import { getRoles } from '../../store/actions/bookings'
 import * as type from '../../store/reducers/types'
+import Modal from '../UI/modal'
+import { useHistory } from 'react-router'
 
 const DebtForm = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const hiddenFileInput = useRef(null)
   const roles = useSelector(({ requests }) => requests.roles)
+  const notification = useSelector(({ notifications }) => notifications)
   const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({
@@ -61,6 +65,15 @@ const DebtForm = () => {
     dispatch(createDebtRequest(form))
   }
 
+  const handleModalAction = () => {
+    if (notification.type === 'location') {
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+    } else {
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+      history.push('/deudas')
+    }
+  }
+
   useEffect(() => {
     dispatch(getRoles())
   }, [])
@@ -77,11 +90,16 @@ const DebtForm = () => {
   }, [user, roles])
 
   useEffect(() => {
-    setForm({ ...form, location: location })
-    dispatch({
-      type: type.NOTIFICATIONS,
-      notification: { message: 'localización copiada exitosamente' }
-    })
+    if (location) {
+      setForm({ ...form, location: location })
+      dispatch({
+        type: type.NOTIFICATIONS,
+        notification: {
+          message: 'localización copiada exitosamente',
+          type: 'location'
+        }
+      })
+    }
   }, [location])
 
   return (
@@ -153,6 +171,23 @@ const DebtForm = () => {
           </ActionArea>
         </Card>
       </RequestWrapper>
+      {notification && notification.hasOwnProperty('message') && (
+        <Modal>
+          <ModalContent type='success'>
+            <i className='fas fa-check'></i>
+            <p>{notification.message}</p>
+            <Button
+              background='primary'
+              width='100%'
+              onClick={() => {
+                handleModalAction()
+              }}
+            >
+              Volver
+            </Button>
+          </ModalContent>
+        </Modal>
+      )}
     </UserWrapper>
   )
 }

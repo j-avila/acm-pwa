@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react'
-import UserWrapper from '../hoc/userWrapper'
+import UserWrapper, { ModalContent } from '../hoc/userWrapper'
 import Card from '../UI/card'
 import Button from '../UI/button'
 import FormInput from '../UI/input'
@@ -8,11 +8,15 @@ import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { createRequest, getRoles } from '../../store/actions/bookings'
 import * as type from '../../store/reducers/types'
+import Modal from '../UI/modal'
+import { useHistory } from 'react-router'
 
 const RequestForm = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const hiddenFileInput = useRef(null)
   const requests = useSelector(({ requests }) => requests)
+  const notification = useSelector(({ notifications }) => notifications)
   const roles = useSelector(({ requests }) => requests.roles)
   const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
@@ -66,6 +70,15 @@ const RequestForm = () => {
     dispatch(createRequest(form))
   }
 
+  const handleModalAction = () => {
+    if (notification.type === 'location') {
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+    } else {
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+      history.push('/solicitudes')
+    }
+  }
+
   useEffect(() => {
     dispatch(getRoles())
     user &&
@@ -99,15 +112,12 @@ const RequestForm = () => {
 
   useEffect(() => {
     if (location) {
-      /* const geoLocation = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
-      }
-      console.log(geoLocation) */
-      setForm({ ...form, location: location })
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: 'localización copiada exitosamente' }
+        notification: {
+          message: 'localización copiada exitosamente',
+          type: 'location'
+        }
       })
     }
   }, [location])
@@ -201,6 +211,23 @@ const RequestForm = () => {
           </ActionArea>
         </Card>
       </RequestWrapper>
+      {notification && notification.hasOwnProperty('message') && (
+        <Modal>
+          <ModalContent type='success'>
+            <i className='fas fa-check'></i>
+            <p>{notification.message}</p>
+            <Button
+              background='primary'
+              width='100%'
+              onClick={() => {
+                handleModalAction()
+              }}
+            >
+              Volver
+            </Button>
+          </ModalContent>
+        </Modal>
+      )}
     </UserWrapper>
   )
 }

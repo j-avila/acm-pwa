@@ -10,12 +10,13 @@ import List from '../UI/list'
 import { DebtWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDebts, getPayedDebts } from '../../store/actions/debts'
+import * as type from '../../store/reducers/types'
 
 const Debts = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const debts = useSelector(({ debts }) => debts.debtsList)
-  const loading = useSelector(({ loading }) => loading)
+  const notification = useSelector(({ notifications }) => notifications)
   const userData = useSelector(({ user }) => user)
   const [debtsToPay, setToPay] = useState({
     toPay: [],

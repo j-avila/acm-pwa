@@ -3,15 +3,18 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import { fetchVisits } from '../../store/actions/visits'
-import UserWrapper from '../hoc/userWrapper'
+import UserWrapper, { ModalContent } from '../hoc/userWrapper'
 import Button from '../UI/button'
 import List from '../UI/list'
 import Tabs, { Panel } from '../UI/tabs'
 import { VisitsWrapper } from './styles'
+import * as type from '../../store/reducers/types'
+import Modal from '../UI/modal'
 const Visits = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const visitsList = useSelector(({ visits }) => visits)
+  const notification = useSelector(({ notifications }) => notifications)
   const [visits, setVisits] = useState({
     booked: [],
     done: []
@@ -20,6 +23,11 @@ const Visits = () => {
   const handleItem = id => {
     // alert(id)
     history.push({ pathname: `/visitas/${id}`, state: { id: id } })
+  }
+
+  const handleModalAction = () => {
+    dispatch({ type: type.NOTIFICATIONS, notification: false })
+    history.push('/visitas')
   }
 
   useEffect(() => {
@@ -67,6 +75,23 @@ const Visits = () => {
           Solicitar Visita
         </Button>
       </VisitsWrapper>
+      {notification && notification.hasOwnProperty('message') && (
+        <Modal>
+          <ModalContent type='success'>
+            <i className='fas fa-check'></i>
+            <p>{notification.message}</p>
+            <Button
+              background='primary'
+              width='100%'
+              onClick={() => {
+                handleModalAction()
+              }}
+            >
+              Volver
+            </Button>
+          </ModalContent>
+        </Modal>
+      )}
     </UserWrapper>
   )
 }

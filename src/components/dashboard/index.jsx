@@ -72,9 +72,11 @@ const Dashboard = props => {
               <section>
                 <strong>Próxima visita programada:</strong>
                 <h1>
-                  {moment(dashData.next_visit.visitreport_data.date).format(
-                    'DD MMMM YYYY - HH:HH'
-                  )}
+                  {dashData.next_visit
+                    ? moment(dashData.next_visit.visitreport_data.date).format(
+                        'DD MMMM YYYY - HH:HH'
+                      )
+                    : 'Sin definir'}
                 </h1>
               </section>
               <footer>{`Celador: ${user.watchman.name}`}</footer>

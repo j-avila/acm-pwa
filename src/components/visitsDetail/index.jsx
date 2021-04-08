@@ -5,6 +5,7 @@ import { apiUrl } from '../../store/actions/utils'
 import { fetchVisit, getBio } from '../../store/actions/visits'
 import UserWrapper from '../hoc/userWrapper'
 import Card from '../UI/card'
+import { GhostLine } from '../UI/ghostLoader'
 import { DetailWrapper } from './styles'
 
 const VisitDetail = props => {
@@ -23,7 +24,17 @@ const VisitDetail = props => {
     <UserWrapper pathName='Detalle de visita'>
       <DetailWrapper>
         {loading ? (
-          <p>cargando...</p>
+          <>
+            <h1>
+              <GhostLine />
+            </h1>
+
+            <Card className='stat-card'>
+              <GhostLine />
+              <GhostLine width='60%' />
+              <GhostLine width='40%' />
+            </Card>
+          </>
         ) : !details ? (
           <p>nada que mostrar</p>
         ) : (
@@ -53,7 +64,14 @@ const VisitDetail = props => {
               </p>
             </Card>
             {bio && bio.messages.length >= 1 && <h2>Bitacora de celador</h2>}
-            {bio &&
+            {loading ? (
+              <Card className='stat-card'>
+                <GhostLine />
+                <GhostLine width='60%' />
+                <GhostLine width='40%' />
+              </Card>
+            ) : (
+              bio &&
               bio.messages.length >= 1 &&
               bio.messages.map(message => (
                 <Card key={message.published_at} className='bio'>
@@ -119,7 +137,8 @@ const VisitDetail = props => {
                     ''
                   )}
                 </Card>
-              ))}
+              ))
+            )}
           </>
         )}
       </DetailWrapper>

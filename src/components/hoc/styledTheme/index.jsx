@@ -55,7 +55,9 @@ export const ThemeWrapper = ({ children }) => {
 
   const genTheme = () => {
     let UTheme =
-      user.profile.app_setting && user.profile.app_setting.theme === '1'
+      user.profile &&
+      user.profile.hasOwnProperty('app_setting') &&
+      user.profile.app_setting.theme === '1'
         ? darkTheme
         : theme
     setTheme(UTheme)
@@ -85,14 +87,14 @@ export const ThemeWrapper = ({ children }) => {
       <ThemeProvider theme={userTheme || theme}>
         <GlobalStyles
           dark={
-            user.hasOwnProperty('profile') &&
-            user.profile.app_setting &&
+            user.profile &&
+            user.profile.hasOwnProperty * 'app_setting' &&
             user.profile.app_setting.theme === '1'
               ? true
               : false
           }
           txtSize={
-            user.hasOwnProperty('profile') && user.profile.app_setting
+            user.profile && user.profile.hasOwnProperty('app_setting')
               ? user.profile.app_setting.size
               : '16px'
           }

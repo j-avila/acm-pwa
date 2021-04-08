@@ -3,7 +3,9 @@ import { darken } from 'polished'
 export const DetailWrapper = styled.div`
   position: relative;
   h1 {
+    margin: 0 auto;
     margin-top: 1rem;
+    max-width: 80vw;
     i {
       display: block;
       margin: 1rem auto;

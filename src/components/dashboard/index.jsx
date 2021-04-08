@@ -79,7 +79,9 @@ const Dashboard = props => {
                     : 'Sin definir'}
                 </h1>
               </section>
-              <footer>{`Celador: ${user.watchman.name}`}</footer>
+              <footer>{`Celador: ${
+                user.watchman ? user.watchman.name : 'Sin asignar'
+              }`}</footer>
             </Card>
 
             <Card

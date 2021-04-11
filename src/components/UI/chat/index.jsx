@@ -131,8 +131,8 @@ const ChatCard = props => {
     <Card>
       <ChatWrapper>
         {loading ? (
-          <Row direction='flex-start'>
-            <ChatBubble direction='flex-start'>
+          <Row direction='flex-end'>
+            <ChatBubble direction='flex-end' width='200px'>
               <GhostLine />
               <GhostLine width='60%' />
               <GhostLine width='40%' />

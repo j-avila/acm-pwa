@@ -4,33 +4,51 @@ import Card from '../card'
 import Button from '../button'
 import ChatBubble from './ChatBubble'
 import { Row, Message, ChatWrapper, FileAdd, ActionArea } from './styles'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { GhostLine } from '../ghostLoader'
-import { socket } from '../../hoc/utils'
 import moment from 'moment'
+import * as type from '../../../store/reducers/types'
 import { apiUrl } from '../../../store/actions/utils'
+import Modal from '../modal'
+import { ModalContent } from '../../hoc/userWrapper'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
+  const dispatch = useDispatch()
+  const notification = useSelector(({ notifications }) => notifications)
+  const error = useSelector(({ errors }) => errors)
   const { id, items, msgAction, chatBar } = props
   const loading = useSelector(({ loading }) => loading)
   const loggedUser = useSelector(({ user }) => user)
-  const requests = useSelector(({ requests }) => requests)
   const [location, setLocation] = useState('')
   const [actions, openActions] = useState()
+  const [valid, setValid] = useState(false)
+  const [preview, setPreview] = useState()
   const [message, setMessage] = useState({
     event_book: id,
-    message: '',
-    coordinates: '',
+    message: undefined,
+    coordinates: undefined,
     attached: undefined
   })
 
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => setLocation(pos))
+      openActions(false)
+      dispatch({
+        type: type.NOTIFICATIONS,
+        notification: {
+          message: 'localización copiada exitosamente',
+          type: 'location'
+        }
+      })
     } else {
       alert('Geolocation is not supported by this browser.')
     }
+  }
+
+  const handleModalAction = () => {
+    dispatch({ type: type.NOTIFICATIONS, notification: false })
   }
 
   const handleFileClick = () => {
@@ -44,36 +62,70 @@ const ChatCard = props => {
 
   // enconde img to base64
   const handleImg = e => {
-    console.log('file to upload:', e.target.files[0])
+    let reader = new FileReader()
     let file = e.target.files[0]
+    console.log('file to upload:', file)
 
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = _handleReaderLoaded.bind(this)
-      reader.readAsBinaryString(file)
+    reader.onloadend = () => {
+      setPreview(reader.result)
+      setMessage({
+        ...message,
+        attached: { filename: file.name, url: file }
+      })
     }
-  }
 
-  const _handleReaderLoaded = readerEvt => {
-    let binaryString = readerEvt.target.result
-    setMessage({ ...message, attached: btoa(binaryString) })
+    openActions(false)
+    reader.readAsDataURL(file)
   }
 
   const handleMessage = () => {
-    msgAction(message)
-    setMessage({
-      ...message,
-      message: '',
-      coordinates: '',
-      attached: undefined
-    })
+    msgAction(message, message.file)
+
+    if (!loading) {
+      setMessage({
+        ...message,
+        message: '',
+        coordinates: '',
+        attached: undefined
+      })
+      setPreview(undefined)
+    }
+
+    /* error &&
+      setMessage({
+        ...message,
+        message: '',
+        coordinates: '',
+        attached: undefined,
+        preview: ''
+      }) */
   }
 
   useEffect(() => {
     // console.log(items)
-    location.hasOwnProperty('coords') &&
-      setMessage({ ...message, coordinates: location.coords })
-  }, [location])
+    if (location) {
+      setMessage({ ...message, coordinates: location })
+      console.log(location)
+    }
+  }, [location, loading])
+
+  useEffect(() => {
+    if (items.length >= 1) {
+      const last = items.length
+      const lastMessage = items[1]
+      const isUserLast = lastMessage.user.code === loggedUser.code
+      const fields = Object.keys(message)
+      const results = fields.filter(field => message[field])
+
+      if (isUserLast) {
+        // setValid(!isUserLast)
+        console.log(isUserLast)
+        setValid(results.length >= 2)
+      } else {
+        setValid(results.length >= 2)
+      }
+    }
+  }, [items, message])
 
   return (
     <Card>
@@ -104,11 +156,11 @@ const ChatCard = props => {
                 direction={
                   !message.user.code
                     ? 'notification'
-                    : message.user.hasOwnProperty('role')
+                    : message.user.code !== loggedUser.code
                     ? 'flex-start'
                     : 'flex-end'
                 }
-                isUser={!message.user.hasOwnProperty('role')}
+                isUser={message.user.code === loggedUser.code}
                 provName={message.user.name}
               >
                 {message.message}
@@ -209,15 +261,55 @@ const ChatCard = props => {
           <FileAdd onClick={() => openActions(!actions)}>
             <i className='fas fa-plus'></i>
           </FileAdd>
-          <input
-            type='text'
-            value={message.message}
-            onChange={e => setMessage({ ...message, message: e.target.value })}
-          />
-          <Button background='transparent' onClick={() => handleMessage()}>
+          <div className='message-holder'>
+            {preview && (
+              <div className='attach-preview'>
+                <i
+                  className='fas fa-times'
+                  onClick={() => {
+                    setMessage({
+                      ...message,
+                      attached: undefined
+                    })
+                    setPreview(undefined)
+                  }}
+                />
+                <img src={preview} alt='attached' />
+              </div>
+            )}
+            <input
+              type='text'
+              value={message.message}
+              onChange={e =>
+                setMessage({ ...message, message: e.target.value })
+              }
+            />
+          </div>
+          <Button
+            background='transparent'
+            onClick={() => handleMessage()}
+            disabled={valid ? '' : 'disabled'}
+          >
             <i className='fas fa-paper-plane'></i>
           </Button>
         </Message>
+      )}
+      {notification && notification.hasOwnProperty('message') && (
+        <Modal>
+          <ModalContent type='success'>
+            <i className='fas fa-check'></i>
+            <p>{notification.message}</p>
+            <Button
+              background='primary'
+              width='100%'
+              onClick={() => {
+                handleModalAction()
+              }}
+            >
+              Volver
+            </Button>
+          </ModalContent>
+        </Modal>
       )}
     </Card>
   )

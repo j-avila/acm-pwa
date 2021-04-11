@@ -26,7 +26,6 @@ const RequestDetail = props => {
     dispatch(getChats(location.state.id))
     socket.emit('open:chat', location.state.id)
     socket.on('message:chat', message => {
-      console.log('yayayajuu', message)
       dispatch({ type: type.REQUEST_FORM, message: message })
     })
   }, [])

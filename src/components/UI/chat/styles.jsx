@@ -29,7 +29,7 @@ export const Bubble = styled.span`
   margin: 40px 0;
   display: inline-block;
   position: relative;
-  width: 200px;
+  max-width: 200px;
   height: auto;
   padding: 1rem;
   color: white;
@@ -112,10 +112,47 @@ export const Message = styled.form`
       font-size: large;
     }
   }
-  input {
+  .message-holder {
+    position: relative;
     padding: 2px 6px;
     border: 0;
     border-radius: 8px;
+    background: ${({ theme }) => theme.background};
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    .attach-preview {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      img {
+        height: 100%;
+        margin: 0 auto;
+        display: block;
+      }
+      i {
+        position: absolute;
+        padding: 6px 8px;
+        top: 0px;
+        left: 0px;
+        border-radius: 50%;
+        background: red;
+        color: white;
+      }
+    }
+    input {
+      border: 0;
+      outline: 0;
+      padding: 0 12px;
+      color: ${({ theme }) => theme.text};
+      background: transparent;
+      &:focus,
+      &:active {
+        border: 0;
+        outline: 0;
+      }
+    }
   }
 `
 

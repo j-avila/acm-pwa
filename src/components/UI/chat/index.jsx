@@ -24,11 +24,13 @@ const ChatCard = props => {
   const [actions, openActions] = useState()
   const [valid, setValid] = useState(false)
   const [preview, setPreview] = useState()
-  const [message, setMessage] = useState({
-    event_book: id,
-    message: undefined,
-    coordinates: undefined,
-    attached: undefined
+  const [messageObj, setMessage] = useState({
+    data: {
+      event_book: id,
+      message: undefined,
+      coordinates: undefined
+    },
+    file: undefined
   })
 
   const getLocation = () => {
@@ -64,29 +66,33 @@ const ChatCard = props => {
   const handleImg = e => {
     let reader = new FileReader()
     let file = e.target.files[0]
-    console.log('file to upload:', file)
+    // console.log('file to upload:', file)
 
     reader.onloadend = () => {
       setPreview(reader.result)
       setMessage({
-        ...message,
-        attached: { filename: file.name, url: file }
+        ...messageObj,
+        file: file
       })
     }
+
+    console.log(messageObj.file)
 
     openActions(false)
     reader.readAsDataURL(file)
   }
 
   const handleMessage = () => {
-    msgAction(message, message.file)
+    msgAction(messageObj)
 
     if (!loading) {
       setMessage({
-        ...message,
-        message: '',
-        coordinates: '',
-        attached: undefined
+        data: {
+          ...messageObj.data,
+          message: '',
+          coordinates: ''
+        },
+        file: undefined
       })
       setPreview(undefined)
     }
@@ -96,7 +102,7 @@ const ChatCard = props => {
         ...message,
         message: '',
         coordinates: '',
-        attached: undefined,
+        file: undefined,
         preview: ''
       }) */
   }
@@ -104,7 +110,10 @@ const ChatCard = props => {
   useEffect(() => {
     // console.log(items)
     if (location) {
-      setMessage({ ...message, coordinates: location })
+      setMessage({
+        ...messageObj,
+        data: { ...messageObj.data, coordinates: location }
+      })
       console.log(location)
     }
   }, [location, loading])
@@ -114,8 +123,8 @@ const ChatCard = props => {
       const last = items.length
       const lastMessage = items[1]
       const isUserLast = lastMessage.user.code === loggedUser.code
-      const fields = Object.keys(message)
-      const results = fields.filter(field => message[field])
+      const fields = Object.keys(messageObj.data)
+      const results = fields.filter(field => messageObj.data[field])
 
       if (isUserLast) {
         // setValid(!isUserLast)
@@ -125,7 +134,7 @@ const ChatCard = props => {
         setValid(results.length >= 2)
       }
     }
-  }, [items, message])
+  }, [items, messageObj])
 
   return (
     <Card>
@@ -165,7 +174,8 @@ const ChatCard = props => {
               >
                 {message.message}
                 <div>
-                  {message.attached && message.attached.formats ? (
+                  {(message.attached && message.attached.formats) ||
+                  (message.file && message.file.formats) ? (
                     <>
                       <span className='attachment'>
                         <p>
@@ -236,13 +246,6 @@ const ChatCard = props => {
                   onChange={e => getFile(e)}
                 >
                   <i className='fas fa-paperclip'></i>
-                  <input
-                    type='file'
-                    typeof='.jepg, .png, .jpg'
-                    style={{ display: 'none' }}
-                    ref={hiddenFileInput}
-                    onChange={e => handleImg(e)}
-                  />
                 </Button>
                 Agregar Archivo
               </span>
@@ -268,21 +271,31 @@ const ChatCard = props => {
                   className='fas fa-times'
                   onClick={() => {
                     setMessage({
-                      ...message,
-                      attached: undefined
+                      ...messageObj,
+                      file: undefined
                     })
                     setPreview(undefined)
                   }}
                 />
-                <img src={preview} alt='attached' />
+                <img src={preview} alt='file' />
               </div>
             )}
             <input
               type='text'
-              value={message.message}
+              value={messageObj.data.message}
               onChange={e =>
-                setMessage({ ...message, message: e.target.value })
+                setMessage({
+                  ...messageObj,
+                  data: { ...messageObj.data, message: e.target.value }
+                })
               }
+            />
+            <input
+              type='file'
+              typeof='.jepg, .png, .jpg'
+              style={{ display: 'none' }}
+              ref={hiddenFileInput}
+              onChange={e => handleImg(e)}
             />
           </div>
           <Button

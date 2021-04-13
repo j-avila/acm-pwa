@@ -104,7 +104,13 @@ const Dashboard = props => {
               <footer>{`Cuotas impagas: ${dashData.fees.count}`}</footer>
             </Card>
 
-            <Card className='stat-card' title='Acciones'>
+            <Card
+              className='stat-card'
+              title='Acciones'
+              onClick={() => {
+                history.push('/acciones')
+              }}
+            >
               <section>
                 <h1>{`${dashData.number_of_actions} Acciones`}</h1>
               </section>

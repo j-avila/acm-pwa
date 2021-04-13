@@ -8,5 +8,8 @@ export const ActionWrapper = styled.div`
     h1 {
       color: ${({ theme }) => theme.secondary};
     }
+    h2 {
+      margin: 1rem 0;
+    }
   }
 `

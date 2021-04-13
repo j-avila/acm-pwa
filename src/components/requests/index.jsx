@@ -56,7 +56,7 @@ const Requests = props => {
   }, [requests])
 
   return (
-    <UserWrapper pathName='Solicitudes/Reclamos'>
+    <UserWrapper pathName='Solicitudes de Atención'>
       <Wrapper>
         <Tabs selected={0}>
           <Panel title='Abiertas'>

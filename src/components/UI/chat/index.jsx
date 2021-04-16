@@ -26,9 +26,7 @@ const ChatCard = props => {
   const [preview, setPreview] = useState()
   const [messageObj, setMessage] = useState({
     data: {
-      event_book: id,
-      message: undefined,
-      coordinates: undefined
+      event_book: id
     },
     file: undefined
   })

@@ -26,8 +26,8 @@ export const setMessage = form => async dispatch => {
   const url = `${apiUrl}/event-book-messages?event_book=${form.data.event_book}`
   console.log('form to send:', form)
 
-  formdata.append('files.attached', form.file, form.file.name)
-  formdata.append('data', JSON.stringify(form.data))
+  form.file && formdata.append('files.attached', form.file, form.file.name)
+  form.data && formdata.append('data', JSON.stringify(form.data))
 
   return axios
     .post(url, formdata, getAuth())

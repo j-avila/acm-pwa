@@ -14,8 +14,6 @@ const Dashboard = props => {
   const history = useHistory()
   const dashData = useSelector(({ dashboard }) => dashboard)
   const user = useSelector(({ user }) => user)
-  const loading = useSelector(({ loading }) => loading)
-  const [info, setInfo] = useState()
 
   useEffect(() => {
     dispatch(userDataHandler())
@@ -33,7 +31,7 @@ const Dashboard = props => {
             <Card
               className='stat-card'
               title='Información del canal'
-              notifications={2}
+              notifications={dashData.notifications.length}
               onClick={() => history.push('/informacion')}
             >
               <section>

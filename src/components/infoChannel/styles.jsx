@@ -30,19 +30,19 @@ export const Content = styled.article`
       }
     }
     .meta {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
       align-items: center;
       width: 50%;
       margin: 12px auto;
-      text-align: left;
+      text-align: center;
+      strong {
+        display: block;
+      }
     }
   }
   h3 {
     color: ${({ theme }) => theme.secondary};
   }
-  p{
+  p {
     font-size: 14px;
   }
 `
@@ -61,8 +61,11 @@ export const NotificationArea = styled.span`
       }
       display: block;
       color: white;
+      p {
+        color: white;
+      }
 
-      span{
+      span {
         text-align: center;
       }
     }

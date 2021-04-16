@@ -5,23 +5,30 @@ import UserWrapper from '../hoc/userWrapper'
 import { useSelector } from 'react-redux'
 
 const ActionsIndex = () => {
-  const actions = useSelector(({ user }) => user)
+  const actions = useSelector(({ user }) => user.acm)
   return (
     <UserWrapper>
       <ActionWrapper>
         <Card>
+          <h2>
+            Rol:
+            {`${actions.rol || 'no definido'}`}
+          </h2>
+          <p>
+            <strong>FJS: </strong>
+            {actions.inscription_fsj || 'No definido'}
+          </p>
+          <p>
+            <strong>Numero de inscripción:</strong>
+            {actions.inscription_number || 'No definido'}
+          </p>
+          <p>
+            <strong>Año de inscripción:</strong>
+            {actions.inscription_year || 'No definido'}
+          </p>
+
           <h1>Tienes</h1>
-          <h2>{`${actions.acm.number_of_actions} acciones`}</h2>
-          <h1>Rol</h1>
-          <h2>{`${actions.acm.rol}`}</h2>
-          {actions.inscription_fsj &&
-            actions.inscription_number &&
-            actions.inscription_year && (
-              <>
-                <h1>FOJA</h1>
-                <h2>{`${actions.acm.inscription_fsj} acciones`}</h2>
-              </>
-            )}
+          <h2>{`${actions.number_of_actions || 'No definido'} acciones`}</h2>
         </Card>
       </ActionWrapper>
     </UserWrapper>

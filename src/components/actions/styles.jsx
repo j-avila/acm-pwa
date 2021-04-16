@@ -11,5 +11,11 @@ export const ActionWrapper = styled.div`
     h2 {
       margin: 1rem 0;
     }
+    p {
+      strong {
+        font-size: large;
+      }
+      font-size: large;
+    }
   }
 `

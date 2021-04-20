@@ -13,6 +13,7 @@ export const FETCH_PROFILE = 'FETCH_PROFILE'
 export const PROFILE_FORM = 'PROFILE_FORM'
 export const EDIT_PROFILE = 'EDIT_PROFILE'
 export const EDIT_SETTINGS = 'EDIT_SETTINGS'
+export const SET_CODE = 'SET_CODE'
 
 // DASHBOARD
 export const FETCH_DASHBOARD = 'FETCH_DASHBOARD'

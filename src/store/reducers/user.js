@@ -9,6 +9,11 @@ export const user = (user = {}, action) => {
         ...user,
         profile: action.profile
       }
+    case types.SET_CODE:
+      return {
+        ...user,
+        codeActive: action.codeActive
+      }
     default:
       return user
   }

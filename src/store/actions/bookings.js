@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { apiUrl, getAuth } from './utils'
 import * as type from '../reducers/types'
-import { socket } from '../../components/hoc/utils'
 
 export const fetchRequests = () => async dispatch => {
   const url = `${apiUrl}/event-books?type=requestforattention`

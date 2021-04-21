@@ -2,15 +2,14 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import moment from 'moment'
-import UserWrapper from '../hoc/userWrapper'
-import Tabs, { Panel } from '../UI/tabs'
-import Button from '../UI/button'
-import Accordion from '../UI/accordion'
-import List from '../UI/list'
+import UserWrapper from '../../hoc/userWrapper'
+import Tabs, { Panel } from '../../UI/tabs'
+import Button from '../../UI/button'
+import Accordion from '../../UI/accordion'
+import List from '../../UI/list'
 import { DebtWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDebts, getPayedDebts } from '../../store/actions/debts'
-import * as type from '../../store/reducers/types'
+import { getDebts, getPayedDebts } from '../../../store/actions/debts'
 
 const Debts = () => {
   const history = useHistory()

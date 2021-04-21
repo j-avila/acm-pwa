@@ -1,10 +1,10 @@
 import moment from 'moment'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchInfoCards } from '../../store/actions/infoChannels'
-import UserWrapper from '../hoc/userWrapper'
-import Card from '../UI/card'
-import { GhostLine } from '../UI/ghostLoader'
+import { fetchInfoCards } from '../../../store/actions/infoChannels'
+import UserWrapper from '../../hoc/userWrapper'
+import Card from '../../UI/card'
+import { GhostLine } from '../../UI/ghostLoader'
 import { Content, InfoWrapper, NotificationArea } from './styles'
 
 const InfoChannel = props => {

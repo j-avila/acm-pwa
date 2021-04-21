@@ -1,22 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react'
-import UserWrapper from '../hoc/userWrapper'
-import Card from '../UI/card'
-import Button from '../UI/button'
-import FormInput from '../UI/input'
+import UserWrapper, { ModalContent } from '../../hoc/userWrapper'
+import Card from '../../UI/card'
+import Button from '../../UI/button'
+import FormInput from '../../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { createVisitRequest, getRoles } from '../../store/actions/visits'
-import * as type from '../../store/reducers/types'
+import { createDebtRequest } from '../../../store/actions/debts'
+import { getRoles } from '../../../store/actions/bookings'
+import * as type from '../../../store/reducers/types'
+import Modal from '../../UI/modal'
+import { useHistory } from 'react-router'
 
-const VistisForm = () => {
+const DebtForm = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const hiddenFileInput = useRef(null)
-  const visits = useSelector(({ visits }) => visits)
+  const roles = useSelector(({ requests }) => requests.roles)
+  const notification = useSelector(({ notifications }) => notifications)
   const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
-  const [form, setForm] = useState({})
-  const [visitsList, setList] = useState()
+  const [form, setForm] = useState({
+    subject: 'Finanzas'
+  })
+
+  const subjectSelect = [{ label: 'Convenios de pago' }]
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -26,7 +34,7 @@ const VistisForm = () => {
     }
   }
 
-  const handleFileClick = () => {
+  const handleFIleClick = () => {
     hiddenFileInput.current.click()
   }
 
@@ -34,13 +42,6 @@ const VistisForm = () => {
     const fileUploaded = event.target.files[0]
     console.log(fileUploaded)
   }
-
-  const subjectSelect = [
-    { label: '¿Como puedo traspasar cuotas?' },
-    { label: 'Convenios de pago' },
-    { label: 'Solicitud' },
-    { label: 'Otro' }
-  ]
 
   // enconde img to base64
   const handleImg = e => {
@@ -60,84 +61,86 @@ const VistisForm = () => {
   }
 
   const handleForm = e => {
-    e.preventDefault()
-    console.log(form)
-    dispatch(createVisitRequest(form))
+    // console.log(form)
+    dispatch(createDebtRequest(form))
+  }
+
+  const handleModalAction = () => {
+    if (notification.type === 'location') {
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+    } else {
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+      history.push('/deudas')
+    }
   }
 
   useEffect(() => {
     dispatch(getRoles())
-    user &&
-      setForm({
-        ...form,
-        irrigator_code: user.code,
-        type: 'requestforattention',
-        subject: 'Solicitud',
-        association_area:
-          visitsList && visitsList.filter(e => e.code === 'watchman')[0].id
-      })
   }, [])
 
   useEffect(() => {
-    visits.hasOwnProperty('roles') && setList(visits.roles)
-  }, [visits])
+    user &&
+      roles &&
+      setForm({
+        ...form,
+        irrigator_code: user.code,
+        association_area: roles[0].id,
+        type: 'requestforattention'
+      })
+  }, [user, roles])
 
   useEffect(() => {
     if (location) {
       setForm({ ...form, location: location })
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: 'localización copiada exitosamente' }
+        notification: {
+          message: 'localización copiada exitosamente',
+          type: 'location'
+        }
       })
     }
   }, [location])
 
   return (
-    <UserWrapper pathName='Nueva Solicitud/Reclamo'>
-      <RequestWrapper onSubmit={e => handleForm(e)}>
-        <h1>Crea una solicitud de visita</h1>
+    <UserWrapper pathName='Reporte de deuda'>
+      <RequestWrapper>
+        <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
-          <FormInput
-            label='¿A quién está dirigida tu solicitud de atención?'
-            width='100%'
-          >
+          <FormInput label='¿Cuál es su problema o necesidad?' width='100%'>
             <select
-              onChange={e =>
-                setForm({ ...form, association_area: e.target.value })
-              }
               disabled
+              onChange={e => setForm({ ...form, subject: e.target.value })}
             >
-              <option>Selecciona una opción</option>
-              {visitsList &&
-                visitsList
-                  .filter(e => e.code === 'watchman')
-                  .map(option => (
-                    <option key={option.id} value={option.id} selected>
-                      {option.name}
+              {roles &&
+                roles
+                  .filter(o => o.name === 'Finanzas')
+                  .map(o => (
+                    <option value={roles.id} selected>
+                      {o.name}
                     </option>
                   ))}
             </select>
           </FormInput>
           <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
             <select
-              onChange={e => setForm({ ...form, subject: e.target.value })}
               disabled
+              onChange={e => setForm({ ...form, subject: e.target.value })}
             >
-              {subjectSelect
-                .filter(e => e.label === 'Solicitud')
-                .map(subject => (
-                  <option key={subject.label} value={subject.label} selected>
-                    {subject.label}
-                  </option>
-                ))}
+              <option disabled>Selecciona un asunto recurrente</option>
+              {subjectSelect.map(subject => (
+                <option key={subject.label} value={subject.label} selected>
+                  {subject.label}
+                </option>
+              ))}
             </select>
           </FormInput>
           <FormInput label='Descripción de la solicitud de atención'>
             <textarea
+              onChange={e => setForm({ ...form, content: e.target.value })}
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
               cols='6'
               rows='6'
-              onChange={e => setForm({ ...form, content: e.target.value })}
             ></textarea>
             <input
               type='file'
@@ -147,15 +150,14 @@ const VistisForm = () => {
               onChange={e => handleImg(e)}
             />
           </FormInput>
-
           <ActionArea className='actions'>
             <Button background='primary'>
               <i className='fas fa-camera'></i>
             </Button>
             <Button
-              ref={handleFileClick}
+              ref={handleFIleClick}
               background='rgba(87,162,198,1)'
-              onClick={() => handleFileClick()}
+              onClick={() => handleFIleClick()}
               onChange={e => getFile(e)}
             >
               <i className='fas fa-paperclip'></i>
@@ -163,14 +165,31 @@ const VistisForm = () => {
             <Button background='secondary' onClick={() => getLocation()}>
               <i className='fas fa-crosshairs'></i>
             </Button>
-            <Button className='btn-send' type='submit'>
+            <Button className='btn-send' onClick={e => handleForm(e)}>
               Enviar
             </Button>
           </ActionArea>
         </Card>
       </RequestWrapper>
+      {notification && notification.hasOwnProperty('message') && (
+        <Modal>
+          <ModalContent type='success'>
+            <i className='fas fa-check'></i>
+            <p>{notification.message}</p>
+            <Button
+              background='primary'
+              width='100%'
+              onClick={() => {
+                handleModalAction()
+              }}
+            >
+              Volver
+            </Button>
+          </ModalContent>
+        </Modal>
+      )}
     </UserWrapper>
   )
 }
 
-export default VistisForm
+export default DebtForm

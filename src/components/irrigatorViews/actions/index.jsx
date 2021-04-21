@@ -1,7 +1,7 @@
 import React from 'react'
 import { ActionWrapper } from './styles'
-import Card from '../UI/card'
-import UserWrapper from '../hoc/userWrapper'
+import Card from '../../UI/card'
+import UserWrapper from '../../hoc/userWrapper'
 import { useSelector } from 'react-redux'
 
 const ActionsIndex = () => {

@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getChats, setMessage } from '../../store/actions/requests'
-import UserWrapper from '../hoc/userWrapper'
-import { socket } from '../hoc/utils'
-import Chat from '../UI/chat'
+import { getChats, setMessage } from '../../../store/actions/requests'
+import UserWrapper from '../../hoc/userWrapper'
+import { socket } from '../../hoc/utils'
+import Chat from '../../UI/chat'
 import { CeladorSection, DetailsWrapper } from './styles'
-import * as type from '../../store/reducers/types'
+import * as type from '../../../store/reducers/types'
 
 const RequestDetail = props => {
   const { location } = props

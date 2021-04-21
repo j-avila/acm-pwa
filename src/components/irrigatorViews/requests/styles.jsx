@@ -1,5 +1,43 @@
 import styled from 'styled-components'
 
+export const Wrapper = styled.div`
+  position: relative;
+  min-height: 500px;
+  .btn-new {
+    position: fixed;
+    bottom: 5vh;
+    left: 45%;
+    transform: translateX(-45%);
+  }
+  @media all and (min-width: 1280px) {
+    margin: 0 auto;
+    width: 80vw;
+    max-width: 1000px;
+  }
+`
+
+// chat
+export const DetailsWrapper = styled.div`
+  #card {
+    margin: 0.5rem auto;
+    margin-bottom: 12vh;
+  }
+`
+
+export const CeladorSection = styled.div`
+  padding: 1rem 2rem;
+  align-items: center;
+  h1 {
+    margin: 0 auto;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+`
+// form
 export const RequestWrapper = styled.form`
   position: relative;
   .form-card {
@@ -32,6 +70,7 @@ export const ActionArea = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin-top: 1rem;
   button {
     padding: 8px 12px;
     i {

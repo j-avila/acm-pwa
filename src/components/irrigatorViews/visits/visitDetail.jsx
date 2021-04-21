@@ -1,11 +1,11 @@
 import moment from 'moment'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { apiUrl } from '../../store/actions/utils'
-import { fetchVisit, getBio } from '../../store/actions/visits'
-import UserWrapper from '../hoc/userWrapper'
-import Card from '../UI/card'
-import { GhostLine } from '../UI/ghostLoader'
+import { apiUrl } from '../../../store/actions/utils'
+import { fetchVisit, getBio } from '../../../store/actions/visits'
+import UserWrapper from '../../hoc/userWrapper'
+import Card from '../../UI/card'
+import { GhostLine } from '../../UI/ghostLoader'
 import { DetailWrapper } from './styles'
 
 const VisitDetail = props => {

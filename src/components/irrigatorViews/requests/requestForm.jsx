@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react'
-import UserWrapper, { ModalContent } from '../hoc/userWrapper'
-import Card from '../UI/card'
-import Button from '../UI/button'
-import FormInput from '../UI/input'
+import UserWrapper, { ModalContent } from '../../hoc/userWrapper'
+import Card from '../../UI/card'
+import Button from '../../UI/button'
+import FormInput from '../../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { createRequest, getRoles } from '../../store/actions/bookings'
-import * as type from '../../store/reducers/types'
-import Modal from '../UI/modal'
+import { createRequest, getRoles } from '../../../store/actions/bookings'
+import * as type from '../../../store/reducers/types'
+import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
 
 const RequestForm = () => {

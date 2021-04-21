@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 const Header = props => {
   const loading = useSelector(({ loading }) => loading)
-  const { title, user, menu, menuItems, notifications, back } = props
+  const { title, user, menu, menuItems, notifications, back, onClick } = props
   const history = useHistory()
 
   return (
@@ -44,6 +44,7 @@ const Header = props => {
               </p>
             </div>
             <Avatar
+              onClick={onClick}
               image={user.watchman && user.watchman.picture}
               alt='celador'
             />

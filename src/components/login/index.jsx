@@ -69,7 +69,10 @@ const Login = props => {
         <Card>
           <img src={Logo} alt='Canal del maule' />
           <form onSubmit={e => handleLogin(e)}>
-            <FormInput className='field' label='Ingresa tu Código de Regante'>
+            <FormInput
+              className='field'
+              label='Ingresa tu Código o Correo eletrónico'
+            >
               <input
                 type='text'
                 placeholder='Código de Regante'

@@ -11,6 +11,7 @@ const InfoChannel = props => {
   const dispatch = useDispatch()
   const infoCards = useSelector(({ information }) => information.infoCards)
   const dashData = useSelector(({ dashboard }) => dashboard)
+  const code = useSelector(({ codeActive }) => codeActive)
   const user = useSelector(({ user }) => user)
   const [alert, setAlert] = useState(true)
   const [loading, setLoading] = useState(true)
@@ -29,8 +30,8 @@ const InfoChannel = props => {
   }
 
   useEffect(() => {
-    dispatch(fetchInfoCards())
-  }, [])
+    code && dispatch(fetchInfoCards(code))
+  }, [code])
 
   useEffect(() => {
     setAlert(dashData.notifications)

@@ -46,7 +46,7 @@ export const OnBoarding = () => {
   }
 
   const handleForm = async () => {
-    await dispatch(createProfile(form))
+    await dispatch(createProfile(form, user.role.name))
   }
 
   useEffect(() => {

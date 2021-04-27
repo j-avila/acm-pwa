@@ -28,6 +28,8 @@ export const Trigger = styled.div`
 
 export const DataList = styled.ul`
   list-style: none;
+  max-height: 45vh;
+  overflow: auto;
   color: ${({ theme }) => theme.background};
   li {
     padding: 12px;

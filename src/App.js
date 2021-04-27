@@ -33,7 +33,6 @@ const App = () => {
   const user = useSelector(({ user }) => user)
 
   const setSockets = () => {
-    console.log(typeof sessionUser)
     socket.emit('join', sessionUser)
     socket.on('welcome', data =>
       console.log(

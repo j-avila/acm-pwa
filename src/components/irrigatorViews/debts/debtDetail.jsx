@@ -51,7 +51,9 @@ const DebtDetail = props => {
               <span>{debtData.expiration}</span>
             </Row>
             {location.state.type === 'payed' && (
-              <h3>{`Monto Cancelado: ${debtData.coin} ${debtData.amount}`}</h3>
+              <h3>{`Monto Cancelado: ${debtData.coin || '$'} ${
+                debtData.amount
+              }`}</h3>
             )}
             {location.state.type === 'payed' ? (
               <h2>{`Estado: pagado`}</h2>

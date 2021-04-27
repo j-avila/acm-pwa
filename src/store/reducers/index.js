@@ -35,6 +35,15 @@ const notifications = (state = {}, action) => {
   }
 }
 
+export const codeActive = (code = null, action) => {
+  switch (action.type) {
+    case types.SET_CODE:
+      return action.code
+    default:
+      return code
+  }
+}
+
 export default combineReducers({
   loading,
   errors,
@@ -45,5 +54,6 @@ export default combineReducers({
   information,
   requests,
   debts,
-  visits
+  visits,
+  codeActive
 })

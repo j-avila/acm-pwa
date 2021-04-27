@@ -44,7 +44,7 @@ const Login = props => {
   }, [form])
 
   useEffect(() => {
-    login.jwt && dispatch(userDataHandler())
+    login.jwt && dispatch(userDataHandler(login.user.role.name))
   }, [login])
 
   useEffect(() => {

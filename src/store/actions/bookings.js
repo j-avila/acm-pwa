@@ -2,8 +2,8 @@ import axios from 'axios'
 import { apiUrl, getAuth } from './utils'
 import * as type from '../reducers/types'
 
-export const fetchRequests = () => async dispatch => {
-  const url = `${apiUrl}/event-books?type=requestforattention`
+export const fetchRequests = code => async dispatch => {
+  const url = `${apiUrl}/event-books?type=requestforattention&irrigator_code=${code}`
   dispatch({ type: type.LOADING, load: true })
   return axios
     .get(url, getAuth())

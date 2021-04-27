@@ -44,6 +44,7 @@ const UserLayout = props => {
   const dispatch = useDispatch()
   const errorMsg = useSelector(({ errors }) => errors)
   const userData = useSelector(({ user }) => user)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const { children, pathName, action } = props
   const [error, setError] = useState()
   const [watchman, showWatchman] = useState()
@@ -56,14 +57,16 @@ const UserLayout = props => {
   }, [])
 
   useEffect(() => {
-    !userData.hasOwnProperty('acm') && dispatch(userDataHandler())
-    socket.on('error', err => dispatch({ type: type.ERROR, error: err }))
+    console.log(userData && !userData.hasOwnProperty('acm'))
+    userData && !userData.hasOwnProperty('acm') && dispatch(userDataHandler())
+    userData.code &&
+      !codeActive &&
+      dispatch({ type: type.SET_CODE, code: userData.code })
 
-    userData.my_other_codes &&
+    !userCodes &&
+      userData.my_other_codes &&
       userData.my_other_codes.length >= 1 &&
       setCodes(userData.my_other_codes)
-
-    dispatch({ type: type.SET_CODE, codeActive: userData.code })
   }, [userData])
 
   useEffect(() => {
@@ -82,7 +85,7 @@ const UserLayout = props => {
       />
       <section>{children}</section>
       {userCodes && userCodes.length >= 1 && (
-        <Toggler items={userData.my_other_codes} activeCode={userData.code} />
+        <Toggler items={userData.my_other_codes} activeCode={codeActive} />
       )}
       {error && error.hasOwnProperty('message') && (
         <Modal>

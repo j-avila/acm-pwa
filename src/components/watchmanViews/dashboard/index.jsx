@@ -4,12 +4,11 @@ import { Dash } from './styles'
 import Card from '../../UI/card'
 import UserWrapper from '../../hoc/userWrapper'
 import { useDispatch, useSelector } from 'react-redux'
-import { userDataHandler } from '../../../store/actions/login'
 import { fetchDashboard } from '../../../store/actions/dashboard'
 import { GhostLine } from '../../UI/ghostLoader'
 import moment from 'moment'
 
-const Dashboard = props => {
+const AdminDashboard = props => {
   const dispatch = useDispatch()
   const history = useHistory()
   const dashData = useSelector(({ dashboard }) => dashboard)
@@ -126,4 +125,4 @@ const Dashboard = props => {
   )
 }
 
-export default Dashboard
+export default AdminDashboard

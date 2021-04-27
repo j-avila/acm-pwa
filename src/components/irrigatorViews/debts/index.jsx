@@ -15,7 +15,8 @@ const Debts = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const debts = useSelector(({ debts }) => debts.debtsList)
-  const notification = useSelector(({ notifications }) => notifications)
+  const payed = useSelector(({ debts }) => debts.payedDebts)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const userData = useSelector(({ user }) => user)
   const [debtsToPay, setToPay] = useState({
     toPay: [],
@@ -33,16 +34,18 @@ const Debts = () => {
   }
   const handlePayed = id => {
     // alert(id)
+    const debtDetail = payed.filter(i => i.id === id)
+    console.log(debtDetail)
     history.push({
       pathname: `/deudas/${id}`,
-      state: { type: 'payed' }
+      state: { type: 'payed', data: debtDetail[0] }
     })
   }
 
   useEffect(() => {
-    dispatch(getDebts(userData.code))
-    dispatch(getPayedDebts(userData.code))
-  }, [])
+    codeActive && dispatch(getDebts(codeActive))
+    codeActive && dispatch(getPayedDebts(codeActive))
+  }, [codeActive])
 
   useEffect(() => {
     if (debts && debts.length >= 1) {
@@ -64,6 +67,24 @@ const Debts = () => {
       })
     }
   }, [debts])
+
+  useEffect(() => {
+    if (payed && payed.length >= 1) {
+      const currentYear = moment().format('YYYY')
+      let results = arr =>
+        arr.map(item => ({
+          id: item.id,
+          overdue:
+            moment(item.expiration).format('YYYY') === currentYear
+              ? false
+              : true,
+          title: `periodo: ${item.year}`,
+          subtitle: `Vence el: ${moment(item.expiration).format('DD/MM/YYYY')}`
+        }))
+
+      setPayed(results(payed).filter(e => e.overdue))
+    }
+  }, [payed])
 
   return (
     <UserWrapper pathName='Deudas'>

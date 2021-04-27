@@ -18,8 +18,10 @@ export const loginHandler = form => async dispatch => {
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
-export const userDataHandler = form => async dispatch => {
-  const url = `${apiUrl}/irrigator-info`
+export const userDataHandler = role => async dispatch => {
+  const url =
+    role === 'irrigator' ? `${apiUrl}/irrigator-info` : `${apiUrl}/myinfo`
+  console.log(role)
   dispatch({ type: type.LOADING, load: true })
   return axios
     .get(url, getAuth())
@@ -31,7 +33,7 @@ export const userDataHandler = form => async dispatch => {
       dispatch({ type: type.LOADING, load: false })
     })
     .catch(err => {
-      dispatch({ type: type.ERROR, error: err })
       dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.ERROR, error: err })
     })
 }

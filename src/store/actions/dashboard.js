@@ -2,8 +2,9 @@ import axios from 'axios'
 import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
-export const fetchDashboard = form => async dispatch => {
-  const url = `${apiUrl}/dashboard-irrigators?_sort=createdAt:desc`
+export const fetchDashboard = code => async dispatch => {
+  console.log(code)
+  const url = `${apiUrl}/dashboard-irrigators/${code}?_sort=createdAt:desc`
 
   dispatch({ type: type.LOADING, load: true })
   return axios

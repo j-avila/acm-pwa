@@ -15,6 +15,7 @@ const Visits = () => {
   const dispatch = useDispatch()
   const visitsList = useSelector(({ visits }) => visits)
   const notification = useSelector(({ notifications }) => notifications)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const [visits, setVisits] = useState({
     booked: [],
     done: []
@@ -31,8 +32,8 @@ const Visits = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchVisits({}))
-  }, [])
+    codeActive && dispatch(fetchVisits(codeActive))
+  }, [codeActive])
 
   useEffect(() => {
     if (

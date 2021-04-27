@@ -9,7 +9,7 @@ const Toggler = props => {
   const dispatch = useDispatch()
   const { items, activeCode } = props
   const [openSelector, setSelector] = useState()
-  const [selected, setSelected] = useState()
+  const [selected, setSelected] = useState(null)
 
   const handleCode = code => {
     setSelected(code)
@@ -17,7 +17,9 @@ const Toggler = props => {
   }
 
   useEffect(() => {
-    dispatch({ type: type.SET_CODE, codeActive: selected })
+    selected &&
+      selected !== activeCode &&
+      dispatch({ type: type.SET_CODE, code: selected })
     console.log(selected)
   }, [selected])
 

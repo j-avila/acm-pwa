@@ -13,6 +13,7 @@ const Requests = props => {
   const dispatch = useDispatch()
   const history = useHistory()
   const requests = useSelector(({ requests }) => requests.open)
+  const code = useSelector(({ codeActive }) => codeActive)
   const [openList, setOpenList] = useState([])
   const [closedList, setClosedList] = useState([])
 
@@ -25,8 +26,8 @@ const Requests = props => {
   }
 
   useEffect(() => {
-    dispatch(fetchRequests())
-  }, [])
+    code && dispatch(fetchRequests(code))
+  }, [code])
 
   useEffect(() => {
     let formatted

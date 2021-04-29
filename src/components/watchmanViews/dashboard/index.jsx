@@ -13,31 +13,44 @@ const AdminDashboard = props => {
   const history = useHistory()
   const dashData = useSelector(({ dashboard }) => dashboard)
   const user = useSelector(({ user }) => user)
+  const session = useSelector(({ login }) => login)
   const code = useSelector(({ codeActive }) => codeActive)
 
+  const getDash = (code = null) => {
+    const role = session.hasOwnProperty('role') && session.role.name
+    role && dispatch(fetchDashboard(null, role))
+  }
+
   useEffect(() => {
-    code && dispatch(fetchDashboard(code))
+    getDash()
+  }, [user])
+
+  useEffect(() => {
+    getDash(code)
   }, [code])
 
   return (
     <UserWrapper>
       <Dash>
         {dashData &&
+        session &&
+        session.hasOwnProperty('association_user') &&
         dashData.hasOwnProperty('requests') &&
-        dashData.hasOwnProperty('fees') &&
-        dashData.hasOwnProperty('number_of_actions') ? (
+        dashData.hasOwnProperty('next_visit') &&
+        dashData.hasOwnProperty('acm') ? (
           <>
             <Card
               className='stat-card'
-              title='Información del canal'
-              notifications={dashData.notifications.length}
-              onClick={() => history.push('/informacion')}
+              title='Regantes'
+              onClick={() => {
+                history.push('/acciones')
+              }}
             >
               <section>
-                <strong>{`Caudal Diario: ${dashData.acm.daily_flow_channel.estacion}`}</strong>
-                <h1>{`${dashData.acm.daily_flow_channel.caudal}`}</h1>
+                <strong>Lista de regantes de la zona:</strong>
+                <h1>{session.association_user.assigned_irrigators.length}</h1>
               </section>
-              <footer>{`Actualizado al ${dashData.acm.daily_flow_channel.updated}`}</footer>
+              <footer>{`Zona ${session.provider}`}</footer>
             </Card>
 
             <Card
@@ -61,7 +74,7 @@ const AdminDashboard = props => {
 
             <Card
               className='stat-card'
-              title='Visitas'
+              title='Reportes y Bitácoras'
               onClick={() => {
                 history.push('/visitas')
               }}
@@ -76,41 +89,24 @@ const AdminDashboard = props => {
                     : 'Sin definir'}
                 </h1>
               </section>
-              <footer>{`Celador: ${
-                user.watchman ? user.watchman.name : 'Sin asignar'
+              <footer>{`Regante con codigo: ${
+                dashData.next_visit.irrigator_code || 'Sin asignar'
               }`}</footer>
             </Card>
 
             <Card
               className='stat-card'
-              title='Deuda'
-              onClick={() => history.push('/deudas')}
-            >
-              <section>
-                <strong>Deuda total:</strong>
-                <h1>{`${
-                  dashData.fees.total.length >= 1
-                    ? dashData.fees.total[0]._id
-                    : ''
-                } ${
-                  dashData.fees.total.length >= 1
-                    ? dashData.fees.total[0].totalSum
-                    : 0
-                }`}</h1>
-              </section>
-              <footer>{`Cuotas impagas: ${dashData.fees.count}`}</footer>
-            </Card>
-
-            <Card
-              className='stat-card'
-              title='Acciones'
+              title='Información de canal'
+              subTitle={dashData.acm.acm_regulation.origin}
               onClick={() => {
                 history.push('/acciones')
               }}
             >
               <section>
-                <h1>{`${dashData.number_of_actions} Acciones`}</h1>
+                <strong>Caudal Diario:</strong>
+                <h1>{dashData.acm.acm_regulation.value}</h1>
               </section>
+              <footer>{`Actualizado el: ${dashData.acm.acm_regulation.updated}`}</footer>
             </Card>
           </>
         ) : (

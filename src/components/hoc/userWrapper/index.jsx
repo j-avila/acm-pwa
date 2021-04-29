@@ -7,7 +7,6 @@ import { userDataHandler } from '../../../store/actions/login'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import * as type from '../../../store/reducers/types'
-import { socket } from '../utils'
 import { WatchmanInfo } from './styles'
 import Avatar from '../../UI/avatar'
 import Toggler from '../../UI/toggler'
@@ -50,23 +49,38 @@ const UserLayout = props => {
   const [watchman, showWatchman] = useState()
   const [userCodes, setCodes] = useState()
   const session = localStorage.getItem('session')
+  const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   useEffect(() => {
-    !session && history.push('/inicio')
-    !userData && dispatch(userDataHandler())
+    const role = userLogged.role.name
+    !session &&
+      history.push('/inicio')(
+        !userData.hasOwnProperty('acm') || !userData.hasOwnProperty('user')
+      ) &&
+      dispatch(userDataHandler(role))
   }, [])
 
   useEffect(() => {
-    console.log(userData && !userData.hasOwnProperty('acm'))
-    userData && !userData.hasOwnProperty('acm') && dispatch(userDataHandler())
+    if (userData && userLogged.role.name === 'irrigator') {
+      !userData.hasOwnProperty('acm') && dispatch(userDataHandler('irrigator'))
+    } else if (userData) {
+      !userData.hasOwnProperty('user') && dispatch(userDataHandler('watchman'))
+    }
+
     userData.code &&
       !codeActive &&
       dispatch({ type: type.SET_CODE, code: userData.code })
 
     !userCodes &&
       userData.my_other_codes &&
-      userData.my_other_codes.length >= 1 &&
+      userData.my_other_codes.length > 1 &&
       setCodes(userData.my_other_codes)
+
+    userLogged &&
+      dispatch({
+        type: type.LOGIN_FORM,
+        form: userLogged
+      })
   }, [userData])
 
   useEffect(() => {

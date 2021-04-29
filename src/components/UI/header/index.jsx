@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Wrapper } from './styles'
 import PropTypes from 'prop-types'
@@ -8,9 +8,38 @@ import { GhostLoader } from '../ghostLoader'
 import { useSelector } from 'react-redux'
 
 const Header = props => {
+  const history = useHistory()
   const loading = useSelector(({ loading }) => loading)
   const { title, user, menu, menuItems, notifications, back, onClick } = props
-  const history = useHistory()
+  const [userData, setData] = useState()
+
+  const setUser = () => {
+    const getAvatar = user => {
+      let picture
+
+      if (user.hasOwnProperty('watchman')) {
+        user.watchman && (picture = user.watchman.picture)
+      } else if ('picture') {
+        user.picture && (picture = user.picture)
+      } else {
+        picture = null
+      }
+
+      return picture
+    }
+
+    const info = {
+      name: user.hasOwnProperty('acm') ? user.acm.name : user.name,
+      picture: getAvatar(user),
+      watchman: user.watchman
+    }
+    setData(info)
+  }
+
+  useEffect(() => {
+    // console.log(user)
+    setUser()
+  }, [user])
 
   return (
     <Wrapper menu={menu}>
@@ -33,21 +62,19 @@ const Header = props => {
         </div>
       </div>
       <div className='user'>
-        {user && user.hasOwnProperty('acm') ? (
+        {userData ? (
           <>
             <div className='content'>
-              <h3>Bienvenido, {user.acm.name}</h3>
-              <p>
-                <strong>{`Tu celador es ${
-                  user.watchman && user.watchman.name
-                }`}</strong>
-              </p>
+              <h3>Bienvenido, {userData.name}</h3>
+              {userData.watchman && (
+                <p>
+                  <strong>{`Tu celador es ${
+                    userData.watchman.name || 'sin definir'
+                  }`}</strong>
+                </p>
+              )}
             </div>
-            <Avatar
-              onClick={onClick}
-              image={user.watchman && user.watchman.picture}
-              alt='celador'
-            />
+            <Avatar onClick={onClick} image={userData.picture} alt='celador' />
           </>
         ) : loading ? (
           <GhostLoader />

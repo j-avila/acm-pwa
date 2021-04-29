@@ -19,9 +19,9 @@ export const loginHandler = form => async dispatch => {
 }
 
 export const userDataHandler = role => async dispatch => {
+  // console.log(role)
   const url =
     role === 'irrigator' ? `${apiUrl}/irrigator-info` : `${apiUrl}/myinfo`
-  console.log(role)
   dispatch({ type: type.LOADING, load: true })
   return axios
     .get(url, getAuth())

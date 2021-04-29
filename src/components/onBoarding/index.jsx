@@ -50,7 +50,8 @@ export const OnBoarding = () => {
   }
 
   useEffect(() => {
-    user.profile && history.push('/panel-de-control')
+    const firstTime = user.profile || user.firtsTime
+    firstTime && history.push('/panel-de-control')
     user.hasOwnProperty('acm') &&
       setForm({ ...form, code: user.acm.code, app_setting: {} })
     // handleAudio(0, 'play')
@@ -126,7 +127,11 @@ export const OnBoarding = () => {
               margin='0 auto'
               background='white'
               color='primary'
-              onClick={() => setModal(true)}
+              onClick={() =>
+                user.profile
+                  ? setModal(true)
+                  : history.push('/panel-de-control')
+              }
             >
               Comenzar
             </Button>

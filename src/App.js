@@ -27,10 +27,12 @@ import ActionsIndex from './components/irrigatorViews/actions'
 import { useEffect, useState } from 'react'
 import { socket } from './components/hoc/utils'
 import { useSelector } from 'react-redux'
+import AdminDashboard from './components/watchmanViews/dashboard'
 
 const App = () => {
   const [sessionUser, setUserSession] = useState()
   const user = useSelector(({ user }) => user)
+  const session = useSelector(({ login }) => login)
 
   const setSockets = () => {
     socket.emit('join', sessionUser)
@@ -66,7 +68,15 @@ const App = () => {
             <Route path='/cerrar-sesion' component={EndSession} />
             <Route path='/ingreso' component={Login} />
             <Route path='/tour' component={OnBoarding} />
-            <Route path='/panel-de-control' component={Dashboard} />
+            <Route
+              path='/panel-de-control'
+              component={
+                session.hasOwnProperty('role') &&
+                session.role.name === 'irrigator'
+                  ? Dashboard
+                  : AdminDashboard
+              }
+            />
             <Route path='/solicitudes' component={Requests} exact />
             <Route path='/acciones' component={ActionsIndex} exact />
             <Route path='/solicitudes/new' component={RequestForm} />

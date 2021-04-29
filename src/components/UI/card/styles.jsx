@@ -17,9 +17,19 @@ export const Wrapper = styled.div`
     border-bottom: 1px solid grey;
     margin-bottom: 1rem;
     padding: 0 0 0.5rem 0;
-    h3 {
-      font-size: 18px;
-      text-align: left;
+    div {
+      h3 {
+        font-size: 18px;
+        text-align: left;
+      }
+      p {
+        text-align: left;
+        color: ${({ theme }) => {
+          let color = lighten(0.2, theme.text)
+          return color
+        }};
+        font-size: 'medium';
+      }
     }
     .notification {
       height: 28px;
@@ -32,11 +42,14 @@ export const Wrapper = styled.div`
       border-radius: 50%;
       font-weight: bold;
     }
-    i {
-      font-size: 18px;
-      align-self: center;
-      text-align: right;
-      color: ${({ theme }) => theme.primary};
+    span {
+      text-align: end;
+      i {
+        font-size: 18px;
+        align-self: center;
+        text-align: right;
+        color: ${({ theme }) => theme.primary};
+      }
     }
   }
   footer {

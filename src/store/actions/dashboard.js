@@ -2,9 +2,11 @@ import axios from 'axios'
 import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
-export const fetchDashboard = code => async dispatch => {
-  console.log(code)
-  const url = `${apiUrl}/dashboard-irrigators/${code}?_sort=createdAt:desc`
+export const fetchDashboard = (code, role) => async dispatch => {
+  console.log(role)
+  const url = code
+    ? `${apiUrl}/dashboard-irrigators/${code}?_sort=createdAt:desc`
+    : `${apiUrl}/dashboard-acmuser`
 
   dispatch({ type: type.LOADING, load: true })
   return axios

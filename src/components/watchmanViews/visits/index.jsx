@@ -64,13 +64,27 @@ const AdminReports = () => {
         <Tabs selected={0}>
           <Panel title='Reportes'>
             <List items={visits.reports} action={handleItem} />
-            <Button onClick={() => history.push('/solicitar-visita')}>
+            <Button
+              onClick={() =>
+                history.push({
+                  pathname: '/solicitudes/new',
+                  state: { type: 'visitreport' }
+                })
+              }
+            >
               Crear Reporte
             </Button>
           </Panel>
           <Panel title='Bitacoras'>
             <List items={visits.binnacles} action={handleItem} />
-            <Button onClick={() => history.push('/solicitar-visita')}>
+            <Button
+              onClick={() =>
+                history.push({
+                  pathname: '/solicitudes/new',
+                  state: { type: 'channelreport' }
+                })
+              }
+            >
               Crear Bitacora
             </Button>
           </Panel>

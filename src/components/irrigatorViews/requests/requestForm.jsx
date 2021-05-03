@@ -10,6 +10,8 @@ import { createRequest, getRoles } from '../../../store/actions/bookings'
 import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
+import { checkRole } from '../../hoc/utils'
+import Select from 'react-select/src/Select'
 
 const RequestForm = () => {
   const dispatch = useDispatch()
@@ -18,6 +20,7 @@ const RequestForm = () => {
   const notification = useSelector(({ notifications }) => notifications)
   const roles = useSelector(({ requests }) => requests.roles)
   const user = useSelector(({ user }) => user)
+  const session = useSelector(({ login }) => login)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({})
   const [listRequests, setList] = useState()
@@ -92,26 +95,32 @@ const RequestForm = () => {
       <RequestWrapper onSubmit={e => handleForm(e)}>
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
-          <FormInput
-            label='¿A quién está dirigida tu solicitud de atención?'
-            width='100%'
-          >
-            <select
-              onChange={e =>
-                setForm({ ...form, association_area: e.target.value })
-              }
+          {checkRole(session, 'irrigator') ? (
+            <FormInput
+              label='¿A quién está dirigida tu solicitud de atención?'
+              width='100%'
             >
-              <option disabled selected>
-                Selecciona una opción
-              </option>
-              {listRequests &&
-                listRequests.map(option => (
-                  <option key={option.id} value={option.id}>
-                    {option.name}
-                  </option>
-                ))}
-            </select>
-          </FormInput>
+              <select
+                onChange={e =>
+                  setForm({ ...form, association_area: e.target.value })
+                }
+              >
+                <option disabled selected>
+                  Selecciona una opción
+                </option>
+                {listRequests &&
+                  listRequests.map(option => (
+                    <option key={option.id} value={option.id}>
+                      {option.name}
+                    </option>
+                  ))}
+              </select>
+            </FormInput>
+          ) : (
+            <FormInput>
+              <Select />
+            </FormInput>
+          )}
           <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
             <select
               onChange={e => setForm({ ...form, subject: e.target.value })}

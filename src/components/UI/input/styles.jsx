@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
     }
   }
   input,
+  .select__control,
   select,
   textarea {
     width: ${({ width }) => width};
@@ -41,5 +42,10 @@ export const Wrapper = styled.div`
     &:invalid {
       border-color: red;
     }
+  }
+  .select__control {
+    width: 100% !important;
+    padding: 8px;
+    color: ${({ theme }) => `${theme.text} !important`};
   }
 `

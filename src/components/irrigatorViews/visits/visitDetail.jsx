@@ -150,7 +150,14 @@ const VisitDetail = props => {
           </>
         )}
         {isAdmin && (
-          <Button onClick={() => history.push('/solicitudes/new')}>
+          <Button
+            onClick={() =>
+              history.push({
+                pathname: `/solicitudes/${location.state.id}`,
+                state: { id: location.state.id }
+              })
+            }
+          >
             Agregar Reporte
           </Button>
         )}

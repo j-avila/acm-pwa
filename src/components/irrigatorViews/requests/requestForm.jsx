@@ -11,9 +11,9 @@ import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
 import { checkRole } from '../../hoc/utils'
-import Select from 'react-select/src/Select'
+import Select from 'react-select'
 
-const RequestForm = () => {
+const RequestForm = ({ location }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const requests = useSelector(({ requests }) => requests)
@@ -21,10 +21,11 @@ const RequestForm = () => {
   const roles = useSelector(({ requests }) => requests.roles)
   const user = useSelector(({ user }) => user)
   const session = useSelector(({ login }) => login)
-  const [location, setLocation] = useState()
+  const [geolocation, setLocation] = useState()
   const [form, setForm] = useState({})
   const [listRequests, setList] = useState()
   const [invalid, setValid] = useState(true)
+  const [irrigators, setIrrigators] = useState([])
 
   const subjectSelect = [
     { label: '¿Como puedo traspasar cuotas?' },
@@ -39,7 +40,7 @@ const RequestForm = () => {
   }
 
   const handleModalAction = () => {
-    if (notification.type === 'location') {
+    if (notification.type === 'geolocation') {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
     } else {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
@@ -64,7 +65,7 @@ const RequestForm = () => {
         ...form,
         irrigator_code: user.code,
         association_area: roles[0].id,
-        type: 'requestforattention'
+        type: location.state.type || 'requestforattention'
       })
   }, [user, roles])
 
@@ -79,16 +80,26 @@ const RequestForm = () => {
   }, [requests, form])
 
   useEffect(() => {
-    if (location) {
+    if (geolocation) {
       dispatch({
         type: type.NOTIFICATIONS,
         notification: {
           message: 'localización copiada exitosamente',
-          type: 'location'
+          type: 'geolocation'
         }
       })
     }
-  }, [location])
+  }, [geolocation])
+
+  useEffect(() => {
+    if (session.association_user.hasOwnProperty('assigned_irrigators')) {
+      let arranged = session.association_user.assigned_irrigators.map(user => ({
+        label: user.name,
+        value: user.code
+      }))
+      setIrrigators(arranged)
+    }
+  }, [session])
 
   return (
     <UserWrapper pathName='Nueva Solicitud/Reclamo'>
@@ -117,8 +128,16 @@ const RequestForm = () => {
               </select>
             </FormInput>
           ) : (
-            <FormInput>
-              <Select />
+            <FormInput label='seleccionar al Regante'>
+              <Select
+                options={irrigators}
+                classNamePrefix='select'
+                placeholder='Seleccionar regante'
+                onChange={e => setForm({ ...form, irrigator_code: e.value })}
+                components={{
+                  IndicatorSeparator: () => null
+                }}
+              />
             </FormInput>
           )}
           <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>

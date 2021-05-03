@@ -4,7 +4,7 @@ import { ItemsList } from './styles'
 import { useSelector } from 'react-redux'
 
 const List = props => {
-  const { items, action } = props
+  const { items, action, status } = props
   const loading = useSelector(({ loading }) => loading)
 
   const handleAction = id => {

@@ -30,6 +30,9 @@ export const ItemsList = styled.ul`
       align-self: center;
       text-align: right;
       color: ${({ theme }) => theme.primary};
+      &.fa-check {
+        color: green;
+      }
     }
   }
 `

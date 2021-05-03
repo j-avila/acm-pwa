@@ -43,12 +43,16 @@ const AdminDashboard = props => {
               className='stat-card'
               title='Regantes'
               onClick={() => {
-                history.push('/acciones')
+                history.push('/regantes')
               }}
             >
               <section>
                 <strong>Lista de regantes de la zona:</strong>
-                <h1>{session.association_user.assigned_irrigators.length}</h1>
+                <h1>
+                  {(session.association_user.assigned_irrigators &&
+                    session.association_user.assigned_irrigators.length) ||
+                    'No disponible'}
+                </h1>
               </section>
               <footer>{`Zona ${session.provider}`}</footer>
             </Card>

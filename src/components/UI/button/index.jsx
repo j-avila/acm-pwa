@@ -15,7 +15,8 @@ const Button = props => {
     shadow,
     disabled,
     className,
-    type
+    type,
+    size
   } = props
 
   return (
@@ -30,6 +31,7 @@ const Button = props => {
         margin={margin}
         display={display}
         shadow={shadow}
+        size={size}
         disabled={disabled ? 'disabled' : ''}
       >
         {children}
@@ -61,7 +63,8 @@ Button.defaultProps = {
   display: 'inline-block',
   shadow: false,
   disabled: false,
-  margin: '0'
+  margin: '0',
+  size: '16px'
 }
 
 export default Button

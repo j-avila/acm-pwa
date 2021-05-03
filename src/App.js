@@ -25,9 +25,13 @@ import DebtForm from './components/irrigatorViews/debts/debtForm'
 import ActionsIndex from './components/irrigatorViews/actions'
 // watchman
 import { useEffect, useState } from 'react'
-import { socket } from './components/hoc/utils'
+import { checkRole, socket } from './components/hoc/utils'
 import { useSelector } from 'react-redux'
 import AdminDashboard from './components/watchmanViews/dashboard'
+import Irrigators from './components/watchmanViews/irrigators'
+import IrrigatorDetail from './components/watchmanViews/irrigators/irrigatorDetail'
+import AdminRequests from './components/watchmanViews/requests'
+import AdminReports from './components/watchmanViews/visits'
 
 const App = () => {
   const [sessionUser, setUserSession] = useState()
@@ -71,13 +75,16 @@ const App = () => {
             <Route
               path='/panel-de-control'
               component={
-                session.hasOwnProperty('role') &&
-                session.role.name === 'irrigator'
-                  ? Dashboard
-                  : AdminDashboard
+                checkRole(session, 'irrigator') ? Dashboard : AdminDashboard
               }
             />
-            <Route path='/solicitudes' component={Requests} exact />
+            <Route
+              path='/solicitudes'
+              component={
+                checkRole(session, 'irrigator') ? Requests : AdminRequests
+              }
+              exact
+            />
             <Route path='/acciones' component={ActionsIndex} exact />
             <Route path='/solicitudes/new' component={RequestForm} />
             <Route path='/solicitudes/:id' component={RequestDetail} />
@@ -85,11 +92,18 @@ const App = () => {
             <Route path='/deudas/new' component={DebtForm} />
             <Route path='/deudas/:id' component={DebtDetail} />
             <Route path='/informacion' component={InfoChannel} />
-            <Route path='/visitas' component={Visits} exact />
+            <Route
+              path='/visitas'
+              component={checkRole(session) ? Visits : AdminReports}
+              exact
+            />
             <Route path='/visitas/:id' component={VisitDetail} />
             <Route path='/perfil' component={EditProfile} />
             <Route path='/opciones' component={Settings} />
             <Route path='/solicitar-visita' component={VistisForm} />
+            <Route path='/regantes' component={Irrigators} />
+            {/* <Route path='/crear-reporte' component={Irrigators} /> */}
+            <Route path='/regante/:id' component={IrrigatorDetail} />
           </Switch>
         </Router>
       </ThemeWrapper>

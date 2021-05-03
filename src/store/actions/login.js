@@ -4,6 +4,7 @@ import { apiUrl, getAuth } from './utils'
 
 export const loginHandler = form => async dispatch => {
   const url = `${apiUrl}/auth/local`
+  dispatch({ type: type.LOADING, load: true })
   return axios
     .post(url, form)
     .then(({ data }) => {
@@ -14,8 +15,12 @@ export const loginHandler = form => async dispatch => {
         type: type.LOGIN_FORM,
         form: data
       })
+      dispatch({ type: type.LOADING, load: false })
     })
-    .catch(err => dispatch({ type: type.ERROR, error: err }))
+    .catch(err => {
+      dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.ERROR, error: err })
+    })
 }
 
 export const userDataHandler = role => async dispatch => {

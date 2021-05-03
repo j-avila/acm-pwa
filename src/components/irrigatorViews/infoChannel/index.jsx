@@ -1,7 +1,9 @@
+import axios from 'axios'
 import moment from 'moment'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchInfoCards } from '../../../store/actions/infoChannels'
+import { apiUrl } from '../../../store/actions/utils'
 import UserWrapper from '../../hoc/userWrapper'
 import Card from '../../UI/card'
 import { GhostLine } from '../../UI/ghostLoader'
@@ -29,6 +31,14 @@ const InfoChannel = props => {
     )
   }
 
+  const markAsRead = async id => {
+    const url = `${apiUrl}/notification-centers/${id}/${code}`
+    await axios.get(url).then(({ data }) => {
+      const filtered = alert.filter(item => item.id !== id)
+      setAlert(filtered)
+    })
+  }
+
   useEffect(() => {
     code && dispatch(fetchInfoCards(code))
   }, [code])
@@ -50,9 +60,12 @@ const InfoChannel = props => {
         {alert &&
           alert.length >= 1 &&
           alert.map(item => (
-            <NotificationArea>
+            <NotificationArea key={item.id}>
               <Card className='alert'>
-                <i className='fas fa-times' onClick={() => setAlert(false)} />
+                <i
+                  className='fas fa-times'
+                  onClick={() => markAsRead(item.id)}
+                />
                 <Content>
                   <i className='fas fa-info-circle'></i>
                   <span>
@@ -171,8 +184,8 @@ const InfoChannel = props => {
               </Content>
             </Card>
             {infoCards.pluviometry.length >= 1 &&
-              infoCards.pluviometry.map(card => (
-                <Card>
+              infoCards.pluviometry.map((card, index) => (
+                <Card key={index}>
                   <Content>
                     <span>
                       <h3>{`Pluviometría: ${card.origin}`}</h3>

@@ -6,33 +6,63 @@ import Button from '../../UI/button'
 import FormInput from '../../UI/input'
 import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { createRequest, getRoles } from '../../../store/actions/bookings'
+import { createDebtRequest } from '../../../store/actions/debts'
+import { getRoles } from '../../../store/actions/bookings'
 import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
 
-const RequestForm = () => {
+const DebtForm = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const requests = useSelector(({ requests }) => requests)
-  const notification = useSelector(({ notifications }) => notifications)
+  const hiddenFileInput = useRef(null)
   const roles = useSelector(({ requests }) => requests.roles)
+  const notification = useSelector(({ notifications }) => notifications)
   const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
-  const [form, setForm] = useState({})
-  const [listRequests, setList] = useState()
-  const [invalid, setValid] = useState(true)
+  const [form, setForm] = useState({
+    subject: 'Finanzas'
+  })
 
-  const subjectSelect = [
-    { label: '¿Como puedo traspasar cuotas?' },
-    { label: 'Convenios de pago' },
-    { label: 'Solicitud' },
-    { label: 'Otro' }
-  ]
+  const subjectSelect = [{ label: 'Convenios de pago' }]
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => setLocation(pos))
+    } else {
+      alert('Geolocation is not supported by this browser.')
+    }
+  }
+
+  const handleFIleClick = () => {
+    hiddenFileInput.current.click()
+  }
+
+  const getFile = event => {
+    const fileUploaded = event.target.files[0]
+    console.log(fileUploaded)
+  }
+
+  // enconde img to base64
+  const handleImg = e => {
+    console.log('file to upload:', e.target.files[0])
+    let file = e.target.files[0]
+
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = _handleReaderLoaded.bind(this)
+      reader.readAsBinaryString(file)
+    }
+  }
+
+  const _handleReaderLoaded = readerEvt => {
+    let binaryString = readerEvt.target.result
+    setForm({ ...form, file: btoa(binaryString) })
+  }
 
   const handleForm = e => {
-    e.preventDefault()
-    dispatch(createRequest(form))
+    // console.log(form)
+    dispatch(createDebtRequest(form))
   }
 
   const handleModalAction = () => {
@@ -40,18 +70,12 @@ const RequestForm = () => {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
     } else {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
-      history.push('/solicitudes')
+      history.push('/deudas')
     }
   }
 
   useEffect(() => {
     dispatch(getRoles())
-    user &&
-      setForm({
-        ...form,
-        irrigator_code: user.code,
-        type: 'requestforattention'
-      })
   }, [])
 
   useEffect(() => {
@@ -66,17 +90,8 @@ const RequestForm = () => {
   }, [user, roles])
 
   useEffect(() => {
-    requests.hasOwnProperty('roles') && setList(requests.roles)
-    // checking for form validation
-    form.association_area &&
-      form.subject &&
-      form.content &&
-      form.content.length >= 30 &&
-      setValid(false)
-  }, [requests, form])
-
-  useEffect(() => {
     if (location) {
+      setForm({ ...form, location: location })
       dispatch({
         type: type.NOTIFICATIONS,
         notification: {
@@ -88,68 +103,69 @@ const RequestForm = () => {
   }, [location])
 
   return (
-    <UserWrapper pathName='Nueva Solicitud/Reclamo'>
-      <RequestWrapper onSubmit={e => handleForm(e)}>
+    <UserWrapper pathName='Reporte de deuda'>
+      <RequestWrapper>
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
-          <FormInput
-            label='¿A quién está dirigida tu solicitud de atención?'
-            width='100%'
-          >
+          <FormInput label='¿Cuál es su problema o necesidad?' width='100%'>
             <select
-              onChange={e =>
-                setForm({ ...form, association_area: e.target.value })
-              }
+              disabled
+              onChange={e => setForm({ ...form, subject: e.target.value })}
             >
-              <option disabled selected>
-                Selecciona una opción
-              </option>
-              {listRequests &&
-                listRequests.map(option => (
-                  <option key={option.id} value={option.id}>
-                    {option.name}
-                  </option>
-                ))}
+              {roles &&
+                roles
+                  .filter(o => o.name === 'Finanzas')
+                  .map(o => (
+                    <option value={roles.id} selected>
+                      {o.name}
+                    </option>
+                  ))}
             </select>
           </FormInput>
           <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
             <select
+              disabled
               onChange={e => setForm({ ...form, subject: e.target.value })}
             >
-              <option disabled selected>
-                Selecciona un asunto recurrente
-              </option>
+              <option disabled>Selecciona un asunto recurrente</option>
               {subjectSelect.map(subject => (
-                <option key={subject.label} value={subject.label}>
+                <option key={subject.label} value={subject.label} selected>
                   {subject.label}
                 </option>
               ))}
             </select>
           </FormInput>
-          {form.subject === 'Otro' && (
-            <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
-              <input
-                type='text'
-                name='nombre'
-                onChange={e =>
-                  setForm({ ...form, otherSubject: e.target.value })
-                }
-                placeholder='Describa su solicitud brevemente'
-              />
-            </FormInput>
-          )}
           <FormInput label='Descripción de la solicitud de atención'>
             <textarea
+              onChange={e => setForm({ ...form, content: e.target.value })}
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
               cols='6'
               rows='6'
-              onChange={e => setForm({ ...form, content: e.target.value })}
             ></textarea>
+            <input
+              type='file'
+              style={{ display: 'none' }}
+              ref={hiddenFileInput}
+              accept='.jpeg, .png, .jpg'
+              onChange={e => handleImg(e)}
+            />
           </FormInput>
-          <span>(Debe tener minimo 30 caracteres)</span>
-
           <ActionArea className='actions'>
-            <Button className='btn-send' type='submit' disabled={invalid}>
+            <Button background='primary'>
+              <i className='fas fa-camera'></i>
+            </Button>
+            <Button
+              ref={handleFIleClick}
+              background='rgba(87,162,198,1)'
+              onClick={() => handleFIleClick()}
+              onChange={e => getFile(e)}
+            >
+              <i className='fas fa-paperclip'></i>
+            </Button>
+            <Button background='secondary' onClick={() => getLocation()}>
+              <i className='fas fa-crosshairs'></i>
+            </Button>
+            <Button className='btn-send' onClick={e => handleForm(e)}>
               Enviar
             </Button>
           </ActionArea>
@@ -176,4 +192,4 @@ const RequestForm = () => {
   )
 }
 
-export default RequestForm
+export default DebtForm

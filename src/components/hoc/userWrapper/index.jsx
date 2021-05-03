@@ -22,6 +22,17 @@ const menuItems = [
   { name: 'cerrar sesión', path: '/cerrar-sesion' }
 ]
 
+const adminMenu = [
+  { name: 'Inicio', path: '/panel-de-control' },
+  { name: 'Regantes', path: '/regantes' },
+  { name: 'Solicitudes y Reclamos', path: '/solicitudes' },
+  { name: 'Reportes y Bitácoras', path: '/visitas' },
+  { name: 'información de los canales', path: '/informacion' },
+  { name: 'perfil', path: '/perfil' },
+  { name: 'ajustes', path: '/opciones' },
+  { name: 'cerrar sesión', path: '/cerrar-sesion' }
+]
+
 export const ModalContent = styled.div`
   i {
     padding: 12px;
@@ -91,7 +102,7 @@ const UserLayout = props => {
     <>
       <Header
         title={pathName ? pathName : 'Canal del Maule'}
-        menuItems={menuItems}
+        menuItems={userLogged.role.name === 'irrigator' ? menuItems : adminMenu}
         user={userData}
         menu
         back

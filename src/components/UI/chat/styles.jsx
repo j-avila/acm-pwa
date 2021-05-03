@@ -73,6 +73,7 @@ export const Bubble = styled.span`
   }
   &.notification {
     width: 100%;
+    max-width: 100%;
     color: ${({ theme }) => theme.text};
     text-align: left;
     i {
@@ -92,6 +93,7 @@ export const Bubble = styled.span`
     color: white;
     font-size: small;
     font-weight: bold;
+    margin-bottom: 8px;
   }
 `
 

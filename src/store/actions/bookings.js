@@ -3,7 +3,10 @@ import { apiUrl, getAuth } from './utils'
 import * as type from '../reducers/types'
 
 export const fetchRequests = code => async dispatch => {
-  const url = `${apiUrl}/event-books?type=requestforattention&irrigator_code=${code}`
+  const url = code
+    ? `${apiUrl}/event-books?type=requestforattention&irrigator_code=${code}`
+    : `${apiUrl}/event-books`
+
   dispatch({ type: type.LOADING, load: true })
   return axios
     .get(url, getAuth())

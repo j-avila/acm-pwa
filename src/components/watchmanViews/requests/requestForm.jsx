@@ -14,6 +14,7 @@ import { useHistory } from 'react-router'
 const RequestForm = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const hiddenFileInput = useRef(null)
   const requests = useSelector(({ requests }) => requests)
   const notification = useSelector(({ notifications }) => notifications)
   const roles = useSelector(({ requests }) => requests.roles)
@@ -23,12 +24,46 @@ const RequestForm = () => {
   const [listRequests, setList] = useState()
   const [invalid, setValid] = useState(true)
 
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => setLocation(pos))
+    } else {
+      alert('Geolocation is not supported by this browser.')
+    }
+  }
+
+  const handleFileClick = () => {
+    hiddenFileInput.current.click()
+  }
+
+  const getFile = event => {
+    const fileUploaded = event.target.files[0]
+    console.log(fileUploaded)
+  }
+
   const subjectSelect = [
     { label: '¿Como puedo traspasar cuotas?' },
     { label: 'Convenios de pago' },
     { label: 'Solicitud' },
     { label: 'Otro' }
   ]
+
+  // enconde img to base64
+  const handleImg = e => {
+    console.log('file to upload:', e.target.files[0])
+    let file = e.target.files[0]
+
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = _handleReaderLoaded.bind(this)
+      reader.readAsBinaryString(file)
+    }
+  }
+
+  const _handleReaderLoaded = readerEvt => {
+    let binaryString = readerEvt.target.result
+    setForm({ ...form, file: btoa(binaryString) })
+  }
 
   const handleForm = e => {
     e.preventDefault()
@@ -145,10 +180,31 @@ const RequestForm = () => {
               rows='6'
               onChange={e => setForm({ ...form, content: e.target.value })}
             ></textarea>
+            <input
+              type='file'
+              style={{ display: 'none' }}
+              ref={hiddenFileInput}
+              accept='.jpeg, .png, .jpg'
+              onChange={e => handleImg(e)}
+            />
           </FormInput>
           <span>(Debe tener minimo 30 caracteres)</span>
 
           <ActionArea className='actions'>
+            <Button background='primary'>
+              <i className='fas fa-camera'></i>
+            </Button>
+            <Button
+              ref={handleFileClick}
+              background='rgba(87,162,198,1)'
+              onClick={() => handleFileClick()}
+              onChange={e => getFile(e)}
+            >
+              <i className='fas fa-paperclip'></i>
+            </Button>
+            <Button background='secondary' onClick={() => getLocation()}>
+              <i className='fas fa-crosshairs'></i>
+            </Button>
             <Button className='btn-send' type='submit' disabled={invalid}>
               Enviar
             </Button>

@@ -1,31 +1,23 @@
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import { apiUrl } from '../../../store/actions/utils'
 import { fetchVisit, getBio } from '../../../store/actions/visits'
 import UserWrapper from '../../hoc/userWrapper'
-import { checkRole } from '../../hoc/utils'
-import Button from '../../UI/button'
 import Card from '../../UI/card'
 import { GhostLine } from '../../UI/ghostLoader'
 import { DetailWrapper } from './styles'
 
 const VisitDetail = props => {
-  const history = useHistory()
   const dispatch = useDispatch()
-  const session = useSelector(({ login }) => login)
   const loading = useSelector(({ loading }) => loading)
   const details = useSelector(({ visits }) => visits.details)
   const bio = useSelector(({ visits }) => visits.bio)
-  const [isAdmin, setRol] = useState()
   const { location } = props
 
   useEffect(() => {
-    const role = !checkRole(session, 'irrigator')
     dispatch(fetchVisit(location.state.id))
     dispatch(getBio(location.state.id))
-    setRol(role)
   }, [])
 
   return (
@@ -148,11 +140,6 @@ const VisitDetail = props => {
               ))
             )}
           </>
-        )}
-        {isAdmin && (
-          <Button onClick={() => history.push('/solicitudes/new')}>
-            Agregar Reporte
-          </Button>
         )}
       </DetailWrapper>
     </UserWrapper>

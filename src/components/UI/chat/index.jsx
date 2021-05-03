@@ -152,20 +152,20 @@ const ChatCard = props => {
             <Row
               key={message.id}
               direction={
-                message.user.code !== loggedUser.code
+                message.user.hasOwnProperty('rol')
                   ? 'flex-start'
-                  : !message.user.code
-                  ? 'notification'
-                  : 'flex-end'
+                  : message.user.role.name === 'watchman'
+                  ? 'flex-end'
+                  : 'notification'
               }
             >
               <ChatBubble
                 direction={
-                  !message.user.code
-                    ? 'notification'
-                    : message.user.code !== loggedUser.code
+                  message.user.hasOwnProperty('rol')
                     ? 'flex-start'
-                    : 'flex-end'
+                    : message.user.role.name === 'watchman'
+                    ? 'flex-end'
+                    : 'notification'
                 }
                 isUser={message.user.code === loggedUser.code}
                 provName={message.user.name}

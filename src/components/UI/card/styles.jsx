@@ -41,6 +41,7 @@ export const Wrapper = styled.div`
       color: white;
       border-radius: 50%;
       font-weight: bold;
+      text-align: center;
     }
     span {
       text-align: end;

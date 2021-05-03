@@ -69,7 +69,7 @@ export const RequestWrapper = styled.form`
 export const ActionArea = styled.div`
   display: flex;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 1rem;
   button {
     padding: 8px 12px;

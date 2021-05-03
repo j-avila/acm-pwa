@@ -7,6 +7,8 @@ import { user } from './user'
 import { debts } from './debts'
 import { dashboard } from './dashboard'
 import { visits } from './visits'
+import { irrigator } from './irrigator'
+import { reports } from './reports'
 
 const errors = (state = {}, action) => {
   switch (action.type) {
@@ -55,5 +57,7 @@ export default combineReducers({
   requests,
   debts,
   visits,
-  codeActive
+  codeActive,
+  irrigator,
+  reports
 })

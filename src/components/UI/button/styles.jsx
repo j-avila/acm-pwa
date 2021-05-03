@@ -4,7 +4,7 @@ import { checkThemeProp } from '../../hoc/utils'
 export const Wrapper = styled.button`
   display: ${({ display }) => display};
   border-radius: 15px;
-  font-size: 16px;
+  font-size: ${({ size }) => size};
   border: 0;
   outline: 0;
   margin: ${({ margin }) => margin};

@@ -2,10 +2,9 @@ import React from 'react'
 import { Bubble } from './styles'
 
 const ChatBubble = props => {
-  const { direction, children, isUser, provName, width } = props
+  const { direction, children, isUser, provName } = props
   return (
     <Bubble
-      style={{ width: width }}
       className={
         direction === 'flex-start'
           ? 'leftSided'
@@ -21,8 +20,6 @@ const ChatBubble = props => {
   )
 }
 
-ChatBubble.defaultProps = {
-  width: 'unset'
-}
+ChatBubble.defaultProps = {}
 
 export default ChatBubble

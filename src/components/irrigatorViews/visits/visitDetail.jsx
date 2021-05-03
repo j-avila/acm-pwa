@@ -53,7 +53,7 @@ const VisitDetail = props => {
             </h1>
             <Card className='info'>
               <p>
-                <strong>Fecha :</strong>
+                <strong>Fecha: </strong>
                 {moment(details.visitreport_data.date).format('DD/MM/YYYY')}
               </p>
               <p>
@@ -61,14 +61,11 @@ const VisitDetail = props => {
                 {moment(details.visitreport_data.date).format('HH:HH')}
               </p>
               <p>
-                <strong>Visitante</strong> : Juan Perez
+                <strong>Visitante: </strong> {details.association_user.name}
               </p>
               <p>
                 <strong>Motivo de la visita: </strong>
                 {details.content}
-              </p>
-              <p>
-                <strong>Adjuntos</strong> :
               </p>
             </Card>
             {bio && bio.messages.length >= 1 && <h2>Bitacora de celador</h2>}
@@ -149,7 +146,7 @@ const VisitDetail = props => {
             )}
           </>
         )}
-        {isAdmin && (
+        {isAdmin && details && !details.closed && (
           <Button
             onClick={() =>
               history.push({

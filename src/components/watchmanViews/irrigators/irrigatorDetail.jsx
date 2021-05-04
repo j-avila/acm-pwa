@@ -99,9 +99,14 @@ const IrrigatorDetail = props => {
                 <Button
                   width='100%'
                   display='block'
-                  onClick={() => history.push({ pathname: '/reportes/new' })}
+                  onClick={() =>
+                    history.push({
+                      pathname: '/solicitudes/new',
+                      state: { type: 'requestforattention' }
+                    })
+                  }
                 >
-                  Crear Bitacora
+                  Agendar Visita
                 </Button>
               </Actions>
             </>

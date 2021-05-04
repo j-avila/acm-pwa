@@ -25,8 +25,8 @@ const menuItems = [
 const adminMenu = [
   { name: 'Inicio', path: '/panel-de-control' },
   { name: 'Regantes', path: '/regantes' },
-  { name: 'Solicitudes y Reclamos', path: '/solicitudes' },
-  { name: 'Reportes y Bitácoras', path: '/visitas' },
+  { name: 'Solicitudes', path: '/solicitudes' },
+  { name: 'Reportes de Visitas', path: '/visitas' },
   { name: 'información de los canales', path: '/informacion' },
   { name: 'perfil', path: '/perfil' },
   { name: 'ajustes', path: '/opciones' },

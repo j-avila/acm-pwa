@@ -59,7 +59,7 @@ const AdminReports = () => {
   }, [reportData])
 
   return (
-    <UserWrapper pathName='Reportes y Bitacoras'>
+    <UserWrapper pathName='Reportes de visitas'>
       <VisitsWrapper>
         <Tabs selected={0}>
           <Panel title='Reportes'>

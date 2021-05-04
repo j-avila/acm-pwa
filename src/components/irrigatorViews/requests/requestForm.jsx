@@ -61,13 +61,15 @@ const RequestForm = ({ location }) => {
   useEffect(() => {
     user &&
       roles &&
+      location.state &&
       setForm({
         ...form,
         irrigator_code: user.code,
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })
-  }, [user, roles])
+    console.log(location)
+  }, [user, roles, location])
 
   useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
@@ -92,7 +94,11 @@ const RequestForm = ({ location }) => {
   }, [geolocation])
 
   useEffect(() => {
-    if (session.association_user.hasOwnProperty('assigned_irrigators')) {
+    if (
+      session &&
+      session.association_user &&
+      session.association_user.hasOwnProperty('assigned_irrigators')
+    ) {
       let arranged = session.association_user.assigned_irrigators.map(user => ({
         label: user.name,
         value: user.code
@@ -128,15 +134,30 @@ const RequestForm = ({ location }) => {
               </select>
             </FormInput>
           ) : (
-            <FormInput label='seleccionar al Regante'>
-              <Select
-                options={irrigators}
-                classNamePrefix='select'
-                placeholder='Seleccionar regante'
-                onChange={e => setForm({ ...form, irrigator_code: e.value })}
-                components={{
-                  IndicatorSeparator: () => null
-                }}
+            <>
+              <FormInput label='seleccionar al Regante'>
+                <Select
+                  options={irrigators}
+                  classNamePrefix='select'
+                  placeholder='Seleccionar regante'
+                  onChange={e => setForm({ ...form, irrigator_code: e.value })}
+                  components={{
+                    IndicatorSeparator: () => null
+                  }}
+                />
+              </FormInput>
+            </>
+          )}
+          {!checkRole(session, 'irrigartor') && location.state && (
+            <FormInput label='Fecha de la visita'>
+              <input
+                type='date'
+                onChange={e =>
+                  setForm({
+                    ...form,
+                    visitreport_data: { date: e.target.value }
+                  })
+                }
               />
             </FormInput>
           )}
@@ -154,6 +175,7 @@ const RequestForm = ({ location }) => {
               ))}
             </select>
           </FormInput>
+
           {form.subject === 'Otro' && (
             <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
               <input

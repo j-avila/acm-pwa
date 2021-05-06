@@ -29,6 +29,9 @@ export const Dash = styled.div`
         }
       }
     }
+    &:last-child {
+      margin-bottom: 10vh;
+    }
   }
   @media all and (min-width: 1280px) {
     max-width: 1000px;

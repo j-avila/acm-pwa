@@ -94,7 +94,7 @@ const VistisForm = () => {
   }, [location])
 
   return (
-    <UserWrapper pathName='Nueva Solicitud/Reclamo'>
+    <UserWrapper pathName='Nueva Solicitud'>
       <RequestWrapper onSubmit={e => handleForm(e)}>
         <h1>Crea una solicitud de visita</h1>
         <Card className='form-card'>

@@ -59,10 +59,10 @@ const AdminReports = () => {
   }, [reportData])
 
   return (
-    <UserWrapper pathName='Reportes de visitas'>
+    <UserWrapper pathName='Reportes'>
       <VisitsWrapper>
         <Tabs selected={0}>
-          <Panel title='Reportes'>
+          <Panel title='Visitas'>
             <List items={visits.reports} action={handleItem} />
             <Button
               onClick={() =>
@@ -75,7 +75,7 @@ const AdminReports = () => {
               Crear Reporte
             </Button>
           </Panel>
-          <Panel title='Bitacoras'>
+          <Panel title='Canal'>
             <List items={visits.binnacles} action={handleItem} />
             <Button
               onClick={() =>

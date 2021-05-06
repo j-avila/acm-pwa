@@ -63,7 +63,7 @@ const Requests = props => {
           <Panel title='Abiertas'>
             <List items={openList} action={handleItem} />
           </Panel>
-          <Panel title='Finalizados'>
+          <Panel title='Cerradas'>
             <List items={closedList} action={handleItem} />
           </Panel>
         </Tabs>
@@ -72,7 +72,7 @@ const Requests = props => {
           width='90%'
           onClick={() => history.push('/solicitudes/new')}
         >
-          Crear nueva solicitud/reclamo
+          Crear nueva solicitud
         </Button>
       </Wrapper>
     </UserWrapper>

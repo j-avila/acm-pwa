@@ -123,7 +123,7 @@ const RequestForm = () => {
   }, [location])
 
   return (
-    <UserWrapper pathName='Nueva Solicitud/Reclamo'>
+    <UserWrapper pathName='Nueva Solicitud'>
       <RequestWrapper onSubmit={e => handleForm(e)}>
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>

@@ -47,6 +47,7 @@ export const createRequest = form => async dispatch => {
         request: data
       })
       dispatch({ type: type.LOADING, load: false })
+      console.log('book:', data)
       dispatch({
         type: type.NOTIFICATIONS,
         notification: { message: 'solicitud enviada con exito' }

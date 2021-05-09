@@ -26,6 +26,7 @@ const RequestForm = ({ location }) => {
   const [listRequests, setList] = useState()
   const [invalid, setValid] = useState(true)
   const [irrigators, setIrrigators] = useState([])
+  const [channels, setChannels] = useState([])
 
   const subjectSelect = [
     { label: '¿Como puedo traspasar cuotas?' },
@@ -44,11 +45,15 @@ const RequestForm = ({ location }) => {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
     } else {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
-      history.push('/solicitudes')
+      history.push({
+        pathname: `/solicitudes/${requests.requestDetail.id}`,
+        state: { id: requests.requestDetail.id }
+      })
     }
   }
 
   useEffect(() => {
+    console.log(location)
     dispatch(getRoles())
     user &&
       setForm({
@@ -74,11 +79,23 @@ const RequestForm = ({ location }) => {
   useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
     // checking for form validation
-    form.association_area &&
-      form.subject &&
-      form.content &&
-      form.content.length >= 30 &&
-      setValid(false)
+    if (location.state.type === 'requestforattention') {
+      form.association_area &&
+        form.subject &&
+        form.content &&
+        form.content.length >= 30 &&
+        setValid(false)
+    } else if (
+      location.state.type === 'channelreport' ||
+      location.state.type === 'visitreport'
+    ) {
+      form.irrigator_code &&
+        form.visitreport_data &&
+        form.visitreport_data.date &&
+        form.content &&
+        form.content.length >= 30 &&
+        setValid(false)
+    }
   }, [requests, form])
 
   useEffect(() => {
@@ -105,6 +122,13 @@ const RequestForm = ({ location }) => {
       }))
       setIrrigators(arranged)
     }
+    if (session.channels && session.channels.length >= 1) {
+      let channels = session.channels.map(channel => ({
+        label: channel.name,
+        value: channel.code
+      }))
+      setChannels(channels)
+    }
   }, [session])
 
   return (
@@ -112,6 +136,21 @@ const RequestForm = ({ location }) => {
       <RequestWrapper onSubmit={e => handleForm(e)}>
         <h1>Crea una nueva solicitud de atención o reclamo</h1>
         <Card className='form-card'>
+          {location.state.type === 'channelreport' && (
+            <FormInput label='Selecciona un Canal' width='100%'>
+              <select onChange={e => setForm({ ...form, channel: e.value })}>
+                {channels && channels.length >= 1 ? (
+                  channels.map(channel => (
+                    <option value={channel.value}>{channel.label}</option>
+                  ))
+                ) : (
+                  <option disabled selected>
+                    No tienes canales asignados
+                  </option>
+                )}
+              </select>
+            </FormInput>
+          )}
           {checkRole(session, 'irrigator') ? (
             <FormInput
               label='¿A quién está dirigida tu solicitud de atención?'
@@ -148,33 +187,37 @@ const RequestForm = ({ location }) => {
               </FormInput>
             </>
           )}
-          {!checkRole(session, 'irrigartor') && location.state && (
-            <FormInput label='Fecha de la visita'>
-              <input
-                type='date'
-                onChange={e =>
-                  setForm({
-                    ...form,
-                    visitreport_data: { date: e.target.value }
-                  })
-                }
-              />
+          {!checkRole(session, 'irrigartor') &&
+            (location.state.type === 'channelreport' ||
+              location.state.type === 'visitreport') && (
+              <FormInput label='Fecha de la visita'>
+                <input
+                  type='date'
+                  onChange={e =>
+                    setForm({
+                      ...form,
+                      visitreport_data: { date: e.target.value }
+                    })
+                  }
+                />
+              </FormInput>
+            )}
+          {location.state.type !== 'channelreport' && (
+            <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
+              <select
+                onChange={e => setForm({ ...form, subject: e.target.value })}
+              >
+                <option disabled selected>
+                  Selecciona un asunto recurrente
+                </option>
+                {subjectSelect.map(subject => (
+                  <option key={subject.label} value={subject.label}>
+                    {subject.label}
+                  </option>
+                ))}
+              </select>
             </FormInput>
           )}
-          <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
-            <select
-              onChange={e => setForm({ ...form, subject: e.target.value })}
-            >
-              <option disabled selected>
-                Selecciona un asunto recurrente
-              </option>
-              {subjectSelect.map(subject => (
-                <option key={subject.label} value={subject.label}>
-                  {subject.label}
-                </option>
-              ))}
-            </select>
-          </FormInput>
 
           {form.subject === 'Otro' && (
             <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>

@@ -72,7 +72,7 @@ const AdminReports = () => {
                 })
               }
             >
-              Crear Reporte
+              Crear Reporte de Visita
             </Button>
           </Panel>
           <Panel title='Canal'>
@@ -85,7 +85,7 @@ const AdminReports = () => {
                 })
               }
             >
-              Crear Bitacora
+              Crear Reporte de Canal
             </Button>
           </Panel>
         </Tabs>

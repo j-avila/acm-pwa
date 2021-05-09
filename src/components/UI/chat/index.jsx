@@ -117,19 +117,19 @@ const ChatCard = props => {
   }, [location, loading])
 
   useEffect(() => {
-    if (items.length >= 1) {
+    if (items.length >= 2) {
       const last = items.length
       const lastMessage = items[1]
       const isUserLast = lastMessage.user.code === loggedUser.code
       const fields = Object.keys(messageObj.data)
       const results = fields.filter(field => messageObj.data[field])
 
-      if (isUserLast) {
-        // setValid(!isUserLast)
+      if (last >= 1 && isUserLast) {
+        setValid(!isUserLast)
         console.log(isUserLast)
         setValid(results.length >= 2)
       } else {
-        setValid(results.length >= 2)
+        setValid(true)
       }
     }
   }, [items, messageObj])
@@ -227,15 +227,15 @@ const ChatCard = props => {
         )}
       </ChatWrapper>
       {chatBar && (
-        <Message>
+        <Message content={preview ? '1fr 9fr' : '1fr'}>
           {actions && (
             <ActionArea>
-              <span>
+              {/* <span>
                 <Button background='primary' display='block'>
                   <i className='fas fa-camera'></i>
                 </Button>
                 Agregar Foto
-              </span>
+              </span> */}
               <span>
                 <Button
                   display='block'
@@ -299,7 +299,7 @@ const ChatCard = props => {
           <Button
             background='transparent'
             onClick={() => handleMessage()}
-            disabled={valid ? '' : 'disabled'}
+            // disabled={valid ? '' : 'disabled'}
           >
             <i className='fas fa-paper-plane'></i>
           </Button>

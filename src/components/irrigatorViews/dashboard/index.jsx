@@ -42,7 +42,7 @@ const Dashboard = props => {
 
             <Card
               className='stat-card visits'
-              title='Solicitudes/Reclamos'
+              title='Solicitudes'
               onClick={() => {
                 history.push('/solicitudes')
               }}

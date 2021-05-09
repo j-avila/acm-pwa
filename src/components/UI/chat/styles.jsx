@@ -34,6 +34,7 @@ export const Bubble = styled.span`
   padding: 1rem;
   color: white;
   font-size: 15px;
+  overflow-wrap: break-word;
   &.rightSided {
     background: ${({ theme }) => theme.secondary};
     text-align: right;
@@ -121,7 +122,7 @@ export const Message = styled.form`
     border-radius: 8px;
     background: ${({ theme }) => theme.background};
     display: grid;
-    grid-template-columns: 1fr 9fr;
+    grid-template-columns: ${({ content }) => content};
     .attach-preview {
       width: 50px;
       height: 50px;
@@ -146,9 +147,11 @@ export const Message = styled.form`
     input {
       border: 0;
       outline: 0;
-      padding: 0 12px;
+      padding: 0 4px;
       color: ${({ theme }) => theme.text};
       background: transparent;
+      font-size: 18px;
+      overflow-wrap: break-word;
       &:focus,
       &:active {
         border: 0;
@@ -174,10 +177,12 @@ export const ActionArea = styled.div`
   display: flex;
   justify-content: space-around;
   position: absolute;
-  width: 100%;
+  flex-direction: column;
+  width: 120px;
   bottom: 100%;
   padding: 1rem 0;
-  align-content: center;
+  align-items: center;
+  border-radius: 0 12px 0 0;
   background: ${({ theme }) => {
     let bgcolor = darken(0.2, theme.background)
     return bgcolor
@@ -185,8 +190,7 @@ export const ActionArea = styled.div`
   span {
     text-align: center;
     display: inline-block;
-    font-size: x-small;
-    max-width: 20%;
+    font-size: small;
     button {
       margin: 8px auto;
       padding: 10px;

@@ -42,6 +42,9 @@ const bodyStyles = css`
     font-size: ${({ txtSize }) => txtSize};
     font-family: 'Open Sans', 'Sans-serif';
   }
+  a:hover {
+    cursor: pointer;
+  }
 `
 
 export const GlobalStyles = createGlobalStyle`

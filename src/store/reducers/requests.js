@@ -26,6 +26,11 @@ export const requests = (state = [], action) => {
         ...state,
         roles: action.roles
       }
+    case types.POST_REQUEST:
+      return {
+        ...state,
+        requestDetail: action.request
+      }
 
     default:
       return state

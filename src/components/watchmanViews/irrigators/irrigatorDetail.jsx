@@ -9,6 +9,9 @@ import FormInput from '../../UI/input'
 import { useDispatch, useSelector } from 'react-redux'
 import { getIrrigatorDetails } from '../../../store/actions/irrigator'
 import { GhostLine } from '../../UI/ghostLoader'
+import axios from 'axios'
+import { apiUrl } from '../../../store/actions/utils'
+import * as types from '../../../store/reducers/types'
 
 const IrrigatorDetail = props => {
   const history = useHistory()
@@ -21,13 +24,25 @@ const IrrigatorDetail = props => {
   const [iData, setData] = useState()
 
   const handleModal = () => {
-    showModal(false)
+    axios
+      .post(apiUrl, form)
+      .then(data => {
+        showModal(false)
+      })
+      .catch(err => {
+        showModal(false)
+        dispatch({ type: types.ERROR, error: err })
+      })
   }
 
   useEffect(() => {
     const code = location.state.data.code
     dispatch(getIrrigatorDetails(code))
   }, [])
+
+  useEffect(() => {
+    setForm({ ...form, irrigators: irrigator.detail.code, type: modal })
+  }, [modal])
 
   useEffect(() => {
     setData(irrigator.detail)
@@ -86,7 +101,7 @@ const IrrigatorDetail = props => {
               <Actions>
                 <Button
                   background='secondary'
-                  onClick={() => showModal('alert')}
+                  onClick={() => showModal('notification')}
                   className='fa fa-bell'
                   size='20px'
                 ></Button>
@@ -117,8 +132,8 @@ const IrrigatorDetail = props => {
       {modal && (
         <Modal
           action={handleModal}
-          closeAction={handleModal}
-          txtAction='Notificar'
+          closeAction={showModal}
+          txtAction={modal === 'cut' ? 'Aviso  de corte' : 'Notificación'}
         >
           <ModalContent>
             <h1>
@@ -132,7 +147,15 @@ const IrrigatorDetail = props => {
                 onChange={e => setForm({ ...form, subject: e.target.value })}
               />
             </FormInput>
-
+            {modal === 'cut' && (
+              <FormInput label='Elegir un Día'>
+                <input
+                  type='date'
+                  name='date'
+                  onChange={e => setForm({ ...form, date: e.target.value })}
+                />
+              </FormInput>
+            )}
             <FormInput label='Mensaje'>
               <input
                 onChange={e => setForm({ ...form, message: e.target.value })}

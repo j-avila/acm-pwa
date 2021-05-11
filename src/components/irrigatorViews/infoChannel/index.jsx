@@ -61,7 +61,7 @@ const InfoChannel = props => {
           alert.length >= 1 &&
           alert.map(item => (
             <NotificationArea key={item.id}>
-              <Card className='alert'>
+              <Card className={`alert ${item.type === 'urgent' && 'urgent'}`}>
                 <i
                   className='fas fa-times'
                   onClick={() => markAsRead(item.id)}

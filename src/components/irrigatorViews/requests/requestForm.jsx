@@ -69,7 +69,7 @@ const RequestForm = ({ location }) => {
       location.state &&
       setForm({
         ...form,
-        irrigator_code: user.code,
+        irrigator_code: user.code || location.state.code,
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })
@@ -134,7 +134,13 @@ const RequestForm = ({ location }) => {
   return (
     <UserWrapper pathName='Nueva Solicitud'>
       <RequestWrapper onSubmit={e => handleForm(e)}>
-        <h1>Crea una nueva solicitud de atención o reclamo</h1>
+        <h1>
+          {location.state.type === 'visitreport'
+            ? 'Crear un nuevo reporte de visita'
+            : location.state.type === 'channelreport'
+            ? 'Crear reporte de canal'
+            : 'Crea una nueva solicitud de atención o reclamo'}
+        </h1>
         <Card className='form-card'>
           {location.state.type === 'channelreport' && (
             <FormInput label='Selecciona un Canal' width='100%'>
@@ -178,6 +184,9 @@ const RequestForm = ({ location }) => {
                 <Select
                   options={irrigators}
                   classNamePrefix='select'
+                  value={
+                    irrigators.filter(i => i.value === location.state.code)[0]
+                  }
                   placeholder='Seleccionar regante'
                   onChange={e => setForm({ ...form, irrigator_code: e.value })}
                   components={{

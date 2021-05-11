@@ -10,8 +10,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getIrrigatorDetails } from '../../../store/actions/irrigator'
 import { GhostLine } from '../../UI/ghostLoader'
 import axios from 'axios'
-import { apiUrl } from '../../../store/actions/utils'
+import { apiUrl, getAuth } from '../../../store/actions/utils'
 import * as types from '../../../store/reducers/types'
+import moment from 'moment'
 
 const IrrigatorDetail = props => {
   const history = useHistory()
@@ -19,13 +20,24 @@ const IrrigatorDetail = props => {
   const { data, location } = props
   const irrigator = useSelector(({ irrigator }) => irrigator)
   const loading = useSelector(({ loading }) => loading)
-  const [form, setForm] = useState()
+  const [form, setForm] = useState({ date: '', message: '' })
   const [modal, showModal] = useState(false)
   const [iData, setData] = useState()
 
   const handleModal = () => {
+    const newForm = {
+      ...form,
+      message:
+        modal === 'urgent'
+          ? `El día ${form.date}: ${form.message}`
+          : form.message,
+      irrigators: [location.state.data.code],
+      type: modal,
+      activation: moment().utc().format('YYYY-MM-DD HH:mm')
+    }
+
     axios
-      .post(apiUrl, form)
+      .post(`${apiUrl}/notification-centers`, newForm, getAuth())
       .then(data => {
         showModal(false)
       })
@@ -107,7 +119,7 @@ const IrrigatorDetail = props => {
                 ></Button>
                 <Button
                   background='error'
-                  onClick={() => showModal('cut')}
+                  onClick={() => showModal('urgent')}
                   className='fa fa-tint-slash'
                   size='20px'
                 ></Button>
@@ -117,7 +129,10 @@ const IrrigatorDetail = props => {
                   onClick={() =>
                     history.push({
                       pathname: '/solicitudes/new',
-                      state: { type: 'requestforattention' }
+                      state: {
+                        type: 'requestforattention',
+                        code: location.state.data.code
+                      }
                     })
                   }
                 >
@@ -133,21 +148,16 @@ const IrrigatorDetail = props => {
         <Modal
           action={handleModal}
           closeAction={showModal}
-          txtAction={modal === 'cut' ? 'Aviso  de corte' : 'Notificación'}
+          txtAction={modal === 'urgent' ? 'Aviso  de corte' : 'Notificación'}
         >
           <ModalContent>
             <h1>
-              {modal === 'cut'
+              {modal === 'urgent'
                 ? 'Notificación de corte'
                 : 'Enviar notificación'}
             </h1>
 
-            <FormInput label='Asunto'>
-              <input
-                onChange={e => setForm({ ...form, subject: e.target.value })}
-              />
-            </FormInput>
-            {modal === 'cut' && (
+            {modal === 'urgent' && (
               <FormInput label='Elegir un Día'>
                 <input
                   type='date'

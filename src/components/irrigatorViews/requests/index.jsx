@@ -70,7 +70,12 @@ const Requests = props => {
         <Button
           className='btn-new'
           width='90%'
-          onClick={() => history.push('/solicitudes/new')}
+          onClick={() =>
+            history.push({
+              pathname: '/solicitudes/new',
+              state: { type: 'requestforattention' }
+            })
+          }
         >
           Crear nueva solicitud
         </Button>

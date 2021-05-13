@@ -139,7 +139,7 @@ const RequestForm = ({ location }) => {
             ? 'Crear un nuevo reporte de visita'
             : location.state.type === 'channelreport'
             ? 'Crear reporte de canal'
-            : 'Crea una nueva solicitud de atención o reclamo'}
+            : 'Crea una nueva solicitud de atención'}
         </h1>
         <Card className='form-card'>
           {location.state.type === 'channelreport' && (

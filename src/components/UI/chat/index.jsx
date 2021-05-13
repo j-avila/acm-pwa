@@ -16,7 +16,6 @@ const ChatCard = props => {
   const hiddenFileInput = useRef(null)
   const dispatch = useDispatch()
   const notification = useSelector(({ notifications }) => notifications)
-  const error = useSelector(({ errors }) => errors)
   const { id, items, msgAction, chatBar } = props
   const loading = useSelector(({ loading }) => loading)
   const loggedUser = useSelector(({ user }) => user)
@@ -137,7 +136,7 @@ const ChatCard = props => {
   return (
     <Card>
       <ChatWrapper>
-        {loading ? (
+        {items.length <= 0 && loading ? (
           <Row direction='flex-end'>
             <ChatBubble direction='flex-end' width='200px'>
               <GhostLine />
@@ -145,7 +144,7 @@ const ChatCard = props => {
               <GhostLine width='40%' />
             </ChatBubble>
           </Row>
-        ) : !items | (items.length <= 0) ? (
+        ) : (!loading && !items) | (!loading && items.length <= 0) ? (
           <span>Comienza por escribir un mensaje</span>
         ) : (
           items.map(message => (

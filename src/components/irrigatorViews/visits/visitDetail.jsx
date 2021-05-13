@@ -61,7 +61,8 @@ const VisitDetail = props => {
                 {moment(details.visitreport_data.date).format('HH:HH')}
               </p>
               <p>
-                <strong>Visitante: </strong> {details.association_user.name}
+                <strong>Visitante: </strong>
+                {details.association_user.name || 'no asignado'}
               </p>
               <p>
                 <strong>Motivo de la visita: </strong>

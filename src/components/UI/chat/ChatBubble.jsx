@@ -2,9 +2,10 @@ import React from 'react'
 import { Bubble } from './styles'
 
 const ChatBubble = props => {
-  const { direction, children, isUser, provName } = props
+  const { direction, children, isUser, provName, width } = props
   return (
     <Bubble
+      width={width}
       className={
         direction === 'flex-start'
           ? 'leftSided'

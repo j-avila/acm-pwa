@@ -27,6 +27,7 @@ export const Row = styled.div`
 export const Bubble = styled.span`
   position: relative;
   margin: 40px 0;
+  width: ${({ width }) => width};
   display: inline-block;
   position: relative;
   max-width: 200px;

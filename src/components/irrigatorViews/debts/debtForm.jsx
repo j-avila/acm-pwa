@@ -105,7 +105,7 @@ const DebtForm = () => {
   return (
     <UserWrapper pathName='Reporte de deuda'>
       <RequestWrapper>
-        <h1>Crea una nueva solicitud de atención o reclamo</h1>
+        <h1>Crea una nueva solicitud de atención</h1>
         <Card className='form-card'>
           <FormInput label='¿Cuál es su problema o necesidad?' width='100%'>
             <select

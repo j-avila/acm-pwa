@@ -89,7 +89,7 @@ const VisitDetail = props => {
                     </strong>
                   </p>
                   <p>
-                    <strong>Bitacora: </strong>
+                    <strong>Historial de reportes: </strong>
                     {message.message}
                   </p>
                   {message.attached && message.attached.formats ? (

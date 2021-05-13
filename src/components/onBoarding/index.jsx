@@ -120,8 +120,7 @@ export const OnBoarding = () => {
         </Slide>
         <Slide bgImg={slide4}>
           <p>
-            Consulta el estado de tus solicitudes, reclamos y/o solicita una
-            visita.
+            Consulta el estado de tus solicitudes o solicita una visita.
             <Button
               display='block'
               margin='0 auto'

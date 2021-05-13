@@ -14,7 +14,7 @@ import Toggler from '../../UI/toggler'
 const menuItems = [
   { name: 'Inicio', path: '/panel-de-control' },
   { name: 'información del canal', path: '/informacion' },
-  { name: 'solicitudes y reclamos', path: '/solicitudes' },
+  { name: 'solicitudes', path: '/solicitudes' },
   { name: 'visitas', path: '/visitas' },
   { name: 'deudas', path: '/deudas' },
   { name: 'perfil', path: '/perfil' },

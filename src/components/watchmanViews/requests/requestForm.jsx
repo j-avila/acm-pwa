@@ -125,7 +125,7 @@ const RequestForm = () => {
   return (
     <UserWrapper pathName='Nueva Solicitud'>
       <RequestWrapper onSubmit={e => handleForm(e)}>
-        <h1>Crea una nueva solicitud de atención o reclamo</h1>
+        <h1>Crea una nueva solicitud de atención</h1>
         <Card className='form-card'>
           <FormInput
             label='¿A quién está dirigida tu solicitud de atención?'

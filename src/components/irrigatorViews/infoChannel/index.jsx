@@ -3,7 +3,7 @@ import moment from 'moment'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchInfoCards } from '../../../store/actions/infoChannels'
-import { apiUrl } from '../../../store/actions/utils'
+import { apiUrl, getAuth } from '../../../store/actions/utils'
 import UserWrapper from '../../hoc/userWrapper'
 import Card from '../../UI/card'
 import { GhostLine } from '../../UI/ghostLoader'
@@ -33,7 +33,7 @@ const InfoChannel = props => {
 
   const markAsRead = async id => {
     const url = `${apiUrl}/notification-centers/${id}/${code}`
-    await axios.get(url).then(({ data }) => {
+    await axios.get(url, getAuth()).then(({ data }) => {
       const filtered = alert.filter(item => item.id !== id)
       setAlert(filtered)
     })

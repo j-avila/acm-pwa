@@ -103,7 +103,7 @@ const AdminDashboard = props => {
               title='Información General'
               subTitle={dashData.acm.acm_regulation.origin}
               onClick={() => {
-                history.push('/acciones')
+                history.push('/canales')
               }}
             >
               <section>

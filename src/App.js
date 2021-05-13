@@ -32,6 +32,7 @@ import Irrigators from './components/watchmanViews/irrigators'
 import IrrigatorDetail from './components/watchmanViews/irrigators/irrigatorDetail'
 import AdminRequests from './components/watchmanViews/requests'
 import AdminReports from './components/watchmanViews/visits'
+import Channels from './components/watchmanViews/channels'
 
 const App = () => {
   const [sessionUser, setUserSession] = useState()
@@ -102,7 +103,7 @@ const App = () => {
             <Route path='/opciones' component={Settings} />
             <Route path='/solicitar-visita' component={VistisForm} />
             <Route path='/regantes' component={Irrigators} />
-            {/* <Route path='/crear-reporte' component={Irrigators} /> */}
+            <Route path='/canales' component={Channels} />
             <Route path='/regante/:id' component={IrrigatorDetail} />
           </Switch>
         </Router>

@@ -109,9 +109,11 @@ const UserLayout = props => {
         onClick={() => showWatchman(true)}
       />
       <section>{children}</section>
-      {userCodes && userCodes.length >= 1 && (
-        <Toggler items={userData.my_other_codes} activeCode={codeActive} />
-      )}
+      {pathName !== 'Detalle de Solicitud' &&
+        userCodes &&
+        userCodes.length >= 1 && (
+          <Toggler items={userData.my_other_codes} activeCode={codeActive} />
+        )}
       {error && error.hasOwnProperty('message') && (
         <Modal>
           <ModalContent type='error'>

@@ -36,8 +36,11 @@ const RequestForm = ({ location }) => {
   ]
 
   const handleForm = e => {
+    let data =
+      form.subject === 'Otro' ? { ...form, subject: form.otherSubject } : form
+
     e.preventDefault()
-    dispatch(createRequest(form))
+    dispatch(createRequest(data))
   }
 
   const handleModalAction = () => {

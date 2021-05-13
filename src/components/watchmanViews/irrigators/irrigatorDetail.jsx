@@ -135,7 +135,7 @@ const IrrigatorDetail = props => {
                     history.push({
                       pathname: '/solicitudes/new',
                       state: {
-                        type: 'requestforattention',
+                        type: 'visitreport',
                         code: location.state.data.code
                       }
                     })

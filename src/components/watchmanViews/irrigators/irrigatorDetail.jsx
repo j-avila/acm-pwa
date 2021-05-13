@@ -53,8 +53,12 @@ const IrrigatorDetail = props => {
   }, [])
 
   useEffect(() => {
-    irrigator &&
-      setForm({ ...form, irrigators: irrigator.detail.code, type: modal })
+    console.log(props.location)
+    setForm({
+      ...form,
+      irrigators: props.location.state.data.code,
+      type: modal
+    })
   }, [modal])
 
   useEffect(() => {

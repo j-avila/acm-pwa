@@ -27,9 +27,9 @@ const adminMenu = [
   { name: 'Regantes', path: '/regantes' },
   { name: 'Solicitudes', path: '/solicitudes' },
   { name: 'Reportes de Visitas', path: '/visitas' },
-  { name: 'información de los canales', path: '/informacion' },
-  { name: 'perfil', path: '/perfil' },
-  { name: 'ajustes', path: '/opciones' },
+  { name: 'información de los canales', path: '/canales' },
+  // { name: 'perfil', path: '/perfil' },
+  // { name: 'ajustes', path: '/opciones' },
   { name: 'cerrar sesión', path: '/cerrar-sesion' }
 ]
 

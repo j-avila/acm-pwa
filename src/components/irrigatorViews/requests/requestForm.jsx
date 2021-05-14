@@ -182,29 +182,34 @@ const RequestForm = ({ location }) => {
               </select>
             </FormInput>
           ) : (
-            <>
-              <FormInput label='seleccionar al Regante'>
-                <Select
-                  options={irrigators}
-                  classNamePrefix='select'
-                  value={
-                    irrigators.filter(i => i.value === location.state.code)[0]
-                  }
-                  placeholder='Seleccionar regante'
-                  onChange={e => setForm({ ...form, irrigator_code: e.value })}
-                  components={{
-                    IndicatorSeparator: () => null
-                  }}
-                />
-              </FormInput>
-            </>
+            location.state.type !== 'channelreport' && (
+              <>
+                <FormInput label='seleccionar al Regante'>
+                  <Select
+                    options={irrigators}
+                    classNamePrefix='select'
+                    value={
+                      irrigators.filter(i => i.value === location.state.code)[0]
+                    }
+                    placeholder='Seleccionar regante'
+                    onChange={e =>
+                      setForm({ ...form, irrigator_code: e.value })
+                    }
+                    components={{
+                      IndicatorSeparator: () => null
+                    }}
+                  />
+                </FormInput>
+              </>
+            )
           )}
+
           {!checkRole(session, 'irrigartor') &&
             (location.state.type === 'channelreport' ||
               location.state.type === 'visitreport') && (
               <FormInput label='Fecha de la visita'>
                 <input
-                  type='date'
+                  type='datetime-local'
                   onChange={e =>
                     setForm({
                       ...form,

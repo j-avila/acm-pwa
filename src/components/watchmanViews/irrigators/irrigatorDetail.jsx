@@ -165,7 +165,7 @@ const IrrigatorDetail = props => {
             {modal === 'urgent' && (
               <FormInput label='Elegir un Día'>
                 <input
-                  type='date'
+                  type='datetime-local'
                   name='date'
                   onChange={e => setForm({ ...form, date: e.target.value })}
                 />

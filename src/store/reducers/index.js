@@ -46,6 +46,15 @@ export const codeActive = (code = null, action) => {
   }
 }
 
+export const recurrentIssues = (issues = [], action) => {
+  switch (action.type) {
+    case types.SET_ISSUES:
+      return action.issues
+    default:
+      return issues
+  }
+}
+
 export default combineReducers({
   loading,
   errors,
@@ -59,5 +68,6 @@ export default combineReducers({
   visits,
   codeActive,
   irrigator,
-  reports
+  reports,
+  recurrentIssues
 })

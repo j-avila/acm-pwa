@@ -7,10 +7,10 @@ const ChatBubble = props => {
     <Bubble
       width={width}
       className={
-        direction === 'flex-start'
-          ? 'leftSided'
-          : direction === 'notification'
+        direction === 'notification'
           ? 'notification'
+          : direction === 'flex-start'
+          ? 'leftSided'
           : 'rightSided'
       }
     >

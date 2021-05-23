@@ -24,10 +24,11 @@ export const getChats = id => async dispatch => {
 export const setMessage = form => async dispatch => {
   const formdata = new FormData()
   const url = `${apiUrl}/event-book-messages?event_book=${form.data.event_book}`
-  console.log('form to send:', form)
 
   form.file && formdata.append('files.attached', form.file, form.file.name)
   form.data && formdata.append('data', JSON.stringify(form.data))
+
+  console.log('form to send:', JSON.stringify(form))
 
   return axios
     .post(url, formdata, getAuth())
@@ -40,4 +41,19 @@ export const setMessage = form => async dispatch => {
       })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
+}
+
+export const getIssues = () => async dispatch => {
+  const url = `${apiUrl}/event-book-options`
+  return axios
+    .get(url, getAuth())
+    .then(({ data }) => {
+      dispatch({
+        type: type.SET_ISSUES,
+        issues: data
+      })
+    })
+    .catch(err => {
+      dispatch({ type: type.ERROR, error: err })
+    })
 }

@@ -22,12 +22,18 @@ const AdminDashboard = props => {
   }
 
   useEffect(() => {
+    console.log('mounted')
     getDash()
-  }, [user])
+  }, [])
 
   useEffect(() => {
-    getDash(code)
-  }, [code])
+    console.log('pase por aqui')
+    if (code) {
+      getDash(code)
+    } else if (user) {
+      getDash()
+    }
+  }, [code, user])
 
   return (
     <UserWrapper>
@@ -93,9 +99,6 @@ const AdminDashboard = props => {
                     : 'Sin definir'}
                 </h1>
               </section>
-              <footer>{`Regante con codigo: ${
-                dashData.next_visit.irrigator_code || 'Sin asignar'
-              }`}</footer>
             </Card>
 
             <Card

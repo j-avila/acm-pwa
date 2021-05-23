@@ -19,3 +19,16 @@ export const getIrrigatorDetails = code => async dispatch => {
       dispatch({ type: type.ERROR, error: err })
     })
 }
+
+export const getHistory = code => async dispatch => {
+  const url = `${apiUrl}/event-books?type=annotation&irrigator_code=${code}`
+  axios
+    .get(url, getAuth())
+    .then(({ data }) => {
+      console.log(data)
+      dispatch({ type: type.GET_HISTORY, history: data })
+    })
+    .catch(err => {
+      dispatch({ type: type.ERROR, error: err })
+    })
+}

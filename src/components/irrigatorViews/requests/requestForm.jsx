@@ -12,6 +12,7 @@ import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
 import { checkRole } from '../../hoc/utils'
 import Select from 'react-select'
+import { getIssues } from '../../../store/actions/requests'
 
 const RequestForm = ({ location }) => {
   const dispatch = useDispatch()
@@ -19,6 +20,7 @@ const RequestForm = ({ location }) => {
   const requests = useSelector(({ requests }) => requests)
   const notification = useSelector(({ notifications }) => notifications)
   const roles = useSelector(({ requests }) => requests.roles)
+  const issues = useSelector(({ recurrentIssues }) => recurrentIssues)
   const user = useSelector(({ user }) => user)
   const session = useSelector(({ login }) => login)
   const [geolocation, setLocation] = useState()
@@ -28,12 +30,12 @@ const RequestForm = ({ location }) => {
   const [irrigators, setIrrigators] = useState([])
   const [channels, setChannels] = useState([])
 
-  const subjectSelect = [
+  const [subjectSelect, setSubjects] = useState([
     { label: '¿Como puedo traspasar cuotas?' },
     { label: 'Convenios de pago' },
     { label: 'Solicitud' },
     { label: 'Otro' }
-  ]
+  ])
 
   const handleForm = e => {
     let data =
@@ -58,6 +60,7 @@ const RequestForm = ({ location }) => {
   useEffect(() => {
     console.log(location)
     dispatch(getRoles())
+    dispatch(getIssues())
     user &&
       setForm({
         ...form,
@@ -77,6 +80,7 @@ const RequestForm = ({ location }) => {
         type: location.state.type || 'requestforattention'
       })
     console.log(location)
+    setSubjects(issues)
   }, [user, roles, location])
 
   useEffect(() => {
@@ -228,8 +232,8 @@ const RequestForm = ({ location }) => {
                   Selecciona un asunto recurrente
                 </option>
                 {subjectSelect.map(subject => (
-                  <option key={subject.label} value={subject.label}>
-                    {subject.label}
+                  <option key={subject.type} value={subject.subject}>
+                    {subject.subject}
                   </option>
                 ))}
               </select>

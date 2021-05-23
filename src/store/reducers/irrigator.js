@@ -6,6 +6,10 @@ export const irrigator = (user = {}, action) => {
       return {
         detail: action.detail
       }
+    case types.GET_HISTORY:
+      return {
+        history: action.history
+      }
     default:
       return user
   }

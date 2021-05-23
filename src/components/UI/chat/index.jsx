@@ -11,18 +11,22 @@ import * as type from '../../../store/reducers/types'
 import { apiUrl } from '../../../store/actions/utils'
 import Modal from '../modal'
 import { ModalContent } from '../../hoc/userWrapper'
+import { checkRole } from '../../hoc/utils'
+import { useHistory } from 'react-router'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
+  const history = useHistory()
   const dispatch = useDispatch()
   const notification = useSelector(({ notifications }) => notifications)
   const { id, items, msgAction, chatBar } = props
   const loading = useSelector(({ loading }) => loading)
   const loggedUser = useSelector(({ user }) => user)
-  const [location, setLocation] = useState('')
+  const [isUser, setUser] = useState()
   const [actions, openActions] = useState()
   const [valid, setValid] = useState(false)
   const [preview, setPreview] = useState()
+  const [userAttended, seAttended] = useState()
   const [messageObj, setMessage] = useState({
     data: {
       event_book: id
@@ -32,7 +36,23 @@ const ChatCard = props => {
 
   const getLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => setLocation(pos))
+      navigator.geolocation.getCurrentPosition(pos => {
+        console.log(pos)
+        setMessage({
+          data: {
+            ...messageObj.data,
+            coordinates: {
+              accuracy: pos.coords.accuracy,
+              altitude: pos.coords.altitude,
+              altitudeAccuracy: pos.coords.altitudeAccuracy,
+              heading: pos.coords.heading,
+              latitude: pos.coords,
+              longitude: pos.coords.longitude,
+              speed: pos.coords.speed
+            }
+          }
+        })
+      })
       openActions(false)
       dispatch({
         type: type.NOTIFICATIONS,
@@ -104,16 +124,12 @@ const ChatCard = props => {
       }) */
   }
 
-  useEffect(() => {
-    // console.log(items)
-    if (location) {
-      setMessage({
-        ...messageObj,
-        data: { ...messageObj.data, coordinates: location }
-      })
-      console.log(location)
-    }
-  }, [location, loading])
+  const setRole = user =>
+    user.hasOwnProperty('code')
+      ? 'flex-end'
+      : user.role.type === 'watchman'
+      ? 'flex-start'
+      : 'notification'
 
   useEffect(() => {
     if (items.length >= 2) {
@@ -122,14 +138,17 @@ const ChatCard = props => {
       const isUserLast = lastMessage.user.code === loggedUser.code
       const fields = Object.keys(messageObj.data)
       const results = fields.filter(field => messageObj.data[field])
+      const attended = items.filter(m => m.user.hasOwnProperty('code'))
 
       if (last >= 1 && isUserLast) {
         setValid(!isUserLast)
-        console.log(isUserLast)
+        // console.log(isUserLast)
         setValid(results.length >= 2)
       } else {
         setValid(true)
       }
+
+      seAttended(props.chatuser)
     }
   }, [items, messageObj])
 
@@ -148,24 +167,9 @@ const ChatCard = props => {
           <span>Comienza por escribir un mensaje</span>
         ) : (
           items.map(message => (
-            <Row
-              key={message.id}
-              direction={
-                message.user.hasOwnProperty('rol')
-                  ? 'flex-start'
-                  : message.user.role.name === 'watchman'
-                  ? 'flex-end'
-                  : 'notification'
-              }
-            >
+            <Row key={message.id} direction={setRole(message.user)}>
               <ChatBubble
-                direction={
-                  message.user.hasOwnProperty('rol')
-                    ? 'flex-start'
-                    : message.user.role.name === 'watchman'
-                    ? 'flex-end'
-                    : 'notification'
-                }
+                direction={setRole(message.user)}
                 isUser={message.user.code === loggedUser.code}
                 provName={message.user.name}
               >
@@ -209,10 +213,16 @@ const ChatCard = props => {
                         rel='noreferrer'
                         target='_blank'
                       >
-                        <i className='fas fa-download'></i>
+                        <i className='fas fa-download' />
                         Descargar archivo
                       </a>
                     </>
+                  ) : message.coordinates &&
+                    message.coordinates.hasOwnProperty('latt') ? (
+                    <span className='attachment'>
+                      <i className='fa fa-map-marker-alt' />
+                      {` ubicacion: ${message.coordinates}`}
+                    </span>
                   ) : (
                     ''
                   )}
@@ -229,12 +239,26 @@ const ChatCard = props => {
         <Message content={preview ? '1fr 9fr' : '1fr'}>
           {actions && (
             <ActionArea>
-              {/* <span>
-                <Button background='primary' display='block'>
-                  <i className='fas fa-camera'></i>
-                </Button>
-                Agregar Foto
-              </span> */}
+              {loggedUser.user && !checkRole(loggedUser.user) && (
+                <span>
+                  <Button
+                    background='primary'
+                    display='block'
+                    onClick={() =>
+                      history.push({
+                        pathname: '/solicitudes/new',
+                        state: {
+                          type: 'visitreport',
+                          code: userAttended
+                        }
+                      })
+                    }
+                  >
+                    <i className='fas fa-calendar' />
+                  </Button>
+                  agendar cita
+                </span>
+              )}
               <span>
                 <Button
                   display='block'

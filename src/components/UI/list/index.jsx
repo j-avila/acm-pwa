@@ -7,8 +7,8 @@ const List = props => {
   const { items, action, status } = props
   const loading = useSelector(({ loading }) => loading)
 
-  const handleAction = id => {
-    !action ? console.log(id) : action(id)
+  const handleAction = item => {
+    !action ? console.log(item) : action(item)
   }
 
   return (
@@ -17,7 +17,7 @@ const List = props => {
         <i className='fas fa-spinner fa-spin fa-3x'></i>
       ) : items && items.length >= 1 ? (
         items.map(item => (
-          <li key={item.id} onClick={() => handleAction(item.id)}>
+          <li key={item.id} onClick={() => handleAction(item)}>
             <span>
               <strong>{item.title}</strong>
               {item.subtitle && item.subtitle}

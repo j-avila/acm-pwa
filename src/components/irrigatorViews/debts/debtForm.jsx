@@ -151,20 +151,6 @@ const DebtForm = () => {
             />
           </FormInput>
           <ActionArea className='actions'>
-            <Button background='primary'>
-              <i className='fas fa-camera'></i>
-            </Button>
-            <Button
-              ref={handleFIleClick}
-              background='rgba(87,162,198,1)'
-              onClick={() => handleFIleClick()}
-              onChange={e => getFile(e)}
-            >
-              <i className='fas fa-paperclip'></i>
-            </Button>
-            <Button background='secondary' onClick={() => getLocation()}>
-              <i className='fas fa-crosshairs'></i>
-            </Button>
             <Button className='btn-send' onClick={e => handleForm(e)}>
               Enviar
             </Button>

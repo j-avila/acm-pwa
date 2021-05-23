@@ -2,6 +2,7 @@ export const LOADING = 'LOADING'
 export const ERROR = 'ERROR'
 export const FORMDATA = 'FORMDATA'
 export const NOTIFICATIONS = 'NOTIFICATIONS'
+export const SET_ISSUES = 'SET_ISSUES'
 
 // LOGIN
 export const LOGIN_FORM = 'LOGIN_FORM'
@@ -44,3 +45,4 @@ export const GET_BINNACLES = 'GET_BINNACLES'
 
 // IRRIGATOR DETAIL
 export const GET_IRRIGATOR = 'GET_IRRIGATOR'
+export const GET_HISTORY = 'GET_HISTORY'

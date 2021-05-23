@@ -14,11 +14,11 @@ const Irrigators = () => {
   const [irrigators, setList] = useState([])
   const [filter, setFilter] = useState('')
 
-  const handleItem = id => {
+  const handleItem = ({ id, code }) => {
     const detail = usersList.association_user.assigned_irrigators.filter(
       i => i.code === id
     )
-    console.log(detail)
+    // console.log(detail)
     history.push({
       pathname: `/regante/${id}`,
       state: { type: 'notpayed', data: detail[0] }
@@ -33,7 +33,8 @@ const Irrigators = () => {
       const listed = inputList.association_user.assigned_irrigators
       const list = listed.map(item => ({
         id: item.code,
-        title: item.name
+        title: item.name,
+        subtitle: item.code
       }))
       listed && setList(list)
     }

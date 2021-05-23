@@ -7,12 +7,17 @@ import { DeatilWrapper, Detail, Row, ModalContent, Actions } from './styles'
 import { useHistory } from 'react-router'
 import FormInput from '../../UI/input'
 import { useDispatch, useSelector } from 'react-redux'
-import { getIrrigatorDetails } from '../../../store/actions/irrigator'
+import {
+  getHistory,
+  getIrrigatorDetails
+} from '../../../store/actions/irrigator'
 import { GhostLine } from '../../UI/ghostLoader'
 import axios from 'axios'
 import { apiUrl, getAuth } from '../../../store/actions/utils'
 import * as types from '../../../store/reducers/types'
 import moment from 'moment'
+import Tabs, { Panel } from '../../UI/tabs'
+import List from '../../UI/list'
 
 const IrrigatorDetail = props => {
   const history = useHistory()
@@ -62,7 +67,10 @@ const IrrigatorDetail = props => {
   }, [modal])
 
   useEffect(() => {
-    setData(irrigator.detail)
+    if (irrigator.detail) {
+      setData(irrigator.detail)
+      dispatch(getHistory(irrigator.detail.code))
+    }
   }, [irrigator])
 
   return (
@@ -83,67 +91,99 @@ const IrrigatorDetail = props => {
           ) : (
             <>
               <h1>{iData.name || 'No Disponible'}</h1>
-              <Card>
-                <Detail>
-                  <Row>
-                    <strong>Código de regante:</strong>
-                    <span>{iData.code || 'No Disponible'}</span>
-                  </Row>
-                  <Row>
-                    <strong>Canal:</strong>
-                    <span>
-                      {`${location.state.data.channel_name}(${iData.channel})` ||
-                        'No Disponible'}
-                    </span>
-                  </Row>
-                  <Row>
-                    <strong>Forja:</strong>
-                    <span>{iData.rol || 'No Disponible'}</span>
-                  </Row>
-                  <Row>
-                    <strong>Direción:</strong>
-                    <span>{iData.address || 'No Disponible'}</span>
-                  </Row>
-                  <Row>
-                    <strong>Teléfono:</strong>
-                    <span>{iData.phone || 'No Disponible'}</span>
-                  </Row>
-                  <Row>
-                    <strong>Geolocalización:</strong>
-                    <span>{iData.location || 'No Disponible'}</span>
-                  </Row>
-                </Detail>
-              </Card>
-
-              <Actions>
-                <Button
-                  background='secondary'
-                  onClick={() => showModal('notification')}
-                  className='fa fa-bell'
-                  size='20px'
-                ></Button>
-                <Button
-                  background='error'
-                  onClick={() => showModal('urgent')}
-                  className='fa fa-tint-slash'
-                  size='20px'
-                ></Button>
-                <Button
-                  width='100%'
-                  display='block'
-                  onClick={() =>
-                    history.push({
-                      pathname: '/solicitudes/new',
-                      state: {
-                        type: 'visitreport',
-                        code: location.state.data.code
+              <Tabs selected={0}>
+                <Panel title='información'>
+                  <>
+                    <Card>
+                      <Detail>
+                        <Row>
+                          <strong>Código de regante:</strong>
+                          <span>{iData.code || 'No Disponible'}</span>
+                        </Row>
+                        <Row>
+                          <strong>Canal:</strong>
+                          <span>
+                            {`${location.state.data.channel_name}(${iData.channel})` ||
+                              'No Disponible'}
+                          </span>
+                        </Row>
+                        <Row>
+                          <strong>Forja:</strong>
+                          <span>{iData.rol || 'No Disponible'}</span>
+                        </Row>
+                        <Row>
+                          <strong>Direción:</strong>
+                          <span>{iData.address || 'No Disponible'}</span>
+                        </Row>
+                        <Row>
+                          <strong>Teléfono:</strong>
+                          <span>{iData.phone || 'No Disponible'}</span>
+                        </Row>
+                        <Row>
+                          <strong>Geolocalización:</strong>
+                          <span>{iData.location || 'No Disponible'}</span>
+                        </Row>
+                      </Detail>
+                    </Card>
+                    <Actions>
+                      <Button
+                        background='secondary'
+                        onClick={() => showModal('information')}
+                        className='fa fa-bell'
+                        size='20px'
+                      ></Button>
+                      <Button
+                        background='error'
+                        onClick={() => showModal('urgent')}
+                        className='fa fa-tint-slash'
+                        size='20px'
+                      ></Button>
+                      <Button
+                        width='100%'
+                        display='block'
+                        onClick={() =>
+                          history.push({
+                            pathname: '/solicitudes/new',
+                            state: {
+                              type: 'visitreport',
+                              code: location.state.data.code
+                            }
+                          })
+                        }
+                      >
+                        Agendar Visita
+                      </Button>
+                    </Actions>
+                  </>
+                </Panel>
+                <Panel title='Historial'>
+                  {loading || !irrigator.history ? (
+                    <Card className='stat-card'>
+                      <GhostLine />
+                      <GhostLine width='60%' />
+                      <GhostLine width='40%' />
+                    </Card>
+                  ) : (
+                    <List items={irrigator.history} />
+                  )}
+                  <Actions>
+                    <Button
+                      margin='0 auto'
+                      onClick={() =>
+                        history.push({
+                          pathname: '/solicitudes/new',
+                          state: {
+                            type: 'annotation',
+                            code: form.irrigators
+                          }
+                        })
                       }
-                    })
-                  }
-                >
-                  Agendar Visita
-                </Button>
-              </Actions>
+                    >
+                      Crear anotacion
+                    </Button>
+                  </Actions>
+                </Panel>
+              </Tabs>
             </>
           )}
         </DeatilWrapper>

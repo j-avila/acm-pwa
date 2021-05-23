@@ -8,6 +8,8 @@ import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { createVisitRequest, getRoles } from '../../../store/actions/visits'
 import * as type from '../../../store/reducers/types'
+import { checkRole } from '../../hoc/utils'
+import Select from 'react-select'
 
 const VistisForm = () => {
   const dispatch = useDispatch()
@@ -17,6 +19,7 @@ const VistisForm = () => {
   const [location, setLocation] = useState()
   const [form, setForm] = useState({})
   const [visitsList, setList] = useState()
+  const [irrigators, setIrrigators] = useState([])
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -80,6 +83,20 @@ const VistisForm = () => {
 
   useEffect(() => {
     visits.hasOwnProperty('roles') && setList(visits.roles)
+
+    if (
+      user &&
+      user.association_user &&
+      user.association_user.hasOwnProperty('assigned_irrigators')
+    ) {
+      let arranged = user.association_user.assigned_irrigators.map(
+        irrigator => ({
+          label: irrigator.name,
+          value: irrigator.code
+        })
+      )
+      setIrrigators(arranged)
+    }
   }, [visits])
 
   useEffect(() => {
@@ -97,27 +114,45 @@ const VistisForm = () => {
       <RequestWrapper onSubmit={e => handleForm(e)}>
         <h1>Crea una solicitud de visita</h1>
         <Card className='form-card'>
-          <FormInput
-            label='¿A quién está dirigida tu solicitud de atención?'
-            width='100%'
-          >
-            <select
-              onChange={e =>
-                setForm({ ...form, association_area: e.target.value })
-              }
-              disabled
+          {!checkRole(user) ? (
+            <FormInput label='seleccionar al Regante'>
+              <Select
+                options={irrigators}
+                classNamePrefix='select'
+                value={
+                  irrigators.filter(i => i.value === location.state.code)[0]
+                }
+                placeholder='Seleccionar regante'
+                onChange={e => setForm({ ...form, irrigator_code: e.value })}
+                components={{
+                  IndicatorSeparator: () => null
+                }}
+              />
+            </FormInput>
+          ) : (
+            <FormInput
+              label='¿A quién está dirigida tu solicitud de atención?'
+              width='100%'
             >
-              <option>Selecciona una opción</option>
-              {visitsList &&
-                visitsList
-                  .filter(e => e.code === 'watchman')
-                  .map(option => (
-                    <option key={option.id} value={option.id} selected>
-                      {option.name}
-                    </option>
-                  ))}
-            </select>
-          </FormInput>
+              <select
+                onChange={e =>
+                  setForm({ ...form, association_area: e.target.value })
+                }
+                disabled
+              >
+                <option>Selecciona una opción</option>
+                {visitsList &&
+                  visitsList
+                    .filter(e => e.code === 'watchman')
+                    .map(option => (
+                      <option key={option.id} value={option.id} selected>
+                        {option.name}
+                      </option>
+                    ))}
+              </select>
+            </FormInput>
+          )}
+
           <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
             <select
               onChange={e => setForm({ ...form, subject: e.target.value })}
@@ -132,6 +167,7 @@ const VistisForm = () => {
                 ))}
             </select>
           </FormInput>
+
           <FormInput label='Descripción de la solicitud de atención'>
             <textarea
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
@@ -149,20 +185,6 @@ const VistisForm = () => {
           </FormInput>
 
           <ActionArea className='actions'>
-            <Button background='primary'>
-              <i className='fas fa-camera'></i>
-            </Button>
-            <Button
-              ref={handleFileClick}
-              background='rgba(87,162,198,1)'
-              onClick={() => handleFileClick()}
-              onChange={e => getFile(e)}
-            >
-              <i className='fas fa-paperclip'></i>
-            </Button>
-            <Button background='secondary' onClick={() => getLocation()}>
-              <i className='fas fa-crosshairs'></i>
-            </Button>
             <Button className='btn-send' type='submit'>
               Enviar
             </Button>

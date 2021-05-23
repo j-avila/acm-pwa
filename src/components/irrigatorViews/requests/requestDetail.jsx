@@ -23,6 +23,7 @@ const RequestDetail = props => {
 
   // event handlers
   useEffect(() => {
+    console.log(props)
     dispatch(getChats(location.state.id))
     socket.emit('open:chat', location.state.id)
     socket.on('message:chat', message => {
@@ -36,7 +37,8 @@ const RequestDetail = props => {
         ...reqDetails,
         closed: request.details.event.closed || false,
         title: request.details.event.subject,
-        messages: request.details.messages
+        messages: request.details.messages,
+        code: location.state.code
       })
   }, [request.details])
 
@@ -47,6 +49,7 @@ const RequestDetail = props => {
           <h1>{reqDetails.title}</h1>
         </CeladorSection>
         <Chat
+          chatuser={reqDetails.code}
           id={location.state.id}
           items={reqDetails.messages}
           msgAction={handleForm}

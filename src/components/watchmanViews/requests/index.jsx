@@ -16,12 +16,12 @@ const AdminRequests = props => {
   const code = useSelector(({ codeActive }) => codeActive)
   const [openList, setOpenList] = useState([])
   const [closedList, setClosedList] = useState([])
+  const [irrigators, setIrrigators] = useState([])
 
-  const handleItem = id => {
-    // let closed = closedList.filter(i => i.id === id)[0].closed
+  const handleItem = ({ id, irrigator }) => {
     history.push({
       pathname: `/solicitudes/${id}`,
-      state: { id: id }
+      state: { id: id, code: irrigator }
     })
   }
 
@@ -38,7 +38,8 @@ const AdminRequests = props => {
         .map(item => ({
           id: item.id,
           title: item.subject,
-          subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
+          subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`,
+          irrigator: item.irrigator_code
         }))
       setOpenList(formatted)
     }
@@ -49,7 +50,8 @@ const AdminRequests = props => {
           id: item.id,
           title: item.subject,
           closed: item.closed,
-          subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
+          subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`,
+          irrigator: item.irrigator_code
         }))
       setClosedList(formatted)
     }

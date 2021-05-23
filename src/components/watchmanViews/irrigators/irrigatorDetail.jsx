@@ -28,6 +28,7 @@ const IrrigatorDetail = props => {
   const [form, setForm] = useState({ date: '', message: '' })
   const [modal, showModal] = useState(false)
   const [iData, setData] = useState()
+  const [historyList, setList] = useState()
 
   const handleModal = () => {
     const newForm = {
@@ -52,6 +53,11 @@ const IrrigatorDetail = props => {
       })
   }
 
+  const handleItem = ({ id, code }) => {
+    const data = { id: id, code: code }
+    history.push({ pathname: `/` })
+  }
+
   useEffect(() => {
     const code = location.state.data.code
     dispatch(getIrrigatorDetails(code))
@@ -70,6 +76,16 @@ const IrrigatorDetail = props => {
     if (irrigator.detail) {
       setData(irrigator.detail)
       dispatch(getHistory(irrigator.detail.code))
+    }
+
+    if (irrigator.history) {
+      setList(
+        irrigator.history.map(item => ({
+          id: item.id,
+          title: item.subject,
+          subtitle: item.irrigator.name
+        }))
+      )
     }
   }, [irrigator])
 
@@ -164,7 +180,7 @@ const IrrigatorDetail = props => {
                       <GhostLine width='40%' />
                     </Card>
                   ) : (
-                    <List items={irrigator.history} />
+                    <List items={historyList} />
                   )}
                   <Actions>
                     <Button

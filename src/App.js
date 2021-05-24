@@ -89,6 +89,7 @@ const App = () => {
             <Route path='/acciones' component={ActionsIndex} exact />
             <Route path='/solicitudes/new' component={RequestForm} />
             <Route path='/solicitudes/:id' component={RequestDetail} />
+            <Route path='/anotaciones/:id' component={RequestDetail} />
             <Route path='/deudas' component={Debts} exact />
             <Route path='/deudas/new' component={DebtForm} />
             <Route path='/deudas/:id' component={DebtDetail} />

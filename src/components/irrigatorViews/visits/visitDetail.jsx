@@ -62,7 +62,9 @@ const VisitDetail = props => {
               </p>
               <p>
                 <strong>Visitante: </strong>
-                {details.association_user.name || 'no asignado'}
+                {details.hasOwnProperty('association_user')
+                  ? details.association_user.name
+                  : 'no asignado'}
               </p>
               <p>
                 <strong>Motivo de la visita: </strong>

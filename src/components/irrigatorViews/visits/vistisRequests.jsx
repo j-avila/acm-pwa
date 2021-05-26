@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react'
-import UserWrapper from '../../hoc/userWrapper'
+import UserWrapper, { ModalContent } from '../../hoc/userWrapper'
 import Card from '../../UI/card'
 import Button from '../../UI/button'
 import FormInput from '../../UI/input'
@@ -10,33 +10,20 @@ import { createVisitRequest, getRoles } from '../../../store/actions/visits'
 import * as type from '../../../store/reducers/types'
 import { checkRole } from '../../hoc/utils'
 import Select from 'react-select'
+import Modal from '../../UI/modal'
+import { useHistory } from 'react-router'
 
 const VistisForm = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const hiddenFileInput = useRef(null)
   const visits = useSelector(({ visits }) => visits)
+  const notification = useSelector(({ notifications }) => notifications)
   const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({})
   const [visitsList, setList] = useState()
   const [irrigators, setIrrigators] = useState([])
-
-  const getLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => setLocation(pos))
-    } else {
-      alert('Geolocation is not supported by this browser.')
-    }
-  }
-
-  const handleFileClick = () => {
-    hiddenFileInput.current.click()
-  }
-
-  const getFile = event => {
-    const fileUploaded = event.target.files[0]
-    console.log(fileUploaded)
-  }
 
   const subjectSelect = [
     { label: '¿Como puedo traspasar cuotas?' },
@@ -68,6 +55,17 @@ const VistisForm = () => {
     dispatch(createVisitRequest(form))
   }
 
+  const handleModalAction = () => {
+    if (notification.type === 'geolocation') {
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+    } else {
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+      history.push({
+        pathname: `/visitas`
+      })
+    }
+  }
+
   useEffect(() => {
     dispatch(getRoles())
     user &&
@@ -75,7 +73,7 @@ const VistisForm = () => {
         ...form,
         irrigator_code: user.code,
         type: 'requestforattention',
-        subject: 'Solicitud',
+        subject: 'Solicitud de Visita',
         association_area:
           visitsList && visitsList.filter(e => e.code === 'watchman')[0].id
       })
@@ -100,14 +98,12 @@ const VistisForm = () => {
   }, [visits])
 
   useEffect(() => {
-    if (location) {
-      setForm({ ...form, location: location })
-      dispatch({
-        type: type.NOTIFICATIONS,
-        notification: { message: 'localización copiada exitosamente' }
+    visitsList &&
+      setForm({
+        ...form,
+        association_area: visitsList.filter(e => e.code === 'watchman')[0].id
       })
-    }
-  }, [location])
+  }, [visitsList])
 
   return (
     <UserWrapper pathName='Nueva Solicitud'>
@@ -191,6 +187,23 @@ const VistisForm = () => {
           </ActionArea>
         </Card>
       </RequestWrapper>
+      {notification && notification.hasOwnProperty('message') && (
+        <Modal>
+          <ModalContent type='success'>
+            <i className='fas fa-check' />
+            <p>{notification.message}</p>
+            <Button
+              background='primary'
+              width='100%'
+              onClick={() => {
+                handleModalAction()
+              }}
+            >
+              Volver
+            </Button>
+          </ModalContent>
+        </Modal>
+      )}
     </UserWrapper>
   )
 }

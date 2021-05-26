@@ -21,7 +21,7 @@ const Visits = () => {
     done: []
   })
 
-  const handleItem = id => {
+  const handleItem = ({ id }) => {
     // alert(id)
     history.push({ pathname: `/visitas/${id}`, state: { id: id } })
   }

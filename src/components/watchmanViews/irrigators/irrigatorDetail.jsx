@@ -29,6 +29,7 @@ const IrrigatorDetail = props => {
   const [modal, showModal] = useState(false)
   const [iData, setData] = useState()
   const [historyList, setList] = useState()
+  const [geoLocation, setGeoLocation] = useState()
 
   const handleModal = props => {
     const newForm = {
@@ -56,6 +57,28 @@ const IrrigatorDetail = props => {
   const handleItem = ({ id, code }) => {
     const data = { id: id, code: code }
     history.push({ pathname: `/anotaciones/${id}`, state: data })
+  }
+
+  // handler for the location
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        console.log(pos)
+        setGeoLocation({
+          coordinates: {
+            accuracy: pos.coords.accuracy,
+            altitude: pos.coords.altitude,
+            altitudeAccuracy: pos.coords.altitudeAccuracy,
+            heading: pos.coords.heading,
+            latitude: pos.coords,
+            longitude: pos.coords.longitude,
+            speed: pos.coords.speed
+          }
+        })
+      })
+    } else {
+      alert('Geolocation is not supported by this browser.')
+    }
   }
 
   useEffect(() => {
@@ -110,7 +133,7 @@ const IrrigatorDetail = props => {
               <Tabs selected={0}>
                 <Panel title='información'>
                   <>
-                    <Card>
+                    <Card className='detailCard'>
                       <Detail>
                         <Row>
                           <strong>Código de regante:</strong>
@@ -137,7 +160,16 @@ const IrrigatorDetail = props => {
                         </Row>
                         <Row>
                           <strong>Geolocalización:</strong>
-                          <span>{iData.location || 'No Disponible'}</span>
+                          iData.location.profile ? (
+                          <span>{iData.location}</span>) : (
+                          <Button
+                            className='geoButton'
+                            onClick={() => getLocation()}
+                          >
+                            <i className='fa fa-map-marker' />
+                            obtener coordenadas
+                          </Button>
+                          )}
                         </Row>
                       </Detail>
                     </Card>

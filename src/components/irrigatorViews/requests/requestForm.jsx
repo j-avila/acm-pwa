@@ -80,7 +80,7 @@ const RequestForm = ({ location }) => {
         type: location.state.type || 'requestforattention'
       })
     console.log(location)
-    setSubjects(issues)
+    setSubjects([...issues, { id: 0, subject: 'Otro' }])
   }, [user, roles, location])
 
   useEffect(() => {

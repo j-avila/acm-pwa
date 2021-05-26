@@ -44,6 +44,13 @@ export const DeatilWrapper = styled.div`
   }
   #card {
     margin: 0 auto;
+    .geoButton {
+      font-size: xx-small;
+      padding: 8px;
+      i {
+        margin-right: 8px;
+      }
+    }
   }
 
   @media all and (min-width: 1280px) {
@@ -60,7 +67,8 @@ export const DeatilWrapper = styled.div`
 
 export const Detail = styled.div`
   position: relative;
-  padding: 1rem 2rem;
+  padding: 0;
+  width: 100%;
   h3 {
     text-align: left;
     padding: 1rem 0;
@@ -75,7 +83,7 @@ export const Detail = styled.div`
 export const Row = styled.div`
   display: grid;
   padding: 0.6rem 0;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   text-align: left;
   margin: 12px auto;
 `

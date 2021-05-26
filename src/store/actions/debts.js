@@ -3,7 +3,7 @@ import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
 export const getDebts = code => async dispatch => {
-  const url = `${apiUrl}/irrigator-fees?code=${code}`
+  const url = `${apiUrl}/irrigator-fees?code=${code}&_sort=expiration:asc&_start=0&_limit=20`
   dispatch({ type: type.LOADING, load: true })
   return axios
     .get(url, getAuth())
@@ -18,7 +18,7 @@ export const getDebts = code => async dispatch => {
 }
 
 export const getPayedDebts = code => async dispatch => {
-  const url = `${apiUrl}/irrigator-fees-paids?code=${code}`
+  const url = `${apiUrl}/irrigator-fees-paids?code=${code}_sort=expiration:asc`
   dispatch({ type: type.LOADING, load: true })
   return axios
     .get(url, getAuth())

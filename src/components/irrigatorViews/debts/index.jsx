@@ -24,7 +24,7 @@ const Debts = () => {
   })
   const [payedDebts, setPayed] = useState([])
 
-  const handleItem = id => {
+  const handleItem = ({ id }) => {
     // alert(id)
     const debtDetail = debts.filter(i => i.id === id)
     history.push({

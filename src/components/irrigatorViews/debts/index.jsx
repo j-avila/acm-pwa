@@ -108,9 +108,9 @@ const Debts = () => {
         <Button
           width='80%'
           display='block'
-          onClick={() => history.push({ pathname: '/deudas/new' })}
+          onClick={() => history.push({ pathname: '/reporte' })}
         >
-          Solicitar Reporte de Deuda
+          Enviar Reporte de Pago
         </Button>
       </DebtWrapper>
     </UserWrapper>

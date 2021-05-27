@@ -86,6 +86,9 @@ export const Row = styled.div`
   grid-template-columns: 1fr 1fr;
   text-align: left;
   margin: 12px auto;
+  a {
+    text-decoration: underline;
+  }
 `
 export const Actions = styled.div`
   margin: 1rem auto;

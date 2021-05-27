@@ -9,7 +9,8 @@ import FormInput from '../../UI/input'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getHistory,
-  getIrrigatorDetails
+  getIrrigatorDetails,
+  updateCoords
 } from '../../../store/actions/irrigator'
 import { GhostLine } from '../../UI/ghostLoader'
 import axios from 'axios'
@@ -64,17 +65,20 @@ const IrrigatorDetail = props => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         console.log(pos)
-        setGeoLocation({
+        const ubication = {
           coordinates: {
             accuracy: pos.coords.accuracy,
             altitude: pos.coords.altitude,
             altitudeAccuracy: pos.coords.altitudeAccuracy,
             heading: pos.coords.heading,
-            latitude: pos.coords,
+            latitude: pos.coords.latitude,
             longitude: pos.coords.longitude,
             speed: pos.coords.speed
           }
-        })
+        }
+
+        dispatch(updateCoords(irrigator.detail.profile.id, ubication))
+        setGeoLocation(ubication)
       })
     } else {
       alert('Geolocation is not supported by this browser.')
@@ -110,7 +114,7 @@ const IrrigatorDetail = props => {
         }))
       )
     }
-  }, [irrigator])
+  }, [irrigator.detail])
 
   return (
     <>
@@ -160,15 +164,22 @@ const IrrigatorDetail = props => {
                         </Row>
                         <Row>
                           <strong>Geolocalización:</strong>
-                          iData.location.profile ? (
-                          <span>{iData.location}</span>) : (
-                          <Button
-                            className='geoButton'
-                            onClick={() => getLocation()}
-                          >
-                            <i className='fa fa-map-marker' />
-                            obtener coordenadas
-                          </Button>
+                          {iData.profile.coordinates ? (
+                            <a
+                              href={`https://www.google.com/maps/@${iData.profile.coordinates.longitude}, ${iData.profile.coordinates.latitude}`}
+                            >{`lat: ${iData.profile.coordinates.latitude} - long: ${iData.profile.coordinates.longitude}`}</a>
+                          ) : geoLocation && geoLocation.coordinates ? (
+                            <a
+                              href={`https://www.google.com/maps/@${geoLocation.coordinates.longitude}, ${geoLocation.coordinates.latitude}`}
+                            >{`lat: ${geoLocation.coordinates.latitude} - long: ${geoLocation.coordinates.longitude}`}</a>
+                          ) : (
+                            <Button
+                              className='geoButton'
+                              onClick={() => getLocation()}
+                            >
+                              <i className='fa fa-map-marker' />
+                              obtener coordenadas
+                            </Button>
                           )}
                         </Row>
                       </Detail>

@@ -20,6 +20,20 @@ export const getIrrigatorDetails = code => async dispatch => {
     })
 }
 
+export const updateCoords = (id, coords) => async dispatch => {
+  const url = `${apiUrl}/irrigator-profiles/${id}`
+
+  return axios
+    .put(url, coords, getAuth())
+    .then(({ data }) => {
+      console.log(data)
+    })
+    .catch(err => {
+      dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.ERROR, error: err })
+    })
+}
+
 export const getHistory = code => async dispatch => {
   const url = `${apiUrl}/event-books?type=annotation&irrigator_code=${code}`
   axios

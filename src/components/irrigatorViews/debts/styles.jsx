@@ -33,6 +33,31 @@ export const DeatilWrapper = styled.div`
   button {
     margin: 20px auto !important;
   }
+  .attach-preview {
+    display: grid;
+    position: relative;
+    grid-template-columns: 2fr 6fr 2fr;
+    column-gap: 8px;
+    align-items: center;
+    i {
+      font-size: large;
+      color: ${({ theme }) => theme.error};
+    }
+    p {
+      text-align: left;
+      color: grey;
+    }
+    .thumbnail {
+      border: 1px solid #adadad;
+      border-radius: 6px;
+      width: 80px;
+      height: 80px;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+    }
+  }
   @media all and (min-width: 1280px) {
     margin: 0 auto;
     width: 80vw;
@@ -114,6 +139,7 @@ export const ActionArea = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
+  column-gap: 8px;
   button {
     padding: 8px 12px;
     i {

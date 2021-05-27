@@ -33,6 +33,7 @@ import IrrigatorDetail from './components/watchmanViews/irrigators/irrigatorDeta
 import AdminRequests from './components/watchmanViews/requests'
 import AdminReports from './components/watchmanViews/visits'
 import Channels from './components/watchmanViews/channels'
+import PayReport from './components/irrigatorViews/debts/payReport'
 
 const App = () => {
   const [sessionUser, setUserSession] = useState()
@@ -93,6 +94,7 @@ const App = () => {
             <Route path='/deudas' component={Debts} exact />
             <Route path='/deudas/new' component={DebtForm} />
             <Route path='/deudas/:id' component={DebtDetail} />
+            <Route path='/reporte' component={PayReport} />
             <Route path='/informacion' component={InfoChannel} />
             <Route
               path='/visitas'

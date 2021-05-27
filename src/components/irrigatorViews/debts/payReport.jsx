@@ -6,11 +6,13 @@ import Button from '../../UI/button'
 import FormInput from '../../UI/input'
 import { ActionArea, DeatilWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { createDebtRequest } from '../../../store/actions/debts'
+import { createDebtRequest, sendPay } from '../../../store/actions/debts'
 import { getRoles } from '../../../store/actions/bookings'
 import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
+import moment from 'moment'
+import Select from 'react-select'
 
 const PayReport = () => {
   const dispatch = useDispatch()
@@ -21,7 +23,8 @@ const PayReport = () => {
   const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
   const [preview, setPreview] = useState()
-  const [form, setForm] = useState()
+  const [form, setForm] = useState({ attachment: '', data: {} })
+  const [valid, setValid] = useState()
 
   const handleFIleClick = () => {
     hiddenFileInput.current.click()
@@ -45,7 +48,7 @@ const PayReport = () => {
 
   const handleForm = e => {
     console.log(form)
-    // dispatch(createDebtRequest(form))
+    dispatch(sendPay(form))
   }
 
   const handleModalAction = () => {
@@ -54,6 +57,20 @@ const PayReport = () => {
     } else {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
       history.push('/deudas')
+    }
+  }
+
+  // validation
+  const validate = () => {
+    if (
+      form.attachment &&
+      form.data.payment_date &&
+      form.data.payment_number &&
+      form.data.bank
+    ) {
+      setValid(true)
+    } else {
+      setValid(false)
     }
   }
 
@@ -66,24 +83,18 @@ const PayReport = () => {
       roles &&
       setForm({
         ...form,
-        irrigator_code: user.code,
-        association_area: roles[0].id,
-        type: 'requestforattention'
+        data: {
+          ...form.data,
+          code: user.code,
+          year: moment().format('YYYY'),
+          stock_type: 0
+        }
       })
   }, [user, roles])
 
   useEffect(() => {
-    if (location) {
-      setForm({ ...form, location: location })
-      dispatch({
-        type: type.NOTIFICATIONS,
-        notification: {
-          message: 'localización copiada exitosamente',
-          type: 'location'
-        }
-      })
-    }
-  }, [location])
+    validate()
+  }, [form])
 
   return (
     <UserWrapper pathName='Reporte de pago'>
@@ -93,27 +104,60 @@ const PayReport = () => {
           <FormInput label='Fecha de pago'>
             <input
               type='date'
-              onChange={e => setForm({ ...form, payment_date: e.target.value })}
+              onChange={e =>
+                setForm({
+                  ...form,
+                  data: { ...form.data, payment_date: e.target.value }
+                })
+              }
+              required
             />
           </FormInput>
           <FormInput label='Numero de operación'>
             <input
               type='number'
+              placeholder='Número de transferencia/deposito'
               onChange={e =>
-                setForm({ ...form, payment_number: e.target.value })
+                setForm({
+                  ...form,
+                  data: { ...form.data, payment_number: e.target.value }
+                })
               }
+              required
             />
           </FormInput>
           <FormInput label='Banco'>
-            <input
-              type='text'
-              onChange={e => setForm({ ...form, bank: e.target.value })}
+            <Select
+              options={[
+                { label: 'Banco estado' },
+                { label: 'Santander' },
+                { label: 'Banco de Chile' },
+                { label: 'Banco BCI' },
+                { label: 'Banco ITAÚ' },
+                { label: 'Scotiabank' },
+                { label: 'Banco Falabella' }
+              ]}
+              classNamePrefix='select'
+              placeholder='¿En que banco realizo el pago?'
+              onChange={e =>
+                setForm({ ...form, data: { ...form.data, bank: e.label } })
+              }
+              components={{
+                IndicatorSeparator: () => null
+              }}
             />
           </FormInput>
           <FormInput label='Monto'>
             <input
               type='number'
-              onChange={e => setForm({ ...form, amount: e.target.value })}
+              placeholder='Cantidad pagada'
+              onChange={e =>
+                setForm({
+                  ...form,
+                  data: { ...form.data, amount: e.target.value }
+                })
+              }
+              required
             />
           </FormInput>
           {preview && (
@@ -138,7 +182,7 @@ const PayReport = () => {
           )}
           <input
             type='file'
-            typeof='.jepg, .png, .jpg'
+            accept='image/*'
             style={{ display: 'none' }}
             ref={hiddenFileInput}
             onChange={e => handleImg(e)}
@@ -153,7 +197,11 @@ const PayReport = () => {
               <i className='fa fa-click' />
               Adjuntar comprobante
             </Button>
-            <Button className='btn-send' onClick={e => handleForm(e)}>
+            <Button
+              className='btn-send'
+              onClick={e => handleForm(e)}
+              disabled={valid ? '' : 'disabled'}
+            >
               Enviar
             </Button>
           </ActionArea>

@@ -18,6 +18,9 @@ export const DebtWrapper = styled.div`
 // form
 export const DeatilWrapper = styled.div`
   position: relative;
+  .form-card {
+    margin: 0 auto;
+  }
   h1 {
     padding: 0.5rem;
   }

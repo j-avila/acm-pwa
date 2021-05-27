@@ -53,3 +53,25 @@ export const createDebtRequest = form => async dispatch => {
       dispatch({ type: type.LOADING, load: false })
     })
 }
+
+export const sendPay = form => async dispatch => {
+  const formdata = new FormData()
+  const url = `${apiUrl}/irrigator-payments-reporteds`
+
+  form.attachment &&
+    formdata.append('files.attached', form.attachment, form.attachment.name)
+  form.data && formdata.append('data', JSON.stringify(form.data))
+
+  console.log('form to send:', JSON.stringify(form))
+
+  return axios
+    .post(url, formdata, getAuth())
+    .then(({ data }) => {
+      console.log(data)
+      dispatch({
+        type: type.NOTIFICATIONS,
+        notification: { message: '¡Pago enviado con exito!' }
+      })
+    })
+    .catch(err => dispatch({ type: type.ERROR, error: err }))
+}

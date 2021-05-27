@@ -91,15 +91,7 @@ const Debts = () => {
       <DebtWrapper>
         <Tabs selected={0}>
           <Panel title='por pagar'>
-            <Accordion
-              title={`próximas a vencer (${debtsToPay.toPay.length})`}
-              openend
-            >
-              <List items={debtsToPay.toPay} action={handleItem} />
-            </Accordion>
-            <Accordion title={`vencidas (${debtsToPay.expired.length})`}>
-              <List items={debtsToPay.expired} action={handleItem} />
-            </Accordion>
+            <List items={debtsToPay.expired} action={handleItem} />
           </Panel>
           <Panel title='pagado'>
             <List items={payedDebts} action={handlePayed} />

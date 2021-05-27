@@ -313,7 +313,7 @@ const ChatCard = props => {
             />
             <input
               type='file'
-              typeof='.jepg, .png, .jpg'
+              accept='image/*'
               style={{ display: 'none' }}
               ref={hiddenFileInput}
               onChange={e => handleImg(e)}

@@ -84,6 +84,10 @@ const RequestForm = ({ location }) => {
   }, [user, roles, location])
 
   useEffect(() => {
+    subjectSelect.length <= 1 && setForm({ ...form, subject: 'Otro' })
+  }, [subjectSelect])
+
+  useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
     // checking for form validation
     if (location.state.type === 'requestforattention') {

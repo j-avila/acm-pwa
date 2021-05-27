@@ -12,6 +12,7 @@ const RequestDetail = props => {
   const { location } = props
   const dispatch = useDispatch()
   const request = useSelector(({ requests }) => requests)
+  const [description, openDescription] = useState()
   const [reqDetails, setDetails] = useState({
     event_book: location.state.id,
     title: '',
@@ -37,6 +38,7 @@ const RequestDetail = props => {
         ...reqDetails,
         closed: request.details.event.closed || false,
         title: request.details.event.subject,
+        description: request.details.event.content,
         messages: request.details.messages,
         code: location.state.code
       })
@@ -47,6 +49,21 @@ const RequestDetail = props => {
       <DetailsWrapper>
         <CeladorSection>
           <h1>{reqDetails.title}</h1>
+          <div className='description'>
+            {reqDetails.description && (
+              <>
+                <strong onClick={() => openDescription(!description)}>
+                  Ver detalles
+                  <i
+                    className={`fa ${
+                      description ? 'fa-chevron-up' : 'fa-chevron-down'
+                    }`}
+                  />
+                </strong>
+                {description && <p>{reqDetails.description}</p>}
+              </>
+            )}
+          </div>
         </CeladorSection>
         <Chat
           chatuser={reqDetails.code}

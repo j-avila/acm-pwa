@@ -29,11 +29,20 @@ export const CeladorSection = styled.div`
   align-items: center;
   h1 {
     margin: 0 auto;
-    font-size: 18px;
+    margin-bottom: 12px;
+    font-size: 16px;
     text-align: center;
     font-weight: bold;
     &:first-letter {
       text-transform: uppercase;
+    }
+  }
+  .description {
+    i {
+      margin-left: 8px;
+    }
+    p {
+      padding: 1rem;
     }
   }
 `

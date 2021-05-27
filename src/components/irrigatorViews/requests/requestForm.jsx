@@ -223,14 +223,17 @@ const RequestForm = ({ location }) => {
                 />
               </FormInput>
             )}
-          {location.state.type !== 'channelreport' && (
+          {(location.state.type !== 'channelreport' ||
+            subjectSelect.length >= 1) && (
             <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
               <select
                 onChange={e => setForm({ ...form, subject: e.target.value })}
               >
-                <option disabled selected>
-                  Selecciona un asunto recurrente
-                </option>
+                {subjectSelect.length >= 2 && (
+                  <option disabled selected>
+                    Selecciona un asunto recurrente
+                  </option>
+                )}
                 {subjectSelect.map(subject => (
                   <option key={subject.type} value={subject.subject}>
                     {subject.subject}
@@ -240,7 +243,7 @@ const RequestForm = ({ location }) => {
             </FormInput>
           )}
 
-          {form.subject === 'Otro' && (
+          {(form.subject === 'Otro' || subjectSelect.length <= 1) && (
             <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
               <input
                 type='text'

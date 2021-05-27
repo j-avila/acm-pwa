@@ -8,15 +8,14 @@ export const EndSession = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    localStorage.setItem('session', null)
-    localStorage.setItem('userActive', null)
+    localStorage.clear()
     dispatch({
       type: type.LOGIN_FORM,
-      form: {}
+      form: null
     })
     dispatch({
       type: type.GET_USER,
-      user: {}
+      user: null
     })
     history.push('/inicio')
   }, [])

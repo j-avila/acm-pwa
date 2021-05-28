@@ -16,6 +16,7 @@ const RequestDetail = props => {
   const [reqDetails, setDetails] = useState({
     event_book: location.state.id,
     title: '',
+    code: location.state.code,
     chats: []
   })
   const handleForm = form => {
@@ -39,8 +40,7 @@ const RequestDetail = props => {
         closed: request.details.event.closed || false,
         title: request.details.event.subject,
         description: request.details.event.content,
-        messages: request.details.messages,
-        code: location.state.code
+        messages: request.details.messages
       })
   }, [request.details])
 

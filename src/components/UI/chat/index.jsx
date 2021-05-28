@@ -26,7 +26,7 @@ const ChatCard = props => {
   const [actions, openActions] = useState()
   const [valid, setValid] = useState(false)
   const [preview, setPreview] = useState()
-  const [userAttended, seAttended] = useState()
+  const [userAttended, seAttended] = useState(props.chatuser)
   const [messageObj, setMessage] = useState({
     data: {
       event_book: id
@@ -147,8 +147,6 @@ const ChatCard = props => {
       } else {
         setValid(true)
       }
-
-      seAttended(props.chatuser)
     }
   }, [items, messageObj])
 

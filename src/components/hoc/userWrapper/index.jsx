@@ -63,16 +63,19 @@ const UserLayout = props => {
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   useEffect(() => {
-    const role = userLogged.role.name
-    !session &&
-      history.push('/inicio')(
-        !userData.hasOwnProperty('acm') || !userData.hasOwnProperty('user')
-      ) &&
-      dispatch(userDataHandler(role))
+    if (!session) {
+      history.push('/inicio')
+    } else {
+      const role = userLogged.role.name
+
+      if (!userData.hasOwnProperty('acm') || !userData.hasOwnProperty('user')) {
+        dispatch(userDataHandler(role))
+      }
+    }
   }, [])
 
   useEffect(() => {
-    if (userData && userLogged.role.name === 'irrigator') {
+    if (userData && userLogged && userLogged.role.name === 'irrigator') {
       !userData.hasOwnProperty('acm') && dispatch(userDataHandler('irrigator'))
     } else if (userData) {
       !userData.hasOwnProperty('user') && dispatch(userDataHandler('watchman'))
@@ -100,71 +103,83 @@ const UserLayout = props => {
 
   return (
     <>
-      <Header
-        title={pathName ? pathName : 'Canal del Maule'}
-        menuItems={userLogged.role.name === 'irrigator' ? menuItems : adminMenu}
-        user={userData}
-        menu
-        back
-        onClick={() => showWatchman(true)}
-      />
-      <section>{children}</section>
-      {pathName !== 'Detalle de Solicitud' &&
-        userCodes &&
-        userCodes.length >= 1 && (
-          <Toggler items={userData.my_other_codes} activeCode={codeActive} />
-        )}
-      {error && error.hasOwnProperty('message') && (
-        <Modal>
-          <ModalContent type='error'>
-            <i className='fas fa-exclamation-triangle'></i>
-            <p>{error.message}</p>
-            <Button
-              background='error'
-              width='100%'
-              onClick={() => {
-                setError(false)
-                dispatch({ type: type.ERROR, error: '' })
-              }}
-            >
-              Volver
-            </Button>
-          </ModalContent>
-        </Modal>
-      )}
-      {watchman && userData.watchman && (
-        <Modal>
-          <h1>Conoce a tu celador</h1>
-          <WatchmanInfo>
-            <Avatar
-              width='80px'
-              height='80px'
-              className='avatar'
-              image={userData.watchman.picture}
-              altTxt={userData.watchman.name}
-            />
-            <div className='info'>
-              <p>
-                <strong>Nombre: </strong>
-                {userData.watchman.name}
-              </p>
-              <p>
-                <strong>Teléfono: </strong>
-                {userData.watchman.telephone}
-              </p>
-              <div className='actions'>
-                <Button background='base' onClick={() => showWatchman(false)}>
-                  cerrar
+      {session && (
+        <>
+          <Header
+            title={pathName ? pathName : 'Canal del Maule'}
+            menuItems={
+              userLogged.role.name === 'irrigator' ? menuItems : adminMenu
+            }
+            user={userData}
+            menu
+            back
+            onClick={() => showWatchman(true)}
+          />
+          <section>{children}</section>
+          {pathName !== 'Detalle de Solicitud' &&
+            userCodes &&
+            userCodes.length >= 1 && (
+              <Toggler
+                items={userData.my_other_codes}
+                activeCode={codeActive}
+              />
+            )}
+          {error && error.hasOwnProperty('message') && (
+            <Modal>
+              <ModalContent type='error'>
+                <i className='fas fa-exclamation-triangle'></i>
+                <p>{error.message}</p>
+                <Button
+                  background='error'
+                  width='100%'
+                  onClick={() => {
+                    setError(false)
+                    dispatch({ type: type.ERROR, error: '' })
+                  }}
+                >
+                  Volver
                 </Button>
-                <Button>
-                  <a href={`tel:${userData.watchman.telephone}`}>
-                    <i className='fas fa-phone' /> Llamar
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </WatchmanInfo>
-        </Modal>
+              </ModalContent>
+            </Modal>
+          )}
+          {watchman && userData.watchman && (
+            <Modal>
+              <h1>Conoce a tu celador</h1>
+              <WatchmanInfo>
+                <Avatar
+                  width='80px'
+                  height='80px'
+                  className='avatar'
+                  image={userData.watchman.picture}
+                  altTxt={userData.watchman.name}
+                />
+                <div className='info'>
+                  <p>
+                    <strong>Nombre: </strong>
+                    {userData.watchman.name}
+                  </p>
+                  <p>
+                    <strong>Teléfono: </strong>
+                    {userData.watchman.telephone}
+                  </p>
+                  <div className='actions'>
+                    <Button
+                      background='base'
+                      onClick={() => showWatchman(false)}
+                    >
+                      cerrar
+                    </Button>
+                    <Button>
+                      <a href={`tel:${userData.watchman.telephone}`}>
+                        <i className='fas fa-phone' /> Llamar
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </WatchmanInfo>
+            </Modal>
+          )}
+        </>
       )}
     </>
   )

@@ -247,7 +247,7 @@ const RequestForm = ({ location }) => {
             </FormInput>
           )}
 
-          {(form.subject === 'Otro' || subjectSelect.length <= 1) && (
+          {(subjectSelect.length <= 1 || form.subject === 'Otro') && (
             <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
               <input
                 type='text'

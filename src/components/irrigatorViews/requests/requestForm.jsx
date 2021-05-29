@@ -58,7 +58,6 @@ const RequestForm = ({ location }) => {
   }
 
   useEffect(() => {
-    console.log(location)
     dispatch(getRoles())
     dispatch(getIssues())
     user &&
@@ -79,9 +78,12 @@ const RequestForm = ({ location }) => {
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })
-    console.log(location)
-    setSubjects([...issues, { id: 0, subject: 'Otro' }])
+    // console.log(location)
   }, [user, roles, location])
+
+  useEffect(() => {
+    issues.length >= 1 && setSubjects([...issues, { id: 0, subject: 'Otro' }])
+  }, [issues])
 
   useEffect(() => {
     subjectSelect.length <= 1 && setForm({ ...form, subject: 'Otro' })
@@ -182,8 +184,8 @@ const RequestForm = ({ location }) => {
                   Selecciona una opción
                 </option>
                 {listRequests &&
-                  listRequests.map(option => (
-                    <option key={option.id} value={option.id}>
+                  listRequests.map((option, index) => (
+                    <option key={index} value={option.id}>
                       {option.name}
                     </option>
                   ))}
@@ -238,8 +240,8 @@ const RequestForm = ({ location }) => {
                     Selecciona un asunto recurrente
                   </option>
                 )}
-                {subjectSelect.map(subject => (
-                  <option key={subject.type} value={subject.subject}>
+                {subjectSelect.map((subject, index) => (
+                  <option key={index} value={subject.subject}>
                     {subject.subject}
                   </option>
                 ))}

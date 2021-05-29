@@ -40,6 +40,13 @@ const Login = props => {
   }
 
   useEffect(() => {
+    dispatch({ type: types.ERROR, error: {} })
+    return () => {
+      dispatch({ type: types.ERROR, error: {} })
+    }
+  }, [])
+
+  useEffect(() => {
     isValid()
   }, [form])
 

@@ -8,9 +8,9 @@ export const socket = io('wss://api.acanalmaule.cl/')
 
 // check the role of the user
 export const checkRole = (session, role = 'irrigator') => {
-  // console.log(output)
   if (session) {
     const output = session.hasOwnProperty('role') && session.role.name === role
+    // console.log(output)
     return output
   } else {
     window.location.replace('/')

@@ -164,7 +164,7 @@ const IrrigatorDetail = props => {
                         </Row>
                         <Row>
                           <strong>Geolocalización:</strong>
-                          {iData.profile.coordinates ? (
+                          {iData.profile && iData.profile.coordinates ? (
                             <a
                               href={`https://www.google.com/maps/@${iData.profile.coordinates.longitude}, ${iData.profile.coordinates.latitude}`}
                             >{`lat: ${iData.profile.coordinates.latitude} - long: ${iData.profile.coordinates.longitude}`}</a>
@@ -291,7 +291,8 @@ IrrigatorDetail.defaultProps = {
     channel: 'Vergara',
     dueDate: '12-12-2020',
     payed: true,
-    amount: '999.999'
+    amount: '999.999',
+    coordinates: 'no asignadas'
   }
 }
 

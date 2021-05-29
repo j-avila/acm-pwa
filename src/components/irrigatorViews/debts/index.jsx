@@ -57,7 +57,7 @@ const Debts = () => {
             moment(item.expiration).format('YYYY') === currentYear
               ? false
               : true,
-          title: `periodo: ${item.year}`,
+          title: `periodo: ${item.year} Cuota ${item.fees_type}`,
           subtitle: `Vence el: ${moment(item.expiration).format('DD/MM/YYYY')}`
         }))
 

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getChats, setMessage } from '../../../store/actions/requests'
 import UserWrapper from '../../hoc/userWrapper'
-import { socket } from '../../hoc/utils'
+import { checkRole, socket } from '../../hoc/utils'
 import Chat from '../../UI/chat'
 import { CeladorSection, DetailsWrapper } from './styles'
 import * as type from '../../../store/reducers/types'
@@ -12,6 +12,7 @@ const RequestDetail = props => {
   const { location } = props
   const dispatch = useDispatch()
   const request = useSelector(({ requests }) => requests)
+  const session = useSelector(({ login }) => login)
   const [description, openDescription] = useState()
   const [reqDetails, setDetails] = useState({
     event_book: location.state.id,
@@ -40,7 +41,8 @@ const RequestDetail = props => {
         closed: request.details.event.closed || false,
         title: request.details.event.subject,
         description: request.details.event.content,
-        messages: request.details.messages
+        messages: request.details.messages,
+        user: request.details.event.irrigator
       })
   }, [request.details])
 
@@ -49,6 +51,12 @@ const RequestDetail = props => {
       <DetailsWrapper>
         <CeladorSection>
           <h1>{reqDetails.title}</h1>
+          {!checkRole(session) && reqDetails.user && (
+            <p className='irrigator-info'>
+              Nombre: <strong>{reqDetails.user.name}</strong> (
+              {reqDetails.user.code})
+            </p>
+          )}
           <div className='description'>
             {reqDetails.description && (
               <>

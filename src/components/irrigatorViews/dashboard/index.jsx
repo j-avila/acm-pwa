@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchDashboard } from '../../../store/actions/dashboard'
 import { GhostLine } from '../../UI/ghostLoader'
 import moment from 'moment'
+import * as types from '../../../store/reducers/types'
 
 const Dashboard = props => {
   const dispatch = useDispatch()
@@ -17,6 +18,9 @@ const Dashboard = props => {
 
   useEffect(() => {
     code && dispatch(fetchDashboard(code))
+    return () => {
+      dispatch({ type: types.ERROR, error: {} })
+    }
   }, [code])
 
   return (

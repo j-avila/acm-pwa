@@ -4,8 +4,15 @@ import Card from '../UI/card'
 import Button from '../UI/button'
 import Logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import * as types from '../../store/reducers/types'
 
 const Login = props => {
+  const disaptch = useDispatch()
+
+  useEffect(() => {
+    disaptch({ type: types.ERROR, error: {} })
+  }, [])
   return (
     <IndexWrapper>
       <Card>

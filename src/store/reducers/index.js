@@ -37,6 +37,15 @@ const notifications = (state = {}, action) => {
   }
 }
 
+const banksInfo = (state = {}, action) => {
+  switch (action.type) {
+    case types.GET_BANKS:
+      return action.banks
+    default:
+      return state
+  }
+}
+
 export const codeActive = (code = null, action) => {
   switch (action.type) {
     case types.SET_CODE:
@@ -57,6 +66,7 @@ export const recurrentIssues = (issues = [], action) => {
 
 export default combineReducers({
   loading,
+  banksInfo,
   errors,
   notifications,
   login,

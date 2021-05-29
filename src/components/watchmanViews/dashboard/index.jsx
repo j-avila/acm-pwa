@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchDashboard } from '../../../store/actions/dashboard'
 import { GhostLine } from '../../UI/ghostLoader'
 import moment from 'moment'
+import * as types from '../../../store/reducers/types'
 
 const AdminDashboard = props => {
   const dispatch = useDispatch()
@@ -24,6 +25,10 @@ const AdminDashboard = props => {
   useEffect(() => {
     console.log('mounted')
     getDash()
+
+    return () => {
+      dispatch({ type: types.ERROR, error: {} })
+    }
   }, [])
 
   useEffect(() => {

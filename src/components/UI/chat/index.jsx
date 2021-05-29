@@ -254,7 +254,7 @@ const ChatCard = props => {
                   >
                     <i className='fas fa-calendar' />
                   </Button>
-                  agendar cita
+                  Agendar Cita
                 </span>
               )}
               <span>

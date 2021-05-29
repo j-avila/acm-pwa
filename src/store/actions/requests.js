@@ -57,3 +57,14 @@ export const getIssues = () => async dispatch => {
       dispatch({ type: type.ERROR, error: err })
     })
 }
+
+export const getBanks = () => async dispatch => {
+  const url = `${apiUrl}/banks`
+
+  return axios
+    .get(url, getAuth())
+    .then(({ data }) => {
+      dispatch({ type: type.GET_BANKS, banks: data })
+    })
+    .catch(err => dispatch({ type: type.ERROR, error: err }))
+}

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { darken } from 'polished'
 
 export const Wrapper = styled.div`
   position: relative;
@@ -36,6 +37,13 @@ export const CeladorSection = styled.div`
     &:first-letter {
       text-transform: uppercase;
     }
+  }
+  p {
+    margin-bottom: 8px;
+    color: ${({ theme }) => {
+      const color = theme.base
+      return darken('0.1', color)
+    }};
   }
   .description {
     i {

@@ -3,6 +3,7 @@ export const ERROR = 'ERROR'
 export const FORMDATA = 'FORMDATA'
 export const NOTIFICATIONS = 'NOTIFICATIONS'
 export const SET_ISSUES = 'SET_ISSUES'
+export const GET_BANKS = 'GET_BANKS'
 
 // LOGIN
 export const LOGIN_FORM = 'LOGIN_FORM'

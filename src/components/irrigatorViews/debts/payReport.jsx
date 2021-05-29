@@ -13,6 +13,7 @@ import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
 import moment from 'moment'
 import Select from 'react-select'
+import { getBanks } from '../../../store/actions/requests'
 
 const PayReport = () => {
   const dispatch = useDispatch()
@@ -20,11 +21,12 @@ const PayReport = () => {
   const hiddenFileInput = useRef(null)
   const roles = useSelector(({ requests }) => requests.roles)
   const notification = useSelector(({ notifications }) => notifications)
+  const banksInfo = useSelector(({ banksInfo }) => banksInfo)
   const user = useSelector(({ user }) => user)
-  const [location, setLocation] = useState()
   const [preview, setPreview] = useState()
   const [form, setForm] = useState({ attachment: '', data: {} })
   const [valid, setValid] = useState()
+  const [banks, setBanks] = useState()
 
   const handleFIleClick = () => {
     hiddenFileInput.current.click()
@@ -76,6 +78,7 @@ const PayReport = () => {
 
   useEffect(() => {
     dispatch(getRoles())
+    dispatch(getBanks())
   }, [])
 
   useEffect(() => {
@@ -91,6 +94,11 @@ const PayReport = () => {
         }
       })
   }, [user, roles])
+
+  useEffect(() => {
+    const list = banksInfo.map(e => ({ label: e.name, value: e.code }))
+    setBanks(list)
+  }, [banksInfo])
 
   useEffect(() => {
     validate()
@@ -128,19 +136,11 @@ const PayReport = () => {
           </FormInput>
           <FormInput label='Banco'>
             <Select
-              options={[
-                { label: 'Banco estado' },
-                { label: 'Santander' },
-                { label: 'Banco de Chile' },
-                { label: 'Banco BCI' },
-                { label: 'Banco ITAÚ' },
-                { label: 'Scotiabank' },
-                { label: 'Banco Falabella' }
-              ]}
+              options={banks}
               classNamePrefix='select'
               placeholder='¿En que banco realizo el pago?'
               onChange={e =>
-                setForm({ ...form, data: { ...form.data, bank: e.label } })
+                setForm({ ...form, data: { ...form.data, bank: e.value } })
               }
               components={{
                 IndicatorSeparator: () => null

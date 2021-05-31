@@ -49,11 +49,15 @@ export const CeladorSection = styled.div`
     i {
       margin-left: 8px;
     }
+    h4 {
+      margin: 8px 0;
+    }
     p {
-      padding: 1rem;
+      padding: 0;
     }
   }
 `
+
 // form
 export const RequestWrapper = styled.form`
   position: relative;
@@ -83,6 +87,7 @@ export const RequestWrapper = styled.form`
     }
   }
 `
+
 export const ActionArea = styled.div`
   display: flex;
   width: 100%;

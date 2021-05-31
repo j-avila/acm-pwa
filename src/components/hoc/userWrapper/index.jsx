@@ -51,6 +51,7 @@ export const ModalContent = styled.div`
 
 const UserLayout = props => {
   const history = useHistory()
+  const location = props.pathname
   const dispatch = useDispatch()
   const errorMsg = useSelector(({ errors }) => errors)
   const userData = useSelector(({ user }) => user)
@@ -72,6 +73,7 @@ const UserLayout = props => {
         dispatch(userDataHandler(role))
       }
     }
+    console.log('wrapper:', location)
   }, [])
 
   useEffect(() => {
@@ -116,14 +118,9 @@ const UserLayout = props => {
             onClick={() => showWatchman(true)}
           />
           <section>{children}</section>
-          {pathName !== 'Detalle de Solicitud' &&
-            userCodes &&
-            userCodes.length >= 1 && (
-              <Toggler
-                items={userData.my_other_codes}
-                activeCode={codeActive}
-              />
-            )}
+          {!pathName && userCodes && userCodes.length >= 1 && (
+            <Toggler items={userData.my_other_codes} activeCode={codeActive} />
+          )}
           {error && error.hasOwnProperty('message') && (
             <Modal>
               <ModalContent type='error'>

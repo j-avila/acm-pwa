@@ -26,7 +26,6 @@ const RequestDetail = props => {
 
   // event handlers
   useEffect(() => {
-    console.log(props)
     dispatch(getChats(location.state.id))
     socket.emit('open:chat', location.state.id)
     socket.on('message:chat', message => {
@@ -42,7 +41,8 @@ const RequestDetail = props => {
         title: request.details.event.subject,
         description: request.details.event.content,
         messages: request.details.messages,
-        user: request.details.event.irrigator
+        user: request.details.event.irrigator,
+        area: request.details.event.association_area.name
       })
   }, [request.details])
 
@@ -68,7 +68,15 @@ const RequestDetail = props => {
                     }`}
                   />
                 </strong>
-                {description && <p>{reqDetails.description}</p>}
+
+                {description && (
+                  <>
+                    {checkRole(session) && reqDetails.area && (
+                      <h4>Area: {reqDetails.area}</h4>
+                    )}
+                    <p>{reqDetails.description}</p>
+                  </>
+                )}
               </>
             )}
           </div>

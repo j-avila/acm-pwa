@@ -2,10 +2,10 @@ import axios from 'axios'
 import { apiUrl, getAuth } from './utils'
 import * as type from '../reducers/types'
 
-export const fetchRequests = code => async dispatch => {
+export const fetchRequests = (code, from = 0, to = 20) => async dispatch => {
   const url = code
     ? `${apiUrl}/event-books?type=requestforattention&irrigator_code=${code}`
-    : `${apiUrl}/event-books`
+    : `${apiUrl}/event-books?type=requestforattention&_start=${from}&_limit=${to}`
 
   dispatch({ type: type.LOADING, load: true })
   return axios
@@ -47,7 +47,6 @@ export const createRequest = form => async dispatch => {
         request: data
       })
       dispatch({ type: type.LOADING, load: false })
-      console.log('book:', data)
       dispatch({
         type: type.NOTIFICATIONS,
         notification: { message: 'solicitud enviada con exito' }

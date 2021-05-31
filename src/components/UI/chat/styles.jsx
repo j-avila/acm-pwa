@@ -97,6 +97,10 @@ export const Bubble = styled.span`
     font-weight: bold;
     margin-bottom: 8px;
   }
+  span {
+    padding: 4px 8px;
+    color: ${({ theme }) => theme.text};
+  }
 `
 
 export const Message = styled.form`

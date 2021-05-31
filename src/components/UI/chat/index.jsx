@@ -46,7 +46,7 @@ const ChatCard = props => {
               altitude: pos.coords.altitude,
               altitudeAccuracy: pos.coords.altitudeAccuracy,
               heading: pos.coords.heading,
-              latitude: pos.coords,
+              latitude: pos.coords.latitude,
               longitude: pos.coords.longitude,
               speed: pos.coords.speed
             }
@@ -216,10 +216,13 @@ const ChatCard = props => {
                       </a>
                     </>
                   ) : message.coordinates &&
-                    message.coordinates.hasOwnProperty('latt') ? (
+                    message.coordinates.hasOwnProperty('latitude') ? (
                     <span className='attachment'>
-                      <i className='fa fa-map-marker-alt' />
-                      {` ubicacion: ${message.coordinates}`}
+                      <a
+                        href={`https://www.google.com/maps/@${message.coordinates.longitude}, ${message.coordinates.latitude}`}
+                      >
+                        <i className='fa fa-map-marker-alt' /> Ubicación
+                      </a>
                     </span>
                   ) : (
                     ''

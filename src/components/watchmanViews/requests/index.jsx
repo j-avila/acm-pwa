@@ -25,6 +25,10 @@ const AdminRequests = props => {
     })
   }
 
+  const fetchPages = (from, to) => {
+    dispatch(fetchRequests(null, from, to))
+  }
+
   useEffect(() => {
     dispatch(fetchRequests())
   }, [])
@@ -63,7 +67,7 @@ const AdminRequests = props => {
       <Wrapper>
         <Tabs selected={0}>
           <Panel title='Abiertas'>
-            <List items={openList} action={handleItem} />
+            <List items={openList} action={handleItem} refresh={fetchPages} />
           </Panel>
           <Panel title='Finalizados'>
             <List items={closedList} action={handleItem} />

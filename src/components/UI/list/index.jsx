@@ -23,12 +23,13 @@ const List = props => {
       {loading ? (
         <i className='fas fa-spinner fa-spin fa-3x' />
       ) : items && items.length >= 1 ? (
-        <InfiniteScroll
-          dataLength={items.length}
-          loading={<i className='fas fa-spinner fa-spin fa-3x' />}
-          next={refreshHandler}
-          hasMore={true}
-        >
+        // <InfiniteScroll
+        //   dataLength={items.length}
+        //   loading={<i className='fas fa-spinner fa-spin fa-3x' />}
+        //   next={refreshHandler}
+        //   hasMore={true}
+        // >
+        <>
           {items.map(item => (
             <li key={item.id} onClick={() => handleAction(item)}>
               <span>
@@ -38,8 +39,9 @@ const List = props => {
               <i className={`fas ${item.status || 'fa-chevron-right'}`}></i>
             </li>
           ))}
-        </InfiniteScroll>
+        </>
       ) : (
+        // </InfiniteScroll>
         <p>No hay nada que mostrar</p>
       )}
     </ItemsList>

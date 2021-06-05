@@ -73,7 +73,6 @@ const UserLayout = props => {
         dispatch(userDataHandler(role))
       }
     }
-    console.log('wrapper:', location)
   }, [])
 
   useEffect(() => {

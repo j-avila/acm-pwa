@@ -16,3 +16,19 @@ export const checkRole = (session, role = 'irrigator') => {
     window.location.replace('/')
   }
 }
+
+export const scrollTo = id => {
+  const element = document.getElementById(id)
+  window.scroll({
+    behavior: 'smooth',
+    left: 0,
+    top: element.offsetTop
+  })
+  console.log(element)
+}
+
+export const setLast = target => {
+  document
+    .getElementById(`${target}`)
+    .lastElementChild.setAttribute('id', 'last')
+}

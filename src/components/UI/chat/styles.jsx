@@ -3,7 +3,6 @@ import { darken } from 'polished'
 
 export const ChatWrapper = styled.div`
   overflow-x: auto;
-  max-height: 400px;
   min-height: 56vh;
   span {
     display: block;

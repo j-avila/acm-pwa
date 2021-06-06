@@ -24,11 +24,4 @@ export const scrollTo = id => {
     left: 0,
     top: element.offsetTop
   })
-  console.log(element)
-}
-
-export const setLast = target => {
-  document
-    .getElementById(`${target}`)
-    .lastElementChild.setAttribute('id', 'last')
 }

@@ -96,7 +96,9 @@ const PayReport = () => {
   }, [user, roles])
 
   useEffect(() => {
-    const list = banksInfo.map(e => ({ label: e.name, value: e.code }))
+    const list =
+      banksInfo.length >= 1 &&
+      banksInfo.map(e => ({ label: e.name, value: e.code }))
     setBanks(list)
   }, [banksInfo])
 

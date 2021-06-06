@@ -166,7 +166,8 @@ const IrrigatorDetail = props => {
                           <strong>Geolocalización:</strong>
                           {iData.profile && iData.profile.coordinates ? (
                             <a
-                              href={`https://www.google.com/maps/@${iData.profile.coordinates.longitude}, ${iData.profile.coordinates.latitude}`}
+                              // href={`https://www.google.com/maps/@${iData.profile.coordinates.longitude}, ${iData.profile.coordinates.latitude}`}
+                              href={`https://maps.google.com/maps?q=${iData.profile.coordinates.latitude}${iData.profile.coordinates.longitude}&hl=es`}
                             >{`lat: ${iData.profile.coordinates.latitude} - long: ${iData.profile.coordinates.longitude}`}</a>
                           ) : geoLocation && geoLocation.coordinates ? (
                             <a

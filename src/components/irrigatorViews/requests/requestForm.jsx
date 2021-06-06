@@ -59,7 +59,7 @@ const RequestForm = ({ location }) => {
 
   useEffect(() => {
     dispatch(getRoles())
-    dispatch(getIssues())
+    dispatch(getIssues(location.state.type))
     user &&
       setForm({
         ...form,

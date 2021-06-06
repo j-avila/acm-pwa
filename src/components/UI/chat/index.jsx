@@ -148,211 +148,207 @@ const ChatCard = props => {
         setValid(true)
       }
     }
-    setLast('chatWrapper')
     scrollTo('bottom')
   }, [items, messageObj])
 
   return (
-    <>
-      <button onClick={() => scrollTo('last')}>go botttom</button>
-      <Card>
-        <ChatWrapper id='chatWrapper'>
-          {items.length <= 0 && loading ? (
-            <Row direction='flex-end'>
-              <ChatBubble direction='flex-end' width='200px'>
-                <GhostLine />
-                <GhostLine width='60%' />
-                <GhostLine width='40%' />
-              </ChatBubble>
-            </Row>
-          ) : (!loading && !items) | (!loading && items.length <= 0) ? (
-            <span>Comienza por escribir un mensaje</span>
-          ) : (
-            items.map(message => (
-              <Row key={message.id} direction={setRole(message.user)}>
-                <ChatBubble
-                  direction={setRole(message.user)}
-                  isUser={message.user.code === loggedUser.code}
-                  provName={message.user.name}
-                >
-                  {message.message}
-                  <div>
-                    {(message.attached && message.attached.formats) ||
-                    (message.file && message.file.formats) ? (
-                      <>
-                        <span className='attachment'>
-                          <p>
-                            <strong>Adjuntos:</strong>
-                          </p>
-                          <a
-                            href={`${apiUrl}${message.attached.url}`}
-                            rel='noreferrer'
-                            target='_blank'
-                          >
-                            <img
-                              src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
-                              alt={message.attached.name}
-                            />
-                          </a>
-                        </span>
-                        <a
-                          href={`${apiUrl}${message.attached.url}`}
-                          rel='noreferrer'
-                          target='_blank'
-                        >
-                          <i className='fas fa-download'></i>
-                          Descargar archivo
-                        </a>
-                      </>
-                    ) : message.attached ? (
-                      <>
-                        <span className='attachment'>
-                          <i className='fas fa-file' />
-                          <strong>{message.attached.name}</strong>
-                        </span>
-                        <a
-                          href={`${apiUrl}${message.attached.url}`}
-                          rel='noreferrer'
-                          target='_blank'
-                        >
-                          <i className='fas fa-download' />
-                          Descargar archivo
-                        </a>
-                      </>
-                    ) : message.coordinates &&
-                      message.coordinates.hasOwnProperty('latitude') ? (
+    <Card>
+      <ChatWrapper id='chatWrapper'>
+        {items.length <= 0 && loading ? (
+          <Row direction='flex-end'>
+            <ChatBubble direction='flex-end' width='200px'>
+              <GhostLine />
+              <GhostLine width='60%' />
+              <GhostLine width='40%' />
+            </ChatBubble>
+          </Row>
+        ) : (!loading && !items) | (!loading && items.length <= 0) ? (
+          <span>Comienza por escribir un mensaje</span>
+        ) : (
+          items.map(message => (
+            <Row key={message.id} direction={setRole(message.user)}>
+              <ChatBubble
+                direction={setRole(message.user)}
+                isUser={message.user.code === loggedUser.code}
+                provName={message.user.name}
+              >
+                {message.message}
+                <div>
+                  {(message.attached && message.attached.formats) ||
+                  (message.file && message.file.formats) ? (
+                    <>
                       <span className='attachment'>
+                        <p>
+                          <strong>Adjuntos:</strong>
+                        </p>
                         <a
-                          href={`https://www.google.com/maps/@${message.coordinates.longitude}, ${message.coordinates.latitude}`}
+                          href={`${apiUrl}${message.attached.url}`}
+                          rel='noreferrer'
+                          target='_blank'
                         >
-                          <i className='fa fa-map-marker-alt' /> Ubicación
+                          <img
+                            src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
+                            alt={message.attached.name}
+                          />
                         </a>
                       </span>
-                    ) : (
-                      ''
-                    )}
-                  </div>
-                  <span className='meta'>
-                    {moment(message.createdAt).format('MMMM DD YYYY')}
-                  </span>
-                </ChatBubble>
-              </Row>
-            ))
-          )}
-        </ChatWrapper>
-        {chatBar && (
-          <Message content={preview ? '1fr 9fr' : '1fr'}>
-            {actions && (
-              <ActionArea>
-                {loggedUser.user && !checkRole(loggedUser.user) && (
-                  <span>
-                    <Button
-                      background='primary'
-                      display='block'
-                      onClick={() =>
-                        history.push({
-                          pathname: '/solicitudes/new',
-                          state: {
-                            type: 'visitreport',
-                            code: userAttended
-                          }
-                        })
-                      }
-                    >
-                      <i className='fas fa-calendar' />
-                    </Button>
-                    Agendar Cita
-                  </span>
-                )}
-                <span>
-                  <Button
-                    display='block'
-                    background='rgba(87,162,198,1)'
-                    onClick={() => handleFileClick()}
-                    onChange={e => getFile(e)}
-                  >
-                    <i className='fas fa-paperclip'></i>
-                  </Button>
-                  Agregar Archivo
-                </span>
-                <span>
-                  <Button
-                    background='secondary'
-                    onClick={() => getLocation()}
-                    display='block'
-                  >
-                    <i className='fas fa-crosshairs'></i>
-                  </Button>
-                  Agregar Ubicación
-                </span>
-              </ActionArea>
-            )}
-            <FileAdd onClick={() => openActions(!actions)}>
-              <i className='fas fa-plus'></i>
-            </FileAdd>
-            <div className='message-holder'>
-              {preview && (
-                <div className='attach-preview'>
-                  <i
-                    className='fas fa-times'
-                    onClick={() => {
-                      setMessage({
-                        ...messageObj,
-                        file: undefined
-                      })
-                      setPreview(undefined)
-                    }}
-                  />
-                  <img src={preview} alt='file' />
+                      <a
+                        href={`${apiUrl}${message.attached.url}`}
+                        rel='noreferrer'
+                        target='_blank'
+                      >
+                        <i className='fas fa-download'></i>
+                        Descargar archivo
+                      </a>
+                    </>
+                  ) : message.attached ? (
+                    <>
+                      <span className='attachment'>
+                        <i className='fas fa-file' />
+                        <strong>{message.attached.name}</strong>
+                      </span>
+                      <a
+                        href={`${apiUrl}${message.attached.url}`}
+                        rel='noreferrer'
+                        target='_blank'
+                      >
+                        <i className='fas fa-download' />
+                        Descargar archivo
+                      </a>
+                    </>
+                  ) : message.coordinates &&
+                    message.coordinates.hasOwnProperty('latitude') ? (
+                    <span className='attachment'>
+                      <a
+                        href={`https://www.google.com/maps/@${message.coordinates.longitude}, ${message.coordinates.latitude}`}
+                      >
+                        <i className='fa fa-map-marker-alt' /> Ubicación
+                      </a>
+                    </span>
+                  ) : (
+                    ''
+                  )}
                 </div>
+                <span className='meta'>
+                  {moment(message.createdAt).format('MMMM DD YYYY')}
+                </span>
+              </ChatBubble>
+            </Row>
+          ))
+        )}
+      </ChatWrapper>
+      {chatBar && (
+        <Message content={preview ? '1fr 9fr' : '1fr'}>
+          {actions && (
+            <ActionArea>
+              {loggedUser.user && !checkRole(loggedUser.user) && (
+                <span>
+                  <Button
+                    background='primary'
+                    display='block'
+                    onClick={() =>
+                      history.push({
+                        pathname: '/solicitudes/new',
+                        state: {
+                          type: 'visitreport',
+                          code: userAttended
+                        }
+                      })
+                    }
+                  >
+                    <i className='fas fa-calendar' />
+                  </Button>
+                  Agendar Cita
+                </span>
               )}
-              <input
-                type='text'
-                value={messageObj.data.message}
-                onChange={e =>
-                  setMessage({
-                    ...messageObj,
-                    data: { ...messageObj.data, message: e.target.value }
-                  })
-                }
-              />
-              <input
-                type='file'
-                accept='image/*'
-                style={{ display: 'none' }}
-                ref={hiddenFileInput}
-                onChange={e => handleImg(e)}
-              />
-            </div>
+              <span>
+                <Button
+                  display='block'
+                  background='rgba(87,162,198,1)'
+                  onClick={() => handleFileClick()}
+                  onChange={e => getFile(e)}
+                >
+                  <i className='fas fa-paperclip'></i>
+                </Button>
+                Agregar Archivo
+              </span>
+              <span>
+                <Button
+                  background='secondary'
+                  onClick={() => getLocation()}
+                  display='block'
+                >
+                  <i className='fas fa-crosshairs'></i>
+                </Button>
+                Agregar Ubicación
+              </span>
+            </ActionArea>
+          )}
+          <FileAdd onClick={() => openActions(!actions)}>
+            <i className='fas fa-plus'></i>
+          </FileAdd>
+          <div className='message-holder'>
+            {preview && (
+              <div className='attach-preview'>
+                <i
+                  className='fas fa-times'
+                  onClick={() => {
+                    setMessage({
+                      ...messageObj,
+                      file: undefined
+                    })
+                    setPreview(undefined)
+                  }}
+                />
+                <img src={preview} alt='file' />
+              </div>
+            )}
+            <input
+              type='text'
+              value={messageObj.data.message}
+              onChange={e =>
+                setMessage({
+                  ...messageObj,
+                  data: { ...messageObj.data, message: e.target.value }
+                })
+              }
+            />
+            <input
+              type='file'
+              accept='image/*'
+              style={{ display: 'none' }}
+              ref={hiddenFileInput}
+              onChange={e => handleImg(e)}
+            />
+          </div>
+          <Button
+            background='transparent'
+            onClick={() => handleMessage()}
+            // disabled={valid ? '' : 'disabled'}
+          >
+            <i className='fas fa-paper-plane'></i>
+          </Button>
+        </Message>
+      )}
+      {notification && notification.hasOwnProperty('message') && (
+        <Modal>
+          <ModalContent type='success'>
+            <i className='fas fa-check'></i>
+            <p>{notification.message}</p>
             <Button
-              background='transparent'
-              onClick={() => handleMessage()}
-              // disabled={valid ? '' : 'disabled'}
+              background='primary'
+              width='100%'
+              onClick={() => {
+                handleModalAction()
+              }}
             >
-              <i className='fas fa-paper-plane'></i>
+              Volver
             </Button>
-          </Message>
-        )}
-        {notification && notification.hasOwnProperty('message') && (
-          <Modal>
-            <ModalContent type='success'>
-              <i className='fas fa-check'></i>
-              <p>{notification.message}</p>
-              <Button
-                background='primary'
-                width='100%'
-                onClick={() => {
-                  handleModalAction()
-                }}
-              >
-                Volver
-              </Button>
-            </ModalContent>
-          </Modal>
-        )}
-        <div id='bottom'></div>
-      </Card>
-    </>
+          </ModalContent>
+        </Modal>
+      )}
+      <div id='bottom'></div>
+    </Card>
   )
 }
 

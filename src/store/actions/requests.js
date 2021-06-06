@@ -43,8 +43,9 @@ export const setMessage = form => async dispatch => {
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
-export const getIssues = () => async dispatch => {
-  const url = `${apiUrl}/event-book-options`
+export const getIssues = area => async dispatch => {
+  console.log(area)
+  const url = `${apiUrl}/event-book-options?type=${area}`
   return axios
     .get(url, getAuth())
     .then(({ data }) => {

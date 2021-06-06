@@ -32,7 +32,7 @@ const Debts = () => {
       state: { type: 'notpayed', data: debtDetail[0] }
     })
   }
-  const handlePayed = id => {
+  const handlePayed = ({ id }) => {
     // alert(id)
     const debtDetail = payed.filter(i => i.id === id)
     console.log(debtDetail)

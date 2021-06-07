@@ -38,10 +38,18 @@ const Dashboard = props => {
               onClick={() => history.push('/informacion')}
             >
               <section>
-                <strong>{`Caudal Diario: ${dashData.acm.daily_flow_channel.estacion}`}</strong>
-                <h1>{`${dashData.acm.daily_flow_channel.caudal}`}</h1>
+                <strong>{`Caudal Diario: ${
+                  dashData.acm.daily_flow_channel.estacion || 'No disponible'
+                }`}</strong>
+                <h1>{`${
+                  dashData.acm.daily_flow_channel.caudal || 'Sin datos'
+                }`}</h1>
               </section>
-              <footer>{`Actualizado al ${dashData.acm.daily_flow_channel.updated}`}</footer>
+              <footer>
+                {dashData.acm.daily_flow_channel.updated
+                  ? `Actualizado al ${dashData.acm.daily_flow_channel.updated}`
+                  : 'su canal no cuenta con telemetría'}
+              </footer>
             </Card>
 
             <Card

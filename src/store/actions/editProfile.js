@@ -2,11 +2,16 @@ import axios from 'axios'
 import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
-export const createProfile = form => async dispatch => {
-  const url = `${apiUrl}/create-irrigator-profiles`
+export const createProfile = (form, role) => async dispatch => {
+  console.log(role)
+  const url =
+    role === 'irrigator'
+      ? `${apiUrl}/create-irrigator-profiles`
+      : `${apiUrl}/update-acmuser-profiles`
+  const roleAction = role === 'irrigator' ? 'post' : 'put'
+
   dispatch({ type: type.LOADING, load: true })
-  return axios
-    .post(url, form, getAuth())
+  return axios[roleAction](url, form, getAuth())
     .then(({ data }) => {
       dispatch({
         type: type.EDIT_PROFILE,

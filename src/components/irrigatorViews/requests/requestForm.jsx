@@ -30,12 +30,7 @@ const RequestForm = ({ location }) => {
   const [irrigators, setIrrigators] = useState([])
   const [channels, setChannels] = useState([])
 
-  const [subjectSelect, setSubjects] = useState([
-    { label: '¿Como puedo traspasar cuotas?' },
-    { label: 'Convenios de pago' },
-    { label: 'Solicitud' },
-    { label: 'Otro' }
-  ])
+  const [subjectSelect, setSubjects] = useState([])
 
   const handleForm = e => {
     let data =
@@ -92,7 +87,10 @@ const RequestForm = ({ location }) => {
   useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
     // checking for form validation
-    if (location.state.type === 'requestforattention') {
+    if (
+      location.state.type === 'requestforattention' ||
+      location.state.type === 'annotation'
+    ) {
       form.association_area &&
         form.subject &&
         form.content &&
@@ -152,6 +150,8 @@ const RequestForm = ({ location }) => {
             ? 'Crear un nuevo reporte de visita'
             : location.state.type === 'channelreport'
             ? 'Crear reporte de canal'
+            : location.state.type === 'annotation'
+            ? 'crear anotación'
             : 'Crea una nueva solicitud de atención'}
         </h1>
         <Card className='form-card'>
@@ -240,11 +240,17 @@ const RequestForm = ({ location }) => {
                     Selecciona un asunto recurrente
                   </option>
                 )}
-                {subjectSelect.map((subject, index) => (
-                  <option key={index} value={subject.subject}>
-                    {subject.subject}
+                {subjectSelect.length <= 1 ? (
+                  <option value='Otro' selected>
+                    Otro
                   </option>
-                ))}
+                ) : (
+                  subjectSelect.map((subject, index) => (
+                    <option key={index} value={subject.subject}>
+                      {subject.subject}
+                    </option>
+                  ))
+                )}
               </select>
             </FormInput>
           )}

@@ -20,7 +20,10 @@ export const fetchVisits = code => async dispatch => {
 }
 
 export const fetchReports = () => async dispatch => {
-  const reports = axios.get(`${apiUrl}/event-books?type=visitreport`, getAuth())
+  const reports = axios.get(
+    `${apiUrl}/event-books?type=visitreport&_sort=published_at:desc`,
+    getAuth()
+  )
   const binnacles = axios.get(
     `${apiUrl}/event-books?type=channelreport`,
     getAuth()

@@ -49,6 +49,13 @@ export const OnBoarding = () => {
     await dispatch(createProfile(form, user.role.name))
   }
 
+  const handleUser = async () => {
+    const role = user.hasOwnProperty('role') ? 'irrigator' : 'admin'
+    user.profile
+      ? setModal(true)
+      : await dispatch(createProfile({ firts_time: false }, role))
+  }
+
   useEffect(() => {
     const firstTime = user.profile || user.firtsTime
     firstTime && history.push('/panel-de-control')
@@ -126,11 +133,7 @@ export const OnBoarding = () => {
               margin='0 auto'
               background='white'
               color='primary'
-              onClick={() =>
-                user.profile
-                  ? setModal(true)
-                  : history.push('/panel-de-control')
-              }
+              onClick={() => handleUser()}
             >
               Comenzar
             </Button>

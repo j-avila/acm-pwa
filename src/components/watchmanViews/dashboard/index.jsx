@@ -23,7 +23,6 @@ const AdminDashboard = props => {
   }
 
   useEffect(() => {
-    console.log('mounted')
     getDash()
 
     return () => {
@@ -32,7 +31,6 @@ const AdminDashboard = props => {
   }, [])
 
   useEffect(() => {
-    console.log('pase por aqui')
     if (code) {
       getDash(code)
     } else if (user) {

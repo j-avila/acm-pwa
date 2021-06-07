@@ -20,7 +20,6 @@ const Toggler = props => {
     selected &&
       selected !== activeCode &&
       dispatch({ type: type.SET_CODE, code: selected })
-    console.log(selected)
   }, [selected])
 
   return (

@@ -79,6 +79,7 @@ const VisitDetail = props => {
                 <GhostLine width='40%' />
               </Card>
             ) : (
+              isAdmin &&
               bio &&
               bio.messages.length >= 1 &&
               bio.messages.map(message => (

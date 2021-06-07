@@ -41,7 +41,7 @@ const App = () => {
   const session = useSelector(({ login }) => login)
 
   const setSockets = () => {
-    socket.emit('join', sessionUser)
+    socket.emit('join', { userid: session.id, token: sessionUser })
     socket.on('welcome', data =>
       console.log(
         `💻 welcome user ${data.username} 🔌 in the socket: ${data.socket}`

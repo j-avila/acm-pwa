@@ -3,7 +3,6 @@ import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
 export const fetchDashboard = (code, role) => async dispatch => {
-  console.log(role)
   const url = code
     ? `${apiUrl}/dashboard-irrigators/${code}?_sort=createdAt:desc`
     : `${apiUrl}/dashboard-acmuser`

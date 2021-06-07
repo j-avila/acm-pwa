@@ -109,8 +109,16 @@ const InfoChannel = props => {
             <Card>
               <Content>
                 <span>
-                  <h3>{`Caudal Diario: ${dailyFlow.estacion}`}</h3>
-                  <p>{`Actualizado el ${dailyFlow.updated}`}</p>
+                  <h3>
+                    {dailyFlow.estacion
+                      ? `Caudal Diario: ${dailyFlow.estacion}`
+                      : 'Sin datos'}
+                  </h3>
+                  <p>
+                    {dailyFlow.updated
+                      ? `Actualizado el ${dailyFlow.updated}`
+                      : 'su canal no cuenta con telemetría'}
+                  </p>
                 </span>
                 <span>
                   <h1>{dailyFlow.caudal}</h1>

@@ -51,8 +51,9 @@ const Register = props => {
           </div>
           <p>
             ¿Tienes problemas para iniciar sesión? <br />
-            <a href='telf:+56500 600 400'>
-              <strong>Contáctanos al 500 600 400</strong>
+            <a href='telf:+56962787034'>
+              <strong>Contáctanos al (+569) 6278 7034</strong>
+            </a>ong>Contáctanos al 500 600 400</strong>
             </a>
           </p>
         </Card>

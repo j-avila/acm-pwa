@@ -151,6 +151,17 @@ const IrrigatorDetail = props => {
                           </span>
                         </Row>
                         <Row>
+                          <strong>Estado:</strong>
+                          <span
+                            style={{
+                              color: iData.slow_payer && 'tomato',
+                              fontWeight: iData.slow_payer && '900'
+                            }}
+                          >
+                            {`${iData.slow_payer ? 'Tiene Deuda' : 'Al día'}`}
+                          </span>
+                        </Row>
+                        <Row>
                           <strong>Forja:</strong>
                           <span>{iData.rol || 'No Disponible'}</span>
                         </Row>
@@ -166,12 +177,11 @@ const IrrigatorDetail = props => {
                           <strong>Geolocalización:</strong>
                           {iData.profile && iData.profile.coordinates ? (
                             <a
-                              // href={`https://www.google.com/maps/@${iData.profile.coordinates.longitude}, ${iData.profile.coordinates.latitude}`}
-                              href={`https://maps.google.com/maps?q=${iData.profile.coordinates.latitude}${iData.profile.coordinates.longitude}&hl=es`}
+                              href={`https://maps.google.com/maps?q=${iData.profile.coordinates.latitude}%2C${iData.profile.coordinates.longitude}&hl=es`}
                             >{`lat: ${iData.profile.coordinates.latitude} - long: ${iData.profile.coordinates.longitude}`}</a>
                           ) : geoLocation && geoLocation.coordinates ? (
                             <a
-                              href={`https://www.google.com/maps/@${geoLocation.coordinates.longitude}, ${geoLocation.coordinates.latitude}`}
+                              href={`https://www.google.com/maps/@${geoLocation.coordinates.longitude}%2C${geoLocation.coordinates.latitude}`}
                             >{`lat: ${geoLocation.coordinates.latitude} - long: ${geoLocation.coordinates.longitude}`}</a>
                           ) : (
                             <Button
@@ -235,6 +245,7 @@ const IrrigatorDetail = props => {
                         history.push({
                           pathname: '/solicitudes/new',
                           state: {
+                            name: 'Anotaciones',
                             type: 'annotation',
                             code: form.irrigators
                           }

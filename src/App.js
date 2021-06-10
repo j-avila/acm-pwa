@@ -41,7 +41,12 @@ const App = () => {
   const session = useSelector(({ login }) => login)
 
   const setSockets = () => {
-    socket.emit('join', { userid: session.id, token: sessionUser })
+    const token = JSON.stringify(localStorage.getItem('session'))
+    const user = {
+      userid: session.id,
+      token: token
+    }
+    socket.emit('join', user)
     socket.on('welcome', data =>
       console.log(
         `💻 welcome user ${data.username} 🔌 in the socket: ${data.socket}`

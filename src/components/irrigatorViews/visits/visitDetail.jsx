@@ -71,7 +71,10 @@ const VisitDetail = props => {
                 {details.content}
               </p>
             </Card>
-            {bio && bio.messages.length >= 1 && <h2>Bitacora de celador</h2>}
+
+            {isAdmin && bio && bio.messages.length >= 1 && (
+              <h2>Bitacora de celador</h2>
+            )}
             {loading ? (
               <Card className='stat-card'>
                 <GhostLine />

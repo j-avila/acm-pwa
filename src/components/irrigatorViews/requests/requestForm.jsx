@@ -143,7 +143,7 @@ const RequestForm = ({ location }) => {
   }, [session])
 
   return (
-    <UserWrapper pathName='Nueva Solicitud'>
+    <UserWrapper pathName={location.state.name || 'Nueva Solicitud'}>
       <RequestWrapper onSubmit={e => handleForm(e)}>
         <h1>
           {location.state.type === 'visitreport'

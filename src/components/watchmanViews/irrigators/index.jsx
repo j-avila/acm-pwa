@@ -6,13 +6,15 @@ import List from '../../UI/list'
 import { IrrigatorsWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import FormInput from '../../UI/input'
+import { userDataHandler } from '../../../store/actions/login'
 
 const Irrigators = () => {
   const history = useHistory()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const usersList = useSelector(({ login }) => login)
   const [irrigators, setList] = useState([])
   const [filter, setFilter] = useState('')
+  const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const handleItem = ({ id, code }) => {
     const detail = usersList.association_user.assigned_irrigators.filter(
@@ -39,6 +41,11 @@ const Irrigators = () => {
       listed && setList(list)
     }
   }
+
+  useEffect(() => {
+    const role = userLogged.role.name
+    dispatch(userDataHandler(role))
+  }, [])
 
   useEffect(() => {
     genList(usersList)

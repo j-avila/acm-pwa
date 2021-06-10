@@ -29,6 +29,7 @@ export const OnBoarding = () => {
   const [slidePos, setSlidePos] = useState(0)
   const [form, setForm] = useState({})
   const [error, setError] = useState()
+  const [userRole, setRole] = useState()
 
   const handleAudio = (index, type) => {
     const itemId = `desc-${index}`
@@ -51,23 +52,28 @@ export const OnBoarding = () => {
 
   const handleUser = async () => {
     const role = user.hasOwnProperty('role') ? 'irrigator' : 'admin'
+    setRole(role)
     user.profile
       ? setModal(true)
-      : await dispatch(createProfile({ firts_time: false }, role))
+      : await dispatch(createProfile({ firts_time: false }, userRole))
   }
 
   useEffect(() => {
-    const firstTime = user.profile || user.firtsTime
+    const firstTime = user.profile || user.firts_time
     firstTime && history.push('/panel-de-control')
     user.hasOwnProperty('acm') &&
       setForm({ ...form, code: user.acm.code, app_setting: {} })
+
     // handleAudio(0, 'play')
   }, [user])
 
   useEffect(() => {
     errorMsg && setModal(false)
     errorMsg && setError(errorMsg.message)
-    if (notification.hasOwnProperty('message')) {
+
+    if (userRole !== 'irrigator' && notification.hasOwnProperty('message')) {
+      history.push('/panel-de-control')
+    } else if (notification.hasOwnProperty('message')) {
       setModal(false)
     }
   }, [errorMsg, notification])
@@ -225,24 +231,26 @@ export const OnBoarding = () => {
           </Error>
         </Modal>
       )}
-      {notification && notification.hasOwnProperty('message') && (
-        <Modal>
-          <ModalContent type='success'>
-            <i className='fas fa-check'></i>
-            <p>{notification.message}</p>
-            <Button
-              background='primary'
-              width='100%'
-              onClick={() => {
-                dispatch({ type: types.NOTIFICATIONS, notification: false })
-                history.push('/panel-de-control')
-              }}
-            >
-              Volver
-            </Button>
-          </ModalContent>
-        </Modal>
-      )}
+      {userRole === 'irrigator' &&
+        notification &&
+        notification.hasOwnProperty('message') && (
+          <Modal>
+            <ModalContent type='success'>
+              <i className='fas fa-check'></i>
+              <p>{notification.message}</p>
+              <Button
+                background='primary'
+                width='100%'
+                onClick={() => {
+                  dispatch({ type: types.NOTIFICATIONS, notification: false })
+                  history.push('/panel-de-control')
+                }}
+              >
+                Volver
+              </Button>
+            </ModalContent>
+          </Modal>
+        )}
     </Wrapper>
   )
 }

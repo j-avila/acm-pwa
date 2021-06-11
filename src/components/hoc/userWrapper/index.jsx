@@ -34,6 +34,10 @@ const adminMenu = [
 ]
 
 export const ModalContent = styled.div`
+  h2 {
+    margin-bottom: 12px;
+  }
+
   i {
     padding: 12px;
     background: ${({ theme, type }) =>
@@ -46,6 +50,12 @@ export const ModalContent = styled.div`
   p {
     margin: 1rem auto;
     font-weight: 900;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 `
 

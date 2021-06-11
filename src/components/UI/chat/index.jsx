@@ -13,6 +13,8 @@ import Modal from '../modal'
 import { ModalContent } from '../../hoc/userWrapper'
 import { checkRole, scrollTo, setLast } from '../../hoc/utils'
 import { useHistory } from 'react-router'
+import FormInput from '../input'
+import { getRoles } from '../../../store/actions/bookings'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
@@ -27,6 +29,9 @@ const ChatCard = props => {
   const [valid, setValid] = useState(false)
   const [preview, setPreview] = useState()
   const [userAttended, seAttended] = useState(props.chatuser)
+  const roles = useSelector(({ requests }) => requests.roles)
+  const [derive, setDerive] = useState()
+  const [rolesList, setList] = useState([])
   const [messageObj, setMessage] = useState({
     data: {
       event_book: id
@@ -124,12 +129,31 @@ const ChatCard = props => {
       }) */
   }
 
+  const genRolesList = () => {
+    let list =
+      roles.length >= 1 &&
+      roles.map(role => ({
+        label: role.name,
+        value: role.id
+      }))
+    setList(list)
+  }
+
   const setRole = user =>
     user.hasOwnProperty('code')
       ? 'flex-end'
       : user.role.type === 'watchman'
       ? 'flex-start'
       : 'notification'
+
+  useEffect(() => {
+    dispatch(getRoles())
+  }, [])
+
+  useEffect(() => {
+    roles && genRolesList()
+    console.log(roles)
+  }, [roles])
 
   useEffect(() => {
     if (items.length >= 2) {
@@ -242,24 +266,36 @@ const ChatCard = props => {
           {actions && (
             <ActionArea>
               {loggedUser.user && !checkRole(loggedUser.user) && (
-                <span>
-                  <Button
-                    background='primary'
-                    display='block'
-                    onClick={() =>
-                      history.push({
-                        pathname: '/solicitudes/new',
-                        state: {
-                          type: 'visitreport',
-                          code: userAttended
-                        }
-                      })
-                    }
-                  >
-                    <i className='fas fa-calendar' />
-                  </Button>
-                  Agendar Cita
-                </span>
+                <>
+                  <span>
+                    <Button
+                      background='primary'
+                      display='block'
+                      onClick={() =>
+                        history.push({
+                          pathname: '/solicitudes/new',
+                          state: {
+                            type: 'visitreport',
+                            code: userAttended
+                          }
+                        })
+                      }
+                    >
+                      <i className='fas fa-calendar' />
+                    </Button>
+                    Agendar Cita
+                  </span>
+                  <span>
+                    <Button
+                      background='primary'
+                      display='block'
+                      onClick={() => setDerive(true)}
+                    >
+                      <i className='far fa-share-square' />
+                    </Button>
+                    Derivar a
+                  </span>
+                </>
               )}
               <span>
                 <Button
@@ -344,6 +380,38 @@ const ChatCard = props => {
             >
               Volver
             </Button>
+          </ModalContent>
+        </Modal>
+      )}
+      {derive && (
+        <Modal>
+          <ModalContent>
+            <h2>Seleccionar area a derivar</h2>
+            <FormInput>
+              <select
+                onChange={({ target }) =>
+                  setMessage({
+                    ...messageObj,
+                    data: { transferred_to: target.value, event_book: id }
+                  })
+                }
+              >
+                <option disabled selected>
+                  Selecciona una opción
+                </option>
+                {rolesList &&
+                  rolesList.length >= 1 &&
+                  rolesList.map(item => (
+                    <option value={item.value}>{item.label}</option>
+                  ))}
+              </select>
+            </FormInput>
+            <div className='actions'>
+              <Button background='secondary' onClick={() => setDerive(false)}>
+                Cancelar
+              </Button>
+              <Button onClick={() => handleMessage()}>Derivar</Button>
+            </div>
           </ModalContent>
         </Modal>
       )}

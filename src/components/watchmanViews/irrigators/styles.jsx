@@ -25,6 +25,7 @@ export const IrrigatorsWrapper = styled.div`
       position: absolute;
       top: 60%;
       right: 15%;
+      padding: 0 8px;
     }
   }
   .filter {

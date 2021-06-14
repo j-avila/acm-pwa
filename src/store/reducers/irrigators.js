@@ -12,6 +12,12 @@ export const irrigators = (state = { data: [] }, action) => {
         count: action.count,
         data: filtered
       }
+    case types.FILTER_IRRIGATORS_LIST:
+      return {
+        ...state,
+        count: action.count,
+        data: action.irrigators
+      }
 
     default:
       return state

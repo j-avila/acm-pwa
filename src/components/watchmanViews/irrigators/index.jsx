@@ -7,17 +7,23 @@ import { IrrigatorsWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import FormInput from '../../UI/input'
 import { userDataHandler } from '../../../store/actions/login'
-import { getIrrigatorsList } from '../../../store/actions/irrigator'
+import {
+  filterIrrigatorsList,
+  getIrrigatorsList
+} from '../../../store/actions/irrigator'
 import Select from 'react-select'
+import { getChannels } from '../../../store/actions/dashboard'
 
 const Irrigators = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const usersList = useSelector(({ irrigators }) => irrigators)
+  const channelsList = useSelector(({ channelsList }) => channelsList)
   const [irrigators, setList] = useState([])
   const [filter, setFilter] = useState({ name: '', channel: undefined })
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
   const codeActive = useSelector(({ codeActive }) => codeActive)
+  const [channels, setChannels] = useState([])
 
   const handleItem = ({ id, code }) => {
     const detail = usersList.data.filter(i => i.code === id)
@@ -42,16 +48,27 @@ const Irrigators = () => {
     const role = userLogged.role.name
     dispatch(userDataHandler(role, codeActive))
     dispatch(getIrrigatorsList())
+    dispatch(getChannels())
   }, [])
 
   useEffect(() => {
     if (filter.name.length >= 4 || filter.channel >= 1) {
       console.log(filter)
-      dispatch(getIrrigatorsList(0, 20, filter.name, filter.channel))
-    } else if (filter.length === 0) {
+      dispatch(filterIrrigatorsList(0, 20, filter.name, filter.channel))
+    } else if (filter.name.length === 0 || !filter.channel) {
       dispatch(getIrrigatorsList())
     }
   }, [filter])
+
+  useEffect(() => {
+    if (channelsList.length >= 1) {
+      let list = channelsList.map(channel => ({
+        label: channel.name,
+        value: channel.code
+      }))
+      setChannels(list)
+    }
+  }, [channelsList])
 
   useEffect(() => {
     genList(usersList.data)
@@ -70,12 +87,12 @@ const Irrigators = () => {
             onClick={() => setFilter({ ...filter, name: '' })}
           />
         </FormInput>
-        <FormInput label='Filtrar por canal:'>
+        <FormInput label='Filtrar por canal:' className='filter'>
           <Select
-            options={[
-              { label: 'one', value: 1 },
-              { label: 'two', value: 2 }
-            ]}
+            id='select'
+            classNamePrefix='select'
+            placeholder='selecciona un canal'
+            options={channels}
             onChange={selected =>
               setFilter({ ...filter, channel: selected.value })
             }

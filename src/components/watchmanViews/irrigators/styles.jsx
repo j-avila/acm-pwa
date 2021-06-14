@@ -27,6 +27,10 @@ export const IrrigatorsWrapper = styled.div`
       right: 15%;
     }
   }
+  .filter {
+    margin: 20px auto;
+    max-width: 280px;
+  }
 `
 // detail
 export const DeatilWrapper = styled.div`

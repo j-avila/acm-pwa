@@ -22,3 +22,18 @@ export const fetchDashboard = (code, role) => async dispatch => {
       dispatch({ type: type.ERROR, error: err })
     })
 }
+
+// get channels list
+export const getChannels = () => async dispatch => {
+  const url = `https://api.acanalmaule.cl/channels?_sort=name:asc&_limit=200`
+
+  return axios
+    .get(url, getAuth())
+    .then(({ data }) => {
+      dispatch({
+        type: type.GET_CHANNELS,
+        channels: data
+      })
+    })
+    .catch(err => dispatch({ type: type.ERROR, error: err }))
+}

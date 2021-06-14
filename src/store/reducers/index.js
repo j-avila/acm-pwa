@@ -38,10 +38,19 @@ const notifications = (state = {}, action) => {
   }
 }
 
-const banksInfo = (state = {}, action) => {
+const banksInfo = (state = [], action) => {
   switch (action.type) {
     case types.GET_BANKS:
       return action.banks
+    default:
+      return state
+  }
+}
+
+const channelsList = (state = [], action) => {
+  switch (action.type) {
+    case types.GET_CHANNELS:
+      return action.channels
     default:
       return state
   }
@@ -68,6 +77,7 @@ export const recurrentIssues = (issues = [], action) => {
 export default combineReducers({
   loading,
   banksInfo,
+  channelsList,
   errors,
   notifications,
   login,

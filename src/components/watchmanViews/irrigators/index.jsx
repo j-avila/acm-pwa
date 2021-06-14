@@ -7,19 +7,20 @@ import { IrrigatorsWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import FormInput from '../../UI/input'
 import { userDataHandler } from '../../../store/actions/login'
+import { getIrrigatorsList } from '../../../store/actions/irrigator'
+import Select from 'react-select'
 
 const Irrigators = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const usersList = useSelector(({ login }) => login)
+  const usersList = useSelector(({ irrigators }) => irrigators)
   const [irrigators, setList] = useState([])
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState({ name: '', channel: undefined })
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
+  const codeActive = useSelector(({ codeActive }) => codeActive)
 
   const handleItem = ({ id, code }) => {
-    const detail = usersList.association_user.assigned_irrigators.filter(
-      i => i.code === id
-    )
+    const detail = usersList.data.filter(i => i.code === id)
     // console.log(detail)
     history.push({
       pathname: `/regante/${id}`,
@@ -28,47 +29,57 @@ const Irrigators = () => {
   }
 
   const genList = inputList => {
-    if (
-      inputList.hasOwnProperty('association_user') &&
-      inputList.association_user.assigned_irrigators
-    ) {
-      const listed = inputList.association_user.assigned_irrigators
-      const list = listed.map(item => ({
-        id: item.code,
-        title: item.name,
-        subtitle: item.code
-      }))
-      listed && setList(list)
-    }
+    const listed = inputList
+    const list = listed.map(item => ({
+      id: item.code,
+      title: item.name,
+      subtitle: item.code
+    }))
+    listed && setList(list)
   }
 
   useEffect(() => {
     const role = userLogged.role.name
-    dispatch(userDataHandler(role))
+    dispatch(userDataHandler(role, codeActive))
+    dispatch(getIrrigatorsList())
   }, [])
 
   useEffect(() => {
-    genList(usersList)
-  }, [usersList])
-
-  useEffect(() => {
-    if (filter.length >= 4) {
-      const filtered = irrigators.filter(
-        user => user.title.toLowerCase().indexOf(filter) !== -1
-      )
-
-      setList(filtered)
+    if (filter.name.length >= 4 || filter.channel >= 1) {
+      console.log(filter)
+      dispatch(getIrrigatorsList(0, 20, filter.name, filter.channel))
     } else if (filter.length === 0) {
-      genList(usersList)
+      dispatch(getIrrigatorsList())
     }
   }, [filter])
+
+  useEffect(() => {
+    genList(usersList.data)
+  }, [usersList.data])
 
   return (
     <UserWrapper pathName='Regantes'>
       <IrrigatorsWrapper>
         <FormInput label='Buscar por Nombre:' className='searchbar'>
-          <input value={filter} onChange={e => setFilter(e.target.value)} />
-          <i className='fa fa-close' onClick={() => setFilter('')} />
+          <input
+            value={filter.name}
+            onChange={e => setFilter({ ...filter, name: e.target.value })}
+          />
+          <i
+            className='fa fa-close'
+            onClick={() => setFilter({ ...filter, name: '' })}
+          />
+        </FormInput>
+        <FormInput label='Filtrar por canal:'>
+          <Select
+            options={[
+              { label: 'one', value: 1 },
+              { label: 'two', value: 2 }
+            ]}
+            onChange={selected =>
+              setFilter({ ...filter, channel: selected.value })
+            }
+          />
         </FormInput>
         <List items={irrigators} action={handleItem} />
       </IrrigatorsWrapper>

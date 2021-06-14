@@ -80,14 +80,15 @@ const UserLayout = props => {
       const role = userLogged.role.name
 
       if (!userData.hasOwnProperty('acm') || !userData.hasOwnProperty('user')) {
-        dispatch(userDataHandler(role))
+        dispatch(userDataHandler(role, codeActive))
       }
     }
   }, [])
 
   useEffect(() => {
     if (userData && userLogged && userLogged.role.name === 'irrigator') {
-      !userData.hasOwnProperty('acm') && dispatch(userDataHandler('irrigator'))
+      !userData.hasOwnProperty('acm') &&
+        dispatch(userDataHandler('irrigator', codeActive))
     } else if (userData) {
       !userData.hasOwnProperty('user') && dispatch(userDataHandler('watchman'))
     }
@@ -107,6 +108,10 @@ const UserLayout = props => {
         form: userLogged
       })
   }, [userData])
+
+  useEffect(() => {
+    codeActive && dispatch(userDataHandler('irrigator', codeActive))
+  }, [codeActive])
 
   useEffect(() => {
     errorMsg && errorMsg.hasOwnProperty('message') && setError(errorMsg)

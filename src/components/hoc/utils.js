@@ -25,3 +25,7 @@ export const scrollTo = id => {
     top: element.offsetTop
   })
 }
+
+export const removeDuplicates = (data, key) => [
+  ...new Map(data.map(item => [key(item), item])).values()
+]

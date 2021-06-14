@@ -2,18 +2,33 @@ import axios from 'axios'
 import { apiUrl, getAuth } from './utils'
 import * as type from '../reducers/types'
 
-export const fetchRequests = (code, from = 0, to = 20) => async dispatch => {
+export const fetchRequests = (
+  code,
+  from = 0,
+  to = 20,
+  closed = false
+) => async dispatch => {
+  const counter = async () =>
+    await axios
+      .get(
+        `https://api.acanalmaule.cl/event-books/count?type=requestforattention&closed=${closed}`,
+        getAuth()
+      )
+      .then(({ data }) => data)
+
   const url = code
-    ? `${apiUrl}/event-books?type=requestforattention&irrigator_code=${code}&_sort=published_at:desc`
-    : `${apiUrl}/event-books?type=requestforattention&_start=${from}&_limit=${to}&_sort=published_at:desc`
+    ? `${apiUrl}/event-books?type=requestforattention&irrigator_code=${code}&closed=${closed}&_start=${from}&_limit=${to}&_sort=published_at:desc`
+    : `${apiUrl}/event-books?type=requestforattention&_start=${from}&closed=${closed}&_limit=${to}&_sort=published_at:desc`
 
   dispatch({ type: type.LOADING, load: true })
+  const count = await counter()
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
       dispatch({
-        type: type.FETCH_REQUESTS,
-        requests: data
+        type: closed ? type.FETCH_CLOSED_REQUESTS : type.FETCH_REQUESTS,
+        requests: data,
+        count: count
       })
       dispatch({ type: type.LOADING, load: false })
     })

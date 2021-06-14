@@ -10,7 +10,7 @@ import { createRequest, getRoles } from '../../../store/actions/bookings'
 import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
-import { checkRole } from '../../hoc/utils'
+import { checkRole, removeDuplicates } from '../../hoc/utils'
 import Select from 'react-select'
 import { getIssues } from '../../../store/actions/requests'
 
@@ -73,7 +73,6 @@ const RequestForm = ({ location }) => {
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })
-    // console.log(location)
   }, [user, roles, location])
 
   useEffect(() => {
@@ -133,14 +132,22 @@ const RequestForm = ({ location }) => {
       }))
       setIrrigators(arranged)
     }
-    if (session.channels && session.channels.length >= 1) {
-      let channels = session.channels.map(channel => ({
-        label: channel.name,
-        value: channel.code
+    if (
+      user.hasOwnProperty('assigned_irrigators') &&
+      user.assigned_irrigators &&
+      user.assigned_irrigators.length >= 1
+    ) {
+      let channels = removeDuplicates(
+        user.assigned_irrigators,
+        item => item.channel
+      )
+      let channelsList = channels.map(channel => ({
+        label: channel.channel_name,
+        value: channel.channel
       }))
-      setChannels(channels)
+      setChannels(channelsList)
     }
-  }, [session])
+  }, [session, user])
 
   return (
     <UserWrapper pathName={location.state.name || 'Nueva Solicitud'}>

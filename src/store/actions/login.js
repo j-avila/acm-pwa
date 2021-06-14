@@ -23,10 +23,12 @@ export const loginHandler = form => async dispatch => {
     })
 }
 
-export const userDataHandler = role => async dispatch => {
+export const userDataHandler = (role, code) => async dispatch => {
   // console.log(role)
   const url =
-    role === 'irrigator' ? `${apiUrl}/irrigator-info` : `${apiUrl}/myinfo`
+    role === 'irrigator'
+      ? `${apiUrl}/irrigator-info/${code}`
+      : `${apiUrl}/myinfo`
   dispatch({ type: type.LOADING, load: true })
   return axios
     .get(url, getAuth())

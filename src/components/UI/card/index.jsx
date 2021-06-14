@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Wrapper } from './styles'
+import { GhostLine } from '../ghostLoader'
 
 const Card = ({
   children,
@@ -8,32 +9,44 @@ const Card = ({
   title,
   subTitle,
   onClick,
-  notifications
+  notifications,
+  loading
 }) => {
   return (
-    <Wrapper id='card' className={className} onClick={onClick}>
-      {title && (
-        <header>
-          <div>
-            <h3>{title}</h3>
-            {subTitle && <p>{subTitle}</p>}
-          </div>
-          <span>
-            {notifications >= 1 && (
-              <span className='notification'>{notifications}</span>
-            )}
-            {onClick && <i className='fa fa-chevron-right' />}
-          </span>
-        </header>
+    <>
+      {!loading ? (
+        <Wrapper id='card' className={className} onClick={onClick}>
+          {title && (
+            <header>
+              <div>
+                <h3>{title}</h3>
+                {subTitle && <p>{subTitle}</p>}
+              </div>
+              <span>
+                {notifications >= 1 && (
+                  <span className='notification'>{notifications}</span>
+                )}
+                {onClick && <i className='fa fa-chevron-right' />}
+              </span>
+            </header>
+          )}
+          {children}
+        </Wrapper>
+      ) : (
+        <>
+          <GhostLine />
+          <GhostLine width='60%' />
+          <GhostLine width='40%' />
+        </>
       )}
-      {children}
-    </Wrapper>
+    </>
   )
 }
 
 Card.propTypes = {
   children: PropTypes.node,
-  notifications: PropTypes.number
+  notifications: PropTypes.number,
+  loading: PropTypes.bool
 }
 
 export default Card

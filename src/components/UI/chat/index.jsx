@@ -146,16 +146,41 @@ const ChatCard = props => {
       ? 'flex-start'
       : 'notification'
 
+  const checkTransfered = items => {
+    if (items) {
+      const last = items.length
+      console.log('last item:', items[last - 1])
+
+      if (last >= 1) {
+        let transferedMsg = items[last - 1]
+
+        console.log('trans msg', transferedMsg)
+
+        transferedMsg.hasOwnProperty('transferred_to') &&
+          transferedMsg.transferred_to.id !== loggedUser.association_area.id &&
+          dispatch({ type: type.RESET_CHAT, payload: {} })
+        history.push('/solicitudes')
+      }
+    }
+  }
+
   useEffect(() => {
     dispatch(getRoles())
+
+    return () => {
+      dispatch({ type: type.RESET_CHAT, payload: {} })
+    }
   }, [])
 
   useEffect(() => {
     roles && genRolesList()
-    console.log(roles)
+    // console.log('rolelist', roles)
+    // console.log('current area:', loggedUser.association_area.id)
   }, [roles])
 
   useEffect(() => {
+    checkTransfered(items)
+
     if (items.length >= 2) {
       const last = items.length
       const lastMessage = items[1]

@@ -14,6 +14,7 @@ const Dashboard = props => {
   const history = useHistory()
   const dashData = useSelector(({ dashboard }) => dashboard)
   const user = useSelector(({ user }) => user)
+  const loading = useSelector(({ loading }) => loading)
   const code = useSelector(({ codeActive }) => codeActive)
 
   useEffect(() => {
@@ -26,12 +27,19 @@ const Dashboard = props => {
   return (
     <UserWrapper>
       <Dash>
-        {dashData &&
-        dashData.hasOwnProperty('requests') &&
-        dashData.hasOwnProperty('fees') &&
-        dashData.hasOwnProperty('number_of_actions') ? (
+        {loading ? (
+          <Card className='stat-card'>
+            <GhostLine />
+            <GhostLine width='60%' />
+            <GhostLine width='40%' />
+          </Card>
+        ) : dashData &&
+          dashData.hasOwnProperty('requests') &&
+          dashData.hasOwnProperty('fees') &&
+          dashData.hasOwnProperty('number_of_actions') ? (
           <>
             <Card
+              loading={loading}
               className='stat-card'
               title='Información del canal'
               notifications={dashData.notifications.length}

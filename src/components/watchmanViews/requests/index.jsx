@@ -13,10 +13,10 @@ const AdminRequests = props => {
   const dispatch = useDispatch()
   const history = useHistory()
   const requests = useSelector(({ requests }) => requests.open)
-  const code = useSelector(({ codeActive }) => codeActive)
+  const closed = useSelector(({ requests }) => requests.closed)
+  const count = useSelector(({ requests }) => requests.count)
   const [openList, setOpenList] = useState([])
   const [closedList, setClosedList] = useState([])
-  const [irrigators, setIrrigators] = useState([])
 
   const handleItem = ({ id, irrigator }) => {
     history.push({
@@ -25,19 +25,20 @@ const AdminRequests = props => {
     })
   }
 
-  const fetchPages = (from, to) => {
-    dispatch(fetchRequests(null, from, to))
+  const fetchPages = (from, to, closed) => {
+    dispatch(fetchRequests(null, from, to, closed))
   }
 
   useEffect(() => {
-    dispatch(fetchRequests())
+    dispatch(fetchRequests(null, 0, 20, false))
+    dispatch(fetchRequests(null, 0, 20, true))
   }, [])
 
   useEffect(() => {
     let formatted
 
-    if (requests && requests.length >= 1) {
-      formatted = requests
+    if (requests.data && requests.data.length >= 1) {
+      formatted = requests.data
         .filter(i => i.closed === false)
         .map(item => ({
           id: item.id,
@@ -47,8 +48,8 @@ const AdminRequests = props => {
         }))
       setOpenList(formatted)
     }
-    if (requests && requests.length >= 1) {
-      formatted = requests
+    if (closed.data && closed.data.length >= 1) {
+      formatted = closed.data
         .filter(i => i.closed === true)
         .map(item => ({
           id: item.id,
@@ -60,17 +61,29 @@ const AdminRequests = props => {
       setClosedList(formatted)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requests])
+  }, [requests, closed])
 
   return (
     <UserWrapper pathName='Solicitudes de Atención'>
       <Wrapper>
         <Tabs selected={0}>
           <Panel title='Abiertas'>
-            <List items={openList} action={handleItem} refresh={fetchPages} />
+            <List
+              data={false}
+              items={openList}
+              action={handleItem}
+              refresh={fetchPages}
+              count={requests.count}
+            />
           </Panel>
           <Panel title='Finalizados'>
-            <List items={closedList} action={handleItem} />
+            <List
+              data={true}
+              items={closedList}
+              action={handleItem}
+              refresh={fetchPages}
+              count={closed.count}
+            />
           </Panel>
         </Tabs>
         <Button

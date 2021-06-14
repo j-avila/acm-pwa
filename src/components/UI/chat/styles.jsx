@@ -99,6 +99,12 @@ export const Bubble = styled.span`
   span {
     padding: 4px 8px;
     color: ${({ theme }) => theme.text};
+    a {
+      width: 100%;
+      height: fit-content;
+      overflow: hidden;
+      display: block;
+    }
   }
 `
 

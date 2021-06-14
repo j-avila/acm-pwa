@@ -35,6 +35,7 @@ const RequestDetail = props => {
 
   useEffect(() => {
     request.hasOwnProperty('details') &&
+      request.details.hasOwnProperty('messages') &&
       setDetails({
         ...reqDetails,
         closed: request.details.event.closed || false,
@@ -53,8 +54,7 @@ const RequestDetail = props => {
           <h1>{reqDetails.title}</h1>
           {!checkRole(session) && reqDetails.user && (
             <p className='irrigator-info'>
-              Nombre: <strong>{reqDetails.user.name}</strong> (
-              {reqDetails.user.code})
+              <strong>{reqDetails.user.name}</strong> ({reqDetails.user.code})
             </p>
           )}
           <div className='description'>

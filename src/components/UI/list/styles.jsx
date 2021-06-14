@@ -35,4 +35,18 @@ export const ItemsList = styled.ul`
       }
     }
   }
+  .paginator {
+    display: block;
+    width: max-content;
+    margin: 0 auto;
+    margin-top: 12px;
+    color: ${({ theme }) => theme.secondary};
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #c4c4c4;
+    i {
+      margin-left: 6px;
+      font-size: 14px;
+    }
+  }
 `

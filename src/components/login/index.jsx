@@ -16,6 +16,7 @@ const Login = props => {
   const history = useHistory()
   const login = useSelector(({ login }) => login)
   const user = useSelector(({ user }) => user)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const errorMsg = useSelector(({ errors }) => errors)
   const [form, setForm] = useState({
     identifier: '',
@@ -51,7 +52,7 @@ const Login = props => {
   }, [form])
 
   useEffect(() => {
-    login.jwt && dispatch(userDataHandler(login.user.role.name))
+    login.jwt && dispatch(userDataHandler(login.user.role.name, codeActive))
   }, [login])
 
   useEffect(() => {

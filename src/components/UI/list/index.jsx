@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { ItemsList } from './styles'
 import { useSelector } from 'react-redux'
-import InfiniteScroll from 'react-infinite-scroll-component'
 
 const List = props => {
-  const { items, action, status, refresh } = props
+  const { items, action, refresh, count, data } = props
   const loading = useSelector(({ loading }) => loading)
   const [page, setPage] = useState({ from: 0, to: 20 })
 
@@ -14,21 +13,22 @@ const List = props => {
   }
 
   const refreshHandler = async () => {
-    refresh && (await refresh(page.from, page.to))
     setPage({ from: page.from + 20, to: page.to + 20 })
   }
 
+  useEffect(() => {
+    page.from !== 0 && refresh && refresh(page.from, page.to, data)
+  }, [page])
+
+  useEffect(() => {
+    console.log('conteo:', items.length)
+  }, [items])
+
   return (
     <ItemsList>
-      {loading ? (
+      {loading && items.length <= 1 ? (
         <i className='fas fa-spinner fa-spin fa-3x' />
       ) : items && items.length >= 1 ? (
-        // <InfiniteScroll
-        //   dataLength={items.length}
-        //   loading={<i className='fas fa-spinner fa-spin fa-3x' />}
-        //   next={refreshHandler}
-        //   hasMore={true}
-        // >
         <>
           {items.map(item => (
             <li key={item.id} onClick={() => handleAction(item)}>
@@ -39,9 +39,20 @@ const List = props => {
               <i className={`fas ${item.status || 'fa-chevron-right'}`}></i>
             </li>
           ))}
+          {items.length <= count && (
+            <span className='paginator' onClick={() => refreshHandler()}>
+              {loading && items.length >= 1 ? (
+                <i className='fas fa-sync fa-spin fa-3x' />
+              ) : (
+                <>
+                  Cargar 20 más
+                  <i className='fas fa-angle-down' />
+                </>
+              )}
+            </span>
+          )}
         </>
       ) : (
-        // </InfiniteScroll>
         <p>No hay nada que mostrar</p>
       )}
     </ItemsList>

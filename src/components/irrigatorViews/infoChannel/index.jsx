@@ -27,7 +27,9 @@ const InfoChannel = props => {
     const result = acmChannel.filter(channel => channel.channel === userChannel)
     console.log(result)
     setDailyFlow(
-      result && result[0] ? result[0] : 'no hay informacióñ disponible'
+      result.length >= 1 && result[0]
+        ? result[0]
+        : { estacion: user.channel.name }
     )
   }
 

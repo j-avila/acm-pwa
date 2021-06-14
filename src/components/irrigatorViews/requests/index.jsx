@@ -13,6 +13,7 @@ const Requests = props => {
   const dispatch = useDispatch()
   const history = useHistory()
   const requests = useSelector(({ requests }) => requests.open)
+  const count = useSelector(({ requests }) => requests.count)
   const code = useSelector(({ codeActive }) => codeActive)
   const [openList, setOpenList] = useState([])
   const [closedList, setClosedList] = useState([])
@@ -62,10 +63,10 @@ const Requests = props => {
       <Wrapper>
         <Tabs selected={0}>
           <Panel title='Abiertas'>
-            <List items={openList} action={handleItem} />
+            <List items={openList} action={handleItem} count={count} />
           </Panel>
           <Panel title='Cerradas'>
-            <List items={closedList} action={handleItem} />
+            <List items={closedList} action={handleItem} count={count} />
           </Panel>
         </Tabs>
         <Button

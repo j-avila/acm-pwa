@@ -43,7 +43,7 @@ export const filterIrrigatorsList = (
   param,
   channel
 ) => async dispatch => {
-  const channelparam = `$&channel=${channel}`
+  const channelparam = `&channel=${channel}`
   const nameparam = `&_where[_or][0][code_contains]=${param}&_where[_or][1][name_contains]=${param}`
   const url = `https://api.acanalmaule.cl/irrigators?_sort=name:asc&_start=${from}&_limit=${to}${
     channel ? channelparam : ''

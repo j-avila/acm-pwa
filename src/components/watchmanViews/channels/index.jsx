@@ -69,10 +69,15 @@ const InfoChannel = props => {
                   {infoCards.acm_regulation.origin && (
                     <p>{`Origen: ${infoCards.acm_regulation.origin}`}</p>
                   )}
+                 {
+                  infoCards.acm_regulation.comment.length > 0 &&
+                  <p> {infoCards.acm_regulation.comment}</p>     
+                  }                       
                 </span>
                 <span>
                   <h1>{infoCards.acm_regulation.value}</h1>
                 </span>
+        
               </Content>
             </Card>
             {infoCards.daily_flow_channel.value.map(channel => (
@@ -96,27 +101,39 @@ const InfoChannel = props => {
                   <h3>Extracción Laguna del Maule</h3>
                   <p>{`Fuente: ${infoCards.extraction.origin}`}</p>
                   <p>{`Actualizado: ${infoCards.extraction.updated}`}</p>
+                  {
+                  infoCards.extraction.comment.length > 0 &&
+                  <p> {infoCards.extraction.comment}</p>     
+                  }  
                 </span>
                 <span>
                   <h1>{infoCards.extraction.value}</h1>
                 </span>
               </Content>
             </Card>
-            <Card>
-              <Content>
-                <span>
-                  <h3>Aporte Convenio Colbún</h3>
-                  <p>{`Fuente: ${infoCards.colbun.origin}`}</p>
-                  <p>
-                    {infoCards.colbun.updated &&
-                      `Actualizado: ${infoCards.colbun.updated}`}
-                  </p>
-                </span>
-                <span>
-                  <h1>{infoCards.colbun.value}</h1>
-                </span>
-              </Content>
-            </Card>
+
+            {infoCards.contributions.length >= 1 &&
+              infoCards.contributions.map((card, index) => (
+                <Card key={index}>
+                  <Content>
+                    <span>
+                      <h3>{card.title}</h3>
+                      <p>{`Fuente: ${card.origin}`}</p>
+                      <p>{`Actualizado: ${card.updated}`}</p>
+                      {
+                      card.comment.length > 0 &&
+                      <p> {card.comment}</p>     
+                      } 
+                    </span>
+                    <span>
+                      <p>{`${card.value}`}</p>
+                    </span>
+                       
+                  </Content>
+                </Card>
+              ))}
+
+
             <Card>
               <Content>
                 <span>
@@ -126,10 +143,15 @@ const InfoChannel = props => {
                     {infoCards.volume.updated &&
                       `Actualizado: ${infoCards.volume.updated}`}
                   </p>
+                  {
+                  infoCards.volume.comment.length > 0 &&
+                  <p> {infoCards.volume.comment}</p>     
+                  }  
                 </span>
                 <span>
                   <h1>{infoCards.volume.value}</h1>
                 </span>
+
               </Content>
             </Card>
             <Card>
@@ -163,11 +185,15 @@ const InfoChannel = props => {
                     <span>
                       <h3>{`Pluviometría: ${card.origin}`}</h3>
                       <p>{`Actualizado: ${card.updated}`}</p>
+                      {
+                      card.comment.length > 0 &&
+                      <p> {card.comment}</p>     
+                      } 
                     </span>
                     <span>
                       <i className='fas fa-thermometer-half'></i>
                       <p>{`${card.value}`}</p>
-                    </span>
+                    </span>                       
                   </Content>
                 </Card>
               ))}

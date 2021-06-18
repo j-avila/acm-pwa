@@ -236,8 +236,10 @@ const RequestForm = ({ location }) => {
                 />
               </FormInput>
             )}
-          {(location.state.type !== 'channelreport' ||
-            subjectSelect.length >= 1) && (
+          
+          {(location.state.type !== 'channelreport' &&  subjectSelect.length >= 1) && (
+
+
             <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
               <select
                 onChange={e => setForm({ ...form, subject: e.target.value })}
@@ -260,6 +262,8 @@ const RequestForm = ({ location }) => {
                 )}
               </select>
             </FormInput>
+
+            
           )}
 
           {(subjectSelect.length <= 1 || form.subject === 'Otro') && (

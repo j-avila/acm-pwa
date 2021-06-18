@@ -32,6 +32,7 @@ const IrrigatorDetail = props => {
   const [historyList, setList] = useState()
   const [geoLocation, setGeoLocation] = useState()
 
+
   const handleModal = props => {
     const newForm = {
       ...form,
@@ -116,6 +117,7 @@ const IrrigatorDetail = props => {
     }
   }, [irrigator.detail])
 
+
   return (
     <>
       <UserWrapper pathName='Regante'>
@@ -146,7 +148,7 @@ const IrrigatorDetail = props => {
                         <Row>
                           <strong>Canal:</strong>
                           <span>
-                            {`${location.state.data.channel_name}(${iData.channel})` ||
+                            {`${iData.channel.code}(${iData.channel.name})` ||
                               'No Disponible'}
                           </span>
                         </Row>

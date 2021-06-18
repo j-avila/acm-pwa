@@ -34,18 +34,21 @@ const Requests = props => {
   useEffect(() => {
     let formatted
 
-    if (requests && requests.length >= 1) {
-      formatted = requests
+    if (requests && requests.count >= 1) {
+      formatted = requests.data
         .filter(i => i.closed === false)
         .map(item => ({
           id: item.id,
           title: item.subject,
           subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
         }))
+
       setOpenList(formatted)
     }
-    if (requests && requests.length >= 1) {
-      formatted = requests
+
+    if (requests && requests.count >= 1) {
+
+      formatted = requests.data
         .filter(i => i.closed === true)
         .map(item => ({
           id: item.id,
@@ -57,6 +60,7 @@ const Requests = props => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requests])
+
 
   return (
     <UserWrapper pathName='Solicitudes de Atención'>

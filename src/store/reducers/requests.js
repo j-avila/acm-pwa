@@ -2,10 +2,15 @@ import { removeDuplicates } from '../../components/hoc/utils'
 import * as types from './types'
 
 export const requests = (
-  state = { open: { data: [] }, closed: { data: [] } },
+  state = { open: { data: [] }, closed: { data: [] }, loading: false },
   action
 ) => {
   switch (action.type) {
+    case types.LOADING_MESSAGE:
+      return {
+        ...state,
+        loading: action.load
+      }
     case types.FETCH_REQUESTS:
       let newitems = action.requests
       let openlist = [...state.open.data, ...newitems]

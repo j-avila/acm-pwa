@@ -32,6 +32,7 @@ export const REQUEST_FORM = 'REQUEST_FORM'
 export const POST_REQUEST = 'POST_REQUEST'
 export const GET_ROLES = 'GET_ROLES'
 export const RESET_CHAT = 'RESET_CHAT'
+export const LOADING_MESSAGE = 'LOADING_MESSAGE'
 
 // DEBTS
 export const GET_DEBTS = 'GET_DEBTS'

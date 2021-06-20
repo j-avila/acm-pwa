@@ -20,10 +20,6 @@ const List = props => {
     page.from !== 0 && refresh && refresh(page.from, page.to, data)
   }, [page])
 
-  useEffect(() => {
-    console.log('conteo:', items.length)
-  }, [items])
-
   return (
     <ItemsList>
       {loading && items.length <= 1 ? (
@@ -39,7 +35,7 @@ const List = props => {
               <i className={`fas ${item.status || 'fa-chevron-right'}`}></i>
             </li>
           ))}
-          {items.length <= count && (
+          {items.length < count ? (
             <span className='paginator' onClick={() => refreshHandler()}>
               {loading && items.length >= 1 ? (
                 <i className='fas fa-sync fa-spin fa-3x' />
@@ -50,6 +46,10 @@ const List = props => {
                 </>
               )}
             </span>
+          ) : items.length === count ? (
+            <span>Haz llegado al final de la lista</span>
+          ) : (
+            ''
           )}
         </>
       ) : (

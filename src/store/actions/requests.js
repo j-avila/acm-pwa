@@ -28,8 +28,8 @@ export const setMessage = form => async dispatch => {
   form.file && formdata.append('files.attached', form.file, form.file.name)
   form.data && formdata.append('data', JSON.stringify(form.data))
 
-  console.log('form to send:', JSON.stringify(form))
-
+  // console.log('form to send:', JSON.stringify(form))
+  dispatch({ type: type.LOADING_MESSAGE, load: true })
   return axios
     .post(url, formdata, getAuth())
     .then(({ data }) => {
@@ -39,8 +39,12 @@ export const setMessage = form => async dispatch => {
         type: type.REQUEST_FORM,
         message: data
       })
+      dispatch({ type: type.LOADING_MESSAGE, load: false })
     })
-    .catch(err => dispatch({ type: type.ERROR, error: err }))
+    .catch(err => {
+      dispatch({ type: type.LOADING_MESSAGE, load: false })
+      dispatch({ type: type.ERROR, error: err })
+    })
 }
 
 export const getIssues = area => async dispatch => {

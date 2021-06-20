@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './App.css'
+import ReactGa from 'react-ga'
 import ThemeWrapper from '../src/components/hoc/styledTheme'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Splash from './components/splash'
@@ -56,6 +57,7 @@ const App = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('userActive'))
+    ReactGa.initialize('G-6F2CHN13HX')
     if (user && user.hasOwnProperty('id')) {
       setUserSession(user.id)
     }

@@ -11,10 +11,11 @@ import * as type from '../../../store/reducers/types'
 import { apiUrl } from '../../../store/actions/utils'
 import Modal from '../modal'
 import { ModalContent } from '../../hoc/userWrapper'
-import { checkRole, scrollTo, setLast } from '../../hoc/utils'
+import { checkRole, scrollTo } from '../../hoc/utils'
 import { useHistory } from 'react-router'
 import FormInput from '../input'
 import { getRoles } from '../../../store/actions/bookings'
+import Dots from '../dots'
 
 const ChatCard = props => {
   const hiddenFileInput = useRef(null)
@@ -22,9 +23,8 @@ const ChatCard = props => {
   const dispatch = useDispatch()
   const notification = useSelector(({ notifications }) => notifications)
   const { id, items, msgAction, chatBar } = props
-  const loading = useSelector(({ loading }) => loading)
+  const loading = useSelector(({ requests }) => requests.loading)
   const loggedUser = useSelector(({ user }) => user)
-  const [isUser, setUser] = useState()
   const [actions, openActions] = useState()
   const [valid, setValid] = useState(false)
   const [preview, setPreview] = useState()
@@ -146,24 +146,6 @@ const ChatCard = props => {
       ? 'flex-start'
       : 'notification'
 
-  const checkTransfered = items => {
-    if (items) {
-      const last = items.length
-      console.log('last item:', items[last - 1])
-
-      if (last >= 1) {
-        let transferedMsg = items[last - 1]
-
-        console.log('trans msg', transferedMsg)
-
-        transferedMsg.hasOwnProperty('transferred_to') &&
-          transferedMsg.transferred_to.id !== loggedUser.association_area.id &&
-          dispatch({ type: type.RESET_CHAT, payload: {} })
-        history.push('/solicitudes')
-      }
-    }
-  }
-
   useEffect(() => {
     dispatch(getRoles())
 
@@ -179,8 +161,6 @@ const ChatCard = props => {
   }, [roles])
 
   useEffect(() => {
-    checkTransfered(items)
-
     if (items.length >= 2) {
       const last = items.length
       const lastMessage = items[1]
@@ -214,76 +194,85 @@ const ChatCard = props => {
         ) : (!loading && !items) | (!loading && items.length <= 0) ? (
           <span>Comienza por escribir un mensaje</span>
         ) : (
-          items.map(message => (
-            <Row key={message.id} direction={setRole(message.user)}>
-              <ChatBubble
-                direction={setRole(message.user)}
-                isUser={message.user.code === loggedUser.code}
-                provName={message.user.name}
-              >
-                {message.message}
-                <div>
-                  {(message.attached && message.attached.formats) ||
-                  (message.file && message.file.formats) ? (
-                    <>
-                      <span className='attachment'>
-                        <p>
-                          <strong>Adjuntos:</strong>
-                        </p>
+          <>
+            {items.map(message => (
+              <Row key={message.id} direction={setRole(message.user)}>
+                <ChatBubble
+                  direction={setRole(message.user)}
+                  isUser={message.user.code === loggedUser.code}
+                  provName={message.user.name}
+                >
+                  {message.message}
+                  <div>
+                    {(message.attached && message.attached.formats) ||
+                    (message.file && message.file.formats) ? (
+                      <>
+                        <span className='attachment'>
+                          <p>
+                            <strong>Adjuntos:</strong>
+                          </p>
+                          <a
+                            href={`${apiUrl}${message.attached.url}`}
+                            rel='noreferrer'
+                            target='_blank'
+                          >
+                            <img
+                              src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
+                              alt={message.attached.name}
+                            />
+                          </a>
+                        </span>
                         <a
                           href={`${apiUrl}${message.attached.url}`}
                           rel='noreferrer'
                           target='_blank'
                         >
-                          <img
-                            src={`${apiUrl}${message.attached.formats.thumbnail.url}`}
-                            alt={message.attached.name}
-                          />
+                          <i className='fas fa-download'></i>
+                          Descargar archivo
+                        </a>
+                      </>
+                    ) : message.attached ? (
+                      <>
+                        <span className='attachment'>
+                          <i className='fas fa-file' />
+                          <strong>{message.attached.name}</strong>
+                        </span>
+                        <a
+                          href={`${apiUrl}${message.attached.url}`}
+                          rel='noreferrer'
+                          target='_blank'
+                        >
+                          <i className='fas fa-download' />
+                          Descargar archivo
+                        </a>
+                      </>
+                    ) : message.coordinates &&
+                      message.coordinates.hasOwnProperty('latitude') ? (
+                      <span className='attachment'>
+                        <a
+                          href={`https://www.google.com/maps/@${message.coordinates.longitude}, ${message.coordinates.latitude}`}
+                        >
+                          <i className='fa fa-map-marker-alt' /> Ubicación
                         </a>
                       </span>
-                      <a
-                        href={`${apiUrl}${message.attached.url}`}
-                        rel='noreferrer'
-                        target='_blank'
-                      >
-                        <i className='fas fa-download'></i>
-                        Descargar archivo
-                      </a>
-                    </>
-                  ) : message.attached ? (
-                    <>
-                      <span className='attachment'>
-                        <i className='fas fa-file' />
-                        <strong>{message.attached.name}</strong>
-                      </span>
-                      <a
-                        href={`${apiUrl}${message.attached.url}`}
-                        rel='noreferrer'
-                        target='_blank'
-                      >
-                        <i className='fas fa-download' />
-                        Descargar archivo
-                      </a>
-                    </>
-                  ) : message.coordinates &&
-                    message.coordinates.hasOwnProperty('latitude') ? (
-                    <span className='attachment'>
-                      <a
-                        href={`https://www.google.com/maps/@${message.coordinates.longitude}, ${message.coordinates.latitude}`}
-                      >
-                        <i className='fa fa-map-marker-alt' /> Ubicación
-                      </a>
-                    </span>
-                  ) : (
-                    ''
-                  )}
-                </div>
-                <span className='meta'>
-                  {moment(message.createdAt).format('MMMM DD YYYY')}
-                </span>
-              </ChatBubble>
-            </Row>
-          ))
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                  <span className='meta'>
+                    {moment(message.createdAt).format('MMMM DD YYYY')}
+                  </span>
+                </ChatBubble>
+              </Row>
+            ))}
+            {loading && (
+              <Row direction='flex-start'>
+                <ChatBubble direction='flex-start' width='80px'>
+                  <Dots />
+                </ChatBubble>
+              </Row>
+            )}
+          </>
         )}
       </ChatWrapper>
       {chatBar && (

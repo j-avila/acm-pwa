@@ -7,11 +7,14 @@ import { checkRole, socket } from '../../hoc/utils'
 import Chat from '../../UI/chat'
 import { CeladorSection, DetailsWrapper } from './styles'
 import * as type from '../../../store/reducers/types'
+import { useHistory } from 'react-router-dom'
 
 const RequestDetail = props => {
   const { location } = props
   const dispatch = useDispatch()
+  const history = useHistory()
   const request = useSelector(({ requests }) => requests)
+  const loggedUser = useSelector(({ user }) => user)
   const session = useSelector(({ login }) => login)
   const [description, openDescription] = useState()
   const [reqDetails, setDetails] = useState({
@@ -22,6 +25,25 @@ const RequestDetail = props => {
   })
   const handleForm = form => {
     dispatch(setMessage(form))
+  }
+
+  const checkTransfered = items => {
+    if (items) {
+      const last = items.length
+      console.log('last item:', items[last - 1])
+
+      if (last >= 1) {
+        let transferedMsg = items[last - 1]
+
+        console.log('trans msg', transferedMsg)
+
+        if (transferedMsg.hasOwnProperty('transferred_to')) {
+          transferedMsg.transferred_to.id !== loggedUser.association_area.id &&
+            dispatch({ type: type.RESET_CHAT, payload: {} })
+          history.push('/solicitudes')
+        }
+      }
+    }
   }
 
   // event handlers
@@ -45,6 +67,7 @@ const RequestDetail = props => {
         user: request.details.event.irrigator,
         area: request.details.event.association_area.name
       })
+    checkTransfered(reqDetails.messages)
   }, [request.details])
 
   return (

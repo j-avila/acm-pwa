@@ -10,10 +10,12 @@ import { Wrapper, Error } from './styles'
 import Modal from '../UI/modal'
 import { loginHandler, userDataHandler } from '../../store/actions/login'
 import { useDispatch, useSelector } from 'react-redux'
+import ReactGA from 'react-ga'
 
 const Login = props => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const location = props.location.pathname
   const login = useSelector(({ login }) => login)
   const user = useSelector(({ user }) => user)
   const codeActive = useSelector(({ codeActive }) => codeActive)
@@ -41,6 +43,7 @@ const Login = props => {
   }
 
   useEffect(() => {
+    ReactGA.pageview(location)
     dispatch({ type: types.ERROR, error: {} })
     return () => {
       dispatch({ type: types.ERROR, error: {} })

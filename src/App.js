@@ -56,8 +56,8 @@ const App = () => {
   }
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('userActive'))
     ReactGa.initialize('G-6F2CHN13HX')
+    const user = JSON.parse(localStorage.getItem('userActive'))
     if (user && user.hasOwnProperty('id')) {
       setUserSession(user.id)
     }

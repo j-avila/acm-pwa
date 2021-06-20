@@ -17,8 +17,9 @@ import { createProfile } from '../../store/actions/editProfile'
 import { useDispatch, useSelector } from 'react-redux'
 import { ModalContent } from '../hoc/userWrapper'
 import { Error } from '../login/styles'
+import ReactGA from 'react-ga'
 
-export const OnBoarding = () => {
+export const OnBoarding = props => {
   const history = useHistory()
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
@@ -30,6 +31,7 @@ export const OnBoarding = () => {
   const [form, setForm] = useState({})
   const [error, setError] = useState()
   const [userRole, setRole] = useState()
+  const location = props.location.pathname
 
   const handleAudio = (index, type) => {
     const itemId = `desc-${index}`
@@ -57,6 +59,10 @@ export const OnBoarding = () => {
       ? setModal(true)
       : await dispatch(createProfile({ firts_time: false }, userRole))
   }
+
+  useEffect(() => {
+    ReactGA.pageview(location)
+  }, [])
 
   useEffect(() => {
     const firstTime = user.profile || user.firts_time

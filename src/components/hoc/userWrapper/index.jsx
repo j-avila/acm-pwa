@@ -10,6 +10,7 @@ import * as type from '../../../store/reducers/types'
 import { WatchmanInfo } from './styles'
 import Avatar from '../../UI/avatar'
 import Toggler from '../../UI/toggler'
+import ReactGA from 'react-ga'
 
 const menuItems = [
   { name: 'Inicio', path: '/panel-de-control' },
@@ -116,6 +117,10 @@ const UserLayout = props => {
   useEffect(() => {
     errorMsg && errorMsg.hasOwnProperty('message') && setError(errorMsg)
   }, [errorMsg])
+
+  useEffect(() => {
+    ReactGA.pageview(location)
+  }, [location])
 
   return (
     <>

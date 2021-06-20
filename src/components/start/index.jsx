@@ -6,11 +6,14 @@ import Logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import * as types from '../../store/reducers/types'
+import ReactGA from 'react-ga'
 
 const Login = props => {
   const disaptch = useDispatch()
+  const location = props.location.pathname
 
   useEffect(() => {
+    ReactGA.pageview(location)
     disaptch({ type: types.ERROR, error: {} })
   }, [])
   return (

@@ -10,7 +10,6 @@ import * as type from '../../../store/reducers/types'
 import { WatchmanInfo } from './styles'
 import Avatar from '../../UI/avatar'
 import Toggler from '../../UI/toggler'
-import ReactGA from 'react-ga'
 
 const menuItems = [
   { name: 'Inicio', path: '/panel-de-control' },
@@ -62,12 +61,11 @@ export const ModalContent = styled.div`
 
 const UserLayout = props => {
   const history = useHistory()
-  const location = props.pathname
   const dispatch = useDispatch()
   const errorMsg = useSelector(({ errors }) => errors)
   const userData = useSelector(({ user }) => user)
   const codeActive = useSelector(({ codeActive }) => codeActive)
-  const { children, pathName, action } = props
+  const { children, pathName } = props
   const [error, setError] = useState()
   const [watchman, showWatchman] = useState()
   const [userCodes, setCodes] = useState()
@@ -117,10 +115,6 @@ const UserLayout = props => {
   useEffect(() => {
     errorMsg && errorMsg.hasOwnProperty('message') && setError(errorMsg)
   }, [errorMsg])
-
-  useEffect(() => {
-    ReactGA.pageview(location)
-  }, [location])
 
   return (
     <>

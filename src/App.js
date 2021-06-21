@@ -35,6 +35,7 @@ import AdminRequests from './components/watchmanViews/requests'
 import AdminReports from './components/watchmanViews/visits'
 import Channels from './components/watchmanViews/channels'
 import PayReport from './components/irrigatorViews/debts/payReport'
+import GATracker from './components/hoc/GaTracker'
 
 const App = () => {
   const [sessionUser, setUserSession] = useState()
@@ -56,7 +57,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    ReactGa.initialize('G-6F2CHN13HX')
+    ReactGa.initialize('UA-199919688-1')
     const user = JSON.parse(localStorage.getItem('userActive'))
     if (user && user.hasOwnProperty('id')) {
       setUserSession(user.id)
@@ -76,45 +77,47 @@ const App = () => {
       <ThemeWrapper>
         <Router>
           <Switch>
-            <Route exact path='/' component={Splash} />
-            <Route path='/inicio' component={Index} />
-            <Route path='/cerrar-sesion' component={EndSession} />
-            <Route path='/ingreso' component={Login} />
-            <Route path='/tour' component={OnBoarding} />
-            <Route
-              path='/panel-de-control'
-              component={
-                checkRole(session, 'irrigator') ? Dashboard : AdminDashboard
-              }
-            />
-            <Route
-              path='/solicitudes'
-              component={
-                checkRole(session, 'irrigator') ? Requests : AdminRequests
-              }
-              exact
-            />
-            <Route path='/acciones' component={ActionsIndex} exact />
-            <Route path='/solicitudes/new' component={RequestForm} />
-            <Route path='/solicitudes/:id' component={RequestDetail} />
-            <Route path='/anotaciones/:id' component={RequestDetail} />
-            <Route path='/deudas' component={Debts} exact />
-            <Route path='/deudas/new' component={DebtForm} />
-            <Route path='/deudas/:id' component={DebtDetail} />
-            <Route path='/reporte' component={PayReport} />
-            <Route path='/informacion' component={InfoChannel} />
-            <Route
-              path='/visitas'
-              component={checkRole(session) ? Visits : AdminReports}
-              exact
-            />
-            <Route path='/visitas/:id' component={VisitDetail} />
-            <Route path='/perfil' component={EditProfile} />
-            <Route path='/opciones' component={Settings} />
-            <Route path='/solicitar-visita' component={VistisForm} />
-            <Route path='/regantes' component={Irrigators} />
-            <Route path='/canales' component={Channels} />
-            <Route path='/regante/:id' component={IrrigatorDetail} />
+            <GATracker>
+              <Route exact path='/' component={Splash} />
+              <Route path='/inicio' component={Index} />
+              <Route path='/cerrar-sesion' component={EndSession} />
+              <Route path='/ingreso' component={Login} />
+              <Route path='/tour' component={OnBoarding} />
+              <Route
+                path='/panel-de-control'
+                component={
+                  checkRole(session, 'irrigator') ? Dashboard : AdminDashboard
+                }
+              />
+              <Route
+                path='/solicitudes'
+                component={
+                  checkRole(session, 'irrigator') ? Requests : AdminRequests
+                }
+                exact
+              />
+              <Route path='/acciones' component={ActionsIndex} exact />
+              <Route path='/solicitudes/new' component={RequestForm} />
+              <Route path='/solicitudes/:id' component={RequestDetail} />
+              <Route path='/anotaciones/:id' component={RequestDetail} />
+              <Route path='/deudas' component={Debts} exact />
+              <Route path='/deudas/new' component={DebtForm} />
+              <Route path='/deudas/:id' component={DebtDetail} />
+              <Route path='/reporte' component={PayReport} />
+              <Route path='/informacion' component={InfoChannel} />
+              <Route
+                path='/visitas'
+                component={checkRole(session) ? Visits : AdminReports}
+                exact
+              />
+              <Route path='/visitas/:id' component={VisitDetail} />
+              <Route path='/perfil' component={EditProfile} />
+              <Route path='/opciones' component={Settings} />
+              <Route path='/solicitar-visita' component={VistisForm} />
+              <Route path='/regantes' component={Irrigators} />
+              <Route path='/canales' component={Channels} />
+              <Route path='/regante/:id' component={IrrigatorDetail} />
+            </GATracker>
           </Switch>
         </Router>
       </ThemeWrapper>

@@ -47,7 +47,8 @@ const AdminReports = () => {
           id: item.id,
           title: item.subject,
           status: item.closed && 'fa-check',
-          subtitle: `Creado el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
+          subtitle: `Creado el: ${moment(item.createdAt).format('DD/MM/YYYY HH:mm')}`, 
+          viewitem: 0,
         }))
 
       const reports = createList(reportData.reports)
@@ -63,7 +64,7 @@ const AdminReports = () => {
       <VisitsWrapper>
         <Tabs selected={0}>
           <Panel title='Visitas'>
-            <List items={visits.reports} action={handleItem} />
+            <List items={visits.reports} />
             <Button
               onClick={() =>
                 history.push({

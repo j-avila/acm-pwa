@@ -2,14 +2,16 @@ import React, { useEffect } from 'react'
 import ReactGA from 'react-ga'
 
 const GATracker = props => {
-  const { children, location } = props
+  const { children } = props
+
+  const location = window.location.href
 
   useEffect(() => {
-    ReactGA.pageview(location.pathname)
-    console.log(location.pathname)
+    ReactGA.pageview(location)
+    console.log('path', location)
   }, [location])
 
-  return <>{children}</>
+  return children
 }
 
 export default GATracker

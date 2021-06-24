@@ -43,10 +43,9 @@ const App = () => {
   const session = useSelector(({ login }) => login)
 
   const setSockets = () => {
-    const token = JSON.stringify(localStorage.getItem('session'))
     const user = {
       userid: session.id,
-      token: token
+      token: localStorage.getItem('session')
     }
     socket.emit('join', user)
     socket.on('welcome', data =>
@@ -76,8 +75,8 @@ const App = () => {
     <div className='App'>
       <ThemeWrapper>
         <Router>
-          <Switch>
-            <GATracker>
+          <GATracker>
+            <Switch>
               <Route exact path='/' component={Splash} />
               <Route path='/inicio' component={Index} />
               <Route path='/cerrar-sesion' component={EndSession} />
@@ -97,10 +96,10 @@ const App = () => {
                 exact
               />
               <Route path='/acciones' component={ActionsIndex} exact />
-              <Route path='/solicitudes/new' component={RequestForm} />
+              <Route path='/solicitudes/new' component={RequestForm} exact />
               <Route path='/solicitudes/:id' component={RequestDetail} />
-              <Route path='/anotaciones/:id' component={RequestDetail} />
               <Route path='/deudas' component={Debts} exact />
+              <Route path='/anotaciones/:id' component={RequestDetail} />
               <Route path='/deudas/new' component={DebtForm} />
               <Route path='/deudas/:id' component={DebtDetail} />
               <Route path='/reporte' component={PayReport} />
@@ -117,8 +116,8 @@ const App = () => {
               <Route path='/regantes' component={Irrigators} />
               <Route path='/canales' component={Channels} />
               <Route path='/regante/:id' component={IrrigatorDetail} />
-            </GATracker>
-          </Switch>
+            </Switch>
+          </GATracker>
         </Router>
       </ThemeWrapper>
     </div>

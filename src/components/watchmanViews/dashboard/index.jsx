@@ -95,8 +95,7 @@ const AdminDashboard = props => {
               <section>
                 <strong>Próxima visita programada:</strong>
                 <h1>
-                  {dashData.next_visit.hasOwnProperty('visitreport_data') &&
-                  dashData.next_visit
+                  {dashData.next_visit && dashData.next_visit.hasOwnProperty('visitreport_data') 
                     ? moment(dashData.next_visit.visitreport_data.date).format(
                         'DD MMMM YYYY - HH:HH'
                       )

@@ -14,7 +14,6 @@ const AdminRequests = props => {
   const history = useHistory()
   const requests = useSelector(({ requests }) => requests.open)
   const closed = useSelector(({ requests }) => requests.closed)
-  const count = useSelector(({ requests }) => requests.count)
   const [openList, setOpenList] = useState([])
   const [closedList, setClosedList] = useState([])
 
@@ -74,6 +73,7 @@ const AdminRequests = props => {
               action={handleItem}
               refresh={fetchPages}
               count={requests.count}
+              listed
             />
           </Panel>
           <Panel title='Finalizados'>
@@ -83,6 +83,7 @@ const AdminRequests = props => {
               action={handleItem}
               refresh={fetchPages}
               count={closed.count}
+              listed
             />
           </Panel>
         </Tabs>

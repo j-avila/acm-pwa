@@ -7,13 +7,20 @@ export const fetchDashboard = (code, role) => async dispatch => {
     ? `${apiUrl}/dashboard-irrigators/${code}?_sort=createdAt:desc`
     : `${apiUrl}/dashboard-acmuser`
 
+  const counter = async () =>
+    await axios
+      .get(`https://api.acanalmaule.cl/irrigators/count`, getAuth())
+      .then(({ data }) => data)
   dispatch({ type: type.LOADING, load: true })
+  const irrigatorsCount = await counter()
+  console.log(irrigatorsCount)
+
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
       dispatch({
         type: type.FETCH_DASHBOARD,
-        dash: data
+        dash: { ...data, counter: irrigatorsCount }
       })
       dispatch({ type: type.LOADING, load: false })
     })

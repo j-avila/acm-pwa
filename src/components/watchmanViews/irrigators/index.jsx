@@ -39,24 +39,28 @@ const Irrigators = () => {
     const list = listed.map(item => ({
       id: item.code,
       title: item.name,
-      subtitle: item.code
+      subtitle: item.code,
+      slow_payer: item.slow_payer
     }))
     listed && setList(list)
+  }
+
+  const fetchIrrigators = (from, to) => {
+    dispatch(getIrrigatorsList(from, to))
   }
 
   useEffect(() => {
     const role = userLogged.role.name
     dispatch(userDataHandler(role, codeActive))
-    dispatch(getIrrigatorsList())
+    fetchIrrigators()
     dispatch(getChannels())
   }, [])
 
   useEffect(() => {
     if (filter.name.length >= 4 || filter.channel >= 1) {
-      console.log(filter)
       dispatch(filterIrrigatorsList(0, 20, filter.name, filter.channel))
     } else if (filter.name.length === 0 || !filter.channel) {
-      dispatch(getIrrigatorsList())
+      fetchIrrigators()
     }
   }, [filter])
 
@@ -98,7 +102,13 @@ const Irrigators = () => {
             }
           />
         </FormInput>
-        <List items={irrigators} action={handleItem} />
+        <List
+          items={irrigators}
+          action={handleItem}
+          refresh={fetchIrrigators}
+          count={usersList.count}
+          listed
+        />
       </IrrigatorsWrapper>
     </UserWrapper>
   )

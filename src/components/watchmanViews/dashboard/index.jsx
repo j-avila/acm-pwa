@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Dash } from './styles'
 import Card from '../../UI/card'
@@ -76,11 +76,7 @@ const AdminDashboard = props => {
             >
               <section>
                 <strong>Lista de regantes de la zona:</strong>
-                <h1>
-                  {(session.association_user.assigned_irrigators &&
-                    session.association_user.assigned_irrigators.length) ||
-                    'No disponible'}
-                </h1>
+                <h1>{(dashData && dashData.counter) || 'No disponible'}</h1>
               </section>
               <footer>{`Zona ${session.provider}`}</footer>
             </Card>
@@ -95,8 +91,11 @@ const AdminDashboard = props => {
               <section>
                 <strong>Próxima visita programada:</strong>
                 <h1>
-                  {dashData.next_visit && dashData.next_visit.hasOwnProperty('visitreport_data') 
-                    ? moment(dashData.next_visit.visitreport_data.date).format('DD MMMM YYYY - HH:HH')
+                  {dashData.next_visit &&
+                  dashData.next_visit.hasOwnProperty('visitreport_data')
+                    ? moment(dashData.next_visit.visitreport_data.date).format(
+                        'DD MMMM YYYY - HH:HH'
+                      )
                     : 'Sin definir'}
                 </h1>
               </section>

@@ -5,7 +5,7 @@ export const VisitsWrapper = styled.div`
   position: relative;
   button {
     position: fixed;
-    bottom: 5vh;
+    bottom: 2vh;
     left: 45%;
     transform: translateX(-45%);
   }

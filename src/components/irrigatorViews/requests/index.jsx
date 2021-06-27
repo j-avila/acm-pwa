@@ -47,7 +47,6 @@ const Requests = props => {
     }
 
     if (requests && requests.count >= 1) {
-
       formatted = requests.data
         .filter(i => i.closed === true)
         .map(item => ({
@@ -61,16 +60,15 @@ const Requests = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requests])
 
-
   return (
     <UserWrapper pathName='Solicitudes de Atención'>
       <Wrapper>
         <Tabs selected={0}>
           <Panel title='Abiertas'>
-            <List items={openList} action={handleItem} count={count} />
+            <List items={openList} action={handleItem} count={count} listed />
           </Panel>
           <Panel title='Cerradas'>
-            <List items={closedList} action={handleItem} count={count} />
+            <List items={closedList} action={handleItem} count={count} listed />
           </Panel>
         </Tabs>
         <Button

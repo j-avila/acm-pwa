@@ -267,20 +267,20 @@ const RequestForm = ({ location }) => {
           )}
 
           {(subjectSelect.length <= 1 || form.subject === 'Otro') && (
-            <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
+            <FormInput label='Escriba su Título:'>
               <input
                 type='text'
                 name='nombre'
                 onChange={e =>
                   setForm({ ...form, otherSubject: e.target.value })
                 }
-                placeholder='Describa su solicitud brevemente'
+                placeholder='Describa su solicitud brevemente por Título breve'
               />
             </FormInput>
           )}
-          <FormInput label='Descripción de la solicitud de atención'>
+          <FormInput label='Breve Descripción'>
             <textarea
-              placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
+              placeholder='Describe el problema o necesidad.'
               cols='6'
               rows='6'
               onChange={e => setForm({ ...form, content: e.target.value })}

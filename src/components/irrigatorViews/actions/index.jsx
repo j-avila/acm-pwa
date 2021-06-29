@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 
 const ActionsIndex = () => {
   const actions = useSelector(({ user }) => user.acm)
+ 
   return (
     <UserWrapper>
       <ActionWrapper>
@@ -28,7 +29,7 @@ const ActionsIndex = () => {
           </p>
 
           <h1>Tienes</h1>
-          <h2>{`${actions.number_of_actions || 'No definido'} acciones`}</h2>
+          <h2>{`${actions.number_of_actions || 'No definido'} acciones`} ( {actions.water_flow} )</h2>
         </Card>
       </ActionWrapper>
     </UserWrapper>

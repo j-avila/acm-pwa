@@ -9,7 +9,8 @@ export const ItemsList = styled.ul`
     margin-bottom: 0.5rem;
     padding: 1rem;
     display: grid;
-    grid-template-columns: 0.2fr 1fr 0.1fr;
+    grid-template-columns: ${({ listed }) =>
+      listed ? '0.2fr 1fr 0.1fr' : '1fr 0.1fr'};
     border-bottom: 1px solid #dddd;
     color: ${({ theme }) => {
       const color = lighten(0.4, theme.text)

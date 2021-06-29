@@ -59,7 +59,8 @@ const RequestForm = ({ location }) => {
       setForm({
         ...form,
         irrigator_code: user.code,
-        type: 'requestforattention'
+        type: 'requestforattention',
+        visitreport_data: { date: null }
       })
   }, [])
 
@@ -95,15 +96,20 @@ const RequestForm = ({ location }) => {
         form.content &&
         form.content.length >= 30 &&
         setValid(false)
-    } else if (
-      location.state.type === 'channelreport' ||
-      location.state.type === 'visitreport'
-    ) {
+    } else if (location.state.type === 'visitreport') {
       form.irrigator_code &&
         form.visitreport_data &&
         form.visitreport_data.date &&
         form.content &&
         form.content.length >= 30 &&
+        setValid(false)
+    } else if (location.state.type === 'channelreport') {
+      form.otherSubject &&
+        form.channel &&
+        form.content &&
+        form.content.length >= 30 &&
+        form.visitreport_data &&
+        form.visitreport_data.date &&
         setValid(false)
     }
   }, [requests, form])
@@ -164,7 +170,9 @@ const RequestForm = ({ location }) => {
         <Card className='form-card'>
           {location.state.type === 'channelreport' && (
             <FormInput label='Selecciona un Canal' width='100%'>
-              <select onChange={e => setForm({ ...form, channel: e.value })}>
+              <select
+                onChange={e => setForm({ ...form, channel: e.target.value })}
+              >
                 {channels && channels.length >= 1 ? (
                   channels.map(channel => (
                     <option value={channel.value}>{channel.label}</option>
@@ -236,35 +244,32 @@ const RequestForm = ({ location }) => {
                 />
               </FormInput>
             )}
-          
-          {(location.state.type !== 'channelreport' &&  subjectSelect.length >= 1) && (
 
-
-            <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
-              <select
-                onChange={e => setForm({ ...form, subject: e.target.value })}
-              >
-                {subjectSelect.length >= 2 && (
-                  <option disabled selected>
-                    Selecciona un asunto recurrente
-                  </option>
-                )}
-                {subjectSelect.length <= 1 ? (
-                  <option value='Otro' selected>
-                    Otro
-                  </option>
-                ) : (
-                  subjectSelect.map((subject, index) => (
-                    <option key={index} value={subject.subject}>
-                      {subject.subject}
+          {location.state.type !== 'channelreport' &&
+            subjectSelect.length >= 1 && (
+              <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
+                <select
+                  onChange={e => setForm({ ...form, subject: e.target.value })}
+                >
+                  {subjectSelect.length >= 2 && (
+                    <option disabled selected>
+                      Selecciona un asunto recurrente
                     </option>
-                  ))
-                )}
-              </select>
-            </FormInput>
-
-            
-          )}
+                  )}
+                  {subjectSelect.length <= 1 ? (
+                    <option value='Otro' selected>
+                      Otro
+                    </option>
+                  ) : (
+                    subjectSelect.map((subject, index) => (
+                      <option key={index} value={subject.subject}>
+                        {subject.subject}
+                      </option>
+                    ))
+                  )}
+                </select>
+              </FormInput>
+            )}
 
           {(subjectSelect.length <= 1 || form.subject === 'Otro') && (
             <FormInput label='Escriba su Título:'>

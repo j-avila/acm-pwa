@@ -10,6 +10,7 @@ import * as type from '../../../store/reducers/types'
 import { WatchmanInfo } from './styles'
 import Avatar from '../../UI/avatar'
 import Toggler from '../../UI/toggler'
+import { socket } from '../utils'
 
 const menuItems = [
   { name: 'Inicio', path: '/panel-de-control' },
@@ -69,8 +70,15 @@ const UserLayout = props => {
   const [error, setError] = useState()
   const [watchman, showWatchman] = useState()
   const [userCodes, setCodes] = useState()
+  const [close, closeSession] = useState()
   const session = localStorage.getItem('session')
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
+
+  const checkSession = () => {
+    socket.on('sesion:close', data => {
+      data && closeSession(true)
+    })
+  }
 
   useEffect(() => {
     if (!session) {
@@ -82,6 +90,7 @@ const UserLayout = props => {
         dispatch(userDataHandler(role, codeActive))
       }
     }
+    checkSession()
   }, [])
 
   useEffect(() => {
@@ -148,6 +157,23 @@ const UserLayout = props => {
                   }}
                 >
                   Volver
+                </Button>
+              </ModalContent>
+            </Modal>
+          )}
+          {close && (
+            <Modal>
+              <ModalContent type='error'>
+                <i className='fas fa-exclamation-triangle'></i>
+                <p>Iniciaste sessión en otro dispositivo</p>
+                <Button
+                  background='error'
+                  width='100%'
+                  onClick={() => {
+                    history.push('/cerrar-sesion')
+                  }}
+                >
+                  Cerrar
                 </Button>
               </ModalContent>
             </Modal>

@@ -21,7 +21,7 @@ const List = props => {
   }, [page])
 
   return (
-    <ItemsList>
+    <ItemsList listed={listed}>
       {loading && items.length <= 1 ? (
         <i className='fas fa-spinner fa-spin fa-3x' />
       ) : items && items.length >= 1 ? (

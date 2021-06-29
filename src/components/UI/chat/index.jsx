@@ -104,9 +104,9 @@ const ChatCard = props => {
     reader.readAsDataURL(file)
   }
 
-  const handleMessage = () => {
-    msgAction(messageObj)
-
+  const handleMessage = async param => {
+    await msgAction(messageObj)
+    param && setDerive(false)
     if (!loading) {
       setMessage({
         data: {
@@ -118,15 +118,6 @@ const ChatCard = props => {
       })
       setPreview(undefined)
     }
-
-    /* error &&
-      setMessage({
-        ...message,
-        message: '',
-        coordinates: '',
-        file: undefined,
-        preview: ''
-      }) */
   }
 
   const genRolesList = () => {
@@ -161,6 +152,19 @@ const ChatCard = props => {
   }, [roles])
 
   useEffect(() => {
+    // handling the transferend conversations
+    const last = items.length - 1
+    if (
+      items.length >= 1 &&
+      items[last] &&
+      items[last].hasOwnProperty('transferred_to')
+    ) {
+      console.log('this is the last', items[last])
+      loggedUser.association_area.code !== items[last].transferred_to.code &&
+        history.push('/solicitudes')
+    }
+
+    // cheking if the last message is from the watchman
     if (items.length >= 2) {
       const last = items.length
       const lastMessage = items[1]
@@ -424,7 +428,7 @@ const ChatCard = props => {
               <Button background='secondary' onClick={() => setDerive(false)}>
                 Cancelar
               </Button>
-              <Button onClick={() => handleMessage()}>Derivar</Button>
+              <Button onClick={() => handleMessage('derivate')}>Derivar</Button>
             </div>
           </ModalContent>
         </Modal>

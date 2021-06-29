@@ -12,8 +12,7 @@ export const fetchDashboard = (code, role) => async dispatch => {
       .get(`https://api.acanalmaule.cl/irrigators/count`, getAuth())
       .then(({ data }) => data)
   dispatch({ type: type.LOADING, load: true })
-  const irrigatorsCount = await counter()
-  console.log(irrigatorsCount)
+  const irrigatorsCount = code ? 0 : await counter()
 
   return axios
     .get(url, getAuth())

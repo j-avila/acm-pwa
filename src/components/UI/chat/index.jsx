@@ -303,16 +303,18 @@ const ChatCard = props => {
                     </Button>
                     Agendar Cita
                   </span>
-                  <span>
-                    <Button
-                      background='primary'
-                      display='block'
-                      onClick={() => setDerive(true)}
-                    >
-                      <i className='far fa-share-square' />
-                    </Button>
-                    Derivar a
-                  </span>
+                  {props.route.includes('solicitudes') && (
+                    <span>
+                      <Button
+                        background='primary'
+                        display='block'
+                        onClick={() => setDerive(true)}
+                      >
+                        <i className='far fa-share-square' />
+                      </Button>
+                      Derivar a
+                    </span>
+                  )}
                 </>
               )}
               <span>

@@ -75,7 +75,7 @@ const AdminDashboard = props => {
               }}
             >
               <section>
-                <strong>Lista de regantes de la zona:</strong>
+                <strong>Lista de rol de regantes de la zona:</strong>
                 <h1>{(dashData && dashData.counter) || 'No disponible'}</h1>
               </section>
               <footer>{`Zona ${session.provider}`}</footer>

@@ -81,6 +81,7 @@ const Irrigators = () => {
   return (
     <UserWrapper pathName='Regantes'>
       <IrrigatorsWrapper>
+        <center>
         <FormInput label='Buscar por Nombre:' className='searchbar'>
           <input
             value={filter.name}
@@ -91,6 +92,7 @@ const Irrigators = () => {
             onClick={() => setFilter({ ...filter, name: '' })}
           />
         </FormInput>
+        </center>
         <FormInput label='Filtrar por canal:' className='filter'>
           <Select
             id='select'

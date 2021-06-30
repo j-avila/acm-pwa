@@ -149,7 +149,7 @@ const VistisForm = () => {
             </FormInput>
           )}
 
-          <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
+          <FormInput label='Titulos Frecuentes' width='100%'>
             <select
               onChange={e => setForm({ ...form, subject: e.target.value })}
               disabled
@@ -164,9 +164,9 @@ const VistisForm = () => {
             </select>
           </FormInput>
 
-          <FormInput label='Descripción de la solicitud de atención'>
+          <FormInput label='Breve Descripción'>
             <textarea
-              placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'
+              placeholder='Describe el problema o necesidad.'
               cols='6'
               rows='6'
               onChange={e => setForm({ ...form, content: e.target.value })}

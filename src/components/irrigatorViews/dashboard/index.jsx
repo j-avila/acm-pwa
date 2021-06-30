@@ -17,6 +17,8 @@ const Dashboard = props => {
   const loading = useSelector(({ loading }) => loading)
   const code = useSelector(({ codeActive }) => codeActive)
 
+  const actions = useSelector(({ user }) => user.acm)
+
   useEffect(() => {
     code && dispatch(fetchDashboard(code))
     return () => {
@@ -128,7 +130,7 @@ const Dashboard = props => {
               }}
             >
               <section>
-                <h1>{`${dashData.number_of_actions} Acciones`}</h1>
+                <h1>{`${dashData.number_of_actions} Acciones`} ( {actions.water_flow} )</h1>
               </section>
             </Card>
           </>

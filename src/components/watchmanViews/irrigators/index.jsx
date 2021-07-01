@@ -61,7 +61,7 @@ const Irrigators = () => {
   useEffect(() => {
     if (filter.name.length >= 4 || filter.channel >= 1) {
       dispatch(filterIrrigatorsList(0, 20, filter.name, filter.channel))
-    } else if (filter.name.length === 0 || !filter.channel) {
+    } else if (filter.name === '' || !filter.channel) {
       fetchIrrigators()
     }
   }, [filter])
@@ -69,11 +69,9 @@ const Irrigators = () => {
   useEffect(() => {
     genList(usersList.data)
   }, [usersList.data])
- 
 
   useEffect(() => {
     if (channelsList.length >= 1) {
-
       let channelsList = removeDuplicates(
         user.assigned_irrigators,
         item => item.channel
@@ -87,24 +85,21 @@ const Irrigators = () => {
     }
   }, [channelsList])
 
-
-
-
   return (
     <UserWrapper pathName='Regantes'>
       <IrrigatorsWrapper>
-        <center>
         <FormInput label='Buscar por Nombre:' className='searchbar'>
-          <input
-            value={filter.name}
-            onChange={e => setFilter({ ...filter, name: e.target.value })}
-          />
-          <i
-            className='fa fa-close'
-            onClick={() => setFilter({ ...filter, name: '' })}
-          />
+          <div>
+            <input
+              value={filter.name}
+              onChange={e => setFilter({ ...filter, name: e.target.value })}
+            />
+            <i
+              className='fa fa-close'
+              onClick={() => setFilter({ ...filter, name: '' })}
+            />
+          </div>
         </FormInput>
-        </center>
         <FormInput label='Filtrar por canal:' className='filter'>
           <Select
             id='select'

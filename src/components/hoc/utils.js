@@ -26,6 +26,11 @@ export const scrollTo = id => {
   })
 }
 
-export const removeDuplicates = (data, key) => [
-  ...new Map(data.map(item => [key(item), item])).values()
-]
+export const removeDuplicates = (data, key) => {
+  console.log(data)
+  if (data) {
+    return [...new Map(data.map(item => [key(item), item])).values()]
+  } else {
+    return []
+  }
+}

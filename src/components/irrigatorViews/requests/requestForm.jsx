@@ -23,6 +23,7 @@ const RequestForm = ({ location }) => {
   const issues = useSelector(({ recurrentIssues }) => recurrentIssues)
   const user = useSelector(({ user }) => user)
   const session = useSelector(({ login }) => login)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const [geolocation, setLocation] = useState()
   const [form, setForm] = useState({})
   const [listRequests, setList] = useState()
@@ -58,7 +59,7 @@ const RequestForm = ({ location }) => {
     user &&
       setForm({
         ...form,
-        irrigator_code: user.code,
+        irrigator_code: codeActive,
         type: 'requestforattention',
         visitreport_data: { date: null }
       })
@@ -70,7 +71,7 @@ const RequestForm = ({ location }) => {
       location.state &&
       setForm({
         ...form,
-        irrigator_code: user.code || location.state.code,
+        irrigator_code: codeActive,
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })

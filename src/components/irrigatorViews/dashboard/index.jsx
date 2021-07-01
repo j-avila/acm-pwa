@@ -130,8 +130,9 @@ const Dashboard = props => {
               }}
             >
               <section>
-                <h1>{`${dashData.number_of_actions} Acciones`} ( {actions.water_flow} )</h1>
+                <h1>{`${dashData.number_of_actions} Acciones`}</h1>
               </section>
+              <footer>Caudal: {actions.water_flow}</footer>
             </Card>
           </>
         ) : (

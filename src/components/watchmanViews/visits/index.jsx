@@ -64,7 +64,7 @@ const AdminReports = () => {
       <VisitsWrapper>
         <Tabs selected={0}>
           <Panel title='Visitas'>
-            <List items={visits.reports} />
+            <List items={visits.reports} action={handleItem} />
             <Button
               onClick={() =>
                 history.push({

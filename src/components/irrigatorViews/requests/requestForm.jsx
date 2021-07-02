@@ -75,6 +75,7 @@ const RequestForm = ({ location }) => {
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })
+
   }, [user, roles, location])
 
   useEffect(() => {
@@ -82,7 +83,9 @@ const RequestForm = ({ location }) => {
   }, [issues])
 
   useEffect(() => {
+    //console.log(subjectSelect);  
     subjectSelect.length <= 1 && setForm({ ...form, subject: 'Otro' })
+
   }, [subjectSelect])
 
   useEffect(() => {
@@ -155,6 +158,23 @@ const RequestForm = ({ location }) => {
       setChannels(channelsList)
     }
   }, [session, user])
+
+  let listaopc = [];
+  if(listRequests){
+    const map = subjectSelect.map((res) =>{
+      if (res.hasOwnProperty('association_area')) {
+          if(res.association_area.id === form.association_area){
+            listaopc.push({
+              id: res.id,
+              subject: res.subject,
+              type: res.type
+            });
+          }
+      }
+    }) 
+  }  
+
+  console.log(listaopc);
 
   return (
     <UserWrapper pathName={location.state.name || 'Nueva Solicitud'}>
@@ -246,15 +266,23 @@ const RequestForm = ({ location }) => {
               </FormInput>
             )}
 
-          {location.state.type !== 'channelreport' &&
-            subjectSelect.length >= 1 && (
-              <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
-                <select
-                  onChange={e => setForm({ ...form, subject: e.target.value })}
-                >
-                  {subjectSelect.length >= 2 && (
-                    <option disabled selected>
-                      Selecciona un asunto recurrente
+            <FormInput label='Títulos Frecuentes' width='100%'>
+              <select
+                onChange={e => setForm({ ...form, subject: e.target.value })}
+              >
+                {subjectSelect.length >= 2 && (
+                  <option disabled selected>
+                    Selecciona un asunto recurrente
+                  </option>
+                )}
+                {subjectSelect.length <= 1 ? (
+                  <option value='Otro' selected>
+                    Otro
+                  </option>
+                ) : (
+                  listaopc.map((subject, index) => (
+                    <option key={index} value={subject.subject}>
+                      {subject.subject}
                     </option>
                   )}
                   {subjectSelect.length <= 1 ? (
@@ -273,20 +301,20 @@ const RequestForm = ({ location }) => {
             )}
 
           {(subjectSelect.length <= 1 || form.subject === 'Otro') && (
-            <FormInput label='Escriba su Título:'>
+            <FormInput label='Escriba un Título:'>
               <input
                 type='text'
                 name='nombre'
                 onChange={e =>
                   setForm({ ...form, otherSubject: e.target.value })
                 }
-                placeholder='Describa su solicitud brevemente por Título breve'
+                placeholder='Título breve'
               />
             </FormInput>
           )}
           <FormInput label='Breve Descripción'>
             <textarea
-              placeholder='Describe el problema o necesidad.'
+              placeholder='Describa brevemente lo colocado en el título.'
               cols='6'
               rows='6'
               onChange={e => setForm({ ...form, content: e.target.value })}

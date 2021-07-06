@@ -82,25 +82,40 @@ const RequestForm = ({ location }) => {
     issues.length >= 1 && setSubjects([...issues, { id: 0, subject: 'Otro' }])
   }, [issues])
 
-  useEffect(() => {
-    //console.log(subjectSelect);  
-    subjectSelect.length <= 1 && setForm({ ...form, subject: 'Otro' })
-
-  }, [subjectSelect])
 
   useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
     // checking for form validation
+      console.log(form);
     if (
       location.state.type === 'requestforattention' ||
       location.state.type === 'annotation'
     ) {
-      form.association_area &&
-        form.subject &&
-        form.content &&
-        form.content.length >= 30 &&
-        setValid(false)
-    } else if (location.state.type === 'visitreport') {
+
+      if(form.hasOwnProperty('subject')){
+        if(form.subject =="Otro"){
+          if(form.hasOwnProperty('otherSubject') && form.otherSubject.length > 10){
+            setValid(false)
+          }else{
+            setValid(true)
+          }
+        }else{
+          if(form.content.length < 30){
+            setValid(true)
+          }else{
+            form.association_area &&
+            form.subject &&
+            form.content &&
+            form.content.length >= 30 &&
+            setValid(false)
+          }
+        }
+      }
+
+    } else if (
+      location.state.type === 'channelreport' ||
+      location.state.type === 'visitreport'
+    ) {
       form.irrigator_code &&
         form.visitreport_data &&
         form.visitreport_data.date &&
@@ -116,6 +131,8 @@ const RequestForm = ({ location }) => {
         form.visitreport_data.date &&
         setValid(false)
     }
+
+
   }, [requests, form])
 
   useEffect(() => {
@@ -161,6 +178,7 @@ const RequestForm = ({ location }) => {
 
   let listaopc = [];
   if(listRequests){
+   // console.log(form.association_area);
     const map = subjectSelect.map((res) =>{
       if (res.hasOwnProperty('association_area')) {
           if(res.association_area.id === form.association_area){
@@ -174,7 +192,6 @@ const RequestForm = ({ location }) => {
     }) 
   }  
 
-  console.log(listaopc);
 
   return (
     <UserWrapper pathName={location.state.name || 'Nueva Solicitud'}>
@@ -224,9 +241,10 @@ const RequestForm = ({ location }) => {
                     <option key={index} value={option.id}>
                       {option.name}
                     </option>
-                  ))}
+                  ))}                
               </select>
             </FormInput>
+
           ) : (
             location.state.type !== 'channelreport' && (
               <>
@@ -249,6 +267,7 @@ const RequestForm = ({ location }) => {
               </>
             )
           )}
+        
 
           {!checkRole(session, 'irrigartor') &&
             (location.state.type === 'channelreport' ||
@@ -270,37 +289,27 @@ const RequestForm = ({ location }) => {
               <select
                 onChange={e => setForm({ ...form, subject: e.target.value })}
               >
-                {subjectSelect.length >= 2 && (
-                  <option disabled selected>
-                    Selecciona un asunto recurrente
-                  </option>
-                )}
-                {subjectSelect.length <= 1 ? (
-                  <option value='Otro' selected>
-                    Otro
-                  </option>
-                ) : (
+                <option selected>
+                  Selecciona un asunto recurrente
+                </option>                                    
+                {listaopc &&(
                   listaopc.map((subject, index) => (
                     <option key={index} value={subject.subject}>
                       {subject.subject}
                     </option>
-                  )}
-                  {subjectSelect.length <= 1 ? (
-                    <option value='Otro' selected>
-                      Otro
-                    </option>
-                  ) : (
-                    subjectSelect.map((subject, index) => (
-                      <option key={index} value={subject.subject}>
-                        {subject.subject}
-                      </option>
-                    ))
-                  )}
-                </select>
-              </FormInput>
-            )}
+                  ))
 
-          {(subjectSelect.length <= 1 || form.subject === 'Otro') && (
+                )}                           
+                <option value='Otro' >
+                  Otro
+                </option>                              
+              </select>
+            </FormInput>
+
+            
+          )}
+
+          {(form.subject === 'Otro') && (
             <FormInput label='Escriba un Título:'>
               <input
                 type='text'
@@ -312,6 +321,9 @@ const RequestForm = ({ location }) => {
               />
             </FormInput>
           )}
+
+
+
           <FormInput label='Breve Descripción'>
             <textarea
               placeholder='Describa brevemente lo colocado en el título.'

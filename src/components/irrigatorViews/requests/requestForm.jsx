@@ -100,7 +100,7 @@ const RequestForm = ({ location }) => {
             setValid(true)
           }
         }else{
-          if(form.content.length < 30){
+          if(form.content && form.content.length < 30){
             setValid(true)
           }else{
             form.association_area &&

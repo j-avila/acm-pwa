@@ -15,18 +15,25 @@ export const IrrigatorsWrapper = styled.div`
     max-width: 1000px;
   }
   .searchbar {
-    padding: 30px 50px;
+    width: 100%;
+    padding: 30px 0px;
     position: sticky;
-    max-width: 400px;
+    margin: 0 auto;
     top: 5vh;
     z-index: 9;
-    background: ${({ theme }) => theme.background};
-    i {
-      position: absolute;
-      top: 60%;
-      right: 15%;
-      padding: 0 8px;
+    div {
+      margin: 0 auto;
+      display: block;
+      max-width: 400px;
+      position: relative;
+      i {
+        position: absolute;
+        top: 40%;
+        right: 2%;
+        padding: 0 8px;
+      }
     }
+    background: ${({ theme }) => theme.background};
   }
   .filter {
     margin: 20px auto;

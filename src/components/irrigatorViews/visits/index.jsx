@@ -20,10 +20,13 @@ const Visits = () => {
     booked: [],
     done: []
   })
+  const user = useSelector(({ user }) => user)
 
   const handleItem = ({ id }) => {
     // alert(id)
-    history.push({ pathname: `/visitas/${id}`, state: { id: id } })
+    if(user.role.name != 'irrigator'){
+      history.push({ pathname: `/visitas/${id}`, state: { id: id } })
+    }
   }
 
   const handleModalAction = () => {
@@ -45,7 +48,7 @@ const Visits = () => {
           id: item.id,
           title: item.subject,
           subtitle: `Agendada para el: ${moment(item.createdAt).format(
-            'DD/MM/YYYY'
+            'DD/MM/YYYY HH:mm'
           )}`
         }))
 

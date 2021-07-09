@@ -13,6 +13,7 @@ import {
 } from '../../../store/actions/irrigator'
 import Select from 'react-select'
 import { getChannels } from '../../../store/actions/dashboard'
+import { removeDuplicates } from '../../hoc/utils'
 
 const Irrigators = () => {
   const history = useHistory()
@@ -24,6 +25,7 @@ const Irrigators = () => {
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
   const codeActive = useSelector(({ codeActive }) => codeActive)
   const [channels, setChannels] = useState([])
+  const user = useSelector(({ user }) => user)
 
   const handleItem = ({ id, code }) => {
     const detail = usersList.data.filter(i => i.code === id)
@@ -59,40 +61,45 @@ const Irrigators = () => {
   useEffect(() => {
     if (filter.name.length >= 4 || filter.channel >= 1) {
       dispatch(filterIrrigatorsList(0, 20, filter.name, filter.channel))
-    } else if (filter.name.length === 0 || !filter.channel) {
+    } else if (filter.name === '' || !filter.channel) {
       fetchIrrigators()
     }
   }, [filter])
 
   useEffect(() => {
+    genList(usersList.data)
+  }, [usersList.data])
+
+  useEffect(() => {
     if (channelsList.length >= 1) {
+      let channelsList = removeDuplicates(
+        user.assigned_irrigators,
+        item => item.channel
+      )
+
       let list = channelsList.map(channel => ({
-        label: channel.name,
-        value: channel.code
+        label: channel.channel_name,
+        value: channel.channel
       }))
       setChannels(list)
     }
   }, [channelsList])
 
-  useEffect(() => {
-    genList(usersList.data)
-  }, [usersList.data])
-
   return (
     <UserWrapper pathName='Regantes'>
       <IrrigatorsWrapper>
-        <center>
         <FormInput label='Buscar por Nombre:' className='searchbar'>
-          <input
-            value={filter.name}
-            onChange={e => setFilter({ ...filter, name: e.target.value })}
-          />
-          <i
-            className='fa fa-close'
-            onClick={() => setFilter({ ...filter, name: '' })}
-          />
+          <div>
+            <input
+              value={filter.name}
+              onChange={e => setFilter({ ...filter, name: e.target.value })}
+            />
+            <i
+              className='fa fa-close'
+              onClick={() => setFilter({ ...filter, name: '' })}
+            />
+          </div>
         </FormInput>
-        </center>
         <FormInput label='Filtrar por canal:' className='filter'>
           <Select
             id='select'

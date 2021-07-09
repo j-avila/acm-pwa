@@ -29,7 +29,7 @@ const ActionsIndex = () => {
           </p>
 
           <h1>Tienes</h1>
-          <h2>{`${actions.number_of_actions || 'No definido'} acciones`} ( {actions.water_flow} )</h2>
+          <h2>{`${actions.number_of_actions || 'No definido'} acciones`}<br/>( {actions.water_flow} )</h2>
         </Card>
       </ActionWrapper>
     </UserWrapper>

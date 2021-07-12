@@ -9,6 +9,8 @@ import { GhostLine } from '../../UI/ghostLoader'
 import moment from 'moment'
 import * as types from '../../../store/reducers/types'
 
+import OnlineStatus from '../../onlineStatus/onlineStatus'
+
 const Dashboard = props => {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -27,7 +29,9 @@ const Dashboard = props => {
   }, [code])
 
   return (
+    
     <UserWrapper>
+      <OnlineStatus />
       <Dash>
         {loading ? (
           <Card className='stat-card'>

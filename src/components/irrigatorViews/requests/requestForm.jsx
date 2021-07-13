@@ -173,8 +173,17 @@ const RequestForm = ({ location }) => {
         value: channel.channel
       }))
       setChannels(channelsList)
+    
+      if(channels && channels.length >= 1 ) {
+        setForm({ ...form, channel: channels[0].channel });
+      }
+
     }
+
   }, [session, user])
+
+
+
 
   let listaopc = [];
   if(listRequests){
@@ -191,7 +200,6 @@ const RequestForm = ({ location }) => {
       }
     }) 
   }  
-
 
   return (
     <UserWrapper pathName={location.state.name || 'Nueva Solicitud'}>
@@ -215,6 +223,7 @@ const RequestForm = ({ location }) => {
                   channels.map(channel => (
                     <option value={channel.value}>{channel.label}</option>
                   ))
+
                 ) : (
                   <option disabled selected>
                     No tienes canales asignados

@@ -12,13 +12,13 @@ develop_deploy:
     - npm install
     - CI=false npm run build
     - tar -czvf ./frontend_deploy.tar.gz ./build --exclude=".git"
-    - ssh-keyscan -t rsa $DEV_IP >> ~/.ssh/known_hosts
-    - ssh-add <(echo "$DEV_PRIVATE_KEY")
-    - ssh $DEVELOPER@$DEV_IP "rm -rf $DEV_PATH/*"
-    - scp ./frontend_deploy.tar.gz $DEVELOPER@$DEV_IP:$DEV_PATH/.
+    - ssh-keyscan -t rsa $DEVP_IP >> ~/.ssh/known_hosts
+    - ssh-add <(echo "$DEVP_PRIVATE_KEY")
+    - ssh $DEVELOPERP@$DEVP_IP "rm -rf $DEVP_PATH/*"
+    - scp ./frontend_deploy.tar.gz $DEVELOPERP@$DEVP_IP:$DEVP_PATH/.
     - rm -f ./frontend_deploy.tar.gz
-    - ssh $DEVELOPER@$DEV_IP "tar -xzvf $DEV_PATH/frontend_deploy.tar.gz -C $DEV_PATH/."
-    - ssh $DEVELOPER@$DEV_IP "rm -f $DEV_PATH/frontend_deploy.tar.gz"
-    - ssh $DEVELOPER@$DEV_IP "mv $DEV_PATH/build/* $DEV_PATH/."
-    - ssh $DEVELOPER@$DEV_IP "rm -rf $DEV_PATH/build"
+    - ssh $DEVELOPERP@$DEVP_IP "tar -xzvf $DEVP_PATH/frontend_deploy.tar.gz -C $DEVP_PATH/."
+    - ssh $DEVELOPERP@$DEVP_IP "rm -f $DEVP_PATH/frontend_deploy.tar.gz"
+    - ssh $DEVELOPERP@$DEVP_IP "mv $DEVP_PATH/build/* $DEVP_PATH/."
+    - ssh $DEVELOPERP@$DEVP_IP "rm -rf $DEVP_PATH/build"
     - echo "-Fin-"

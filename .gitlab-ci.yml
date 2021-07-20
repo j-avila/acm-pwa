@@ -9,6 +9,7 @@ develop_deploy:
   only:
     - dev
   script:
+    - echo "$DEVP_IP"
     - npm install
     - CI=false npm run build
     - tar -czvf ./frontend_deploy.tar.gz ./build --exclude=".git"

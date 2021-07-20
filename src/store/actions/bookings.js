@@ -11,7 +11,7 @@ export const fetchRequests = (
   const counter = async () =>
     await axios
       .get(
-        `https://api.acanalmaule.cl/event-books/count?type=requestforattention&closed=${closed}`,
+        `${apiUrl}/event-books/count?type=requestforattention&closed=${closed}`,
         getAuth()
       )
       .then(({ data }) => data)

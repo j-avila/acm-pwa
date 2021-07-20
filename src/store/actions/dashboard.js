@@ -9,7 +9,7 @@ export const fetchDashboard = (code, role) => async dispatch => {
 
   const counter = async () =>
     await axios
-      .get(`https://api.acanalmaule.cl/irrigators/count`, getAuth())
+      .get(`${apiUrl}/irrigators/count`, getAuth())
       .then(({ data }) => data)
   dispatch({ type: type.LOADING, load: true })
   const irrigatorsCount = code ? 0 : await counter()
@@ -31,7 +31,7 @@ export const fetchDashboard = (code, role) => async dispatch => {
 
 // get channels list
 export const getChannels = () => async dispatch => {
-  const url = `https://api.acanalmaule.cl/channels?_sort=name:asc&_limit=200`
+  const url = `${apiUrl}/channels?_sort=name:asc&_limit=200`
 
   return axios
     .get(url, getAuth())

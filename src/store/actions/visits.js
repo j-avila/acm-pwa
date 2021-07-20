@@ -4,7 +4,7 @@ import * as type from '../reducers/types'
 
 export const fetchVisits = code => async dispatch => {
   const url = code
-    ? `${apiUrl}/event-books?type=visitreport&irrigator_code=/${code}`
+    ? `${apiUrl}/event-books?type=visitreport&irrigator_code=${code}`
     : `${apiUrl}/event-books?type=visitreport`
   dispatch({ type: type.LOADING, load: true })
   return axios

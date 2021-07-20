@@ -20,11 +20,11 @@ const OnlineStatus = props => {
       }
     }, [])
 
-  return (
+  return !online ? (
     <div>
-      Navegador <b>{online ? 'Con Acceso' : 'Sin Acceso'}</b> a Internet  
+      Navegador <b>Sin Acceso</b> a Internet  
     </div>
-  )
+  ) : ""
 }
 
 export default OnlineStatus

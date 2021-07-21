@@ -47,7 +47,7 @@ const Visits = () => {
         arr.map(item => ({
           id: item.id,
           title: item.subject,
-          subtitle: `Agendada para el: ${moment(item.createdAt).format(
+          subtitle: `Agendada para el: ${moment(item.visitreport_data.date).format(
             'DD/MM/YYYY HH:mm'
           )}`
         }))

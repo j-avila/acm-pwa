@@ -28,12 +28,10 @@ export const setMessage = form => async dispatch => {
   form.file && formdata.append('files.attached', form.file, form.file.name)
   form.data && formdata.append('data', JSON.stringify(form.data))
 
-  // console.log('form to send:', JSON.stringify(form))
   dispatch({ type: type.LOADING_MESSAGE, load: true })
   return axios
     .post(url, formdata, getAuth())
     .then(({ data }) => {
-      // console.log(data)
       socket.emit('message:chat', data)
       dispatch({
         type: type.REQUEST_FORM,
@@ -48,7 +46,6 @@ export const setMessage = form => async dispatch => {
 }
 
 export const getIssues = area => async dispatch => {
-  console.log(area)
   const url = `${apiUrl}/event-book-options?type=${area}`
   return axios
     .get(url, getAuth())

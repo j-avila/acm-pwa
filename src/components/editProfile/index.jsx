@@ -35,7 +35,6 @@ const EditProfile = props => {
 
   // enconde img to base64
   const handleImg = async e => {
-    console.log(e)
     let file = e.target.files[0]
     const reader = new FileReader()
 

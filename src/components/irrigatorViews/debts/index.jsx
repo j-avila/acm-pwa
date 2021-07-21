@@ -35,7 +35,7 @@ const Debts = () => {
   const handlePayed = ({ id }) => {
     // alert(id)
     const debtDetail = payed.filter(i => i.id === id)
-    console.log(debtDetail)
+
     history.push({
       pathname: `/deudas/${id}`,
       state: { type: 'payed', data: debtDetail[0] }

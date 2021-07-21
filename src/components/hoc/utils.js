@@ -10,7 +10,6 @@ export const socket = io('wss://api.acanalmaule.cl/')
 export const checkRole = (session, role = 'irrigator') => {
   if (session) {
     const output = session.hasOwnProperty('role') && session.role.name === role
-    // console.log(output)
     return output
   } else {
     window.location.replace('/')
@@ -27,7 +26,6 @@ export const scrollTo = id => {
 }
 
 export const removeDuplicates = (data, key) => {
-  console.log(data)
   if (data) {
     return [...new Map(data.map(item => [key(item), item])).values()]
   } else {

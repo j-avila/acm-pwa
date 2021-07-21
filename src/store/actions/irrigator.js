@@ -95,9 +95,6 @@ export const updateCoords = (id, coords) => async dispatch => {
 
   return axios
     .put(url, coords, getAuth())
-    .then(({ data }) => {
-      console.log(data)
-    })
     .catch(err => {
       dispatch({ type: type.LOADING, load: false })
       dispatch({ type: type.ERROR, error: err })
@@ -109,7 +106,6 @@ export const getHistory = code => async dispatch => {
   axios
     .get(url, getAuth())
     .then(({ data }) => {
-      console.log(data)
       dispatch({ type: type.GET_HISTORY, history: data })
     })
     .catch(err => {

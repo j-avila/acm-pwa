@@ -86,7 +86,6 @@ const RequestForm = ({ location }) => {
   useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
     // checking for form validation
-      console.log(form);
     if (
       location.state.type === 'requestforattention' ||
       location.state.type === 'annotation'
@@ -187,7 +186,6 @@ const RequestForm = ({ location }) => {
 
   let listaopc = [];
   if(listRequests){
-   // console.log(form.association_area);
     const map = subjectSelect.map((res) =>{
       if (res.hasOwnProperty('association_area')) {
           if(res.association_area.id === form.association_area){

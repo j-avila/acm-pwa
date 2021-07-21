@@ -19,7 +19,6 @@ const Requests = props => {
   const [closedList, setClosedList] = useState([])
 
   const handleItem = ({ id }) => {
-    console.log(id)
     // let closed = closedList.filter(i => i.id === id)[0].closed
     history.push({
       pathname: `/solicitudes/${id}`,

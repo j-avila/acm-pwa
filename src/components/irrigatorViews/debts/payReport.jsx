@@ -49,7 +49,6 @@ const PayReport = () => {
   }
 
   const handleForm = e => {
-    console.log(form)
     dispatch(sendPay(form))
   }
 

@@ -8,7 +8,6 @@ const GATracker = props => {
 
   useEffect(() => {
     ReactGA.pageview(location)
-    console.log('path', location)
   }, [location])
 
   return children

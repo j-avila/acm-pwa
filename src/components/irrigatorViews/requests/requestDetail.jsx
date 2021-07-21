@@ -30,12 +30,9 @@ const RequestDetail = props => {
   const checkTransfered = items => {
     if (items) {
       const last = items.length
-      console.log('last item:', items[last - 1])
 
       if (last >= 1) {
         let transferedMsg = items[last - 1]
-
-        console.log('trans msg', transferedMsg)
 
         if (transferedMsg.hasOwnProperty('transferred_to')) {
           transferedMsg.transferred_to.id !== loggedUser.association_area.id &&

@@ -32,7 +32,6 @@ const Register = props => {
             <input
               type={visiblePassword ? 'text' : 'password'}
               style={{ display: 'inline-block', width: 'calc(88% - 36px)' }}
-              onChange={e => console.log(e)}
             />
             <i
               className={`fas ${visiblePassword ? 'fa-eye-slash' : 'fa-eye'}`}

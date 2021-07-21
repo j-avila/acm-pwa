@@ -37,7 +37,6 @@ const Header = props => {
   }
 
   useEffect(() => {
-    // console.log(user)
     setUser()
   }, [user])
 

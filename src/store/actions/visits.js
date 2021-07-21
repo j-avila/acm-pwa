@@ -31,7 +31,6 @@ export const fetchReports = () => async dispatch => {
 
   axios.all([reports, binnacles], getAuth()).then(
     axios.spread((...resp) => {
-      console.log(resp)
       dispatch({
         type: type.GET_REPORTS,
         reports: { reports: resp[0].data, binnacles: resp[1].data }

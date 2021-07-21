@@ -34,7 +34,6 @@ const VistisForm = () => {
 
   // enconde img to base64
   const handleImg = e => {
-    console.log('file to upload:', e.target.files[0])
     let file = e.target.files[0]
 
     if (file) {
@@ -51,7 +50,6 @@ const VistisForm = () => {
 
   const handleForm = e => {
     e.preventDefault()
-    console.log(form)
     dispatch(createVisitRequest(form))
   }
 

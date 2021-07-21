@@ -36,7 +36,6 @@ export const OnBoarding = props => {
   const handleAudio = (index, type) => {
     const itemId = `desc-${index}`
     const item = document.getElementById(itemId)
-    console.log(item)
     // setSlidePos(index)
     return item[type]()
   }

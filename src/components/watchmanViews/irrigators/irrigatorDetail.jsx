@@ -65,7 +65,7 @@ const IrrigatorDetail = props => {
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
-        console.log(pos)
+
         const ubication = {
           coordinates: {
             accuracy: pos.coords.accuracy,

@@ -3,7 +3,6 @@ import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
 export const createProfile = (form, role) => async dispatch => {
-  console.log(role)
   const url =
     role === 'irrigator'
       ? `${apiUrl}/create-irrigator-profiles`

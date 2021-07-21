@@ -38,7 +38,6 @@ const RequestForm = () => {
 
   const getFile = event => {
     const fileUploaded = event.target.files[0]
-    console.log(fileUploaded)
   }
 
   const subjectSelect = [
@@ -50,7 +49,6 @@ const RequestForm = () => {
 
   // enconde img to base64
   const handleImg = e => {
-    console.log('file to upload:', e.target.files[0])
     let file = e.target.files[0]
 
     if (file) {

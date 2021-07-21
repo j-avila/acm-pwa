@@ -62,12 +62,9 @@ export const sendPay = form => async dispatch => {
     formdata.append('files.attached', form.attachment, form.attachment.name)
   form.data && formdata.append('data', JSON.stringify(form.data))
 
-  console.log('form to send:', JSON.stringify(form))
-
   return axios
     .post(url, formdata, getAuth())
-    .then(({ data }) => {
-      console.log(data)
+    .then(() => {
       dispatch({
         type: type.NOTIFICATIONS,
         notification: { message: '¡Pago enviado con exito!' }

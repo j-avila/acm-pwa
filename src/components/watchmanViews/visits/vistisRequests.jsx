@@ -32,7 +32,6 @@ const VistisForm = () => {
 
   const getFile = event => {
     const fileUploaded = event.target.files[0]
-    console.log(fileUploaded)
   }
 
   const subjectSelect = [
@@ -44,7 +43,6 @@ const VistisForm = () => {
 
   // enconde img to base64
   const handleImg = e => {
-    console.log('file to upload:', e.target.files[0])
     let file = e.target.files[0]
 
     if (file) {
@@ -61,7 +59,7 @@ const VistisForm = () => {
 
   const handleForm = async e => {
     e.preventDefault()
-    console.log(form)
+
     await dispatch(createVisitRequest(form))
     history.push('/visitas')
   }

@@ -22,7 +22,6 @@ const Login = props => {
           display='block'
           margin='4rem auto'
           background='indigoGradient'
-          onClick={() => console.log('ingresar')}
         >
           <Link to='/ingreso'>Ingresar</Link>
         </Button>

@@ -32,12 +32,10 @@ const DebtForm = () => {
 
   const getFile = event => {
     const fileUploaded = event.target.files[0]
-    console.log(fileUploaded)
   }
 
   // enconde img to base64
   const handleImg = e => {
-    console.log('file to upload:', e.target.files[0])
     let file = e.target.files[0]
 
     if (file) {
@@ -53,7 +51,6 @@ const DebtForm = () => {
   }
 
   const handleForm = e => {
-    // console.log(form)
     dispatch(createDebtRequest(form))
   }
 

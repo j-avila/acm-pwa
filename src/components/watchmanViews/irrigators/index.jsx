@@ -29,7 +29,7 @@ const Irrigators = () => {
 
   const handleItem = ({ id, code }) => {
     const detail = usersList.data.filter(i => i.code === id)
-    // console.log(detail)
+
     history.push({
       pathname: `/regante/${id}`,
       state: { type: 'notpayed', data: detail[0] }

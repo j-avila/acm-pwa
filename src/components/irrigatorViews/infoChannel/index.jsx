@@ -25,7 +25,6 @@ const InfoChannel = props => {
     const userChannel = user.acm.channel
 
     const result = acmChannel.filter(channel => channel.channel === userChannel)
-    console.log(result)
     setDailyFlow(
       result.length >= 1 && result[0]
         ? result[0]

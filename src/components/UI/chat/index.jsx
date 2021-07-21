@@ -42,7 +42,6 @@ const ChatCard = props => {
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
-        console.log(pos)
         setMessage({
           data: {
             ...messageObj.data,
@@ -81,14 +80,12 @@ const ChatCard = props => {
 
   const getFile = event => {
     const fileUploaded = event.target.files[0]
-    console.log(fileUploaded)
   }
 
   // enconde img to base64
   const handleImg = e => {
     let reader = new FileReader()
     let file = e.target.files[0]
-    // console.log('file to upload:', file)
 
     reader.onloadend = () => {
       setPreview(reader.result)
@@ -97,8 +94,6 @@ const ChatCard = props => {
         file: file
       })
     }
-
-    console.log(messageObj.file)
 
     openActions(false)
     reader.readAsDataURL(file)
@@ -147,8 +142,6 @@ const ChatCard = props => {
 
   useEffect(() => {
     roles && genRolesList()
-    // console.log('rolelist', roles)
-    // console.log('current area:', loggedUser.association_area.id)
   }, [roles])
 
   useEffect(() => {
@@ -159,7 +152,6 @@ const ChatCard = props => {
       items[last] &&
       items[last].hasOwnProperty('transferred_to')
     ) {
-      console.log('this is the last', items[last])
       loggedUser.association_area.code !== items[last].transferred_to.code &&
         history.push('/solicitudes')
     }
@@ -175,7 +167,6 @@ const ChatCard = props => {
 
       if (last >= 1 && isUserLast) {
         setValid(!isUserLast)
-        // console.log(isUserLast)
         setValid(results.length >= 2)
       } else {
         setValid(true)

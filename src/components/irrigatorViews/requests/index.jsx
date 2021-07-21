@@ -39,7 +39,7 @@ const Requests = props => {
         .map(item => ({
           id: item.id,
           title: item.subject,
-          subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
+          subtitle: `Creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
         }))
 
       setOpenList(formatted)
@@ -52,7 +52,7 @@ const Requests = props => {
           id: item.id,
           title: item.subject,
           closed: item.closed,
-          subtitle: `creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
+          subtitle: `Creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
         }))
       setClosedList(formatted)
     }

@@ -58,7 +58,7 @@ const VisitDetail = props => {
               </p>
               <p>
                 <strong>Hora: </strong>
-                {moment(details.visitreport_data.date).format('HH:HH')}
+                {moment(details.visitreport_data.date).format('HH:mm')}
               </p>
               <p>
                 <strong>Visitante: </strong>
@@ -91,7 +91,7 @@ const VisitDetail = props => {
                     <strong>
                       Publicado el:
                       {moment(message.published_at).format(
-                        'DD/MM/YYYY - HH:HH'
+                        'DD/MM/YYYY - HH:mm'
                       )}
                     </strong>
                   </p>

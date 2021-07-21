@@ -78,7 +78,7 @@ const InfoChannel = props => {
                         'DD/MM/YYYY'
                       )}`}</strong>
                       <strong>{`hora: ${moment(item.date).format(
-                        'HH'
+                        'HH:mm'
                       )}`}</strong>
                     </div>
                   </span>

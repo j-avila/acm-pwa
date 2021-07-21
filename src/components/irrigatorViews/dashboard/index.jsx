@@ -96,9 +96,7 @@ const Dashboard = props => {
                 <strong>Próxima visita programada:</strong>
                 <h1>
                   {dashData.next_visit
-                    ? moment(dashData.next_visit.visitreport_data.date).format(
-                        'DD MMMM YYYY - HH:HH'
-                      )
+                    ? moment(dashData.next_visit.visitreport_data.date).format('DD/MM/YYYY HH:mm')
                     : 'Sin definir'}
                 </h1>
               </section>

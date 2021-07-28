@@ -112,7 +112,6 @@ const RequestForm = ({ location }) => {
       }
 
     } else if (
-      location.state.type === 'channelreport' ||
       location.state.type === 'visitreport'
     ) {
       form.irrigator_code &&
@@ -186,7 +185,7 @@ const RequestForm = ({ location }) => {
 
   let listaopc = [];
   if(listRequests){
-    const map = subjectSelect.map((res) =>{
+    subjectSelect.forEach((res) => {
       if (res.hasOwnProperty('association_area')) {
           if(res.association_area.id === form.association_area){
             listaopc.push({
@@ -196,8 +195,8 @@ const RequestForm = ({ location }) => {
             });
           }
       }
-    }) 
-  }  
+    })
+  }
 
   return (
     <UserWrapper pathName={location.state.name || 'Nueva Solicitud'}>
@@ -236,9 +235,14 @@ const RequestForm = ({ location }) => {
               width='100%'
             >
               <select
-                onChange={e =>
-                  setForm({ ...form, association_area: e.target.value })
-                }
+                onChange={e => {
+                  const subjects = subjectSelect.filter(item=>item.association_area && item.association_area.id==e.target.value)
+                  if(!subjects.length){
+                    setForm({ ...form, association_area: e.target.value, subject: 'Otro', otherSubject:'' })
+                  }else {
+                    setForm({ ...form, association_area: e.target.value, subject: '', otherSubject:'' })
+                  }
+                }}
               >
                 <option disabled selected>
                   Selecciona una opción
@@ -296,7 +300,7 @@ const RequestForm = ({ location }) => {
               <select
                 onChange={e => setForm({ ...form, subject: e.target.value })}
               >
-                <option selected>
+                <option selected={(form.subject === '')?'selected':''}>
                   Selecciona un asunto recurrente
                 </option>                                    
                 {listaopc &&(
@@ -307,13 +311,11 @@ const RequestForm = ({ location }) => {
                   ))
 
                 )}                           
-                <option value='Otro' >
+                <option value='Otro' selected={(form.subject === 'Otro')?'selected':''}>
                   Otro
                 </option>                              
               </select>
             </FormInput>
-
-            
 
           {(form.subject === 'Otro') && (
             <FormInput label='Escriba un Título:'>
@@ -324,6 +326,7 @@ const RequestForm = ({ location }) => {
                   setForm({ ...form, otherSubject: e.target.value })
                 }
                 placeholder='Título breve'
+                value={form.otherSubject}
               />
             </FormInput>
           )}

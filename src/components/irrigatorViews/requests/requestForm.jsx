@@ -45,11 +45,18 @@ const RequestForm = ({ location }) => {
     if (notification.type === 'geolocation') {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
     } else {
-      dispatch({ type: type.NOTIFICATIONS, notification: false })
-      history.push({
-        pathname: `/solicitudes/${requests.requestDetail.id}`,
-        state: { id: requests.requestDetail.id }
-      })
+      if(location.state.type === 'visitreport'){
+        dispatch({ type: type.NOTIFICATIONS, notification: false })
+        history.push({
+          pathname: `/visitas`
+        })
+      }else{
+        dispatch({ type: type.NOTIFICATIONS, notification: false })
+        history.push({
+          pathname: `/solicitudes/${requests.requestDetail.id}`,
+          state: { id: requests.requestDetail.id }
+        })
+      }
     }
   }
 
@@ -84,9 +91,8 @@ const RequestForm = ({ location }) => {
     /* Setear en caso de no venir ningun asunto a Otro */
     const subjects = issues.filter(item=>item.association_area && item.association_area.id==roles[0].id)
     if(!subjects.length && (location.state.type ==='visitreport' || location.state.type === 'channelreport') ){
-      setForm({ irrigator_code: location.state.code, subject: 'Otro', otherSubject:'' })
+      setForm({ irrigator_code: location.state.code, subject: 'Otro', otherSubject:'', type:location.state.type })
     }
-
   }, [issues])
 
 

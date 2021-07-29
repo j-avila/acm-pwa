@@ -59,7 +59,7 @@ const RequestForm = ({ location }) => {
     user &&
       setForm({
         ...form,
-        irrigator_code: codeActive,
+        irrigator_code: location.state.code,
         type: 'requestforattention',
         visitreport_data: { date: null }
       })
@@ -71,7 +71,7 @@ const RequestForm = ({ location }) => {
       location.state &&
       setForm({
         ...form,
-        irrigator_code: codeActive,
+        irrigator_code: location.state.code,
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })
@@ -80,6 +80,13 @@ const RequestForm = ({ location }) => {
 
   useEffect(() => {
     issues.length >= 1 && setSubjects([...issues, { id: 0, subject: 'Otro' }])
+
+    /* Setear en caso de no venir ningun asunto a Otro */
+    const subjects = issues.filter(item=>item.association_area && item.association_area.id==roles[0].id)
+    if(!subjects.length && (location.state.type ==='visitreport' || location.state.type === 'channelreport') ){
+      setForm({ irrigator_code: location.state.code, subject: 'Otro', otherSubject:'' })
+    }
+
   }, [issues])
 
 

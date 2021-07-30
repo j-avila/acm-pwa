@@ -35,6 +35,7 @@ const Requests = props => {
 
     if (requests && requests.count >= 1) {
       formatted = requests.data
+        .filter(i => i.irrigator_code === code)
         .filter(i => i.closed === false)
         .map(item => ({
           id: item.id,
@@ -43,10 +44,9 @@ const Requests = props => {
         }))
 
       setOpenList(formatted)
-    }
 
-    if (requests && requests.count >= 1) {
       formatted = requests.data
+        .filter(i => i.irrigator_code === code)
         .filter(i => i.closed === true)
         .map(item => ({
           id: item.id,

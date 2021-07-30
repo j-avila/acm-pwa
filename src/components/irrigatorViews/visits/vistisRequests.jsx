@@ -20,6 +20,7 @@ const VistisForm = () => {
   const visits = useSelector(({ visits }) => visits)
   const notification = useSelector(({ notifications }) => notifications)
   const user = useSelector(({ user }) => user)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({})
   const [visitsList, setList] = useState()
@@ -59,7 +60,7 @@ const VistisForm = () => {
     } else {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
       history.push({
-        pathname: `/visitas`
+        pathname: `/solicitudes`
       })
     }
   }
@@ -69,7 +70,7 @@ const VistisForm = () => {
     user &&
       setForm({
         ...form,
-        irrigator_code: user.code,
+        irrigator_code: codeActive || user.code,
         type: 'requestforattention',
         subject: 'Solicitud de Visita',
         association_area:

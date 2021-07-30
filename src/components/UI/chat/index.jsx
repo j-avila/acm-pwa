@@ -274,7 +274,7 @@ const ChatCard = props => {
         <Message content={preview ? '1fr 9fr' : '1fr'}>
           {actions && (
             <ActionArea>
-              {loggedUser.user && !checkRole(loggedUser.user) && (
+              {loggedUser.user && !checkRole(loggedUser.user) && props.type.includes('requestforattention') && (
                 <>
                   <span>
                     <Button
@@ -292,7 +292,7 @@ const ChatCard = props => {
                     >
                       <i className='fas fa-calendar' />
                     </Button>
-                    Agendar Cita
+                    Agendar Visita
                   </span>
                   {props.route.includes('solicitudes') && (
                     <span>

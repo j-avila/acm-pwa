@@ -23,6 +23,7 @@ const PayReport = () => {
   const notification = useSelector(({ notifications }) => notifications)
   const banksInfo = useSelector(({ banksInfo }) => banksInfo)
   const user = useSelector(({ user }) => user)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const [preview, setPreview] = useState()
   const [form, setForm] = useState({ attachment: '', data: {} })
   const [valid, setValid] = useState()
@@ -87,7 +88,7 @@ const PayReport = () => {
         ...form,
         data: {
           ...form.data,
-          code: user.code,
+          code: codeActive || user.code,
           year: moment().format('YYYY'),
           stock_type: 0
         }
@@ -113,6 +114,7 @@ const PayReport = () => {
           <FormInput label='Fecha de pago'>
             <input
               type='date'
+              max={moment().format('YYYY-MM-DD')}
               onChange={e =>
                 setForm({
                   ...form,

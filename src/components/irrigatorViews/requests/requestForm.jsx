@@ -13,6 +13,7 @@ import { useHistory } from 'react-router'
 import { checkRole, removeDuplicates } from '../../hoc/utils'
 import Select from 'react-select'
 import { getIssues } from '../../../store/actions/requests'
+import moment from 'moment'
 
 const RequestForm = ({ location }) => {
   const dispatch = useDispatch()
@@ -299,6 +300,7 @@ const RequestForm = ({ location }) => {
               <FormInput label='Fecha de la visita'>
                 <input
                   type='datetime-local'
+                  min={moment().format('YYYY-MM-DDTHH:mm:ss')}
                   onChange={e =>
                     setForm({
                       ...form,

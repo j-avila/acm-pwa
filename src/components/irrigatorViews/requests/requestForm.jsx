@@ -66,7 +66,7 @@ const RequestForm = ({ location }) => {
     user &&
       setForm({
         ...form,
-        irrigator_code: location.state.code,
+        irrigator_code: location.state.code || codeActive,
         type: 'requestforattention',
         visitreport_data: { date: null }
       })
@@ -78,7 +78,7 @@ const RequestForm = ({ location }) => {
       location.state &&
       setForm({
         ...form,
-        irrigator_code: location.state.code,
+        irrigator_code: location.state.code || codeActive,
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })

@@ -13,6 +13,7 @@ const Requests = props => {
   const dispatch = useDispatch()
   const history = useHistory()
   const requests = useSelector(({ requests }) => requests.open)
+  const requestsClosed = useSelector(({ requests }) => requests.closed)
   const count = useSelector(({ requests }) => requests.count)
   const code = useSelector(({ codeActive }) => codeActive)
   const [openList, setOpenList] = useState([])
@@ -27,7 +28,11 @@ const Requests = props => {
   }
 
   useEffect(() => {
-    code && dispatch(fetchRequests(code))
+    if(code){
+
+      dispatch(fetchRequests(code))
+      dispatch(fetchRequests(code,0,20,true))
+    }
   }, [code])
 
   useEffect(() => {
@@ -45,7 +50,7 @@ const Requests = props => {
 
       setOpenList(formatted)
 
-      formatted = requests.data
+      formatted = requestsClosed.data
         .filter(i => i.irrigator_code === code)
         .filter(i => i.closed === true)
         .map(item => ({

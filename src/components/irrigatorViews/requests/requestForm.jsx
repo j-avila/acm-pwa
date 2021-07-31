@@ -68,8 +68,7 @@ const RequestForm = ({ location }) => {
       setForm({
         ...form,
         irrigator_code: location.state.code || codeActive,
-        type: 'requestforattention',
-        visitreport_data: { date: null }
+        type: 'requestforattention'
       })
   }, [])
 
@@ -300,7 +299,8 @@ const RequestForm = ({ location }) => {
               <FormInput label='Fecha de la visita'>
                 <input
                   type='datetime-local'
-                  min={moment().format('YYYY-MM-DDTHH:mm:ss')}
+                  min={moment().format('YYYY-MM-DDTHH:mm')}
+                  max='2100-01-01T00:00'
                   onChange={e =>
                     setForm({
                       ...form,

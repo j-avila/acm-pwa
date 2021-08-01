@@ -23,12 +23,13 @@ const Settings = () => {
   }
 
   useEffect(() => {
-    user.hasOwnProperty('profile') &&
-      user.profile.hasOwnProperty('app_setting') &&
-      setTheme({
-        size: user.profile.app_setting.size || '13px',
-        theme: user.profile.app_setting.theme || 0
-      })
+    user &&
+    user.profile &&
+    user.profile.app_setting &&
+    setTheme({
+      size: user.profile.app_setting.size || '13px',
+      theme: user.profile.app_setting.theme || 0
+    })
   }, [user])
 
   return (

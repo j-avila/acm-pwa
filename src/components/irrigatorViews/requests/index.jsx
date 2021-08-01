@@ -42,7 +42,6 @@ const Requests = props => {
         title: item.subject,
         subtitle: `Creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
       }))
-      console.log('open', formatted)
       setOpenList(formatted)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,7 +58,6 @@ const Requests = props => {
         subtitle: `Creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
       }))
 
-      console.log('closed', closedFormated)
       setClosedList(closedFormated)
     }
   }, [requests.closed])

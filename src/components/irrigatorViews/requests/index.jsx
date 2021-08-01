@@ -48,8 +48,6 @@ const Requests = props => {
   }, [requests.open])
 
   useEffect(() => {
-    requests.closed && console.log('closed has done some shit', requests.closed)
-
     if (requests.closed && requests.closed.data.length >= 1) {
       let closedFormated = requests.closed.data.map(item => ({
         id: item.id,

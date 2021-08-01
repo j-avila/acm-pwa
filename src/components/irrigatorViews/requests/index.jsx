@@ -12,15 +12,13 @@ import { Wrapper } from './styles'
 const Requests = props => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const requests = useSelector(({ requests }) => requests.open)
-  const requestsClosed = useSelector(({ requests }) => requests.closed)
-  const count = useSelector(({ requests }) => requests.count)
+  const requests = useSelector(({ requests }) => requests)
+  // const count = useSelector(({ requests }) => requests.count)
   const code = useSelector(({ codeActive }) => codeActive)
   const [openList, setOpenList] = useState([])
   const [closedList, setClosedList] = useState([])
 
   const handleItem = ({ id }) => {
-    // let closed = closedList.filter(i => i.id === id)[0].closed
     history.push({
       pathname: `/solicitudes/${id}`,
       state: { id: id }
@@ -28,48 +26,63 @@ const Requests = props => {
   }
 
   useEffect(() => {
+    dispatch(fetchRequests(code))
+    dispatch(fetchRequests(code, 1, 20, true))
+  }, [])
+
+  useEffect(() => {
     code && dispatch(fetchRequests(code))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    code && dispatch(fetchRequests(code, 1, 20, true))
   }, [code])
 
   useEffect(() => {
-    let formatted
-
-    if (requests.open && requests.count >= 1) {
-      formatted = requests.data
-        .filter(i => i.irrigator_code === code)
-        .filter(i => i.closed === false)
-        .map(item => ({
-          id: item.id,
-          title: item.subject,
-          subtitle: `Creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
-        }))
-
+    if (requests.open && requests.open.data.length >= 1) {
+      let formatted = requests.open.data.map(item => ({
+        id: item.id,
+        title: item.subject,
+        subtitle: `Creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
+      }))
+      console.log('open', formatted)
       setOpenList(formatted)
-
-    if (requests.closed && requests.count >= 1) {
-      formatted = requests.data
-        .filter(i => i.closed === true)
-        .map(item => ({
-          id: item.id,
-          title: item.subject,
-          closed: item.closed,
-          subtitle: `Creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
-        }))
-      setClosedList(formatted)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requests])
+  }, [requests.open])
+
+  useEffect(() => {
+    requests.closed && console.log('closed has done some shit', requests.closed)
+
+    if (requests.closed && requests.closed.data.length >= 1) {
+      let closedFormated = requests.closed.data.map(item => ({
+        id: item.id,
+        title: item.subject,
+        closed: item.closed,
+        subtitle: `Creada el: ${moment(item.createdAt).format('DD/MM/YYYY')}`
+      }))
+
+      console.log('closed', closedFormated)
+      setClosedList(closedFormated)
+    }
+  }, [requests.closed])
 
   return (
     <UserWrapper pathName='Solicitudes de Atención'>
       <Wrapper>
         <Tabs selected={0}>
           <Panel title='Abiertas'>
-            <List items={openList} action={handleItem} count={count} listed />
+            <List
+              items={openList}
+              action={handleItem}
+              count={openList.count}
+              listed
+            />
           </Panel>
           <Panel title='Cerradas'>
-            <List items={closedList} action={handleItem} count={count} listed />
+            <List
+              items={closedList}
+              action={handleItem}
+              count={closedList.count}
+              listed
+            />
           </Panel>
         </Tabs>
         <Button

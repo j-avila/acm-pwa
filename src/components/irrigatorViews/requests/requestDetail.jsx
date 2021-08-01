@@ -62,7 +62,8 @@ const RequestDetail = props => {
         description: request.details.event.content,
         messages: request.details.messages,
         user: request.details.event.irrigator,
-        area: request.details.event.association_area.name
+        area: request.details.event.association_area.name,
+        type: request.details.event.type
       })
     checkTransfered(reqDetails.messages)
   }, [request.details])
@@ -107,6 +108,7 @@ const RequestDetail = props => {
           items={reqDetails.messages}
           msgAction={handleForm}
           chatBar={!reqDetails.closed}
+          type={reqDetails.type}
           route={location.pathname}
           type={location.state.type}
         />

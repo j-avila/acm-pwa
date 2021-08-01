@@ -13,6 +13,7 @@ import { useHistory } from 'react-router'
 import { checkRole, removeDuplicates } from '../../hoc/utils'
 import Select from 'react-select'
 import { getIssues } from '../../../store/actions/requests'
+import moment from 'moment'
 
 const RequestForm = ({ location }) => {
   const dispatch = useDispatch()
@@ -66,9 +67,8 @@ const RequestForm = ({ location }) => {
     user &&
       setForm({
         ...form,
-        irrigator_code: location.state.code,
-        type: 'requestforattention',
-        visitreport_data: { date: null }
+        irrigator_code: location.state.code || codeActive,
+        type: 'requestforattention'
       })
   }, [])
 
@@ -78,7 +78,7 @@ const RequestForm = ({ location }) => {
       location.state &&
       setForm({
         ...form,
-        irrigator_code: location.state.code,
+        irrigator_code: location.state.code || codeActive,
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })
@@ -299,6 +299,8 @@ const RequestForm = ({ location }) => {
               <FormInput label='Fecha de la visita'>
                 <input
                   type='datetime-local'
+                  min={moment().format('YYYY-MM-DDTHH:mm')}
+                  max='2100-01-01T00:00'
                   onChange={e =>
                     setForm({
                       ...form,

@@ -13,6 +13,7 @@ const Requests = props => {
   const dispatch = useDispatch()
   const history = useHistory()
   const requests = useSelector(({ requests }) => requests.open)
+  const requestsClosed = useSelector(({ requests }) => requests.closed)
   const count = useSelector(({ requests }) => requests.count)
   const code = useSelector(({ codeActive }) => codeActive)
   const [openList, setOpenList] = useState([])
@@ -36,6 +37,7 @@ const Requests = props => {
 
     if (requests.open && requests.count >= 1) {
       formatted = requests.data
+        .filter(i => i.irrigator_code === code)
         .filter(i => i.closed === false)
         .map(item => ({
           id: item.id,
@@ -44,7 +46,6 @@ const Requests = props => {
         }))
 
       setOpenList(formatted)
-    }
 
     if (requests.closed && requests.count >= 1) {
       formatted = requests.data

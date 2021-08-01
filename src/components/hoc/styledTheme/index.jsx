@@ -58,6 +58,7 @@ export const ThemeWrapper = ({ children }) => {
 
   const genTheme = () => {
     let UTheme =
+      user &&
       user.profile &&
       user.profile.hasOwnProperty('app_setting') &&
       user.profile.app_setting.theme === '1'
@@ -97,7 +98,7 @@ export const ThemeWrapper = ({ children }) => {
               : false
           }
           txtSize={
-            user.profile && user.profile.hasOwnProperty('app_setting')
+            user && user.profile && user.profile.hasOwnProperty('app_setting')
               ? user.profile.app_setting.size
               : '16px'
           }

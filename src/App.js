@@ -36,6 +36,7 @@ import AdminReports from './components/watchmanViews/visits'
 import Channels from './components/watchmanViews/channels'
 import PayReport from './components/irrigatorViews/debts/payReport'
 import GATracker from './components/hoc/GaTracker'
+import networkDetector from './components/hoc/networkDetector'
 
 const App = () => {
   const [sessionUser, setUserSession] = useState()
@@ -124,4 +125,4 @@ const App = () => {
   )
 }
 
-export default App
+export default networkDetector(App)

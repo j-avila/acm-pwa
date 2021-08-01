@@ -108,6 +108,7 @@ const RequestDetail = props => {
           msgAction={handleForm}
           chatBar={!reqDetails.closed}
           route={location.pathname}
+          type={location.state.type}
         />
       </DetailsWrapper>
     </UserWrapper>

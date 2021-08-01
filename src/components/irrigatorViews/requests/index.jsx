@@ -28,12 +28,13 @@ const Requests = props => {
 
   useEffect(() => {
     code && dispatch(fetchRequests(code))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code])
 
   useEffect(() => {
     let formatted
 
-    if (requests && requests.count >= 1) {
+    if (requests.open && requests.count >= 1) {
       formatted = requests.data
         .filter(i => i.closed === false)
         .map(item => ({
@@ -45,7 +46,7 @@ const Requests = props => {
       setOpenList(formatted)
     }
 
-    if (requests && requests.count >= 1) {
+    if (requests.closed && requests.count >= 1) {
       formatted = requests.data
         .filter(i => i.closed === true)
         .map(item => ({

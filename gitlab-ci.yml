@@ -1,0 +1,24 @@
+image: node:12.21.0
+before_script:
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - mkdir -p ~/.ssh
+  - touch ~/.ssh/known_hosts
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+develop_deploy:
+  only:
+    - dev
+  script:
+    - npm install
+    - CI=false npm run build
+    - tar -czvf ./frontend_deploy.tar.gz ./build --exclude=".git"
+    - ssh-keyscan -t rsa $DEVP_IP >> ~/.ssh/known_hosts
+    - ssh-add <(echo "$DEVP_PRIVATE_KEY")
+    - ssh $DEVELOPERP@$DEVP_IP "rm -rf $DEVP_PATH/*"
+    - scp ./frontend_deploy.tar.gz $DEVELOPERP@$DEVP_IP:$DEVP_PATH/.
+    - rm -f ./frontend_deploy.tar.gz
+    - ssh $DEVELOPERP@$DEVP_IP "tar -xzvf $DEVP_PATH/frontend_deploy.tar.gz -C $DEVP_PATH/."
+    - ssh $DEVELOPERP@$DEVP_IP "rm -f $DEVP_PATH/frontend_deploy.tar.gz"
+    - ssh $DEVELOPERP@$DEVP_IP "mv $DEVP_PATH/build/* $DEVP_PATH/."
+    - ssh $DEVELOPERP@$DEVP_IP "rm -rf $DEVP_PATH/build"
+    - echo "-Fin-"

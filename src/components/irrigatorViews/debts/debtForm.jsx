@@ -19,6 +19,7 @@ const DebtForm = () => {
   const roles = useSelector(({ requests }) => requests.roles)
   const notification = useSelector(({ notifications }) => notifications)
   const user = useSelector(({ user }) => user)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const [location, setLocation] = useState()
   const [form, setForm] = useState({
     subject: 'Finanzas'
@@ -72,7 +73,7 @@ const DebtForm = () => {
       roles &&
       setForm({
         ...form,
-        irrigator_code: user.code,
+        irrigator_code: codeActive || user.code,
         association_area: roles[0].id,
         type: 'requestforattention'
       })

@@ -76,9 +76,9 @@ const EditProfile = props => {
       }
     }
 
-    const code = codeActive || form.code
+    const code = codeActive || form.code;
 
-    dispatch(editProfile(formData, code))
+    dispatch(editProfile(formData, code));
   }
 
   // stateManagments

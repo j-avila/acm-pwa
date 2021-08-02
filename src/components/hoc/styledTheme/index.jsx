@@ -91,6 +91,7 @@ export const ThemeWrapper = ({ children }) => {
       <ThemeProvider theme={userTheme || theme}>
         <GlobalStyles
           dark={
+            user &&
             user.profile &&
             user.profile.hasOwnProperty * 'app_setting' &&
             user.profile.app_setting.theme === '1'

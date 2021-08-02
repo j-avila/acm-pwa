@@ -21,4 +21,4 @@ develop_deploy:
     - ssh $DEVELOPERP@$DEVP_IP "rm -f $DEVP_PATH/frontend_deploy.tar.gz"
     - ssh $DEVELOPERP@$DEVP_IP "mv $DEVP_PATH/build/* $DEVP_PATH/."
     - ssh $DEVELOPERP@$DEVP_IP "rm -rf $DEVP_PATH/build"
-    - echo "-Fin-"
+    - echo "-Fin-CI-"

@@ -27,7 +27,7 @@ const Requests = props => {
 
   useEffect(() => {
     dispatch(fetchRequests(code))
-    dispatch(fetchRequests(code, 1, 20, true))
+    dispatch(fetchRequests(code, 0, 20, true))
   }, [])
 
   useEffect(() => {

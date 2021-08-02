@@ -194,6 +194,8 @@ const IrrigatorDetail = props => {
                               obtener coordenadas
                             </Button>
                           )}
+                          <br/>
+                          <span>(punto entrega agua)</span>
                         </Row>
                       </Detail>
                     </Card>

@@ -17,6 +17,7 @@ const EditProfile = props => {
   const history = useHistory()
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const hiddenFileInput = useRef(null)
   const [pic, setPic] = useState()
   const [passValid, isValid] = useState(false)
@@ -75,7 +76,9 @@ const EditProfile = props => {
       }
     }
 
-    dispatch(editProfile(formData))
+    const code = codeActive || form.code
+
+    dispatch(editProfile(formData, code))
   }
 
   // stateManagments
@@ -91,17 +94,17 @@ const EditProfile = props => {
 
   useEffect(() => {
     user &&
-      user.hasOwnProperty('acm') &&
-      user.profile &&
-      setForm({
-        ...form,
-        code: user.acm.code || undefined,
-        contact_name: user.acm.name || undefined,
-        contact_address: user.profile.contact_address || undefined,
-        contact_telephone: user.profile.contact_telephone || undefined,
-        email: user.profile.email || undefined,
-        picture: user.profile.picture || undefined
-      })
+    user.hasOwnProperty('acm') &&
+    user.profile &&
+    setForm({
+      ...form,
+      code: user.acm.code || undefined,
+      contact_name: user.profile.contact_name || undefined,
+      contact_address: user.profile.contact_address || undefined,
+      contact_telephone: user.profile.contact_telephone || undefined,
+      email: user.profile.email || undefined,
+      picture: user.profile.picture || undefined
+    })
     // handleAudio(0, 'play')
   }, [user])
 

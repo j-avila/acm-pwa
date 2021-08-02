@@ -9,6 +9,7 @@ import { Wrapper, SettingsContainer } from './styles'
 const Settings = () => {
   const dispatch = useDispatch()
   const user = useSelector(({ user }) => user)
+  const codeActive = useSelector(({ codeActive }) => codeActive)
   const [appSettings, setTheme] = useState({
     size: '',
     theme: ''
@@ -19,7 +20,8 @@ const Settings = () => {
       ...user.profile,
       app_setting: { ...appSettings }
     }
-    dispatch(editProfile(userSettings))
+    const code = codeActive || user.code
+    dispatch(editProfile(userSettings,code))
   }
 
   useEffect(() => {

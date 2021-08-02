@@ -25,8 +25,8 @@ export const createProfile = (form, role) => async dispatch => {
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
-export const editProfile = form => async dispatch => {
-  const url = `${apiUrl}/update-irrigator-profiles`
+export const editProfile = (form,code) => async dispatch => {
+  const url = code ? `${apiUrl}/update-irrigator-profiles/${code}` : `${apiUrl}/update-irrigator-profiles`;
 
   return axios
     .put(url, form, getAuth())

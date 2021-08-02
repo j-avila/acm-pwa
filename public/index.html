@@ -10,8 +10,6 @@
   <meta name="description" content="Asociación Canal Maule" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo-trans.png" />
   <meta property="og:type" content="app" />
-
-
   <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -26,20 +24,6 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  <!-- Service worker registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('serviceWorker.js').then(function (registration) {
-          // Registration was successful
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, function (err) {
-          // registration failed :(
-          console.log('ServiceWorker registration failed: ', err);
-        });
-      });
-    }
-  </script>
   <title>Asociación Canal Maule</title>
 </head>
 

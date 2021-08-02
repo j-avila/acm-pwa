@@ -165,7 +165,7 @@ const RequestForm = ({ location }) => {
       session.association_user.hasOwnProperty('assigned_irrigators')
     ) {
       let arranged = session.association_user.assigned_irrigators.map(user => ({
-        label: user.name,
+        label: `(${user.code}) ${user.name}`,
         value: user.code
       }))
       setIrrigators(arranged)

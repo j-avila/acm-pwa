@@ -88,7 +88,7 @@ const VistisForm = () => {
     ) {
       let arranged = user.association_user.assigned_irrigators.map(
         irrigator => ({
-          label: irrigator.name,
+          label: `(${irrigator.code}) ${irrigator.name}`,
           value: irrigator.code
         })
       )

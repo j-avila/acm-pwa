@@ -255,7 +255,7 @@ const ChatCard = props => {
                     )}
                   </div>
                   <span className='meta'>
-                    {moment(message.createdAt).format('MMMM DD YYYY')}
+                    {moment(message.createdAt).format('DD/MM/YYYY HH:mm')}
                   </span>
                 </ChatBubble>
               </Row>

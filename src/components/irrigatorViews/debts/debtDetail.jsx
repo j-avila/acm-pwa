@@ -61,13 +61,17 @@ const DebtDetail = props => {
               <h2>{`Total a pagar: ${debtData.coin} ${debtData.amount}`}</h2>
             )}
           </Detail>
-          <Card className='info'>
-            <i className='fas fa-info-circle' />
-            <p>
-              Acércate a nuestras oficinas para realizar el pago de tu cuota o
-              realiza una transferencia bancaria
-            </p>
-          </Card>
+
+          {location.state.type !== 'payed' && (
+            <Card className='info'>
+              <i className='fas fa-info-circle' />
+              <p>
+                Acércate a nuestras oficinas para realizar el pago de tu cuota o
+                realiza una transferencia bancaria
+              </p>
+            </Card>
+          )}
+
           {location.state.type !== 'payed' && (
             <Button
               width='80%'
@@ -77,13 +81,16 @@ const DebtDetail = props => {
               Datos para transferencia bancaria
             </Button>
           )}
-          <Button
-            width='80%'
-            display='block'
-            onClick={() => history.push({ pathname: '/deudas/new' })}
-          >
-            Solicitar Reporte de Deuda
-          </Button>
+
+          {location.state.type !== 'payed' && (
+            <Button
+              width='80%'
+              display='block'
+              onClick={() => history.push({ pathname: '/deudas/new' })}
+            >
+              Solicitar Reporte de Deuda
+            </Button>
+          )}
         </DeatilWrapper>
       </UserWrapper>
       {modal && (

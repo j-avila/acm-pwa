@@ -196,7 +196,7 @@ const UserLayout = props => {
                   </p>
                   <p>
                     <strong>Teléfono: </strong>
-                    {userData.watchman.telephone}
+                    {userData.watchman.telephone || 'No disponible aún'}
                   </p>
                   <div className='actions'>
                     <Button
@@ -205,8 +205,8 @@ const UserLayout = props => {
                     >
                       cerrar
                     </Button>
-                    <Button>
-                      <a href={`tel:${userData.watchman.telephone}`}>
+                    <Button disabled={ userData.watchman.telephone ? '' : 'disabled' }>
+                      <a href={userData.watchman.telephone ? `tel:${userData.watchman.telephone}` : '#'}>
                         <i className='fas fa-phone' /> Llamar
                       </a>
                     </Button>

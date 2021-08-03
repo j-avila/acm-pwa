@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux'
 const Login = props => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const location = props.location.pathname
   const login = useSelector(({ login }) => login)
   const user = useSelector(({ user }) => user)
   const codeActive = useSelector(({ codeActive }) => codeActive)
@@ -58,15 +57,15 @@ const Login = props => {
 
   useEffect(() => {
     if (login.hasOwnProperty('jwt') && user) {
-      if (login.jwt && !user.profile) {
+      if (login.jwt && user.profile && user.profile.app_setting && !user.profile.app_setting.size) {
         history.push('/tour')
-      } else if (login.jwt && user.profile) {
+      } else if ( login.jwt && ( user.profile || login.user.role.name != 'irrigator' ) ) {
         history.push('/panel-de-control')
       }
     } else {
       setError(true)
     }
-  }, [login.user])
+  }, [login.user, user])
 
   useEffect(() => {
     errorMsg && setError(errorMsg.message)

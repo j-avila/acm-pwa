@@ -13,7 +13,7 @@ import slide1 from '../../assets/slide1.png'
 import slide2 from '../../assets/slide2.png'
 import slide3 from '../../assets/slide3.png'
 import slide4 from '../../assets/slide4.png'
-import { createProfile } from '../../store/actions/editProfile'
+import { editProfile } from '../../store/actions/editProfile'
 import { useDispatch, useSelector } from 'react-redux'
 import { ModalContent } from '../hoc/userWrapper'
 import { Error } from '../login/styles'
@@ -48,7 +48,7 @@ export const OnBoarding = props => {
   }
 
   const handleForm = async () => {
-    await dispatch(createProfile(form, user.role.name))
+    await dispatch(editProfile(form, user.code))
   }
 
   const handleUser = async () => {
@@ -56,7 +56,7 @@ export const OnBoarding = props => {
     setRole(role)
     user.profile
       ? setModal(true)
-      : await dispatch(createProfile({ firts_time: false }, userRole))
+      : await dispatch(editProfile({ firts_time: false }, userRole))
   }
 
   useEffect(() => {
@@ -64,10 +64,10 @@ export const OnBoarding = props => {
   }, [])
 
   useEffect(() => {
-    const firstTime = user.profile || user.firts_time
+    const firstTime = ( user.profile && user.profile.app_setting && user.profile.app_setting.size ) || user.firts_time
     firstTime && history.push('/panel-de-control')
     user.hasOwnProperty('acm') &&
-      setForm({ ...form, code: user.acm.code, app_setting: {} })
+      setForm({ ...form, code: user.acm.code, app_setting: {  "size": "13px", "theme": 0} })
 
     // handleAudio(0, 'play')
   }, [user])

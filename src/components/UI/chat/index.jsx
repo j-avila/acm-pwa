@@ -25,11 +25,11 @@ const ChatCard = props => {
   const { id, items, msgAction, chatBar } = props
   const loading = useSelector(({ requests }) => requests.loading)
   const loggedUser = useSelector(({ user }) => user)
-  const [actions, openActions] = useState()
-  const [valid, setValid] = useState(false)
+  const [actions, openActions] = useState(false)
   const [preview, setPreview] = useState()
   const [userAttended, seAttended] = useState(props.chatuser)
   const roles = useSelector(({ requests }) => requests.roles)
+  const eventType = useSelector(({ requests }) => requests.details && requests.details.event ? requests.details.event.type : '')
   const [derive, setDerive] = useState()
   const [rolesList, setList] = useState([])
   const [messageObj, setMessage] = useState({
@@ -164,13 +164,6 @@ const ChatCard = props => {
       const fields = Object.keys(messageObj.data)
       const results = fields.filter(field => messageObj.data[field])
       const attended = items.filter(m => m.user.hasOwnProperty('code'))
-
-      if (last >= 1 && isUserLast) {
-        setValid(!isUserLast)
-        setValid(results.length >= 2)
-      } else {
-        setValid(true)
-      }
     }
     scrollTo('bottom')
   }, [items, messageObj])
@@ -274,7 +267,7 @@ const ChatCard = props => {
         <Message content={preview ? '1fr 9fr' : '1fr'}>
           {actions && (
             <ActionArea>
-              {loggedUser.user && !checkRole(loggedUser.user) && props.type.includes('requestforattention') && (
+              {loggedUser.user && !checkRole(loggedUser.user) && eventType== 'requestforattention' && (
                 <>
                   <span>
                     <Button
@@ -331,6 +324,7 @@ const ChatCard = props => {
               </span>
             </ActionArea>
           )}
+
           <FileAdd onClick={() => openActions(!actions)}>
             <i className='fas fa-plus'></i>
           </FileAdd>

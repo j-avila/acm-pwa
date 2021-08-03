@@ -61,7 +61,7 @@ const Dashboard = props => {
               <footer>
                 {dashData.acm.daily_flow_channel.updated
                   ? `Actualizado al ${dashData.acm.daily_flow_channel.updated}`
-                  : 'su canal no cuenta con telemetría'}
+                  : 'Su canal no cuenta con telemetría'}
               </footer>
             </Card>
 

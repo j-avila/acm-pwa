@@ -225,7 +225,7 @@ const RequestForm = ({ location }) => {
         </h1>
         <Card className='form-card'>
           {location.state.type === 'channelreport' && (
-            <FormInput label='Selecciona un Canal' width='100%'>
+            <FormInput label='Selecciona un canal' width='100%'>
               <select
                 onChange={e => setForm({ ...form, channel: e.target.value })}
               >
@@ -272,7 +272,7 @@ const RequestForm = ({ location }) => {
           ) : (
             location.state.type !== 'channelreport' && (
               <>
-                <FormInput label='seleccionar al Regante'>
+                <FormInput label='Seleccionar al regante'>
                   <Select
                     options={irrigators}
                     classNamePrefix='select'
@@ -311,7 +311,7 @@ const RequestForm = ({ location }) => {
               </FormInput>
             )}
 
-            <FormInput label='Títulos Frecuentes' width='100%'>
+            <FormInput label='Consultas más frecuentes' width='100%'>
               <select
                 onChange={e => setForm({ ...form, subject: e.target.value })}
               >
@@ -333,7 +333,7 @@ const RequestForm = ({ location }) => {
             </FormInput>
 
           {(form.subject === 'Otro') && (
-            <FormInput label='Escriba un Título:'>
+            <FormInput label='Escriba un título:'>
               <input
                 type='text'
                 name='nombre'
@@ -348,7 +348,7 @@ const RequestForm = ({ location }) => {
 
 
 
-          <FormInput label='Breve Descripción'>
+          <FormInput label='Breve descripción'>
             <textarea
               placeholder='Describa brevemente lo colocado en el título.'
               cols='6'

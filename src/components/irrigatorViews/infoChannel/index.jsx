@@ -118,7 +118,7 @@ const InfoChannel = props => {
                   <p>
                     {dailyFlow.updated
                       ? `Actualizado el ${dailyFlow.updated}`
-                      : 'su canal no cuenta con telemetría'}
+                      : 'Su canal no cuenta con telemetría'}
                   </p>
                 </span>
                 <span>

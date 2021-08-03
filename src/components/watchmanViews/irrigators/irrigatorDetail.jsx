@@ -78,7 +78,7 @@ const IrrigatorDetail = props => {
           }
         }
 
-        dispatch(updateCoords(irrigator.detail.profile.id, ubication))
+        if( irrigator.detail && irrigator.detail.profile ) dispatch( updateCoords( irrigator.detail.profile.id, ubication ) )
         setGeoLocation(ubication)
       })
     } else {

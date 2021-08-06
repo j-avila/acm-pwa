@@ -103,6 +103,7 @@ const AdminDashboard = props => {
               className='stat-card'
               title='Información General'
               subTitle={dashData.acm.acm_regulation.origin}
+              notifications={dashData.notifications.length}
               onClick={() => {
                 history.push('/canales')
               }}

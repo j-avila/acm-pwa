@@ -7,7 +7,7 @@ before_script:
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 develop_deploy:
   only:
-    - dev
+    - main
   script:
     - npm install
     - CI=false npm run build

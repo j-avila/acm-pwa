@@ -3,7 +3,7 @@ import moment from 'moment'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchInfoCards } from '../../../store/actions/infoChannels'
-import { apiUrl } from '../../../store/actions/utils'
+import { apiUrl, getAuth } from '../../../store/actions/utils'
 import UserWrapper from '../../hoc/userWrapper'
 import Card from '../../UI/card'
 import { GhostLine } from '../../UI/ghostLoader'
@@ -34,6 +34,14 @@ const InfoChannel = props => {
     )
   }
 
+  const markAsRead = async id => {
+    const url = `${apiUrl}/notification-centers/${id}/watchman`
+    await axios.get(url, getAuth()).then(() => {
+      const filtered = alert.filter(item => item.id !== id)
+      setAlert(filtered)
+    })
+  }
+
   useEffect(() => {
     dispatch(fetchInfoCards())
   }, [])
@@ -52,6 +60,33 @@ const InfoChannel = props => {
   return (
     <UserWrapper pathName='Información del canal'>
       <InfoWrapper>
+        {alert &&
+          alert.length >= 1 &&
+          alert.map(item => (
+            <NotificationArea key={item.id}>
+              <Card className={`alert ${item.type === 'urgent' && 'urgent'}`}>
+                <i
+                  className='fas fa-times'
+                  onClick={() => markAsRead(item.id)}
+                />
+                <Content>
+                  <i className='fas fa-info-circle'></i>
+                  <span>
+                    {item.title && <h3>{item.title}</h3>}
+                    <p>{item.message}</p>
+                    <div className='meta'>
+                      <strong>{`Fecha: ${moment(item.date).format(
+                        'DD/MM/YYYY'
+                      )}`}</strong>
+                      <strong>{`hora: ${moment(item.date).format(
+                        'HH:mm'
+                      )}`}</strong>
+                    </div>
+                  </span>
+                </Content>
+              </Card>
+            </NotificationArea>
+          ))}
         {!infoCards ? (
           <Card>
             <GhostLine />

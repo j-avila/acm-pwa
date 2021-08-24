@@ -270,7 +270,7 @@ const ChatCard = props => {
             <ActionArea>
               {loggedUser.user && !checkRole(loggedUser.user) && eventType== 'requestforattention' && (
                 <>{console.log(userLogged)}
-                  {"adminacm" == userLogged.role.type ? null :(
+                  {["adminacm","sectionm"].includes(userLogged.role.type) ? null :(
                     <span>
                       <Button
                         background='primary'

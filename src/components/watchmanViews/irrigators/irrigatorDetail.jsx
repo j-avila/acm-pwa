@@ -213,7 +213,7 @@ const IrrigatorDetail = props => {
                         className='fa fa-tint-slash'
                         size='20px'
                       ></Button>
-                      {"adminacm" == userLogged.role.type ? null : (
+                      {["adminacm","sectionm"].includes(userLogged.role.type) ? null : (
                         <Button
                           width='100%'
                           display='block'

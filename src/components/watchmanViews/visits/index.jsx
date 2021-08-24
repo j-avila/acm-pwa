@@ -66,7 +66,7 @@ const AdminReports = () => {
         <Tabs selected={0}>
           <Panel title='Visitas'>
             <List items={visits.reports} action={handleItem} />
-            {"adminacm" == userLogged.role.type ? null :(
+            {["adminacm","sectionm"].includes(userLogged.role.type) ? null :(
               <Button
                 onClick={() =>
                   history.push({
@@ -81,7 +81,7 @@ const AdminReports = () => {
           </Panel>
           <Panel title='Canal'>
             <List items={visits.binnacles} action={handleItem} />
-            {"adminacm" == userLogged.role.type ? null :(
+            {["adminacm","sectionm"].includes(userLogged.role.type) ? null :(
               <Button
                 onClick={() =>
                   history.push({

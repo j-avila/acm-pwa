@@ -22,6 +22,7 @@ const AdminReports = () => {
     booked: [],
     done: []
   })
+  const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const handleItem = ({ id }) => {
     // alert(id)
@@ -65,29 +66,33 @@ const AdminReports = () => {
         <Tabs selected={0}>
           <Panel title='Visitas'>
             <List items={visits.reports} action={handleItem} />
-            <Button
-              onClick={() =>
-                history.push({
-                  pathname: '/solicitudes/new',
-                  state: { type: 'visitreport' }
-                })
-              }
-            >
-              Crear Reporte de Visita
-            </Button>
+            {"adminacm" == userLogged.role.type ? null :(
+              <Button
+                onClick={() =>
+                  history.push({
+                    pathname: '/solicitudes/new',
+                    state: { type: 'visitreport' }
+                  })
+                }
+              >
+                Crear Reporte de Visita
+              </Button>
+            )}
           </Panel>
           <Panel title='Canal'>
             <List items={visits.binnacles} action={handleItem} />
-            <Button
-              onClick={() =>
-                history.push({
-                  pathname: '/solicitudes/new',
-                  state: { type: 'channelreport' }
-                })
-              }
-            >
-              Crear Reporte de Canal
-            </Button>
+            {"adminacm" == userLogged.role.type ? null :(
+              <Button
+                onClick={() =>
+                  history.push({
+                    pathname: '/solicitudes/new',
+                    state: { type: 'channelreport' }
+                  })
+                }
+              >
+                Crear Reporte de Canal
+              </Button>
+            )}
           </Panel>
         </Tabs>
       </VisitsWrapper>

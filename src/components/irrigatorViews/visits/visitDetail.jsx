@@ -20,6 +20,7 @@ const VisitDetail = props => {
   const bio = useSelector(({ visits }) => visits.bio)
   const [isAdmin, setRol] = useState()
   const { location } = props
+  const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   useEffect(() => {
     const role = !checkRole(session, 'irrigator')
@@ -153,7 +154,7 @@ const VisitDetail = props => {
             )}
           </>
         )}
-        {isAdmin && details && !details.closed && (
+        {"adminacm" != userLogged.role.type && isAdmin && details && !details.closed && (
           <Button
             onClick={() =>
               history.push({

@@ -16,6 +16,7 @@ const AdminRequests = props => {
   const closed = useSelector(({ requests }) => requests.closed)
   const [openList, setOpenList] = useState([])
   const [closedList, setClosedList] = useState([])
+  const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const handleItem = ({ id, irrigator }) => {
     history.push({
@@ -87,18 +88,20 @@ const AdminRequests = props => {
             />
           </Panel>
         </Tabs>
-        <Button
-          className='btn-new'
-          width='90%'
-          onClick={() =>
-            history.push({
-              pathname: '/solicitudes/new',
-              state: { type: 'requestforattention' }
-            })
-          }
-        >
-          Crear nueva solicitud
-        </Button>
+        {"adminacm" == userLogged.role.type ? null :(
+          <Button
+            className='btn-new'
+            width='90%'
+            onClick={() =>
+              history.push({
+                pathname: '/solicitudes/new',
+                state: { type: 'requestforattention' }
+              })
+            }
+          >
+            Crear nueva solicitud
+          </Button>
+        )}
       </Wrapper>
     </UserWrapper>
   )

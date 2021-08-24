@@ -17,6 +17,7 @@ const VistisForm = () => {
   const [location, setLocation] = useState()
   const [form, setForm] = useState({})
   const [visitsList, setList] = useState()
+  const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -148,9 +149,12 @@ const VistisForm = () => {
           </FormInput>
 
           <ActionArea className='actions'>
-            <Button className='btn-send' type='submit'>
-              Crear solicitud
-            </Button>
+            {"adminacm" == userLogged.role.type ? null :(
+              <Button className='btn-send' type='submit'>
+                Crear solicitud
+              </Button>
+            )}
+
           </ActionArea>
         </Card>
       </RequestWrapper>

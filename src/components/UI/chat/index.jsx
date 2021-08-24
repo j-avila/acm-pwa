@@ -38,6 +38,7 @@ const ChatCard = props => {
     },
     file: undefined
   })
+  const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -268,25 +269,28 @@ const ChatCard = props => {
           {actions && (
             <ActionArea>
               {loggedUser.user && !checkRole(loggedUser.user) && eventType== 'requestforattention' && (
-                <>
-                  <span>
-                    <Button
-                      background='primary'
-                      display='block'
-                      onClick={() =>
-                        history.push({
-                          pathname: '/solicitudes/new',
-                          state: {
-                            type: 'visitreport',
-                            code: userAttended
-                          }
-                        })
-                      }
-                    >
-                      <i className='fas fa-calendar' />
-                    </Button>
-                    Agendar Visita
-                  </span>
+                <>{console.log(userLogged)}
+                  {"adminacm" == userLogged.role.type ? null :(
+                    <span>
+                      <Button
+                        background='primary'
+                        display='block'
+                        onClick={() =>
+                          history.push({
+                            pathname: '/solicitudes/new',
+                            state: {
+                              type: 'visitreport',
+                              code: userAttended
+                            }
+                          })
+                        }
+                      >
+                        <i className='fas fa-calendar' />
+                      </Button>
+                      Agendar Visita
+                    </span>
+                  )}
+
                   {props.route.includes('solicitudes') && (
                     <span>
                       <Button

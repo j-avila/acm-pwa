@@ -31,6 +31,7 @@ const IrrigatorDetail = props => {
   const [iData, setData] = useState()
   const [historyList, setList] = useState()
   const [geoLocation, setGeoLocation] = useState()
+  const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
 
   const handleModal = props => {
@@ -212,21 +213,23 @@ const IrrigatorDetail = props => {
                         className='fa fa-tint-slash'
                         size='20px'
                       ></Button>
-                      <Button
-                        width='100%'
-                        display='block'
-                        onClick={() =>
-                          history.push({
-                            pathname: '/solicitudes/new',
-                            state: {
-                              type: 'visitreport',
-                              code: location.state.data.code
-                            }
-                          })
-                        }
-                      >
-                        Agendar Visita
-                      </Button>
+                      {"adminacm" == userLogged.role.type ? null : (
+                        <Button
+                          width='100%'
+                          display='block'
+                          onClick={() =>
+                            history.push({
+                              pathname: '/solicitudes/new',
+                              state: {
+                                type: 'visitreport',
+                                code: location.state.data.code
+                              }
+                            })
+                          }
+                        >
+                          Agendar Visita
+                        </Button>
+                      )}
                     </Actions>
                   </>
                 </Panel>
@@ -243,21 +246,23 @@ const IrrigatorDetail = props => {
                   <Actions
                     style={{ gridTemplateColumns: '1fr', alignItems: 'center' }}
                   >
-                    <Button
-                      margin='0 auto'
-                      onClick={() =>
-                        history.push({
-                          pathname: '/solicitudes/new',
-                          state: {
-                            name: 'Anotaciones',
-                            type: 'annotation',
-                            code: form.irrigators
-                          }
-                        })
-                      }
-                    >
-                      Crear anotacion
-                    </Button>
+                    {"adminacm" == userLogged.role.type ? null :(
+                      <Button
+                        margin='0 auto'
+                        onClick={() =>
+                          history.push({
+                            pathname: '/solicitudes/new',
+                            state: {
+                              name: 'Anotaciones',
+                              type: 'annotation',
+                              code: form.irrigators
+                            }
+                          })
+                        }
+                      >
+                        Crear anotacion
+                      </Button>
+                    )}
                   </Actions>
                 </Panel>
               </Tabs>

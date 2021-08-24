@@ -116,7 +116,7 @@ const IrrigatorDetail = props => {
         }))
       )
     }
-  }, [irrigator.detail])
+  }, [irrigator.detail,irrigator.history])
 
 
   return (

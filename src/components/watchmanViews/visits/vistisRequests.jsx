@@ -149,7 +149,7 @@ const VistisForm = () => {
           </FormInput>
 
           <ActionArea className='actions'>
-            {"adminacm" == userLogged.role.type ? null :(
+            {["adminacm","sectionm"].includes(userLogged.role.type) ? null :(
               <Button className='btn-send' type='submit'>
                 Crear solicitud
               </Button>

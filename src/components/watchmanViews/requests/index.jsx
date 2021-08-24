@@ -88,7 +88,7 @@ const AdminRequests = props => {
             />
           </Panel>
         </Tabs>
-        {"adminacm" == userLogged.role.type ? null :(
+        {["adminacm","sectionm"].includes(userLogged.role.type) ? null :(
           <Button
             className='btn-new'
             width='90%'

@@ -53,9 +53,6 @@ const VisitDetail = props => {
                 {moment(details.visitreport_data.date).format('HH:mm')}
               </p>
               <p>
-                <strong>Visitante</strong> : Juan Perez
-              </p>
-              <p>
                 <strong>Motivo de la visita: </strong>
                 {details.content}
               </p>

@@ -48,7 +48,7 @@ const AdminReports = () => {
           id: item.id,
           title: item.subject,
           status: item.closed && 'fa-check',
-          subtitle: `Creado el: ${moment(item.createdAt).format('DD/MM/YYYY HH:mm')}`, 
+          subtitle: `Creada: ${moment(item.createdAt).format('DD/MM/YYYY HH:mm')} - Cod: ${item.irrigator_code || item.channel_code}`, 
           viewitem: 0,
         }))
 

@@ -135,7 +135,7 @@ const RequestForm = ({ location }) => {
         setValid(false)
     } else if (location.state.type === 'channelreport') {
       form.otherSubject &&
-        form.channel &&
+        form.channel_code &&
         form.content &&
         form.content.length >= 30 &&
         form.visitreport_data &&
@@ -186,7 +186,7 @@ const RequestForm = ({ location }) => {
       setChannels(channelsList)
     
       if(channels && channels.length >= 1 ) {
-        setForm({ ...form, channel: channels[0].channel });
+        setForm({ ...form, channel_code: channels[0].channel });
       }
 
     }
@@ -227,7 +227,7 @@ const RequestForm = ({ location }) => {
           {location.state.type === 'channelreport' && (
             <FormInput label='Selecciona un canal' width='100%'>
               <select
-                onChange={e => setForm({ ...form, channel: e.target.value })}
+                onChange={e => setForm({ ...form, channel_code: e.target.value })}
               >
                 {channels && channels.length >= 1 ? (
                   channels.map(channel => (
@@ -299,8 +299,6 @@ const RequestForm = ({ location }) => {
               <FormInput label='Fecha de la visita'>
                 <input
                   type='datetime-local'
-                  min={moment().format('YYYY-MM-DDTHH:mm')}
-                  max='2100-01-01T00:00'
                   onChange={e =>
                     setForm({
                       ...form,

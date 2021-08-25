@@ -42,3 +42,21 @@ export const editProfile = (form,code) => async dispatch => {
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
+
+export const editProfileAcmUser = (form,code) => async dispatch => {
+  const url = `${apiUrl}/update-acmuser-profiles`;
+
+  return axios
+    .put(url, form, getAuth())
+    .then(({ data }) => {
+      dispatch({
+        type: type.EDIT_PROFILE,
+        profile: data
+      })
+      dispatch({
+        type: type.NOTIFICATIONS,
+        notification: { message: 'guardado con exito' }
+      })
+    })
+    .catch(err => dispatch({ type: type.ERROR, error: err }))
+}

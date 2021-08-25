@@ -30,7 +30,7 @@ const adminMenu = [
   { name: 'Reportes de Visitas', path: '/visitas' },
   { name: 'información de los canales', path: '/canales' },
   // { name: 'perfil', path: '/perfil' },
-  // { name: 'ajustes', path: '/opciones' },
+  { name: 'ajustes', path: '/opciones' },
   { name: 'cerrar sesión', path: '/cerrar-sesion' }
 ]
 

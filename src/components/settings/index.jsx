@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { editProfile } from '../../store/actions/editProfile'
+import { editProfile, editProfileAcmUser } from '../../store/actions/editProfile'
 import UserWrapper from '../hoc/userWrapper'
 import Button from '../UI/button'
 import FormInput from '../UI/input'
@@ -14,14 +14,22 @@ const Settings = () => {
     size: '',
     theme: ''
   })
+  const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const handleOptions = () => {
-    const userSettings = {
-      ...user.profile,
-      app_setting: { ...appSettings }
+    if(userLogged.role.name == "irrigator"){
+      const userSettings = {
+        ...user.profile,
+        app_setting: { ...appSettings }
+      }
+      const code = codeActive || user.code
+      dispatch(editProfile(userSettings,code))
+    }else{
+      const userSettings = {
+        app_setting: appSettings
+      }
+      dispatch(editProfileAcmUser(userSettings))
     }
-    const code = codeActive || user.code
-    dispatch(editProfile(userSettings,code))
   }
 
   useEffect(() => {

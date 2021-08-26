@@ -91,7 +91,7 @@ const RequestForm = ({ location }) => {
     /* Setear en caso de no venir ningun asunto a Otro */
     const subjects = issues.filter(item=>item.association_area && item.association_area.id==roles[0].id)
     if(!subjects.length && (location.state.type ==='visitreport' || location.state.type === 'channelreport') ){
-      setForm({ irrigator_code: location.state.code, subject: 'Otro', otherSubject:'', type:location.state.type })
+      setForm({ ...form, irrigator_code: location.state.code, subject: 'Otro', otherSubject:'', type:location.state.type })
     }
   }, [issues])
 
@@ -179,6 +179,7 @@ const RequestForm = ({ location }) => {
         user.assigned_irrigators,
         item => item.channel
       )
+
       let channelsList = channels.map(channel => ({
         label: channel.channel_name,
         value: channel.channel
@@ -188,9 +189,7 @@ const RequestForm = ({ location }) => {
       if(channels && channels.length >= 1 ) {
         setForm({ ...form, channel_code: channels[0].channel });
       }
-
     }
-
   }, [session, user])
 
 

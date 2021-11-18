@@ -49,7 +49,7 @@ export const Content = styled.article`
 export const NotificationArea = styled.span`
   .alert {
     margin: 1rem auto;
-    background: #04e4c6;
+    background: #3c9f3c;
     i {
       font-size: 4rem;
       margin-bottom: 1rem;
@@ -77,7 +77,7 @@ export const NotificationArea = styled.span`
       right: 5%;
     }
     &.urgent {
-      background: tomato;
+      background: #f34627;
     }
   }
 `

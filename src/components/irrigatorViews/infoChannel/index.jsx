@@ -1,5 +1,6 @@
 import axios from 'axios'
 import moment from 'moment'
+import convertToHTML from 'markdown-to-html-converter'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchInfoCards } from '../../../store/actions/infoChannels'
@@ -60,7 +61,12 @@ const InfoChannel = props => {
       <InfoWrapper>
         {alert &&
           alert.length >= 1 &&
-          alert.map(item => (
+          alert.map(item => {
+            /* traduciendo MarkDown a HTML */
+            let htmlStr = convertToHTML(item.message);
+            if(htmlStr.includes("href")) htmlStr = htmlStr.replace("href", "target='_blank' href");
+
+            return (
             <NotificationArea key={item.id}>
               <Card className={`alert ${item.type === 'urgent' && 'urgent'}`}>
                 <i
@@ -71,7 +77,7 @@ const InfoChannel = props => {
                   <i className='fas fa-info-circle'></i>
                   <span>
                     {item.title && <h3>{item.title}</h3>}
-                    <p>{item.message}</p>
+                    <p dangerouslySetInnerHTML={{__html: htmlStr}}></p>
                     <div className='meta'>
                       <strong>{`Fecha: ${moment(item.date).format(
                         'DD/MM/YYYY'
@@ -84,7 +90,7 @@ const InfoChannel = props => {
                 </Content>
               </Card>
             </NotificationArea>
-          ))}
+          )})}
         {!infoCards ? (
           <Card>
             <GhostLine />

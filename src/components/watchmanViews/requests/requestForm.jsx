@@ -21,7 +21,11 @@ const RequestForm = () => {
   const roles = useSelector(({ requests }) => requests.roles)
   const user = useSelector(({ user }) => user)
   const [location, setLocation] = useState()
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState({
+    visitreport_data: {
+      date: moment().format('YYYY-MM-DDThh:mm')
+    }
+  })
   const [listRequests, setList] = useState()
   const [invalid, setValid] = useState(true)
 

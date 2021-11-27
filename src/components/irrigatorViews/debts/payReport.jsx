@@ -25,7 +25,12 @@ const PayReport = () => {
   const user = useSelector(({ user }) => user)
   const codeActive = useSelector(({ codeActive }) => codeActive)
   const [preview, setPreview] = useState()
-  const [form, setForm] = useState({ attachment: '', data: {} })
+  const [form, setForm] = useState({
+    attachment: '',
+    data: {
+      payment_date: moment().format('YYYY-MM-DD')
+    }
+  })
   const [valid, setValid] = useState()
   const [banks, setBanks] = useState()
 
@@ -114,6 +119,7 @@ const PayReport = () => {
           <FormInput label='Fecha de pago'>
             <input
               type='date'
+              value={form.data.payment_date}
               max={moment().format('YYYY-MM-DD')}
               onChange={e =>
                 setForm({

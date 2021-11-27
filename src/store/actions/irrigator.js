@@ -13,11 +13,12 @@ export const getIrrigatorsList = (
   const url = `${apiUrl}/irrigators?_sort=name:asc&_start=${from}&_limit=${to}${
     channel ? channelparam : ''
   }${param ? nameparam : ''}`
+  const counterURL = `${apiUrl}/irrigators/count?${
+    channel ? channelparam : ''
+  }${param ? nameparam : ''}`
 
   const counter = async () =>
-    await axios
-      .get(`${apiUrl}/irrigators/count`, getAuth())
-      .then(({ data }) => data)
+    await axios.get(counterURL, getAuth()).then(({ data }) => data)
 
   dispatch({ type: type.LOADING, load: true })
   const count = await counter()
@@ -48,11 +49,12 @@ export const filterIrrigatorsList = (
   const url = `${apiUrl}/irrigators?_sort=name:asc&_start=${from}&_limit=${to}${
     channel ? channelparam : ''
   }${param ? nameparam : ''}`
+  const counterURL = `${apiUrl}/irrigators/count?${
+    channel ? channelparam : ''
+  }${param ? nameparam : ''}`
 
   const counter = async () =>
-    await axios
-      .get(`${apiUrl}/irrigators/count`, getAuth())
-      .then(({ data }) => data)
+    await axios.get(counterURL, getAuth()).then(({ data }) => data)
 
   dispatch({ type: type.LOADING, load: true })
   const count = await counter()
@@ -93,12 +95,10 @@ export const getIrrigatorDetails = code => async dispatch => {
 export const updateCoords = (id, coords) => async dispatch => {
   const url = `${apiUrl}/irrigator-profiles/${id}`
 
-  return axios
-    .put(url, coords, getAuth())
-    .catch(err => {
-      dispatch({ type: type.LOADING, load: false })
-      dispatch({ type: type.ERROR, error: err })
-    })
+  return axios.put(url, coords, getAuth()).catch(err => {
+    dispatch({ type: type.LOADING, load: false })
+    dispatch({ type: type.ERROR, error: err })
+  })
 }
 
 export const getHistory = code => async dispatch => {

@@ -46,12 +46,12 @@ const RequestForm = ({ location }) => {
     if (notification.type === 'geolocation') {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
     } else {
-      if(location.state.type === 'visitreport'){
+      if (location.state.type === 'visitreport') {
         dispatch({ type: type.NOTIFICATIONS, notification: false })
         history.push({
           pathname: `/visitas`
         })
-      }else{
+      } else {
         dispatch({ type: type.NOTIFICATIONS, notification: false })
         history.push({
           pathname: `/solicitudes/${requests.requestDetail.id}`,
@@ -82,19 +82,29 @@ const RequestForm = ({ location }) => {
         association_area: roles[0].id,
         type: location.state.type || 'requestforattention'
       })
-
   }, [user, roles, location])
 
   useEffect(() => {
     issues.length >= 1 && setSubjects([...issues, { id: 0, subject: 'Otro' }])
 
     /* Setear en caso de no venir ningun asunto a Otro */
-    const subjects = issues.filter(item=>item.association_area && item.association_area.id==roles[0].id)
-    if(!subjects.length && (location.state.type ==='visitreport' || location.state.type === 'channelreport') ){
-      setForm({ ...form, irrigator_code: location.state.code, subject: 'Otro', otherSubject:'', type:location.state.type })
+    const subjects = issues.filter(
+      item => item.association_area && item.association_area.id == roles[0].id
+    )
+    if (
+      !subjects.length &&
+      (location.state.type === 'visitreport' ||
+        location.state.type === 'channelreport')
+    ) {
+      setForm({
+        ...form,
+        irrigator_code: location.state.code,
+        subject: 'Otro',
+        otherSubject: '',
+        type: location.state.type
+      })
     }
   }, [issues])
-
 
   useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
@@ -103,47 +113,32 @@ const RequestForm = ({ location }) => {
       location.state.type === 'requestforattention' ||
       location.state.type === 'annotation'
     ) {
-
-      if(form.hasOwnProperty('subject')){
-        if(form.subject =="Otro"){
-          if(form.hasOwnProperty('otherSubject') && form.otherSubject.length > 10){
+      if (form.hasOwnProperty('subject')) {
+        if (form.subject == 'Otro') {
+          if (
+            form.hasOwnProperty('otherSubject') &&
+            form.otherSubject.length > 10
+          ) {
             setValid(false)
-          }else{
+          } else {
             setValid(true)
-          }
-        }else{
-          if(form.content && form.content.length < 30){
-            setValid(true)
-          }else{
-            form.association_area &&
-            form.subject &&
-            form.content &&
-            form.content.length >= 30 &&
-            setValid(false)
           }
         }
       }
-
-    } else if (
-      location.state.type === 'visitreport'
-    ) {
+    } else if (location.state.type === 'visitreport') {
       form.irrigator_code &&
         form.visitreport_data &&
         form.visitreport_data.date &&
         form.content &&
-        form.content.length >= 30 &&
         setValid(false)
     } else if (location.state.type === 'channelreport') {
       form.otherSubject &&
         form.channel_code &&
         form.content &&
-        form.content.length >= 30 &&
         form.visitreport_data &&
         form.visitreport_data.date &&
         setValid(false)
     }
-
-
   }, [requests, form])
 
   useEffect(() => {
@@ -185,27 +180,24 @@ const RequestForm = ({ location }) => {
         value: channel.channel
       }))
       setChannels(channelsList)
-    
-      if(channels && channels.length >= 1 ) {
-        setForm({ ...form, channel_code: channels[0].channel });
+
+      if (channels && channels.length >= 1) {
+        setForm({ ...form, channel_code: channels[0].channel })
       }
     }
   }, [session, user])
 
-
-
-
-  let listaopc = [];
-  if(listRequests){
-    subjectSelect.forEach((res) => {
+  let listaopc = []
+  if (listRequests) {
+    subjectSelect.forEach(res => {
       if (res.hasOwnProperty('association_area')) {
-          if(res.association_area.id === form.association_area){
-            listaopc.push({
-              id: res.id,
-              subject: res.subject,
-              type: res.type
-            });
-          }
+        if (res.association_area.id === form.association_area) {
+          listaopc.push({
+            id: res.id,
+            subject: res.subject,
+            type: res.type
+          })
+        }
       }
     })
   }
@@ -226,13 +218,14 @@ const RequestForm = ({ location }) => {
           {location.state.type === 'channelreport' && (
             <FormInput label='Selecciona un canal' width='100%'>
               <select
-                onChange={e => setForm({ ...form, channel_code: e.target.value })}
+                onChange={e =>
+                  setForm({ ...form, channel_code: e.target.value })
+                }
               >
                 {channels && channels.length >= 1 ? (
                   channels.map(channel => (
                     <option value={channel.value}>{channel.label}</option>
                   ))
-
                 ) : (
                   <option disabled selected>
                     No tienes canales asignados
@@ -248,11 +241,25 @@ const RequestForm = ({ location }) => {
             >
               <select
                 onChange={e => {
-                  const subjects = subjectSelect.filter(item=>item.association_area && item.association_area.id==e.target.value)
-                  if(!subjects.length){
-                    setForm({ ...form, association_area: e.target.value, subject: 'Otro', otherSubject:'' })
-                  }else {
-                    setForm({ ...form, association_area: e.target.value, subject: '', otherSubject:'' })
+                  const subjects = subjectSelect.filter(
+                    item =>
+                      item.association_area &&
+                      item.association_area.id == e.target.value
+                  )
+                  if (!subjects.length) {
+                    setForm({
+                      ...form,
+                      association_area: e.target.value,
+                      subject: 'Otro',
+                      otherSubject: ''
+                    })
+                  } else {
+                    setForm({
+                      ...form,
+                      association_area: e.target.value,
+                      subject: '',
+                      otherSubject: ''
+                    })
                   }
                 }}
               >
@@ -264,10 +271,9 @@ const RequestForm = ({ location }) => {
                     <option key={index} value={option.id}>
                       {option.name}
                     </option>
-                  ))}                
+                  ))}
               </select>
             </FormInput>
-
           ) : (
             location.state.type !== 'channelreport' && (
               <>
@@ -290,7 +296,6 @@ const RequestForm = ({ location }) => {
               </>
             )
           )}
-        
 
           {!checkRole(session, 'irrigartor') &&
             (location.state.type === 'channelreport' ||
@@ -308,28 +313,29 @@ const RequestForm = ({ location }) => {
               </FormInput>
             )}
 
-            <FormInput label='Consultas más frecuentes' width='100%'>
-              <select
-                onChange={e => setForm({ ...form, subject: e.target.value })}
+          <FormInput label='Consultas más frecuentes' width='100%'>
+            <select
+              onChange={e => setForm({ ...form, subject: e.target.value })}
+            >
+              <option selected={form.subject === '' ? 'selected' : ''}>
+                Selecciona un asunto recurrente
+              </option>
+              {listaopc &&
+                listaopc.map((subject, index) => (
+                  <option key={index} value={subject.subject}>
+                    {subject.subject}
+                  </option>
+                ))}
+              <option
+                value='Otro'
+                selected={form.subject === 'Otro' ? 'selected' : ''}
               >
-                <option selected={(form.subject === '')?'selected':''}>
-                  Selecciona un asunto recurrente
-                </option>                                    
-                {listaopc &&(
-                  listaopc.map((subject, index) => (
-                    <option key={index} value={subject.subject}>
-                      {subject.subject}
-                    </option>
-                  ))
+                Otro
+              </option>
+            </select>
+          </FormInput>
 
-                )}                           
-                <option value='Otro' selected={(form.subject === 'Otro')?'selected':''}>
-                  Otro
-                </option>                              
-              </select>
-            </FormInput>
-
-          {(form.subject === 'Otro') && (
+          {form.subject === 'Otro' && (
             <FormInput label='Escriba un título:'>
               <input
                 type='text'
@@ -343,8 +349,6 @@ const RequestForm = ({ location }) => {
             </FormInput>
           )}
 
-
-
           <FormInput label='Breve descripción'>
             <textarea
               placeholder='Describa brevemente lo colocado en el título.'
@@ -353,7 +357,6 @@ const RequestForm = ({ location }) => {
               onChange={e => setForm({ ...form, content: e.target.value })}
             ></textarea>
           </FormInput>
-          <span>(Debe tener minimo 30 caracteres)</span>
 
           <ActionArea className='actions'>
             <Button className='btn-send' type='submit' disabled={invalid}>

@@ -104,8 +104,6 @@ const RequestForm = () => {
     form.association_area &&
       form.subject &&
       form.content &&
-      form.content.length >= 30 &&
-      setValid(false)
   }, [requests, form])
 
   useEffect(() => {
@@ -186,7 +184,6 @@ const RequestForm = () => {
               onChange={e => handleImg(e)}
             />
           </FormInput>
-          <span>(Debe tener minimo 30 caracteres)</span>
 
           <ActionArea className='actions'>
             <Button background='primary'>

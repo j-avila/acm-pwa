@@ -99,10 +99,10 @@ const RequestForm = () => {
     form.association_area && form.subject && form.content && setValid(false)
   }, [requests, form])
 
-  // useEffect(() => {
-  //   form.content?.length > 10 &&
-  //     setForm({ ...form, subject: truncate(form.content) })
-  // }, [form.content])
+  useEffect(() => {
+    form.content?.length > 10 &&
+      setForm({ ...form, subject: truncate(form.content) })
+  }, [form.content])
 
   useEffect(() => {
     if (location) {

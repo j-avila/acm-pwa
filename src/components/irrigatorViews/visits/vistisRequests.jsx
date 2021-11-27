@@ -8,7 +8,7 @@ import { ActionArea, RequestWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { createVisitRequest, getRoles } from '../../../store/actions/visits'
 import * as type from '../../../store/reducers/types'
-import { checkRole } from '../../hoc/utils'
+import { checkRole, truncate } from '../../hoc/utils'
 import Select from 'react-select'
 import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
@@ -104,6 +104,11 @@ const VistisForm = () => {
       })
   }, [visitsList])
 
+  useEffect(() => {
+    form.content?.length > 25 &&
+      setForm({ ...form, subject: truncate(form.content, 25) })
+  }, [form.content])
+
   return (
     <UserWrapper pathName='Nueva Solicitud'>
       <RequestWrapper onSubmit={e => handleForm(e)}>
@@ -147,21 +152,6 @@ const VistisForm = () => {
               </select>
             </FormInput>
           )}
-
-          <FormInput label='Titulos Frecuentes' width='100%'>
-            <select
-              onChange={e => setForm({ ...form, subject: e.target.value })}
-              disabled
-            >
-              {subjectSelect
-                .filter(e => e.label === 'Solicitud')
-                .map(subject => (
-                  <option key={subject.label} value={subject.label} selected>
-                    {subject.label}
-                  </option>
-                ))}
-            </select>
-          </FormInput>
 
           <FormInput label='Breve Descripción'>
             <textarea

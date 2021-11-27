@@ -10,6 +10,7 @@ import { createRequest, getRoles } from '../../../store/actions/bookings'
 import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
+import { truncate } from '../../hoc/utils'
 
 const RequestForm = () => {
   const dispatch = useDispatch()
@@ -39,13 +40,6 @@ const RequestForm = () => {
   const getFile = event => {
     const fileUploaded = event.target.files[0]
   }
-
-  const subjectSelect = [
-    { label: '¿Como puedo traspasar cuotas?' },
-    { label: 'Convenios de pago' },
-    { label: 'Solicitud' },
-    { label: 'Otro' }
-  ]
 
   // enconde img to base64
   const handleImg = e => {
@@ -100,11 +94,15 @@ const RequestForm = () => {
 
   useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
+
     // checking for form validation
-    form.association_area &&
-      form.subject &&
-      form.content &&
+    form.association_area && form.subject && form.content && setValid(false)
   }, [requests, form])
+
+  // useEffect(() => {
+  //   form.content?.length > 10 &&
+  //     setForm({ ...form, subject: truncate(form.content) })
+  // }, [form.content])
 
   useEffect(() => {
     if (location) {
@@ -143,32 +141,6 @@ const RequestForm = () => {
                 ))}
             </select>
           </FormInput>
-          <FormInput label='¿Cuál es tu problema o necesidad?' width='100%'>
-            <select
-              onChange={e => setForm({ ...form, subject: e.target.value })}
-            >
-              <option disabled selected>
-                Selecciona un asunto recurrente
-              </option>
-              {subjectSelect.map(subject => (
-                <option key={subject.label} value={subject.label}>
-                  {subject.label}
-                </option>
-              ))}
-            </select>
-          </FormInput>
-          {form.subject === 'Otro' && (
-            <FormInput label='Cree un nuevo asunto si su problema o necesidad no está entre las opciones:'>
-              <input
-                type='text'
-                name='nombre'
-                onChange={e =>
-                  setForm({ ...form, otherSubject: e.target.value })
-                }
-                placeholder='Describa su solicitud brevemente'
-              />
-            </FormInput>
-          )}
           <FormInput label='Descripción de la solicitud de atención'>
             <textarea
               placeholder='Describe tu problema o necesidad. Puedes ingresar fotos, subir archivos y marcar tu ubicación.'

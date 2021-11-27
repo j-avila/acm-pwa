@@ -10,7 +10,7 @@ import { createRequest, getRoles } from '../../../store/actions/bookings'
 import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
 import { useHistory } from 'react-router'
-import { checkRole, removeDuplicates } from '../../hoc/utils'
+import { checkRole, removeDuplicates, truncate } from '../../hoc/utils'
 import Select from 'react-select'
 import { getIssues } from '../../../store/actions/requests'
 import moment from 'moment'
@@ -36,7 +36,9 @@ const RequestForm = ({ location }) => {
 
   const handleForm = e => {
     let data =
-      form.subject === 'Otro' ? { ...form, subject: form.otherSubject } : form
+      form.subject === 'Otro'
+        ? { ...form, subject: truncate(form.content) }
+        : form
 
     e.preventDefault()
     dispatch(createRequest(data))
@@ -64,6 +66,7 @@ const RequestForm = ({ location }) => {
   useEffect(() => {
     dispatch(getRoles())
     dispatch(getIssues(location.state.type))
+
     user &&
       setForm({
         ...form,
@@ -85,7 +88,7 @@ const RequestForm = ({ location }) => {
   }, [user, roles, location])
 
   useEffect(() => {
-    issues.length >= 1 && setSubjects([...issues, { id: 0, subject: 'Otro' }])
+    issues.length >= 1 && setSubjects([...issues, { id: 0 }])
 
     /* Setear en caso de no venir ningun asunto a Otro */
     const subjects = issues.filter(
@@ -99,7 +102,6 @@ const RequestForm = ({ location }) => {
       setForm({
         ...form,
         irrigator_code: location.state.code,
-        subject: 'Otro',
         otherSubject: '',
         type: location.state.type
       })
@@ -108,6 +110,7 @@ const RequestForm = ({ location }) => {
 
   useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
+
     // checking for form validation
     if (
       location.state.type === 'requestforattention' ||
@@ -140,6 +143,11 @@ const RequestForm = ({ location }) => {
         setValid(false)
     }
   }, [requests, form])
+
+  useEffect(() => {
+    form.content?.length > 25 &&
+      setForm({ ...form, subject: truncate(form.content, 25) })
+  }, [form.content])
 
   useEffect(() => {
     if (geolocation) {
@@ -250,14 +258,12 @@ const RequestForm = ({ location }) => {
                     setForm({
                       ...form,
                       association_area: e.target.value,
-                      subject: 'Otro',
                       otherSubject: ''
                     })
                   } else {
                     setForm({
                       ...form,
                       association_area: e.target.value,
-                      subject: '',
                       otherSubject: ''
                     })
                   }
@@ -312,43 +318,6 @@ const RequestForm = ({ location }) => {
                 />
               </FormInput>
             )}
-
-          <FormInput label='Consultas más frecuentes' width='100%'>
-            <select
-              onChange={e => setForm({ ...form, subject: e.target.value })}
-            >
-              <option selected={form.subject === '' ? 'selected' : ''}>
-                Selecciona un asunto recurrente
-              </option>
-              {listaopc &&
-                listaopc.map((subject, index) => (
-                  <option key={index} value={subject.subject}>
-                    {subject.subject}
-                  </option>
-                ))}
-              <option
-                value='Otro'
-                selected={form.subject === 'Otro' ? 'selected' : ''}
-              >
-                Otro
-              </option>
-            </select>
-          </FormInput>
-
-          {form.subject === 'Otro' && (
-            <FormInput label='Escriba un título:'>
-              <input
-                type='text'
-                name='nombre'
-                onChange={e =>
-                  setForm({ ...form, otherSubject: e.target.value })
-                }
-                placeholder='Título breve'
-                value={form.otherSubject}
-              />
-            </FormInput>
-          )}
-
           <FormInput label='Breve descripción'>
             <textarea
               placeholder='Describa brevemente lo colocado en el título.'

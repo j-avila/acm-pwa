@@ -26,7 +26,11 @@ const RequestForm = ({ location }) => {
   const session = useSelector(({ login }) => login)
   const codeActive = useSelector(({ codeActive }) => codeActive)
   const [geolocation, setLocation] = useState()
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState({
+    visitreport_data: {
+      date: moment().format('YYYY-MM-DDThh:mm')
+    }
+  })
   const [listRequests, setList] = useState()
   const [invalid, setValid] = useState(true)
   const [irrigators, setIrrigators] = useState([])
@@ -309,6 +313,7 @@ const RequestForm = ({ location }) => {
               <FormInput label='Fecha de la visita'>
                 <input
                   type='datetime-local'
+                  value={form.visitreport_data?.date}
                   onChange={e =>
                     setForm({
                       ...form,

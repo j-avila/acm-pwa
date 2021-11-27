@@ -33,7 +33,6 @@ const IrrigatorDetail = props => {
   const [geoLocation, setGeoLocation] = useState()
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
-
   const handleModal = props => {
     const newForm = {
       ...form,
@@ -66,7 +65,6 @@ const IrrigatorDetail = props => {
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
-
         const ubication = {
           coordinates: {
             accuracy: pos.coords.accuracy,
@@ -79,7 +77,8 @@ const IrrigatorDetail = props => {
           }
         }
 
-        if( irrigator.detail && irrigator.detail.profile ) dispatch( updateCoords( irrigator.detail.profile.id, ubication ) )
+        if (irrigator.detail && irrigator.detail.profile)
+          dispatch(updateCoords(irrigator.detail.profile.id, ubication))
         setGeoLocation(ubication)
       })
     } else {
@@ -90,6 +89,9 @@ const IrrigatorDetail = props => {
   useEffect(() => {
     const code = location.state.data.code
     dispatch(getIrrigatorDetails(code))
+    setForm({
+      date: new Date()
+    })
   }, [])
 
   useEffect(() => {
@@ -116,8 +118,7 @@ const IrrigatorDetail = props => {
         }))
       )
     }
-  }, [irrigator.detail,irrigator.history])
-
+  }, [irrigator.detail, irrigator.history])
 
   return (
     <>
@@ -195,7 +196,7 @@ const IrrigatorDetail = props => {
                               obtener coordenadas
                             </Button>
                           )}
-                          <br/>
+                          <br />
                           <span>(punto entrega agua)</span>
                         </Row>
                       </Detail>
@@ -213,7 +214,9 @@ const IrrigatorDetail = props => {
                         className='fa fa-tint-slash'
                         size='20px'
                       ></Button>
-                      {["adminacm","sectionm"].includes(userLogged.role.type) ? null : (
+                      {['adminacm', 'sectionm'].includes(
+                        userLogged.role.type
+                      ) ? null : (
                         <Button
                           width='100%'
                           display='block'
@@ -246,7 +249,7 @@ const IrrigatorDetail = props => {
                   <Actions
                     style={{ gridTemplateColumns: '1fr', alignItems: 'center' }}
                   >
-                    {"adminacm" == userLogged.role.type ? null :(
+                    {'adminacm' == userLogged.role.type ? null : (
                       <Button
                         margin='0 auto'
                         onClick={() =>
@@ -288,6 +291,7 @@ const IrrigatorDetail = props => {
               <FormInput label='Elegir un Día'>
                 <input
                   type='datetime-local'
+                  value={form.date}
                   name='date'
                   onChange={e => setForm({ ...form, date: e.target.value })}
                 />

@@ -71,21 +71,29 @@ const Irrigators = () => {
   }, [usersList.data])
 
   useEffect(() => {
-    if("adminacm" == userLogged.role.type){
-      setChannels(channelsList.map(channel=>( {label: channel.name, value: channel.code} )));
-    }else{
+    let listChannels = [{ label: 'Todos', value: 0 }]
+    if ('adminacm' == userLogged.role.type) {
+      channelsList.map(channel => {
+        listChannels = [
+          ...listChannels,
+          { label: channel.name, value: channel.id }
+        ]
+      })
+    } else {
       if (channelsList.length >= 1) {
         let channelsList = removeDuplicates(
           user.assigned_irrigators,
           item => item.channel
         )
-  
-        let list = channelsList.map(channel => ({
-          label: channel.channel_name,
-          value: channel.channel
-        }))
-        setChannels(list)
+
+        channelsList.map(channel => {
+          listChannels = [
+            ...listChannels,
+            { label: channel.name, value: channel.channel }
+          ]
+        })
       }
+      setChannels(listChannels)
     }
   }, [channelsList])
 

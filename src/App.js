@@ -43,12 +43,15 @@ const App = () => {
   const user = useSelector(({ user }) => user)
   const session = useSelector(({ login }) => login)
 
-  const setSockets = () => {
+  const setSockets = async () => {
     const user = {
       userid: session.id,
       token: localStorage.getItem('session')
     }
-    socket.emit('join', user)
+    socket.emit('join', {
+      userid: session.id,
+      token: localStorage.getItem('session')
+    })
     socket.on('welcome', data =>
       console.log(
         `💻 welcome user ${data.username} 🔌 in the socket: ${data.socket}`
@@ -68,8 +71,9 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    sessionUser && setSockets()
-    user && setSockets()
+    if (sessionUser && user) {
+      setSockets()
+    }
   }, [sessionUser, user])
 
   return (

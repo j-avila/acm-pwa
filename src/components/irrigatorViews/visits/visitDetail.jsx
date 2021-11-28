@@ -54,6 +54,10 @@ const VisitDetail = props => {
             </h1>
             <Card className='info'>
               <p>
+                <strong>Creado por: </strong>
+                {details.association_user.name}
+              </p>
+              <p>
                 <strong>Fecha: </strong>
                 {moment(details.visitreport_data.date).format('DD/MM/YYYY')}
               </p>
@@ -148,18 +152,21 @@ const VisitDetail = props => {
             )}
           </>
         )}
-        {"adminacm" != userLogged.role.type && isAdmin && details && !details.closed && (
-          <Button
-            onClick={() =>
-              history.push({
-                pathname: `/solicitudes/${location.state.id}`,
-                state: { id: location.state.id }
-              })
-            }
-          >
-            Agregar Reporte
-          </Button>
-        )}
+        {'adminacm' != userLogged.role.type &&
+          isAdmin &&
+          details &&
+          !details.closed && (
+            <Button
+              onClick={() =>
+                history.push({
+                  pathname: `/solicitudes/${location.state.id}`,
+                  state: { id: location.state.id }
+                })
+              }
+            >
+              Agregar Reporte
+            </Button>
+          )}
       </DetailWrapper>
     </UserWrapper>
   )

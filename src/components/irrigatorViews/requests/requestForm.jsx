@@ -106,7 +106,7 @@ const RequestForm = ({ location }) => {
       setForm({
         ...form,
         irrigator_code: location.state.code,
-        otherSubject: '',
+        subject: truncate(form.content, 25),
         type: location.state.type
       })
     }
@@ -122,10 +122,7 @@ const RequestForm = ({ location }) => {
     ) {
       if (form.hasOwnProperty('subject')) {
         if (form.subject == 'Otro') {
-          if (
-            form.hasOwnProperty('otherSubject') &&
-            form.otherSubject.length > 10
-          ) {
+          if (form.hasOwnProperty('subject') && form.subject.length > 10) {
             setValid(false)
           } else {
             setValid(true)
@@ -139,7 +136,7 @@ const RequestForm = ({ location }) => {
         form.content &&
         setValid(false)
     } else if (location.state.type === 'channelreport') {
-      form.otherSubject &&
+      form.subject &&
         form.channel_code &&
         form.content &&
         form.visitreport_data &&
@@ -262,13 +259,13 @@ const RequestForm = ({ location }) => {
                     setForm({
                       ...form,
                       association_area: e.target.value,
-                      otherSubject: ''
+                      subject: truncate(form.content, 25)
                     })
                   } else {
                     setForm({
                       ...form,
                       association_area: e.target.value,
-                      otherSubject: ''
+                      subject: truncate(form.content, 25)
                     })
                   }
                 }}

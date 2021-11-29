@@ -55,7 +55,7 @@ const VisitDetail = props => {
             <Card className='info'>
               <p>
                 <strong>Creado por: </strong>
-                {details.association_user.name}
+                {details.association_user ? details.association_user.name : 'Sin registro'}
               </p>
               <p>
                 <strong>Fecha: </strong>

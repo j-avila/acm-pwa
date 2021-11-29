@@ -37,6 +37,7 @@ import Channels from './components/watchmanViews/channels'
 import PayReport from './components/irrigatorViews/debts/payReport'
 import GATracker from './components/hoc/GaTracker'
 import networkDetector from './components/hoc/networkDetector'
+import NotificationsForm from './components/watchmanViews/notifications'
 
 const App = () => {
   const [sessionUser, setUserSession] = useState()
@@ -121,6 +122,7 @@ const App = () => {
               <Route path='/regantes' component={Irrigators} />
               <Route path='/canales' component={Channels} />
               <Route path='/regante/:id' component={IrrigatorDetail} />
+              <Route path='/notificaciones' component={NotificationsForm} />
             </Switch>
           </GATracker>
         </Router>

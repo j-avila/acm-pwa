@@ -34,4 +34,4 @@ export const removeDuplicates = (data, key) => {
 }
 
 export const truncate = (input, length = 20) =>
-  input.length > 5 ? `${input.substring(0, length)}...` : input
+input && input.length > 5 ? `${input.substring(0, length)}...` : input

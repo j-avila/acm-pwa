@@ -71,30 +71,8 @@ const Irrigators = () => {
   }, [usersList.data])
 
   useEffect(() => {
-    let listChannels = [{ label: 'Todos', value: 0 }]
-    if ('adminacm' == userLogged.role.type) {
-      channelsList.map(channel => {
-        listChannels = [
-          ...listChannels,
-          { label: channel.name, value: channel.id }
-        ]
-      })
-    } else {
-      if (channelsList.length >= 1) {
-        let channelsList = removeDuplicates(
-          user.assigned_irrigators,
-          item => item.channel
-        )
-
-        channelsList.map(channel => {
-          listChannels = [
-            ...listChannels,
-            { label: channel.name, value: channel.channel }
-          ]
-        })
-      }
-      setChannels(listChannels)
-    }
+    let listChannels = [{ label: 'Todos', value: 0 }].concat(channelsList.map(channel => ({ label: channel.name, value: channel.code })))
+    setChannels(listChannels)
   }, [channelsList])
 
   return (

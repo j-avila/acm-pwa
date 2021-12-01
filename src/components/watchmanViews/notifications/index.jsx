@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getChannels } from '../../../store/actions/dashboard'
-import { getIrrigatorsList } from '../../../store/actions/irrigator'
 import { setNotification } from '../../../store/actions/notifications'
 import { fetchWatchmans } from '../../../store/actions/watchmans'
 import UserWrapper from '../../hoc/userWrapper'

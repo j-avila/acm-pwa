@@ -26,7 +26,8 @@ export const FormIrrigator = props => {
   const { submitAction, channels } = props
   const [channelsList, setChannelsList] = useState([])
   const [form, setForm] = useState({
-    date: moment().format('YYYY-MM-DD')
+    date: moment().format('YYYY-MM-DD'),
+    hour: moment().format('HH:mm')
   })
 
   const handleChange = e => {
@@ -109,6 +110,7 @@ export const FormWatchman = props => {
   const [channelsList, setChannelsList] = useState([])
   const [form, setForm] = useState({
     date: moment().format('YYYY-MM-DD'),
+    hour: moment().format('HH:mm'),
     association_area_code: 'watchman'
   })
 

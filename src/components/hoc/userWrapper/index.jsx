@@ -34,6 +34,20 @@ const adminMenu = [
   { name: 'cerrar sesión', path: '/cerrar-sesion' }
 ]
 
+/* Retornar el menu segun el tipo de usuario */
+const selectMenu = type => {
+  let menu = menuItems; // Menu por defecto
+  
+  if(type !== 'irrigator'){
+    menu = adminMenu;
+
+    /* Se oculta la opcion de notificaciones del celador y jefe de sección */
+    if(type === 'watchman' || type === 'sectionm')  menu = adminMenu.filter(item=>item.path !== '/notificaciones');
+  }
+
+  return menu;
+}
+
 export const ModalContent = styled.div`
   h2 {
     margin-bottom: 12px;
@@ -138,9 +152,7 @@ const UserLayout = props => {
         <>
           <Header
             title={pathName ? pathName : 'Canal del Maule'}
-            menuItems={
-              userLogged.role.name === 'irrigator' ? menuItems : adminMenu
-            }
+            menuItems={selectMenu(userLogged.role.name)}
             user={userData}
             menu
             back

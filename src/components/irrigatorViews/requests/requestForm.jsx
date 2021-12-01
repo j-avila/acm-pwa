@@ -92,27 +92,6 @@ const RequestForm = ({ location }) => {
   }, [user, roles, location])
 
   useEffect(() => {
-    issues.length >= 1 && setSubjects([...issues, { id: 0 }])
-
-    /* Setear en caso de no venir ningun asunto a Otro */
-    const subjects = issues.filter(
-      item => item.association_area && item.association_area.id == roles[0].id
-    )
-    if (
-      !subjects.length &&
-      (location.state.type === 'visitreport' ||
-        location.state.type === 'channelreport')
-    ) {
-      setForm({
-        ...form,
-        irrigator_code: location.state.code,
-        subject: truncate(form.content, 25),
-        type: location.state.type
-      })
-    }
-  }, [issues])
-
-  useEffect(() => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
 
     // checking for form validation
@@ -120,15 +99,7 @@ const RequestForm = ({ location }) => {
       location.state.type === 'requestforattention' ||
       location.state.type === 'annotation'
     ) {
-      if (form.hasOwnProperty('subject')) {
-        if (form.subject == 'Otro') {
-          if (form.hasOwnProperty('subject') && form.subject.length > 10) {
-            setValid(false)
-          } else {
-            setValid(true)
-          }
-        }
-      }
+      form.visitreport_data && form.content && setValid(false)
     } else if (location.state.type === 'visitreport') {
       form.irrigator_code &&
         form.visitreport_data &&
@@ -136,8 +107,7 @@ const RequestForm = ({ location }) => {
         form.content &&
         setValid(false)
     } else if (location.state.type === 'channelreport') {
-      form.subject &&
-        form.channel_code &&
+      form.channel_code &&
         form.content &&
         form.visitreport_data &&
         form.visitreport_data.date &&

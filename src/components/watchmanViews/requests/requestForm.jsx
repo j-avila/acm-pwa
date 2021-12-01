@@ -100,11 +100,11 @@ const RequestForm = () => {
     requests.hasOwnProperty('roles') && setList(requests.roles)
 
     // checking for form validation
-    form.association_area && form.subject && form.content && setValid(false)
+    form.association_area && form.content?.length && setValid(false)
   }, [requests, form])
 
   useEffect(() => {
-    form.content?.length > 10 &&
+    form.content?.length &&
       setForm({ ...form, subject: truncate(form.content) })
   }, [form.content])
 

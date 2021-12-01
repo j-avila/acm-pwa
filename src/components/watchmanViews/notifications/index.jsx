@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getChannels } from '../../../store/actions/dashboard'
+import { getIrrigatorsList } from '../../../store/actions/irrigator'
+import { setNotification } from '../../../store/actions/notifications'
+import { fetchWatchmans } from '../../../store/actions/watchmans'
 import UserWrapper from '../../hoc/userWrapper'
 import Button from '../../UI/button'
 import Card from '../../UI/card'
@@ -8,12 +12,25 @@ import { Wrapper } from './styles'
 
 const NotificationsForm = () => {
   // store
+  const dispatch = useDispatch()
   const channelsList = useSelector(({ channelsList }) => channelsList)
-  const usersList = useSelector(({ irrigators }) => irrigators)
-  const notification = useSelector(({ notifications }) => notifications)
+  const watchmansList = useSelector(({ watchmans }) => watchmans)
 
   // states
-  const [area, setArea] = useState()
+  const [area, setArea] = useState('irrigators')
+
+  const submitForm = notification => {
+    dispatch(setNotification(notification))
+  }
+
+  const getOptions = () => {
+    dispatch(fetchWatchmans())
+    dispatch(getChannels())
+  }
+
+  useEffect(() => {
+    getOptions()
+  }, [])
 
   return (
     <UserWrapper>
@@ -37,7 +54,19 @@ const NotificationsForm = () => {
           </Button>
         </div>
         <Card className='form-card'>
-          {area === 'irrigators' ? <FormIrrigator /> : <FormWatchman />}
+          {area === 'irrigators' ? (
+            <FormIrrigator
+              watchmans={watchmansList}
+              channels={channelsList}
+              submitAction={submitForm}
+            />
+          ) : (
+            <FormWatchman
+              watchmans={watchmansList}
+              channels={channelsList}
+              submitAction={submitForm}
+            />
+          )}
         </Card>
       </Wrapper>
     </UserWrapper>

@@ -38,7 +38,7 @@ export const Wrapper = styled.form`
     }
   }
 `
-export const ActionArea = styled.div`
+export const ActionArea = styled.form`
   display: flex;
   width: 100%;
   justify-content: space-between;

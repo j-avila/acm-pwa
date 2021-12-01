@@ -10,6 +10,7 @@ import { visits } from './visits'
 import { irrigator } from './irrigator'
 import { irrigators } from './irrigators'
 import { reports } from './reports'
+import { watchmans } from './watchmans'
 
 const errors = (state = {}, action) => {
   switch (action.type) {
@@ -91,5 +92,6 @@ export default combineReducers({
   irrigator,
   reports,
   recurrentIssues,
-  irrigators
+  irrigators,
+  watchmans
 })

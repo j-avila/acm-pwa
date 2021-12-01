@@ -29,7 +29,7 @@ const adminMenu = [
   { name: 'Solicitudes', path: '/solicitudes' },
   { name: 'Reportes de Visitas', path: '/visitas' },
   { name: 'información de los canales', path: '/canales' },
-  // { name: 'perfil', path: '/perfil' },
+  { name: 'Notificaciones', path: '/notificaciones' },
   { name: 'ajustes', path: '/opciones' },
   { name: 'cerrar sesión', path: '/cerrar-sesion' }
 ]
@@ -64,10 +64,12 @@ const UserLayout = props => {
   const history = useHistory()
   const dispatch = useDispatch()
   const errorMsg = useSelector(({ errors }) => errors)
+  const notificationMsg = useSelector(({ notifications }) => notifications)
   const userData = useSelector(({ user }) => user)
   const codeActive = useSelector(({ codeActive }) => codeActive)
   const { children, pathName } = props
   const [error, setError] = useState()
+  const [notification, setNotification] = useState()
   const [watchman, showWatchman] = useState()
   const [userCodes, setCodes] = useState()
   const [close, closeSession] = useState()
@@ -122,8 +124,13 @@ const UserLayout = props => {
   }, [codeActive])
 
   useEffect(() => {
-    errorMsg && errorMsg.hasOwnProperty('message') && setError(errorMsg)
+    errorMsg?.hasOwnProperty('message') && setError(errorMsg)
   }, [errorMsg])
+
+  useEffect(() => {
+    notificationMsg?.hasOwnProperty('message') &&
+      setNotification(notificationMsg)
+  }, [notificationMsg])
 
   return (
     <>
@@ -142,6 +149,24 @@ const UserLayout = props => {
           <section>{children}</section>
           {!pathName && userCodes && userCodes.length >= 1 && (
             <Toggler items={userData.my_other_codes} activeCode={codeActive} />
+          )}
+          {notification && notification.hasOwnProperty('message') && (
+            <Modal>
+              <ModalContent type='success'>
+                <i className='fas fa-exclamation-triangle'></i>
+                <p>{notification.message}</p>
+                <Button
+                  background='primary'
+                  width='100%'
+                  onClick={() => {
+                    setNotification(false)
+                    dispatch({ type: type.NOTIFICATIONS, notification: '' })
+                  }}
+                >
+                  Volver
+                </Button>
+              </ModalContent>
+            </Modal>
           )}
           {error && error.hasOwnProperty('message') && (
             <Modal>
@@ -205,8 +230,16 @@ const UserLayout = props => {
                     >
                       cerrar
                     </Button>
-                    <Button disabled={ userData.watchman.telephone ? '' : 'disabled' }>
-                      <a href={userData.watchman.telephone ? `tel:${userData.watchman.telephone}` : '#'}>
+                    <Button
+                      disabled={userData.watchman.telephone ? '' : 'disabled'}
+                    >
+                      <a
+                        href={
+                          userData.watchman.telephone
+                            ? `tel:${userData.watchman.telephone}`
+                            : '#'
+                        }
+                      >
                         <i className='fas fa-phone' /> Llamar
                       </a>
                     </Button>

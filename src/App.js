@@ -115,6 +115,18 @@ const App = () => {
                 component={checkRole(session) ? Visits : AdminReports}
                 exact
               />
+              <Route
+                path='/notificaciones'
+                component={
+                  session?.role?.type &&
+                  !['irrigator', 'watchman', 'sectionm'].includes(
+                    session.role.type
+                  )
+                    ? NotificationsForm
+                    : Dashboard
+                }
+                exact
+              />
               <Route path='/visitas/:id' component={VisitDetail} />
               <Route path='/perfil' component={EditProfile} />
               <Route path='/opciones' component={Settings} />
@@ -122,7 +134,7 @@ const App = () => {
               <Route path='/regantes' component={Irrigators} />
               <Route path='/canales' component={Channels} />
               <Route path='/regante/:id' component={IrrigatorDetail} />
-              <Route path='/notificaciones' component={NotificationsForm} />
+              {/* <Route path='/notificaciones' component={NotificationsForm} /> */}
             </Switch>
           </GATracker>
         </Router>

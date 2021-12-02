@@ -2,15 +2,17 @@ import axios from 'axios'
 import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
+
 export const getIrrigatorsList = (
   from = 0,
   to = 20,
   param,
-  channel
+  channel,
+  reset = false
 ) => async dispatch => {
   const channelparam = `$&channel=${channel}`
   const nameparam = `&_where[_or][0][code_contains]=${param}&_where[_or][1][name_contains]=${param}`
-  const url = `${apiUrl}/irrigators?_sort=name:asc&_start=${from}&_limit=${to}${
+  const url = `${apiUrl}/irrigators?_sort=name:asc,code:asc&_start=${from}&_limit=${to}${
     channel ? channelparam : ''
   }${param ? nameparam : ''}`
   const counterURL = `${apiUrl}/irrigators/count?${
@@ -25,10 +27,12 @@ export const getIrrigatorsList = (
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
+      /* El parametro reset cuando recibe TRUE, envia la señal de limpiar el state */
       dispatch({
         type: type.GET_IRRIGATORS_LIST,
         irrigators: data,
-        count: count
+        count: count,
+        reset
       })
       dispatch({ type: type.LOADING, load: false })
     })
@@ -42,11 +46,12 @@ export const filterIrrigatorsList = (
   from = 0,
   to = 20,
   param,
-  channel
+  channel,
+  reset = false
 ) => async dispatch => {
   const channelparam = `&channel=${channel}`
   const nameparam = `&_where[_or][0][code_contains]=${param}&_where[_or][1][name_contains]=${param}`
-  const url = `${apiUrl}/irrigators?_sort=name:asc&_start=${from}&_limit=${to}${
+  const url = `${apiUrl}/irrigators?_sort=name:asc,code:asc&_start=${from}&_limit=${to}${
     channel ? channelparam : ''
   }${param ? nameparam : ''}`
   const counterURL = `${apiUrl}/irrigators/count?${
@@ -61,10 +66,12 @@ export const filterIrrigatorsList = (
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
+      /* El parametro reset cuando recibe TRUE, envia la señal de limpiar el state */
       dispatch({
         type: type.FILTER_IRRIGATORS_LIST,
         irrigators: data,
-        count: count
+        count: count,
+        reset
       })
       dispatch({ type: type.LOADING, load: false })
     })

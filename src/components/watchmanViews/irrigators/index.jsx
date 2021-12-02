@@ -13,7 +13,6 @@ import {
 } from '../../../store/actions/irrigator'
 import Select from 'react-select'
 import { getChannels } from '../../../store/actions/dashboard'
-import { removeDuplicates } from '../../hoc/utils'
 
 const Irrigators = () => {
   const history = useHistory()
@@ -25,7 +24,13 @@ const Irrigators = () => {
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
   const codeActive = useSelector(({ codeActive }) => codeActive)
   const [channels, setChannels] = useState([])
-  const user = useSelector(({ user }) => user)
+
+  /* Paginación de los regantes */
+  const [pageControl, setPageControl] = useState({
+    start:0,
+    limit:20,
+    reset:false
+  })
 
   const handleItem = ({ id, code }) => {
     const detail = usersList.data.filter(i => i.code === id)
@@ -47,11 +52,27 @@ const Irrigators = () => {
     listed && setList(list)
   }
 
-  const fetchIrrigators = (from, to) => {
-    dispatch(getIrrigatorsList(from, to))
+  const fetchIrrigators = () => {
+
+    if (filter.name.length >= 4 || filter.channel >= 1) {
+      
+      dispatch(filterIrrigatorsList(pageControl.start, pageControl.limit, filter.name, filter.channel))
+      
+    } else {
+
+      dispatch(getIrrigatorsList(pageControl.start, pageControl.limit))
+    }
+    pageControl.start += pageControl.limit;
+    setPageControl(pageControl)
   }
 
   useEffect(() => {
+    /* Se limpia los datos cuando se ingresa al componente */
+    setList([])
+    pageControl.start = 0;
+    setPageControl(pageControl)
+
+    dispatch(getIrrigatorsList(0, 20, null, null, true))
     const role = userLogged.role.name
     dispatch(userDataHandler(role, codeActive))
     fetchIrrigators()
@@ -60,10 +81,23 @@ const Irrigators = () => {
 
   useEffect(() => {
     if (filter.name.length >= 4 || filter.channel >= 1) {
-      dispatch(filterIrrigatorsList(0, 20, filter.name, filter.channel))
+      /* Se ejecuta cuando se supera la longitud del texto o se elige un canal */
+      /* Se limpia los datos cuando se ingresa al component */
+      setList([])
+      pageControl.start = 0;
+
+      dispatch(filterIrrigatorsList(0, 20, filter.name, filter.channel, true));
+      fetchIrrigators()
     } else if (filter.name === '' || !filter.channel) {
+      /* Se ejecuta si se limpia y se deja en blanco */
+      /* Se limpia los datos cuando se ingresa al component */
+      setList([])
+      pageControl.start = 0;
+      dispatch(getIrrigatorsList(0, 20, null, null, true));
+
       fetchIrrigators()
     }
+    setPageControl(pageControl)
   }, [filter])
 
   useEffect(() => {
@@ -104,7 +138,7 @@ const Irrigators = () => {
         <List
           items={irrigators}
           action={handleItem}
-          refresh={fetchIrrigators}
+          refresh={()=>fetchIrrigators()}
           count={usersList.count}
           listed
         />

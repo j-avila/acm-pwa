@@ -1,25 +1,21 @@
-import { removeDuplicates } from '../../components/hoc/utils'
-import * as types from './types'
-
 export const irrigators = (state = { data: [] }, action) => {
-  switch (action.type) {
-    case types.GET_IRRIGATORS_LIST:
-      let newitems = action.irrigators
-      let list = [...state.data, ...newitems]
-      let filtered = removeDuplicates(list, item => item.id)
-      return {
-        ...state,
-        count: action.count,
-        data: filtered
-      }
-    case types.FILTER_IRRIGATORS_LIST:
-      return {
-        ...state,
-        count: action.count,
-        data: action.irrigators
-      }
+  /* Limpiar el state */
+  if(action.reset) state = { data: [] }
 
-    default:
-      return state
+  const flagValue = JSON.stringify(state.data)
+  const list = JSON.parse(flagValue)
+
+  if(action['irrigators']) {
+    action.irrigators.forEach(element => {
+      if(!flagValue.includes(JSON.stringify(element))) list.push(element)
+    });
+
+    return {
+      ...state,
+      count: action.count,
+      data: list
+    }
   }
+
+  return state
 }

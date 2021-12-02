@@ -58,14 +58,14 @@ export const ItemsList = styled.ul`
   }
   span {
     color: ${({ theme }) => theme.base};
-    font-size: xx-small;
+    font-size: 1rem;
   }
   .paginator {
     display: block;
     width: max-content;
     margin: 0 auto;
     margin-top: 12px;
-    font-size: 12px;
+    font-size: 1rem;
     color: ${({ theme }) => theme.secondary};
     padding: 8px 12px;
     border-radius: 8px;

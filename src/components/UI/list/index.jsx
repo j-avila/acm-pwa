@@ -13,7 +13,7 @@ const List = props => {
   }
 
   const refreshHandler = async () => {
-    setPage({ from: page.from + 20, to: page.to + 20 })
+    setPage({ from: page.from + 20, to:20 })
   }
 
   useEffect(() => {

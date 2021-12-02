@@ -84,7 +84,7 @@ const Login = props => {
               <input
                 type='text'
                 placeholder='Código de Regante'
-                onChange={e => setForm({ ...form, identifier: e.target.value })}
+                onChange={e => setForm({ ...form, identifier: e.target.value.trim() })}
               />
             </FormInput>
             <FormInput className='field append' label='Ingresa tu Contraseña'>
@@ -93,7 +93,7 @@ const Login = props => {
                   type={visiblePassword ? 'text' : 'password'}
                   placeholder='Tu contraseña'
                   style={{ display: 'inline-block', width: 'calc(90% - 36px)' }}
-                  onChange={e => setForm({ ...form, password: e.target.value })}
+                  onChange={e => setForm({ ...form, password: e.target.value.trim() })}
                 />
                 <i
                   className={`fas ${

@@ -20,6 +20,13 @@ export const fetchVisits = code => async dispatch => {
 }
 
 export const fetchReports = () => async dispatch => {
+  const counter = async () =>
+    await axios
+      .get(`${apiUrl}/event-books/count?type=visitreport`, getAuth())
+      .then(({ data }) => data)
+
+  console.log('counting', await counter())
+
   const reports = axios.get(
     `${apiUrl}/event-books?type=visitreport&_sort=published_at:desc`,
     getAuth()
@@ -30,10 +37,15 @@ export const fetchReports = () => async dispatch => {
   )
 
   axios.all([reports, binnacles], getAuth()).then(
-    axios.spread((...resp) => {
+    axios.spread(async (...resp) => {
+      const count = await counter()
       dispatch({
         type: type.GET_REPORTS,
-        reports: { reports: resp[0].data, binnacles: resp[1].data }
+        reports: {
+          counters: count,
+          reports: resp[0].data,
+          binnacles: resp[1].data
+        }
       })
     })
   )

@@ -34,7 +34,7 @@ const NotificationsForm = () => {
   return (
     <UserWrapper>
       <Wrapper>
-        <h1>Crear notificacion</h1>
+        <h1>Crear notificación</h1>
         <p>Selecciona un area a notificar</p>
         <div className='selector'>
           <Button

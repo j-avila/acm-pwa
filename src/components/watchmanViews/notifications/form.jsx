@@ -85,7 +85,7 @@ export const FormIrrigator = props => {
           onChange={handleChange}
         />
       </FormInput>
-      <FormInput label='elige una hora para el envío'>
+      <FormInput label='Elige una hora para el envío'>
         <input
           type='time'
           name='hour'

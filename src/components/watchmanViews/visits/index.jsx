@@ -10,12 +10,10 @@ import Tabs, { Panel } from '../../UI/tabs'
 import { VisitsWrapper } from './styles'
 import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
-import { checkRole } from '../../hoc/utils'
 
 const AdminReports = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const visitsList = useSelector(({ visits }) => visits)
   const reportData = useSelector(({ reports }) => reports)
   const notification = useSelector(({ notifications }) => notifications)
   const [visits, setVisits] = useState({
@@ -34,8 +32,12 @@ const AdminReports = () => {
     history.push('/visitas')
   }
 
-  useEffect(() => {
+  const fetchVisitsData = () => {
     dispatch(fetchReports())
+  }
+
+  useEffect(() => {
+    fetchVisitsData()
   }, [])
 
   useEffect(() => {
@@ -48,8 +50,10 @@ const AdminReports = () => {
           id: item.id,
           title: item.subject,
           status: item.closed && 'fa-check',
-          subtitle: `Creada: ${moment(item.createdAt).format('DD/MM/YYYY HH:mm')} - Cod: ${item.irrigator_code || item.channel_code}`, 
-          viewitem: 0,
+          subtitle: `Creada: ${moment(item.createdAt).format(
+            'DD/MM/YYYY HH:mm'
+          )} - Cod: ${item.irrigator_code || item.channel_code}`,
+          viewitem: 0
         }))
 
       const reports = createList(reportData.reports)
@@ -65,8 +69,14 @@ const AdminReports = () => {
       <VisitsWrapper>
         <Tabs selected={0}>
           <Panel title='Visitas'>
-            <List items={visits.reports} action={handleItem} />
-            {["adminacm","sectionm"].includes(userLogged.role.type) ? null :(
+            <List
+              items={visits.reports}
+              action={handleItem}
+              refresh={fetchVisitsData}
+              count={visits.count[0]}
+              listed
+            />
+            {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (
               <Button
                 onClick={() =>
                   history.push({
@@ -80,8 +90,14 @@ const AdminReports = () => {
             )}
           </Panel>
           <Panel title='Canal'>
-            <List items={visits.binnacles} action={handleItem} />
-            {["adminacm","sectionm"].includes(userLogged.role.type) ? null :(
+            <List
+              items={visits.binnacles}
+              action={handleItem}
+              refresh={fetchVisitsData}
+              count={visits.count[1]}
+              listed
+            />
+            {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (
               <Button
                 onClick={() =>
                   history.push({

@@ -51,19 +51,17 @@ const RequestForm = ({ location }) => {
   const handleModalAction = () => {
     if (notification.type === 'geolocation') {
       dispatch({ type: type.NOTIFICATIONS, notification: false })
+    } else if (location.state.type === 'visitreport') {
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+      history.push({
+        pathname: `/visitas`
+      })
     } else {
-      if (location.state.type === 'visitreport') {
-        dispatch({ type: type.NOTIFICATIONS, notification: false })
-        history.push({
-          pathname: `/visitas`
-        })
-      } else {
-        dispatch({ type: type.NOTIFICATIONS, notification: false })
-        history.push({
-          pathname: `/solicitudes/${requests.requestDetail.id}`,
-          state: { id: requests.requestDetail.id }
-        })
-      }
+      dispatch({ type: type.NOTIFICATIONS, notification: false })
+      history.push({
+        pathname: `/solicitudes/${requests.requestDetail.id}`,
+        state: { id: requests.requestDetail.id }
+      })
     }
   }
 
@@ -99,16 +97,16 @@ const RequestForm = ({ location }) => {
       location.state.type === 'requestforattention' ||
       location.state.type === 'annotation'
     ) {
-      form.visitreport_data && form.content && setValid(false)
+      form.visitreport_data && form.subject && setValid(false)
     } else if (location.state.type === 'visitreport') {
       form.irrigator_code &&
         form.visitreport_data &&
         form.visitreport_data.date &&
-        form.content &&
+        form.subject &&
         setValid(false)
     } else if (location.state.type === 'channelreport') {
       form.channel_code &&
-        form.content &&
+        form.subject &&
         form.visitreport_data &&
         form.visitreport_data.date &&
         setValid(false)
@@ -295,7 +293,7 @@ const RequestForm = ({ location }) => {
               placeholder='Describa brevemente lo colocado en el título.'
               cols='6'
               rows='6'
-              onChange={e => setForm({ ...form, content: e.target.value })}
+              onChange={e => setForm({ ...form, subject: e.target.value })}
             ></textarea>
           </FormInput>
 

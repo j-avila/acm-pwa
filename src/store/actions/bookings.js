@@ -64,7 +64,7 @@ export const createRequest = form => async dispatch => {
       dispatch({ type: type.LOADING, load: false })
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: 'Solicitud enviada con exito' }
+        notification: { type: 'report', message: 'Solicitud enviada con exito' }
       })
     })
     .catch(err => {

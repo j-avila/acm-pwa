@@ -36,16 +36,17 @@ const adminMenu = [
 
 /* Retornar el menu segun el tipo de usuario */
 const selectMenu = type => {
-  let menu = menuItems; // Menu por defecto
-  
-  if(type !== 'irrigator'){
-    menu = adminMenu;
+  let menu = menuItems // Menu por defecto
+
+  if (type !== 'irrigator') {
+    menu = adminMenu
 
     /* Se oculta la opcion de notificaciones del celador y jefe de sección */
-    if(type === 'watchman' || type === 'sectionm')  menu = adminMenu.filter(item=>item.path !== '/notificaciones');
+    if (type === 'watchman' || type === 'sectionm')
+      menu = adminMenu.filter(item => item.path !== '/notificaciones')
   }
 
-  return menu;
+  return menu
 }
 
 export const ModalContent = styled.div`
@@ -162,25 +163,27 @@ const UserLayout = props => {
           {!pathName && userCodes && userCodes.length >= 1 && (
             <Toggler items={userData.my_other_codes} activeCode={codeActive} />
           )}
-          {notification && notification.hasOwnProperty('message') && (
-            <Modal>
-              <ModalContent type='success'>
-                <i className='fas fa-exclamation-triangle'></i>
-                <p>{notification.message}</p>
-                <Button
-                  background='primary'
-                  width='100%'
-                  onClick={() => {
-                    setNotification(false)
-                    dispatch({ type: type.NOTIFICATIONS, notification: '' })
-                    history.push('/panel-de-control')
-                  }}
-                >
-                  Volver
-                </Button>
-              </ModalContent>
-            </Modal>
-          )}
+          {notification &&
+            notification.hasOwnProperty('message') &&
+            notification?.type !== 'report' && (
+              <Modal>
+                <ModalContent type='success'>
+                  <i className='fas fa-exclamation-triangle'></i>
+                  <p>{notification.message}</p>
+                  <Button
+                    background='primary'
+                    width='100%'
+                    onClick={() => {
+                      setNotification(false)
+                      dispatch({ type: type.NOTIFICATIONS, notification: '' })
+                      history.push('/panel-de-control')
+                    }}
+                  >
+                    Volver
+                  </Button>
+                </ModalContent>
+              </Modal>
+            )}
           {error && error.hasOwnProperty('message') && (
             <Modal>
               <ModalContent type='error'>

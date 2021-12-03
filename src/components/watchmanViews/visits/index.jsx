@@ -73,7 +73,7 @@ const AdminReports = () => {
               items={visits.reports}
               action={handleItem}
               refresh={fetchVisitsData}
-              count={visits.count[0]}
+              // count={visits.count[0]}
               listed
             />
             {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (
@@ -94,7 +94,7 @@ const AdminReports = () => {
               items={visits.binnacles}
               action={handleItem}
               refresh={fetchVisitsData}
-              count={visits.count[1]}
+              // count={visits.count[1]}
               listed
             />
             {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (

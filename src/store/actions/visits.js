@@ -19,20 +19,24 @@ export const fetchVisits = code => async dispatch => {
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
-export const fetchReports = () => async dispatch => {
+export const fetchReports = (
+  pagestart = 0,
+  pagelimit = 20
+) => async dispatch => {
   const counter = async () =>
     await axios
-      .get(`${apiUrl}/event-books/count?type=visitreport`, getAuth())
+      .get(
+        `${apiUrl}/event-books/count?type=visitreport&_start=${pagestart}&_limit=${pagelimit}`,
+        getAuth()
+      )
       .then(({ data }) => data)
 
-  console.log('counting', await counter())
-
   const reports = axios.get(
-    `${apiUrl}/event-books?type=visitreport&_sort=published_at:desc`,
+    `${apiUrl}/event-books?type=visitreport&_sort=published_at:desc&_start=${pagestart}&_limit=${pagelimit}`,
     getAuth()
   )
   const binnacles = axios.get(
-    `${apiUrl}/event-books?type=channelreport`,
+    `${apiUrl}/event-books?type=channelreport&_start=${pagestart}&_limit=${pagelimit}`,
     getAuth()
   )
 

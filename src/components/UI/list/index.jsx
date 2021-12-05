@@ -4,7 +4,7 @@ import { ItemsList } from './styles'
 import { useSelector } from 'react-redux'
 
 const List = props => {
-  const { items, action, refresh, count, data, listed } = props
+  const { items, action, refresh, count, data, listed, loadState } = props
   const loading = useSelector(({ loading }) => loading)
   const [page, setPage] = useState({ from: 0, to: 20 })
 
@@ -13,7 +13,7 @@ const List = props => {
   }
 
   const refreshHandler = async () => {
-    setPage({ from: page.from + 20, to:20 })
+    setPage({ from: page.from + 20, to: 20 })
   }
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const List = props => {
             <>
               <span>{`Viendo ${items.length} de ${count} `}</span>
               <span className='paginator' onClick={() => refreshHandler()}>
-                {loading && items.length >= 1 ? (
+                {loadState && items.length >= 1 ? (
                   <i className='fas fa-sync fa-spin fa-3x' />
                 ) : (
                   <>
@@ -55,7 +55,7 @@ const List = props => {
                 )}
               </span>
             </>
-          ) : items.length === count ? (
+          ) : items.length === count || items.length > count ? (
             <span>Haz llegado al final de la lista</span>
           ) : (
             ''

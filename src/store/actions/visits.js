@@ -6,7 +6,7 @@ export const fetchVisits = code => async dispatch => {
   const url = code
     ? `${apiUrl}/event-books?type=visitreport&irrigator_code=${code}`
     : `${apiUrl}/event-books?type=visitreport`
-  dispatch({ type: type.LOADING, load: true })
+  dispatch({ type: type.LOADING, loading: true })
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
@@ -14,7 +14,7 @@ export const fetchVisits = code => async dispatch => {
         type: type.GET_VISITS,
         visits: data
       })
-      dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.LOADING, loading: false })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
@@ -39,6 +39,7 @@ export const fetchReports = (
   )
 
   const getall = async () => {
+    // dispatch({ type: type.LOADING, loading: true })
     await axios.all([reports, binnacles], getAuth()).then(
       axios.spread(async (...resp) => {
         const vCount = await counter('visitreport')
@@ -55,9 +56,11 @@ export const fetchReports = (
         })
       })
     )
+    // dispatch({ type: type.LOADING, loading: false })
   }
 
   const getReports = async () => {
+    dispatch({ type: type.LOADING_REPORTS, loading: true })
     const vCount = await counter('visitreport')
 
     dispatch({
@@ -67,9 +70,11 @@ export const fetchReports = (
         reports: reports.data
       }
     })
+    dispatch({ type: type.LOADING_REPORTS, loading: false })
   }
 
   const getBinnacles = async () => {
+    dispatch({ type: type.LOADING_REPORTS, loading: true })
     const bCount = await counter('channelreport')
 
     dispatch({
@@ -79,6 +84,7 @@ export const fetchReports = (
         binnacles: binnacles.data
       }
     })
+    dispatch({ type: type.LOADING_REPORTS, loading: false })
   }
 
   console.log(reqType)
@@ -98,7 +104,7 @@ export const fetchReports = (
 
 export const fetchVisit = id => async dispatch => {
   const url = `${apiUrl}/event-books/${id}`
-  dispatch({ type: type.LOADING, load: true })
+  dispatch({ type: type.LOADING, loading: true })
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
@@ -106,14 +112,14 @@ export const fetchVisit = id => async dispatch => {
         type: type.GET_VISITS_DETAILS,
         visit: data
       })
-      dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.LOADING, loading: false })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
 export const getBio = id => async dispatch => {
   const url = `${apiUrl}/get-messages/${id}`
-  dispatch({ type: type.LOADING, load: true })
+  dispatch({ type: type.LOADING, loading: true })
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
@@ -121,17 +127,17 @@ export const getBio = id => async dispatch => {
         type: type.GET_VISIT_BIO,
         messages: data
       })
-      dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.LOADING, loading: false })
     })
     .catch(err => {
       dispatch({ type: type.ERROR, error: err })
-      dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.LOADING, loading: false })
     })
 }
 
 export const getRoles = () => async dispatch => {
   const url = `${apiUrl}/association-areas`
-  dispatch({ type: type.LOADING, load: true })
+  dispatch({ type: type.LOADING, loading: true })
 
   return axios
     .get(url, getAuth())
@@ -140,14 +146,14 @@ export const getRoles = () => async dispatch => {
         type: type.GET_ROLES,
         roles: data
       })
-      dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.LOADING, loading: false })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
 export const createVisitRequest = form => async dispatch => {
   const url = `${apiUrl}/event-books`
-  dispatch({ type: type.LOADING, load: true })
+  dispatch({ type: type.LOADING, loading: true })
   return axios
     .post(url, form, getAuth())
     .then(({ data }) => {
@@ -155,7 +161,7 @@ export const createVisitRequest = form => async dispatch => {
         type: type.REQUEST_VISIT,
         vistisRequest: data
       })
-      dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.LOADING, loading: false })
       dispatch({
         type: type.NOTIFICATIONS,
         notification: { message: 'Solicitud enviada con exito' }
@@ -163,6 +169,6 @@ export const createVisitRequest = form => async dispatch => {
     })
     .catch(err => {
       dispatch({ type: type.ERROR, error: err })
-      dispatch({ type: type.LOADING, load: false })
+      dispatch({ type: type.LOADING, loading: false })
     })
 }

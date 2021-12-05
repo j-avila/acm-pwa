@@ -2,13 +2,13 @@ import * as types from './types'
 
 export const reports = (state = { reports: [], binnacles: [] }, action) => {
   let newReports = action.reports
-  if (state.reports.length > 0 && action.reports.reports) {
+  if (state.reports.length > 0 && action.reports?.reports) {
     newReports = {
       ...newReports,
       reports: [...state.reports, ...action.reports.reports]
     }
   }
-  if (state.binnacles.length > 0 && action.reports.binnacles) {
+  if (state.binnacles.length > 0 && action.reports?.binnacles) {
     newReports = {
       ...newReports,
       binnacles: [...state.binnacles, ...action.reports.binnacles]
@@ -27,6 +27,11 @@ export const reports = (state = { reports: [], binnacles: [] }, action) => {
       return {
         ...state,
         binnacles: [...state.binnacles, ...action.reports.binnacles]
+      }
+    case types.LOADING_REPORTS:
+      return {
+        ...state,
+        loading: action.loading
       }
 
     default:

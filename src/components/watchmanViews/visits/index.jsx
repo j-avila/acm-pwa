@@ -10,6 +10,7 @@ import Tabs, { Panel } from '../../UI/tabs'
 import { VisitsWrapper } from './styles'
 import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
+import { reports } from '../../../store/reducers/reports'
 
 const AdminReports = () => {
   const history = useHistory()
@@ -93,6 +94,7 @@ const AdminReports = () => {
                 )
               }
               count={reportData.reportsCount}
+              loadState={reportData.loading}
               listed
             />
             {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (
@@ -120,6 +122,7 @@ const AdminReports = () => {
                 )
               }
               count={reportData.binnaclesCount}
+              loadState={reportData.loading}
               listed
             />
             {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (

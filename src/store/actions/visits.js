@@ -21,38 +21,79 @@ export const fetchVisits = code => async dispatch => {
 
 export const fetchReports = (
   pagestart = 0,
-  pagelimit = 20
+  pagelimit = 20,
+  reqType = undefined
 ) => async dispatch => {
-  const counter = async () =>
+  const counter = async type =>
     await axios
-      .get(
-        `${apiUrl}/event-books/count?type=visitreport&_start=${pagestart}&_limit=${pagelimit}`,
-        getAuth()
-      )
+      .get(`${apiUrl}/event-books/count?type=${type}`, getAuth())
       .then(({ data }) => data)
 
-  const reports = axios.get(
+  const reports = await axios.get(
     `${apiUrl}/event-books?type=visitreport&_sort=published_at:desc&_start=${pagestart}&_limit=${pagelimit}`,
     getAuth()
   )
-  const binnacles = axios.get(
-    `${apiUrl}/event-books?type=channelreport&_start=${pagestart}&_limit=${pagelimit}`,
+  const binnacles = await axios.get(
+    `${apiUrl}/event-books?type=channelreport&_sort=name:asc,code:asc&_start=${pagestart}&_limit=${pagelimit}`,
     getAuth()
   )
 
-  axios.all([reports, binnacles], getAuth()).then(
-    axios.spread(async (...resp) => {
-      const count = await counter()
-      dispatch({
-        type: type.GET_REPORTS,
-        reports: {
-          counters: count,
-          reports: resp[0].data,
-          binnacles: resp[1].data
-        }
+  const getall = async () => {
+    await axios.all([reports, binnacles], getAuth()).then(
+      axios.spread(async (...resp) => {
+        const vCount = await counter('visitreport')
+        const bCount = await counter('channelreport')
+
+        dispatch({
+          type: type.GET_REPORTS,
+          reports: {
+            reportsCount: vCount,
+            binnaclesCount: bCount,
+            reports: resp[0].data,
+            binnacles: resp[1].data
+          }
+        })
       })
+    )
+  }
+
+  const getReports = async () => {
+    const vCount = await counter('visitreport')
+
+    dispatch({
+      type: type.GET_VISIT_REPORTS,
+      reports: {
+        reportsCount: vCount,
+        reports: reports.data
+      }
     })
-  )
+  }
+
+  const getBinnacles = async () => {
+    const bCount = await counter('channelreport')
+
+    dispatch({
+      type: type.GET_CHANNEL_REPORTS,
+      reports: {
+        binnaclesCount: bCount,
+        binnacles: binnacles.data
+      }
+    })
+  }
+
+  console.log(reqType)
+
+  switch (reqType) {
+    case 'visits':
+      getReports()
+      break
+    case 'channels':
+      getBinnacles()
+      break
+    default:
+      getall()
+      break
+  }
 }
 
 export const fetchVisit = id => async dispatch => {

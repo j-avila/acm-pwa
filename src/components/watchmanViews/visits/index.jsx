@@ -2,7 +2,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
-import { fetchReports, fetchVisits } from '../../../store/actions/visits'
+import { fetchReports } from '../../../store/actions/visits'
 import UserWrapper, { ModalContent } from '../../hoc/userWrapper'
 import Button from '../../UI/button'
 import List from '../../UI/list'
@@ -20,6 +20,11 @@ const AdminReports = () => {
     booked: [],
     done: []
   })
+  const [pageControl, setPageControl] = useState({
+    visitsStart: 0,
+    channelStart: 0,
+    limit: 20
+  })
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const handleItem = ({ id }) => {
@@ -32,8 +37,16 @@ const AdminReports = () => {
     history.push('/visitas')
   }
 
-  const fetchVisitsData = () => {
-    dispatch(fetchReports())
+  const fetchVisitsData = (start, limit, reqType) => {
+    dispatch(fetchReports(start, limit, reqType))
+    console.log(reqType)
+
+    let startNum = reqType === 'visits' ? 'visitsStart' : 'channelStart'
+    let paged = {
+      ...pageControl,
+      [startNum]: (pageControl[startNum] += 20)
+    }
+    setPageControl(paged)
   }
 
   useEffect(() => {
@@ -46,7 +59,7 @@ const AdminReports = () => {
       reportData.hasOwnProperty('binnacles')
     ) {
       const createList = arr =>
-        arr.map(item => ({
+        arr?.map(item => ({
           id: item.id,
           title: item.subject,
           status: item.closed && 'fa-check',
@@ -72,8 +85,14 @@ const AdminReports = () => {
             <List
               items={visits.reports}
               action={handleItem}
-              refresh={fetchVisitsData}
-              // count={visits.count[0]}
+              refresh={() =>
+                fetchVisitsData(
+                  pageControl.visitsStart,
+                  pageControl.limit,
+                  'visits'
+                )
+              }
+              count={reportData.reportsCount}
               listed
             />
             {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (
@@ -93,8 +112,14 @@ const AdminReports = () => {
             <List
               items={visits.binnacles}
               action={handleItem}
-              refresh={fetchVisitsData}
-              // count={visits.count[1]}
+              refresh={() =>
+                fetchVisitsData(
+                  pageControl.channelStart,
+                  pageControl.limit,
+                  'channels'
+                )
+              }
+              count={reportData.binnaclesCount}
               listed
             />
             {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (

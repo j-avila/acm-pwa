@@ -27,9 +27,9 @@ const Irrigators = () => {
 
   /* Paginación de los regantes */
   const [pageControl, setPageControl] = useState({
-    start:0,
-    limit:20,
-    reset:false
+    start: 0,
+    limit: 20,
+    reset: false
   })
 
   const handleItem = ({ id, code }) => {
@@ -53,30 +53,36 @@ const Irrigators = () => {
   }
 
   const fetchIrrigators = () => {
-
     if (filter.name.length >= 4 || filter.channel >= 1) {
-      
-      dispatch(filterIrrigatorsList(pageControl.start, pageControl.limit, filter.name, filter.channel))
-      
+      dispatch(
+        filterIrrigatorsList(
+          pageControl.start,
+          pageControl.limit,
+          filter.name,
+          filter.channel
+        )
+      )
     } else {
-
       dispatch(getIrrigatorsList(pageControl.start, pageControl.limit))
     }
-    pageControl.start += pageControl.limit;
+    pageControl.start += pageControl.limit
     setPageControl(pageControl)
   }
 
   useEffect(() => {
-    /* Se limpia los datos cuando se ingresa al componente */
-    setList([])
-    pageControl.start = 0;
-    setPageControl(pageControl)
-
     dispatch(getIrrigatorsList(0, 20, null, null, true))
     const role = userLogged.role.name
     dispatch(userDataHandler(role, codeActive))
     fetchIrrigators()
     dispatch(getChannels())
+
+    return () => {
+      /* Se limpia los datos cuando se ingresa al componente */
+      // antes de desmontar el componente
+      setList([])
+      pageControl.start = 0
+      setPageControl(pageControl)
+    }
   }, [])
 
   useEffect(() => {
@@ -84,16 +90,16 @@ const Irrigators = () => {
       /* Se ejecuta cuando se supera la longitud del texto o se elige un canal */
       /* Se limpia los datos cuando se ingresa al component */
       setList([])
-      pageControl.start = 0;
+      pageControl.start = 0
 
-      dispatch(filterIrrigatorsList(0, 20, filter.name, filter.channel, true));
+      dispatch(filterIrrigatorsList(0, 20, filter.name, filter.channel, true))
       fetchIrrigators()
     } else if (filter.name === '' || !filter.channel) {
       /* Se ejecuta si se limpia y se deja en blanco */
       /* Se limpia los datos cuando se ingresa al component */
       setList([])
-      pageControl.start = 0;
-      dispatch(getIrrigatorsList(0, 20, null, null, true));
+      pageControl.start = 0
+      dispatch(getIrrigatorsList(0, 20, null, null, true))
 
       fetchIrrigators()
     }
@@ -105,7 +111,12 @@ const Irrigators = () => {
   }, [usersList.data])
 
   useEffect(() => {
-    let listChannels = [{ label: 'Todos', value: 0 }].concat(channelsList.map(channel => ({ label: channel.name, value: channel.code })))
+    let listChannels = [{ label: 'Todos', value: 0 }].concat(
+      channelsList.map(channel => ({
+        label: channel.name,
+        value: channel.code
+      }))
+    )
     setChannels(listChannels)
   }, [channelsList])
 
@@ -138,7 +149,7 @@ const Irrigators = () => {
         <List
           items={irrigators}
           action={handleItem}
-          refresh={()=>fetchIrrigators()}
+          refresh={fetchIrrigators}
           count={usersList.count}
           listed
         />

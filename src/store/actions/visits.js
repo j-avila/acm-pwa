@@ -104,7 +104,6 @@ export const fetchReports = (
 
 export const fetchVisit = id => async dispatch => {
   const url = `${apiUrl}/event-books/${id}`
-  dispatch({ type: type.LOADING, loading: true })
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
@@ -112,14 +111,12 @@ export const fetchVisit = id => async dispatch => {
         type: type.GET_VISITS_DETAILS,
         visit: data
       })
-      dispatch({ type: type.LOADING, loading: false })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
 export const getBio = id => async dispatch => {
   const url = `${apiUrl}/get-messages/${id}`
-  dispatch({ type: type.LOADING, loading: true })
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
@@ -127,7 +124,6 @@ export const getBio = id => async dispatch => {
         type: type.GET_VISIT_BIO,
         messages: data
       })
-      dispatch({ type: type.LOADING, loading: false })
     })
     .catch(err => {
       dispatch({ type: type.ERROR, error: err })

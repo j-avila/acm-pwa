@@ -127,7 +127,7 @@ const App = () => {
                 }
                 exact
               />
-              <Route path='/visitas/:id' component={VisitDetail} />
+              <Route path='/visitas/:id' component={RequestDetail} />
               <Route path='/perfil' component={EditProfile} />
               <Route path='/opciones' component={Settings} />
               <Route path='/solicitar-visita' component={VistisForm} />

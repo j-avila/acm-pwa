@@ -21,7 +21,7 @@ const errors = (state = {}, action) => {
   }
 }
 
-const loading = (state = null, action) => {
+const loading = (state = false, action) => {
   switch (action.type) {
     case types.LOADING:
       return action.load

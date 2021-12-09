@@ -18,17 +18,16 @@ export const fetchVisits = code => async dispatch => {
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
+const counter = async type =>
+  await axios
+    .get(`${apiUrl}/event-books/count?type=${type}`, getAuth())
+    .then(({ data }) => data)
 
 export const fetchReports = (
   pagestart = 0,
   pagelimit = 20,
   reqType = undefined
 ) => async dispatch => {
-  const counter = async type =>
-    await axios
-      .get(`${apiUrl}/event-books/count?type=${type}`, getAuth())
-      .then(({ data }) => data)
-
   const reports = await axios.get(
     `${apiUrl}/event-books?type=visitreport&_sort=published_at:desc&_start=${pagestart}&_limit=${pagelimit}`,
     getAuth()
@@ -66,8 +65,8 @@ export const fetchReports = (
     dispatch({
       type: type.GET_VISIT_REPORTS,
       reports: {
-        reportsCount: vCount,
-        reports: reports.data
+        count: vCount,
+        data: reports.data
       }
     })
     dispatch({ type: type.LOADING_REPORTS, loading: false })
@@ -79,15 +78,13 @@ export const fetchReports = (
 
     dispatch({
       type: type.GET_CHANNEL_REPORTS,
-      reports: {
-        binnaclesCount: bCount,
-        binnacles: binnacles.data
+      binnacles: {
+        count: bCount,
+        data: binnacles.data
       }
     })
     dispatch({ type: type.LOADING_REPORTS, loading: false })
   }
-
-  console.log(reqType)
 
   switch (reqType) {
     case 'visits':
@@ -97,7 +94,8 @@ export const fetchReports = (
       getBinnacles()
       break
     default:
-      getall()
+      getReports()
+      getBinnacles()
       break
   }
 }

@@ -134,7 +134,7 @@ const App = () => {
               <Route path='/regantes' component={Irrigators} />
               <Route path='/canales' component={Channels} />
               <Route path='/regante/:id' component={IrrigatorDetail} />
-              {/* <Route path='/notificaciones' component={NotificationsForm} /> */}
+              <Route path='/notificaciones' component={NotificationsForm} />
             </Switch>
           </GATracker>
         </Router>

@@ -9,6 +9,20 @@ export const VisitsWrapper = styled.div`
     left: 45%;
     transform: translateX(-45%);
   }
+  .tabs {
+    width: 80%;
+    margin: 2vh auto;
+    display: flex;
+    justify-content: space-between;
+    button {
+      position: relative;
+      display: block;
+      left: unset;
+      top: unset;
+      bottom: unset;
+      transform: unset;
+    }
+  }
   @media all and (min-width: 1280px) {
     margin: 0 auto;
     width: 80vw;

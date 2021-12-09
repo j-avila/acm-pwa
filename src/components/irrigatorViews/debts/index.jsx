@@ -5,7 +5,6 @@ import moment from 'moment'
 import UserWrapper from '../../hoc/userWrapper'
 import Tabs, { Panel } from '../../UI/tabs'
 import Button from '../../UI/button'
-import Accordion from '../../UI/accordion'
 import List from '../../UI/list'
 import { DebtWrapper } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,7 +16,6 @@ const Debts = () => {
   const debts = useSelector(({ debts }) => debts.debtsList)
   const payed = useSelector(({ debts }) => debts.payedDebts)
   const codeActive = useSelector(({ codeActive }) => codeActive)
-  const userData = useSelector(({ user }) => user)
   const [debtsToPay, setToPay] = useState({
     toPay: [],
     expired: []
@@ -89,7 +87,7 @@ const Debts = () => {
   return (
     <UserWrapper pathName='Deudas'>
       <DebtWrapper>
-        <Tabs selected={0}>
+        <Tabs>
           <Panel title='por pagar'>
             <List items={debtsToPay.expired} action={handleItem} />
           </Panel>

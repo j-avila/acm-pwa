@@ -9,7 +9,7 @@ import { dashboard } from './dashboard'
 import { visits } from './visits'
 import { irrigator } from './irrigator'
 import { irrigators } from './irrigators'
-import { reports } from './reports'
+import { reports, binnacles } from './reports'
 import { watchmans } from './watchmans'
 
 const errors = (state = {}, action) => {
@@ -91,6 +91,7 @@ export default combineReducers({
   codeActive,
   irrigator,
   reports,
+  binnacles,
   recurrentIssues,
   irrigators,
   watchmans

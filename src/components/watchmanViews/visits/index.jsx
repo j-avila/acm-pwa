@@ -7,7 +7,7 @@ import { fetchReports } from '../../../store/actions/visits'
 import UserWrapper, { ModalContent } from '../../hoc/userWrapper'
 import Button from '../../UI/button'
 import List from '../../UI/list'
-// import Tabs, { Panel } from '../../UI/tabs'
+import Tabs, { Panel } from '../../UI/tabs'
 import { VisitsWrapper } from './styles'
 import * as type from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
@@ -90,84 +90,64 @@ const AdminReports = () => {
   return (
     <UserWrapper pathName='Reportes'>
       <VisitsWrapper>
-        <main>
-          <div className='tabs'>
-            <Button
-              background={selected === 'visits' ? 'gray' : 'primary'}
-              onClick={() => setSelected('visits')}
-            >
-              Visitas
-            </Button>
-            <Button
-              background={selected === 'channels' ? 'gray' : 'primary'}
-              onClick={() => setSelected('channels')}
-            >
-              Canales
-            </Button>
-          </div>
-
-          {selected === 'channels' ? (
-            <>
-              <List
-                items={binnacles}
-                action={handleItem}
-                refresh={() =>
-                  fetchVisitsData(
-                    pageControl.channelStart,
-                    pageControl.limit,
-                    'channels'
-                  )
+        <Tabs selected={0}>
+          <Panel title='Visitas'>
+            <List
+              items={reports}
+              action={handleItem}
+              refresh={() =>
+                fetchVisitsData(
+                  pageControl.visitsStart,
+                  pageControl.limit,
+                  'visits'
+                )
+              }
+              count={reportData.count}
+              loadState={reportData.loading}
+              listed
+            />
+            {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (
+              <Button
+                onClick={() =>
+                  history.push({
+                    pathname: '/solicitudes/new',
+                    state: { type: 'visitreport' }
+                  })
                 }
-                count={binnaclesData.count}
-                listed
-              />
-              {['adminacm', 'sectionm'].includes(
-                userLogged.role.type
-              ) ? null : (
-                <Button
-                  onClick={() =>
-                    history.push({
-                      pathname: '/solicitudes/new',
-                      state: { type: 'channelreport' }
-                    })
-                  }
-                >
-                  Crear Reporte de Canal
-                </Button>
-              )}
-            </>
-          ) : (
-            <>
-              <List
-                items={reports}
-                action={handleItem}
-                refresh={() =>
-                  fetchVisitsData(
-                    pageControl.visitsStart,
-                    pageControl.limit,
-                    'visits'
-                  )
+              >
+                Crear Reporte de Visita
+              </Button>
+            )}
+          </Panel>
+          <Panel title='Canal'>
+            <List
+              items={binnacles}
+              action={handleItem}
+              refresh={() =>
+                fetchVisitsData(
+                  pageControl.channelStart,
+                  pageControl.limit,
+                  'channels'
+                )
+              }
+              count={binnaclesData.count}
+              loadState={binnaclesData.loading}
+              listed
+            />
+            {['adminacm', 'sectionm'].includes(userLogged.role.type) ? null : (
+              <Button
+                onClick={() =>
+                  history.push({
+                    pathname: '/solicitudes/new',
+                    state: { type: 'channelreport' }
+                  })
                 }
-                count={reportData.count}
-                listed
-              />
-              {['adminacm', 'sectionm'].includes(
-                userLogged.role.type
-              ) ? null : (
-                <Button
-                  onClick={() =>
-                    history.push({
-                      pathname: '/solicitudes/new',
-                      state: { type: 'visitreport' }
-                    })
-                  }
-                >
-                  Crear Reporte de Visita
-                </Button>
-              )}
-            </>
-          )}
-        </main>
+              >
+                Crear Reporte de Canal
+              </Button>
+            )}
+          </Panel>
+        </Tabs>
       </VisitsWrapper>
       {notification && notification.hasOwnProperty('message') && (
         <Modal>

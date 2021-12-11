@@ -17,8 +17,8 @@ export const fetchRequests = (
       .then(({ data }) => data)
 
   const url = code
-    ? `${apiUrl}/event-books?type=requestforattention&irrigator_code=${code}&closed=${closed}&_start=${from}&_limit=${to}&_sort=published_at:desc`
-    : `${apiUrl}/event-books?type=requestforattention&_start=${from}&closed=${closed}&_limit=${to}&_sort=published_at:desc`
+    ? `${apiUrl}/event-books?type=requestforattention&irrigator_code=${code}&closed=${closed}&_start=${from}&_limit=${to}&_sort=createdAt:desc`
+    : `${apiUrl}/event-books?type=requestforattention&_start=${from}&closed=${closed}&_limit=${to}&_sort=createdAt:desc`
 
   dispatch({ type: type.LOADING, load: true })
   const count = await counter()

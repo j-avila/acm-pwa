@@ -4,8 +4,8 @@ import * as type from '../reducers/types'
 
 export const fetchVisits = code => async dispatch => {
   const url = code
-    ? `${apiUrl}/event-books?type=visitreport&irrigator_code=${code}`
-    : `${apiUrl}/event-books?type=visitreport`
+    ? `${apiUrl}/event-books?type=visitreport&_sort=createdAt:desc&irrigator_code=${code}`
+    : `${apiUrl}/event-books?type=visitreport&_sort=createdAt:desc`
   dispatch({ type: type.LOADING, loading: true })
   return axios
     .get(url, getAuth())
@@ -36,27 +36,6 @@ export const fetchReports = (
     `${apiUrl}/event-books?type=channelreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
     getAuth()
   )
-
-  const getall = async () => {
-    // dispatch({ type: type.LOADING, loading: true })
-    await axios.all([reports, binnacles], getAuth()).then(
-      axios.spread(async (...resp) => {
-        const vCount = await counter('visitreport')
-        const bCount = await counter('channelreport')
-
-        dispatch({
-          type: type.GET_REPORTS,
-          reports: {
-            reportsCount: vCount,
-            binnaclesCount: bCount,
-            reports: resp[0].data,
-            binnacles: resp[1].data
-          }
-        })
-      })
-    )
-    // dispatch({ type: type.LOADING, loading: false })
-  }
 
   const getReports = async () => {
     dispatch({ type: type.LOADING_REPORTS, loading: true })

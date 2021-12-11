@@ -109,7 +109,7 @@ export const updateCoords = (id, coords) => async dispatch => {
 }
 
 export const getHistory = code => async dispatch => {
-  const url = `${apiUrl}/event-books?type=annotation&irrigator_code=${code}`
+  const url = `${apiUrl}/event-books?type=annotation&_sort=createdAt:desc&irrigator_code=${code}`
   axios
     .get(url, getAuth())
     .then(({ data }) => {

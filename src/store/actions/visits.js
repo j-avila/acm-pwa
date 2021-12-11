@@ -28,17 +28,16 @@ export const fetchReports = (
   pagelimit = 20,
   reqType = undefined
 ) => async dispatch => {
-  const reports = await axios.get(
-    `${apiUrl}/event-books?type=visitreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
-    getAuth()
-  )
-  const binnacles = await axios.get(
-    `${apiUrl}/event-books?type=channelreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
-    getAuth()
-  )
 
+  /* Llamada a los reportes de visita */
   const getReports = async () => {
+    const reports = await axios.get(
+      `${apiUrl}/event-books?type=visitreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
+      getAuth()
+    )
+
     dispatch({ type: type.LOADING_REPORTS, loading: true })
+    
     const vCount = await counter('visitreport')
 
     dispatch({
@@ -51,7 +50,13 @@ export const fetchReports = (
     dispatch({ type: type.LOADING_REPORTS, loading: false })
   }
 
-  const getBinnacles = async () => {
+  /* Llamada a los reportes de canal */
+  const getBinnacles = async () => {  
+    const binnacles = await axios.get(
+      `${apiUrl}/event-books?type=channelreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
+      getAuth()
+    )
+
     dispatch({ type: type.LOADING_REPORTS, loading: true })
     const bCount = await counter('channelreport')
 

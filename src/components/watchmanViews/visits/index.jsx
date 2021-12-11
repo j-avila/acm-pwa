@@ -22,14 +22,20 @@ const AdminReports = () => {
   const notification = useSelector(({ notifications }) => notifications)
 
   //component states
-  const [selected, setSelected] = useState('visits')
   const [reports, setReports] = useState([])
   const [binnacles, setBinnacles] = useState([])
-  const [pageControl, setPageControl] = useState({
-    visitsStart: 0,
-    channelStart: 0,
-    limit: 20
+  const [pageControlChannel, setPageControlChannel] = useState({
+    start: 20, // Esta es la siguiente linea que se desea buscar
+    limit: 20,
+    reset: false
   })
+
+  const [pageControlVisit, setPageControlVisit] = useState({
+    start: 20, // Esta es la siguiente linea que se desea buscar
+    limit: 20,
+    reset: false
+  })
+
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const handleItem = ({ id }) => {
@@ -42,30 +48,41 @@ const AdminReports = () => {
     history.push('/visitas')
   }
 
-  const fetchVisitsData = (start, limit, reqType) => {
-    dispatch(fetchReports(start, limit, reqType))
-
-    let startNum = reqType === 'visits' ? 'visitsStart' : 'channelStart'
-    let paged = {
-      ...pageControl,
-      [startNum]: (pageControl[startNum] += 20)
+  const fetchReportData = (start, limit, type) => {
+    dispatch(fetchReports(start, limit, type))
+    let pagination = {
+      start: start+20,
+      limit,
+      reset: false
     }
-    setPageControl(paged)
+
+    if(type === 'visits'){
+      setPageControlVisit(pagination)
+    }else{
+      setPageControlChannel(pagination)
+    }
   }
 
   const createList = arr =>
-    arr?.map(item => ({
-      id: item.id,
-      title: item.subject,
-      status: item.closed && 'fa-check',
-      subtitle: `Creada: ${moment(item.createdAt).format(
+    arr?.map(item => {
+      let subtitle = `Creada:${moment(item.createdAt).format(
         'DD/MM/YYYY HH:mm'
-      )} - Cod: ${item.irrigator_code || item.channel_code}`,
-      viewitem: 0
-    }))
+      )} - Cod:${item.irrigator_code || item.channel_code}`;
+
+      if(item.association_user) subtitle += ` - Por:${item.association_user.name}`
+
+      return {
+        id: item.id,
+        title: item.subject,
+        status: item.closed && 'fa-check',
+        subtitle,
+        viewitem: 0
+      }
+    })
 
   useEffect(() => {
-    fetchVisitsData()
+    /* Hace la busqueda inicial de los reportes de visita y reportes de canal, desde el 0 y solo 20 items */
+    dispatch(fetchReports(0,20))
   }, [])
 
   useEffect(() => {
@@ -75,7 +92,6 @@ const AdminReports = () => {
     )
 
     setReports(reportsList)
-    console.log('repos', reports)
   }, [reportData.data])
 
   useEffect(() => {
@@ -84,7 +100,6 @@ const AdminReports = () => {
       item => item.id
     )
     setBinnacles(binnaclesList)
-    console.log('bins', binnacles)
   }, [binnaclesData.data])
 
   return (
@@ -96,9 +111,9 @@ const AdminReports = () => {
               items={reports}
               action={handleItem}
               refresh={() =>
-                fetchVisitsData(
-                  pageControl.visitsStart,
-                  pageControl.limit,
+                fetchReportData(
+                  pageControlVisit.start,
+                  pageControlVisit.limit,
                   'visits'
                 )
               }
@@ -124,9 +139,9 @@ const AdminReports = () => {
               items={binnacles}
               action={handleItem}
               refresh={() =>
-                fetchVisitsData(
-                  pageControl.channelStart,
-                  pageControl.limit,
+                fetchReportData(
+                  pageControlChannel.start,
+                  pageControlChannel.limit,
                   'channels'
                 )
               }

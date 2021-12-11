@@ -9,7 +9,7 @@ import Button from '../../UI/button'
 import List from '../../UI/list'
 import Tabs, { Panel } from '../../UI/tabs'
 import { VisitsWrapper } from './styles'
-import * as type from '../../../store/reducers/types'
+import * as types from '../../../store/reducers/types'
 import Modal from '../../UI/modal'
 import { removeDuplicates } from '../../hoc/utils'
 
@@ -24,17 +24,6 @@ const AdminReports = () => {
   //component states
   const [reports, setReports] = useState([])
   const [binnacles, setBinnacles] = useState([])
-  const [pageControlChannel, setPageControlChannel] = useState({
-    start: 20, // Esta es la siguiente linea que se desea buscar
-    limit: 20,
-    reset: false
-  })
-
-  const [pageControlVisit, setPageControlVisit] = useState({
-    start: 20, // Esta es la siguiente linea que se desea buscar
-    limit: 20,
-    reset: false
-  })
 
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
@@ -44,32 +33,37 @@ const AdminReports = () => {
   }
 
   const handleModalAction = () => {
-    dispatch({ type: type.NOTIFICATIONS, notification: false })
+    dispatch({ type: types.NOTIFICATIONS, notification: false })
     history.push('/visitas')
   }
 
-  const fetchReportData = (start, limit, type) => {
-    dispatch(fetchReports(start, limit, type))
+  const fetchReportData = (start, limit, mode) => {
+    dispatch(fetchReports(start, limit, mode))
     let pagination = {
-      start: start+20,
-      limit,
-      reset: false
+      start: start + 20,
+      limit
     }
 
-    if(type === 'visits'){
-      setPageControlVisit(pagination)
-    }else{
-      setPageControlChannel(pagination)
+    if (mode === 'visits') {
+      paginator(types.COUNT_REPORTS, pagination)
+    } else {
+      paginator(pagination, types.COUNT_BINNACLES)
     }
   }
 
+  const paginator = (start, mode) => {
+    dispatch({ type: mode, count: start })
+  }
+
+  // crea los items de las listas
   const createList = arr =>
     arr?.map(item => {
       let subtitle = `Creada:${moment(item.createdAt).format(
         'DD/MM/YYYY HH:mm'
-      )} - Cod:${item.irrigator_code || item.channel_code}`;
+      )} - Cod:${item.irrigator_code || item.channel_code}`
 
-      if(item.association_user) subtitle += ` - Por:${item.association_user.name}`
+      if (item.association_user)
+        subtitle += ` - Por:${item.association_user.name}`
 
       return {
         id: item.id,
@@ -82,7 +76,8 @@ const AdminReports = () => {
 
   useEffect(() => {
     /* Hace la busqueda inicial de los reportes de visita y reportes de canal, desde el 0 y solo 20 items */
-    dispatch(fetchReports(0,20,null,true))
+    console.log('inicial')
+    dispatch(fetchReports(0, 20, null))
   }, [])
 
   useEffect(() => {
@@ -90,6 +85,8 @@ const AdminReports = () => {
       createList(reportData?.data),
       item => item.id
     )
+
+    console.log(reportData)
 
     setReports(reportsList)
   }, [reportData.data])
@@ -111,13 +108,9 @@ const AdminReports = () => {
               items={reports}
               action={handleItem}
               refresh={() =>
-                fetchReportData(
-                  pageControlVisit.start,
-                  pageControlVisit.limit,
-                  'visits'
-                )
+                fetchReportData(reportData.count, reportData.limit, 'visits')
               }
-              count={reportData.count}
+              count={reportData.total}
               loadState={reportData.loading}
               listed
             />
@@ -140,12 +133,12 @@ const AdminReports = () => {
               action={handleItem}
               refresh={() =>
                 fetchReportData(
-                  pageControlChannel.start,
-                  pageControlChannel.limit,
+                  binnaclesData.count,
+                  binnaclesData.total,
                   'channels'
                 )
               }
-              count={binnaclesData.count}
+              count={binnaclesData.total}
               loadState={binnaclesData.loading}
               listed
             />

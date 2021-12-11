@@ -29,7 +29,6 @@ export const fetchReports = (
   reqType = undefined,
   reset = false
 ) => async dispatch => {
-
   /* Llamada a los reportes de visita */
   const getReports = async () => {
     const reports = await axios.get(
@@ -38,22 +37,21 @@ export const fetchReports = (
     )
 
     dispatch({ type: type.LOADING_REPORTS, loading: true })
-    
+
     const vCount = await counter('visitreport')
 
     dispatch({
       type: type.GET_VISIT_REPORTS,
       reports: {
-        count: vCount,
+        total: vCount,
         data: reports.data
-      },
-      reset
+      }
     })
     dispatch({ type: type.LOADING_REPORTS, loading: false })
   }
 
   /* Llamada a los reportes de canal */
-  const getBinnacles = async () => {  
+  const getBinnacles = async () => {
     const binnacles = await axios.get(
       `${apiUrl}/event-books?type=channelreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
       getAuth()
@@ -65,7 +63,7 @@ export const fetchReports = (
     dispatch({
       type: type.GET_CHANNEL_REPORTS,
       binnacles: {
-        count: bCount,
+        total: bCount,
         data: binnacles.data
       },
       reset
@@ -101,6 +99,7 @@ export const fetchVisit = id => async dispatch => {
 }
 
 export const getBio = id => async dispatch => {
+  /* Pr */
   const url = `${apiUrl}/get-messages/${id}`
   return axios
     .get(url, getAuth())

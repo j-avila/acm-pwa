@@ -3,7 +3,7 @@ import * as types from './types'
 
 export const reports = (state = { data: [] }, action) => {
   /* Limpiar el state */
-  if(action.reset) state = { data: [] }
+  if (action.reset) state = { data: [] }
 
   let newState = []
 
@@ -18,8 +18,14 @@ export const reports = (state = { data: [] }, action) => {
     case types.GET_VISIT_REPORTS:
       return {
         ...state,
-        count: action.reports?.count,
+        total: action.reports.total,
         data: newState
+      }
+    case types.COUNT_REPORTS:
+      return {
+        ...state,
+        count: action.count,
+        limit: 20
       }
     case types.LOADING_REPORTS:
       return {
@@ -46,8 +52,14 @@ export const binnacles = (state = { data: [] }, action) => {
     case types.GET_CHANNEL_REPORTS:
       return {
         ...state,
-        count: action.binnacles?.count,
+        total: action.binnacles?.total,
         data: newState
+      }
+    case types.COUNT_BINNACLES:
+      return {
+        ...state,
+        count: action.count,
+        limit: 20
       }
     case types.LOADING_BINNACLES:
       return {

@@ -63,7 +63,8 @@ const RequestDetail = props => {
         messages: request.details.messages,
         user: request.details.event.irrigator,
         area: request.details.event.association_area.name,
-        type: request.details.event.type
+        type: request.details.event.type,
+        createdBy: request.details.event.association_user?.name
       })
     checkTransfered(reqDetails.messages)
   }, [request.details])
@@ -76,6 +77,11 @@ const RequestDetail = props => {
           {!checkRole(session) && reqDetails.user && (
             <p className='irrigator-info'>
               <strong>{reqDetails.user.name}</strong> ({reqDetails.user.code})
+            </p>
+          )}
+          {reqDetails?.createdBy && (
+            <p className='irrigator-info'>
+              <strong>Creador por: {reqDetails.createdBy}</strong>
             </p>
           )}
           <div className='description'>

@@ -29,11 +29,11 @@ export const fetchReports = (
   reqType = undefined
 ) => async dispatch => {
   const reports = await axios.get(
-    `${apiUrl}/event-books?type=visitreport&_sort=published_at:desc&_start=${pagestart}&_limit=${pagelimit}`,
+    `${apiUrl}/event-books?type=visitreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
     getAuth()
   )
   const binnacles = await axios.get(
-    `${apiUrl}/event-books?type=channelreport&_sort=name:asc,code:asc&_start=${pagestart}&_limit=${pagelimit}`,
+    `${apiUrl}/event-books?type=channelreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
     getAuth()
   )
 

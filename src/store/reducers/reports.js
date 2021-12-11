@@ -2,6 +2,9 @@ import { removeDuplicates } from '../../components/hoc/utils'
 import * as types from './types'
 
 export const reports = (state = { data: [] }, action) => {
+  /* Limpiar el state */
+  if(action.reset) state = { data: [] }
+
   let newState = []
 
   if (state.data.length > 0 && action.reports?.data.length > 0) {

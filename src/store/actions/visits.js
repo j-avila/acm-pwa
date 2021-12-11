@@ -26,7 +26,8 @@ const counter = async type =>
 export const fetchReports = (
   pagestart = 0,
   pagelimit = 20,
-  reqType = undefined
+  reqType = undefined,
+  reset = false
 ) => async dispatch => {
 
   /* Llamada a los reportes de visita */
@@ -45,7 +46,8 @@ export const fetchReports = (
       reports: {
         count: vCount,
         data: reports.data
-      }
+      },
+      reset
     })
     dispatch({ type: type.LOADING_REPORTS, loading: false })
   }
@@ -65,7 +67,8 @@ export const fetchReports = (
       binnacles: {
         count: bCount,
         data: binnacles.data
-      }
+      },
+      reset
     })
     dispatch({ type: type.LOADING_REPORTS, loading: false })
   }

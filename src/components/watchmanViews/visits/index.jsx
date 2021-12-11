@@ -82,7 +82,7 @@ const AdminReports = () => {
 
   useEffect(() => {
     /* Hace la busqueda inicial de los reportes de visita y reportes de canal, desde el 0 y solo 20 items */
-    dispatch(fetchReports(0,20))
+    dispatch(fetchReports(0,20,null,true))
   }, [])
 
   useEffect(() => {

@@ -21,7 +21,7 @@ export const Dash = styled.div`
         span {
           text-align: center;
           h1 {
-            font-size: xxx-large;
+            font-size: ${({ theme }) => theme.hSize};
           }
           &:first-child {
             border-right: 1px solid #a5a5a5;

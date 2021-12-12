@@ -13,7 +13,7 @@ export const ActionWrapper = styled.div`
     }
     p {
       strong {
-        font-size: large;
+        font-size: ${({ theme }) => theme.pSize};
       }
       font-size: large;
     }

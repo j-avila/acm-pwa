@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Alert } from '../hoc/uiStyles'
 import { useHistory } from 'react-router'
 import { editProfile } from '../../store/actions/editProfile'
-import Modal from '../UI/modal'
 
 const EditProfile = props => {
   const history = useHistory()
@@ -76,9 +75,9 @@ const EditProfile = props => {
       }
     }
 
-    const code = codeActive || form.code;
+    const code = codeActive || form.code
 
-    dispatch(editProfile(formData, code));
+    dispatch(editProfile(formData, code))
   }
 
   // stateManagments
@@ -94,17 +93,17 @@ const EditProfile = props => {
 
   useEffect(() => {
     user &&
-    user.hasOwnProperty('acm') &&
-    user.profile &&
-    setForm({
-      ...form,
-      code: user.acm.code || undefined,
-      contact_name: user.profile.contact_name || undefined,
-      contact_address: user.profile.contact_address || undefined,
-      contact_telephone: user.profile.contact_telephone || undefined,
-      email: user.profile.email || undefined,
-      picture: user.profile.picture || undefined
-    })
+      user.hasOwnProperty('acm') &&
+      user.profile &&
+      setForm({
+        ...form,
+        code: user.acm.code || undefined,
+        contact_name: user.profile.contact_name || undefined,
+        contact_address: user.profile.contact_address || undefined,
+        contact_telephone: user.profile.contact_telephone || undefined,
+        email: user.profile.email || undefined,
+        picture: user.profile.picture || undefined
+      })
     // handleAudio(0, 'play')
   }, [user])
 

@@ -8,5 +8,7 @@
   "shadow": "1px 2px 5px #C9CFD8",
   "blueGradient": "linear-gradient(270deg, #64AEDF 0%, #3A83D5 100%)",
   "greygradient": " linear-gradient(180deg, #F8FAFD 0%, #EBEFF7 100%)",
-  "indigoGradient": "linear-gradient(270deg, #3493D1 0%, #226CBE 71.36%)"
+  "indigoGradient": "linear-gradient(270deg, #3493D1 0%, #226CBE 71.36%)",
+  "pSize": "13px",
+  "hSize": "22px"
 }

@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { useDispatch, useSelector } from 'react-redux'
-import { editProfile, editProfileAcmUser } from '../../store/actions/editProfile'
+import {
+  editProfile,
+  editProfileAcmUser
+} from '../../store/actions/editProfile'
 import UserWrapper from '../hoc/userWrapper'
 import Button from '../UI/button'
 import FormInput from '../UI/input'
@@ -11,20 +15,20 @@ const Settings = () => {
   const user = useSelector(({ user }) => user)
   const codeActive = useSelector(({ codeActive }) => codeActive)
   const [appSettings, setTheme] = useState({
-    size: '',
-    theme: ''
+    size: user.app_setting?.size,
+    theme: user.app_setting?.theme
   })
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const handleOptions = () => {
-    if(userLogged.role.name == "irrigator"){
+    if (userLogged.role.name === 'irrigator') {
       const userSettings = {
         ...user.profile,
         app_setting: { ...appSettings }
       }
       const code = codeActive || user.code
-      dispatch(editProfile(userSettings,code))
-    }else{
+      dispatch(editProfile(userSettings, code))
+    } else {
       const userSettings = {
         app_setting: appSettings
       }
@@ -33,13 +37,11 @@ const Settings = () => {
   }
 
   useEffect(() => {
-    user &&
-    user.profile &&
-    user.profile.app_setting &&
-    setTheme({
-      size: user.profile.app_setting.size || '13px',
-      theme: user.profile.app_setting.theme || 0
-    })
+    user?.app_setting &&
+      setTheme({
+        size: user.app_setting.size || 'normal',
+        theme: user.app_setting.theme || 0
+      })
   }, [user])
 
   return (
@@ -88,9 +90,9 @@ const Settings = () => {
 export default Settings
 
 const txtSizes = [
-  { label: 13, value: '13px' },
-  { label: 16, value: '16px' },
-  { label: 20, value: '20px' }
+  { label: 'Normal', value: 'normal' },
+  { label: 'Media', value: 'medium' },
+  { label: 'Grande', value: 'large' }
 ]
 
 const Themes = [

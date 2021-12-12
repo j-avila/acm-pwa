@@ -51,7 +51,7 @@ export const Wrapper = styled.div`
       color: white;
     }
     h3 {
-      font-size: 20px;
+      font-size: ${({ theme }) => theme.h3Size};
       color: white;
     }
   }

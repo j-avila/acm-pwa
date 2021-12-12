@@ -39,7 +39,7 @@ export const RequestWrapper = styled.form`
   }
   h1 {
     max-width: 80%;
-    font-size: 18px;
+    font-size: ${({ theme }) => theme.hSize};
     margin: 12px auto;
   }
   label {
@@ -142,7 +142,7 @@ export const CeladorSection = styled.div`
   align-items: center;
   h1 {
     margin: 0 auto;
-    font-size: 18px;
+    font-size: ${({ theme }) => theme.hSize};
     text-align: center;
     font-weight: bold;
     &:first-letter {

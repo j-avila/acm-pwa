@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
     padding: 0 0 0.5rem 0;
     div {
       h3 {
-        font-size: 18px;
+        font-size: ${({ theme }) => theme.h3Size};
         text-align: left;
       }
       p {

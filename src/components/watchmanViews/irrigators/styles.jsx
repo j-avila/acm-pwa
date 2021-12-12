@@ -141,7 +141,7 @@ export const RequestWrapper = styled.form`
   }
   h1 {
     max-width: 80%;
-    font-size: 18px;
+    font-size: ${({ theme }) => theme.hSize};
     margin: 12px auto;
   }
   label {

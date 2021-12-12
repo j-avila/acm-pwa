@@ -176,7 +176,8 @@ const UserLayout = props => {
                     onClick={() => {
                       setNotification(false)
                       dispatch({ type: type.NOTIFICATIONS, notification: '' })
-                      history.push('/panel-de-control')
+                      notification.type !== 'location' &&
+                        history.push('/panel-de-control')
                     }}
                   >
                     Volver

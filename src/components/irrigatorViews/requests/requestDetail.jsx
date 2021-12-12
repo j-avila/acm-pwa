@@ -116,7 +116,7 @@ const RequestDetail = props => {
           chatBar={!reqDetails.closed}
           type={reqDetails.type}
           route={location.pathname}
-          type={location.state.type}
+          // type={location.state.type}
         />
       </DetailsWrapper>
     </UserWrapper>

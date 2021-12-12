@@ -9,70 +9,96 @@ import { reset } from './reset'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 
-const bodyStyles = css`
-  ${reset}
-  background: ${({ dark }) => (dark ? 'none' : `url(${Fondo})`)};
-  background-color: ${({ theme }) => theme.background};
-  background-size: cover;
-  color: ${theme.text};
-  font-family: 'Open Sans', 'Sans-serif';
-  h1,
-  h2,
-  h3,
-  h4,
-  button {
-    color: ${({ theme }) => theme.text};
-    font-family: 'Open Sans', 'Sans-serif';
-    &:first-letter {
-      text-transform: capitalize;
-    }
-  }
-  h1{
-    font-size: 22px;
-    letter-spacing: 0.25px;
-  }
-  h2{
-    font-size: 18px;
-  }
-  h3{
-    font-size: 16px;
-  }
-  p, label {
-    color: ${({ theme }) => theme.text};
-    font-size: ${({ txtSize }) => txtSize};
-    font-family: 'Open Sans', 'Sans-serif';
-  }
-  a:hover {
-    cursor: pointer;
-  }
-`
-
 export const GlobalStyles = createGlobalStyle`
   body{
-    ${bodyStyles}
+    ${reset}
+    background: ${({ dark }) => (dark ? 'none' : `url(${Fondo})`)};
+    background-color: ${({ theme }) => theme.background};
+    background-size: cover;
+    font-size: ${({ theme }) => theme.pSize};
+    color: ${theme.text};
+    font-family: 'Open Sans', 'Sans-serif';
+    h1,
+    h2,
+    h3,
+    h4,
+    button {
+      color: ${({ theme }) => theme.text};
+      font-family: 'Open Sans', 'Sans-serif';
+      &:first-letter {
+        text-transform: capitalize;
+      }
+    }
+    h1{
+      font-size: ${({ theme }) => theme.hSize};
+      letter-spacing: 0.25px;
+    }
+    h2{
+      font-size: ${({ theme }) => theme.h2Size};
+    }
+    h3{
+      font-size: ${({ theme }) => theme.h3Size};
+    }
+    p, label, strong {
+      color: ${({ theme }) => theme.text};
+      font-size: ${({ theme }) => theme.pSize};
+      font-family: 'Open Sans', 'Sans-serif';
+    }
+    a:hover {
+      cursor: pointer;
+    }
   }
 `
 export const ThemeWrapper = ({ children }) => {
   const user = useSelector(({ user }) => user)
   const [userTheme, setTheme] = useState()
 
+  const setTxtSize = size => {
+    let txtSizes
+
+    switch (size) {
+      case 'medium':
+        txtSizes = {
+          hSize: '35px !important',
+          h2Size: '24px !important',
+          h3Size: '20px !important',
+          pSize: '16px !important'
+        }
+        break
+      case 'large':
+        txtSizes = {
+          hSize: '42px !important',
+          h2Size: '30px !important',
+          h3Size: '26px !important',
+          pSize: '18px !important'
+        }
+        break
+
+      default:
+        txtSizes = {
+          hSize: '22px !important',
+          h2Size: '18px !important',
+          h3Size: '16px !important',
+          pSize: '13px !important'
+        }
+        break
+    }
+    return txtSizes
+  }
+
   const genTheme = () => {
-    let UTheme =
-      user &&
-      user.profile &&
-      user.profile.hasOwnProperty('app_setting') &&
-      user.profile.app_setting.theme === '1'
-        ? darkTheme
-        : theme
-    setTheme(UTheme)
+    let UTheme = user?.app_setting?.theme === '1' ? darkTheme : theme
+
+    const txtSize = setTxtSize(user?.app_setting?.size)
+    setTheme({ ...UTheme, ...txtSize })
   }
 
   useEffect(() => {
-    user.hasOwnProperty('profile') && genTheme()
+    user?.app_setting && genTheme()
   }, [])
 
   useEffect(() => {
-    user.hasOwnProperty('profile') && genTheme()
+    user?.app_setting && genTheme()
   }, [user])
 
   return (
@@ -89,21 +115,7 @@ export const ThemeWrapper = ({ children }) => {
         ></script>
       </Helmet>
       <ThemeProvider theme={userTheme || theme}>
-        <GlobalStyles
-          dark={
-            user &&
-            user.profile &&
-            user.profile.hasOwnProperty * 'app_setting' &&
-            user.profile.app_setting.theme === '1'
-              ? true
-              : false
-          }
-          txtSize={
-            user && user.profile && user.profile.hasOwnProperty('app_setting')
-              ? user.profile.app_setting.size
-              : '16px'
-          }
-        />
+        <GlobalStyles />
         {children}
       </ThemeProvider>
     </>

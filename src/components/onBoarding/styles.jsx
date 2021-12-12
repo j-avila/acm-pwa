@@ -29,8 +29,8 @@ export const Wrapper = styled.div`
       }
     }
   }
-  p{
-    font-size: 0.8rem;
+  p {
+    font-size: ${({ theme }) => theme.pSize};
     padding-top: 1rem;
   }
   #card {

@@ -149,8 +149,23 @@ export const Message = styled.form`
         padding: 6px 8px;
         top: 0px;
         left: 0px;
+        z-index: 2;
         border-radius: 50%;
         background: red;
+        color: white;
+      }
+    }
+    .map-attached {
+      display: block;
+      position: relative;
+      background: dimgrey;
+      color: white;
+      font-size: xx-large;
+      border-radius: 0;
+      padding: 11px 10px;
+      z-index: 1;
+      &:before {
+        font-size: xx-large;
         color: white;
       }
     }

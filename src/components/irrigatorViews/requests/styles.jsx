@@ -31,7 +31,7 @@ export const CeladorSection = styled.div`
   h1 {
     margin: 0 auto;
     margin-bottom: 12px;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.hSize};
     text-align: center;
     font-weight: bold;
     &:first-letter {

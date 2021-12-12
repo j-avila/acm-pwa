@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import Card from '../card'
@@ -29,7 +30,11 @@ const ChatCard = props => {
   const [preview, setPreview] = useState()
   const [userAttended, seAttended] = useState(props.chatuser)
   const roles = useSelector(({ requests }) => requests.roles)
-  const eventType = useSelector(({ requests }) => requests.details && requests.details.event ? requests.details.event.type : '')
+  const eventType = useSelector(({ requests }) =>
+    requests.details && requests.details.event
+      ? requests.details.event.type
+      : ''
+  )
   const [derive, setDerive] = useState()
   const [rolesList, setList] = useState([])
   const [messageObj, setMessage] = useState({
@@ -265,46 +270,55 @@ const ChatCard = props => {
         )}
       </ChatWrapper>
       {chatBar && (
-        <Message content={preview ? '1fr 9fr' : '1fr'}>
+        <Message
+          content={
+            preview || messageObj.data.coordinates?.latitude ? '1fr 9fr' : '1fr'
+          }
+        >
           {actions && (
             <ActionArea>
-              {loggedUser.user && !checkRole(loggedUser.user) && eventType== 'requestforattention' && (
-                <>{console.log(userLogged)}
-                  {["adminacm","sectionm"].includes(userLogged.role.type) ? null :(
-                    <span>
-                      <Button
-                        background='primary'
-                        display='block'
-                        onClick={() =>
-                          history.push({
-                            pathname: '/solicitudes/new',
-                            state: {
-                              type: 'visitreport',
-                              code: userAttended
-                            }
-                          })
-                        }
-                      >
-                        <i className='fas fa-calendar' />
-                      </Button>
-                      Agendar Visita
-                    </span>
-                  )}
+              {loggedUser.user &&
+                !checkRole(loggedUser.user) &&
+                eventType == 'requestforattention' && (
+                  <>
+                    {console.log(userLogged)}
+                    {['adminacm', 'sectionm'].includes(
+                      userLogged.role.type
+                    ) ? null : (
+                      <span>
+                        <Button
+                          background='primary'
+                          display='block'
+                          onClick={() =>
+                            history.push({
+                              pathname: '/solicitudes/new',
+                              state: {
+                                type: 'visitreport',
+                                code: userAttended
+                              }
+                            })
+                          }
+                        >
+                          <i className='fas fa-calendar' />
+                        </Button>
+                        Agendar Visita
+                      </span>
+                    )}
 
-                  {props.route.includes('solicitudes') && (
-                    <span>
-                      <Button
-                        background='primary'
-                        display='block'
-                        onClick={() => setDerive(true)}
-                      >
-                        <i className='far fa-share-square' />
-                      </Button>
-                      Derivar a
-                    </span>
-                  )}
-                </>
-              )}
+                    {props.route.includes('solicitudes') && (
+                      <span>
+                        <Button
+                          background='primary'
+                          display='block'
+                          onClick={() => setDerive(true)}
+                        >
+                          <i className='far fa-share-square' />
+                        </Button>
+                        Derivar a
+                      </span>
+                    )}
+                  </>
+                )}
               <span>
                 <Button
                   display='block'
@@ -348,6 +362,23 @@ const ChatCard = props => {
                 <img src={preview} alt='file' />
               </div>
             )}
+            {messageObj.data.coordinates?.latitude &&
+              messageObj.data.coordinates?.longitude && (
+                <div className='attach-preview'>
+                  <i
+                    className='fas fa-times'
+                    onClick={() => {
+                      setMessage({
+                        ...messageObj,
+                        data: {
+                          coordinates: undefined
+                        }
+                      })
+                    }}
+                  />
+                  <figure className='fa fa-map-marked map-attached' />
+                </div>
+              )}
             <input
               type='text'
               value={messageObj.data.message}
@@ -375,23 +406,7 @@ const ChatCard = props => {
           </Button>
         </Message>
       )}
-      {notification && notification.hasOwnProperty('message') && (
-        <Modal>
-          <ModalContent type='success'>
-            <i className='fas fa-check'></i>
-            <p>{notification.message}</p>
-            <Button
-              background='primary'
-              width='100%'
-              onClick={() => {
-                handleModalAction()
-              }}
-            >
-              Volver
-            </Button>
-          </ModalContent>
-        </Modal>
-      )}
+
       {derive && (
         <Modal>
           <ModalContent>

@@ -25,14 +25,12 @@ const counter = async type =>
 
 export const fetchReports = (
   pagestart = 0,
-  pagelimit = 20,
-  reqType = undefined,
-  reset = false
+  reqType = undefined
 ) => async dispatch => {
   /* Llamada a los reportes de visita */
   const getReports = async () => {
     const reports = await axios.get(
-      `${apiUrl}/event-books?type=visitreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
+      `${apiUrl}/event-books?type=visitreport&_sort=createdAt:desc&_start=${pagestart}&_limit=20`,
       getAuth()
     )
 
@@ -53,7 +51,7 @@ export const fetchReports = (
   /* Llamada a los reportes de canal */
   const getBinnacles = async () => {
     const binnacles = await axios.get(
-      `${apiUrl}/event-books?type=channelreport&_sort=createdAt:desc&_start=${pagestart}&_limit=${pagelimit}`,
+      `${apiUrl}/event-books?type=channelreport&_sort=createdAt:desc&_start=${pagestart}&_limit=20`,
       getAuth()
     )
 
@@ -65,8 +63,7 @@ export const fetchReports = (
       binnacles: {
         total: bCount,
         data: binnacles.data
-      },
-      reset
+      }
     })
     dispatch({ type: type.LOADING_REPORTS, loading: false })
   }

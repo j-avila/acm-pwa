@@ -37,15 +37,12 @@ const AdminReports = () => {
     history.push('/visitas')
   }
 
-  const fetchReportData = (start, limit, mode) => {
-    dispatch(fetchReports(start, limit, mode))
-    let pagination = {
-      start: start + 20,
-      limit
-    }
+  const fetchReportData = (start, mode) => {
+    dispatch(fetchReports(start, mode))
+    let pagination = start + 20
 
     if (mode === 'visits') {
-      paginator(types.COUNT_REPORTS, pagination)
+      paginator(pagination, types.COUNT_REPORTS)
     } else {
       paginator(pagination, types.COUNT_BINNACLES)
     }
@@ -75,9 +72,17 @@ const AdminReports = () => {
     })
 
   useEffect(() => {
-    /* Hace la busqueda inicial de los reportes de visita y reportes de canal, desde el 0 y solo 20 items */
-    console.log('inicial')
-    dispatch(fetchReports(0, 20, null))
+    /* 
+      Si no se ha realizado ninguna peticion, se hace la peticion y se regista en el state, 
+      en caso contrario no se ejecuta para trabajar con los datos del state.
+    */
+    if(!reportData.count){
+      /* Se setea en 20 para la siguiete busqueda de datos */
+      paginator(20, types.COUNT_REPORTS)
+      paginator(20, types.COUNT_BINNACLES)
+      /* Hace la busqueda inicial de los reportes de visita y reportes de canal, desde el 0 y solo 20 items */
+      dispatch(fetchReports(0))
+    }
   }, [])
 
   useEffect(() => {
@@ -85,8 +90,6 @@ const AdminReports = () => {
       createList(reportData?.data),
       item => item.id
     )
-
-    console.log(reportData)
 
     setReports(reportsList)
   }, [reportData.data])
@@ -107,9 +110,7 @@ const AdminReports = () => {
             <List
               items={reports}
               action={handleItem}
-              refresh={() =>
-                fetchReportData(reportData.count, reportData.limit, 'visits')
-              }
+              refresh={() => fetchReportData(reportData.count, 'visits') }
               count={reportData.total}
               loadState={reportData.loading}
               listed
@@ -131,13 +132,7 @@ const AdminReports = () => {
             <List
               items={binnacles}
               action={handleItem}
-              refresh={() =>
-                fetchReportData(
-                  binnaclesData.count,
-                  binnaclesData.total,
-                  'channels'
-                )
-              }
+              refresh={() => fetchReportData( binnaclesData.count, 'channels' )}
               count={binnaclesData.total}
               loadState={binnaclesData.loading}
               listed

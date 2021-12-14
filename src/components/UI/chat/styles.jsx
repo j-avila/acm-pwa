@@ -172,6 +172,7 @@ export const Message = styled.form`
     input {
       border: 0;
       outline: 0;
+      width: 100%;
       padding: 0 4px;
       color: ${({ theme }) => theme.text};
       background: transparent;

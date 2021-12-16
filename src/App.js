@@ -40,19 +40,16 @@ import networkDetector from './components/hoc/networkDetector'
 import NotificationsForm from './components/watchmanViews/notifications'
 
 const App = () => {
-  const [sessionUser, setUserSession] = useState()
-  const user = useSelector(({ user }) => user)
   const session = useSelector(({ login }) => login)
 
   const setSockets = async () => {
-    const user = {
-      userid: session.id,
-      token: localStorage.getItem('session')
-    }
-    socket.emit('join', {
-      userid: session.id,
+    const userActive = JSON.parse(localStorage.getItem('userActive'))
+
+    if(userActive?.id) socket.emit('join', {
+      userid: userActive.id,
       token: localStorage.getItem('session')
     })
+
     socket.on('welcome', data =>
       console.log(
         `💻 welcome user ${data.username} 🔌 in the socket: ${data.socket}`
@@ -62,9 +59,10 @@ const App = () => {
 
   useEffect(() => {
     ReactGa.initialize('UA-179614315-1')
-    const user = JSON.parse(localStorage.getItem('userActive'))
-    if (user && user.hasOwnProperty('id')) {
-      setUserSession(user.id)
+    const userActive = JSON.parse(localStorage.getItem('userActive'))
+    if (userActive && userActive.hasOwnProperty('id')) {
+      /* Abre la conexion */
+      setSockets()
     }
     return () => {
       socket.close()
@@ -72,10 +70,10 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if (sessionUser && user) {
+    if (session) {
       setSockets()
     }
-  }, [sessionUser, user])
+  }, [session])
 
   return (
     <div className='App'>

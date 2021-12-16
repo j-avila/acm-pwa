@@ -47,7 +47,7 @@ export const Wrapper = styled.div`
       max-width: 60px;
       max-height: 80px;
     }
-    p {
+    p, p * {
       color: white;
     }
     h3 {

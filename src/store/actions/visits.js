@@ -6,7 +6,7 @@ export const fetchVisits = code => async dispatch => {
   const url = code
     ? `${apiUrl}/event-books?type=visitreport&_sort=createdAt:desc&irrigator_code=${code}`
     : `${apiUrl}/event-books?type=visitreport&_sort=createdAt:desc`
-  dispatch({ type: type.LOADING, loading: true })
+  //dispatch({ type: type.LOADING, loading: true })
   return axios
     .get(url, getAuth())
     .then(({ data }) => {
@@ -14,7 +14,7 @@ export const fetchVisits = code => async dispatch => {
         type: type.GET_VISITS,
         visits: data
       })
-      dispatch({ type: type.LOADING, loading: false })
+      //dispatch({ type: type.LOADING, loading: false })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }

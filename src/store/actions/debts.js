@@ -45,7 +45,7 @@ export const createDebtRequest = form => async dispatch => {
       dispatch({ type: type.LOADING, load: false })
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: 'Solicitud enviada con exito' }
+        notification: { message: 'Solicitud enviada con éxito.' }
       })
     })
     .catch(err => {
@@ -67,7 +67,7 @@ export const sendPay = form => async dispatch => {
     .then(() => {
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: '¡Pago enviado con exito!' }
+        notification: { message: '¡Pago enviado con éxito!.' }
       })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))

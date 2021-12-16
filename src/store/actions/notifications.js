@@ -10,7 +10,7 @@ export const setNotification = notForm => async dispatch => {
       dispatch({ type: types.LOADING_MESSAGE, load: false })
       dispatch({
         type: types.NOTIFICATIONS,
-        notification: { message: 'Notificación enviada con exito' }
+        notification: { message: 'Notificación enviada con éxito.' }
       })
     })
     .catch(err => {

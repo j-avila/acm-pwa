@@ -30,7 +30,7 @@ const DebtForm = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => setLocation(pos))
     } else {
-      alert('Geolocation is not supported by this browser.')
+      alert('Este navegador no admite la geolocalización.')
     }
   }
 
@@ -92,7 +92,7 @@ const DebtForm = () => {
       dispatch({
         type: type.NOTIFICATIONS,
         notification: {
-          message: 'localización copiada exitosamente',
+          message: 'Localización copiada exitosamente.',
           type: 'location'
         }
       })

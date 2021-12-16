@@ -67,12 +67,12 @@ const ChatCard = props => {
       dispatch({
         type: type.NOTIFICATIONS,
         notification: {
-          message: 'localización copiada exitosamente',
+          message: 'Localización copiada exitosamente.',
           type: 'location'
         }
       })
     } else {
-      alert('Geolocation is not supported by this browser.')
+      alert('Este navegador no admite la geolocalización.')
     }
   }
 

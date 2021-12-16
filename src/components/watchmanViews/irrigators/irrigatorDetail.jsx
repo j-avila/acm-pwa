@@ -82,7 +82,7 @@ const IrrigatorDetail = props => {
         setGeoLocation(ubication)
       })
     } else {
-      alert('Geolocation is not supported by this browser.')
+      alert('Este navegador no admite la geolocalización.')
     }
   }
 

@@ -123,7 +123,7 @@ const RequestForm = ({ location }) => {
       dispatch({
         type: type.NOTIFICATIONS,
         notification: {
-          message: 'localización copiada exitosamente',
+          message: 'Localización copiada exitosamente.',
           type: 'geolocation'
         }
       })

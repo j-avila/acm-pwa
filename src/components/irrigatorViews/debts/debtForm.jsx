@@ -85,7 +85,7 @@ const DebtForm = () => {
       dispatch({
         type: type.NOTIFICATIONS,
         notification: {
-          message: 'localización copiada exitosamente',
+          message: 'Localización copiada exitosamente.',
           type: 'location'
         }
       })

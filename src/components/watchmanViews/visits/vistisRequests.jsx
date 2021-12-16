@@ -23,7 +23,7 @@ const VistisForm = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => setLocation(pos))
     } else {
-      alert('Geolocation is not supported by this browser.')
+      alert('Este navegador no admite la geolocalización.')
     }
   }
 
@@ -87,7 +87,7 @@ const VistisForm = () => {
       setForm({ ...form, location: location })
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: 'localización copiada exitosamente' }
+        notification: { message: 'Localización copiada exitosamente.' }
       })
     }
   }, [location])

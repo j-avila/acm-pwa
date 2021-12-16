@@ -19,7 +19,7 @@ export const createProfile = (form, role) => async dispatch => {
       dispatch({ type: type.LOADING, load: false })
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: 'guardado con exito' }
+        notification: { message: 'Guardado con éxito.' }
       })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
@@ -37,7 +37,7 @@ export const editProfile = (form,code) => async dispatch => {
       })
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: 'guardado con exito' }
+        notification: { message: 'Guardado con éxito.' }
       })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
@@ -55,7 +55,7 @@ export const editProfileAcmUser = (form,code) => async dispatch => {
       })
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: 'guardado con exito' }
+        notification: { message: 'Guardado con éxito.' }
       })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))

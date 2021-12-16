@@ -141,7 +141,7 @@ export const createVisitRequest = form => async dispatch => {
       dispatch({ type: type.LOADING, loading: false })
       dispatch({
         type: type.NOTIFICATIONS,
-        notification: { message: 'Solicitud enviada con exito' }
+        notification: { message: 'Solicitud enviada con éxito.' }
       })
     })
     .catch(err => {

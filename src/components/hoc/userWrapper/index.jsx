@@ -92,9 +92,7 @@ const UserLayout = props => {
   const userLogged = JSON.parse(localStorage.getItem('userActive'))
 
   const checkSession = () => {
-    socket.on('sesion:close', data => {
-      data && closeSession(true)
-    })
+    socket.on('sesion:close', () => closeSession(true))
   }
 
   useEffect(() => {

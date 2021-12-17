@@ -60,13 +60,10 @@ const App = () => {
   useEffect(() => {
     ReactGa.initialize('UA-179614315-1')
     const userActive = JSON.parse(localStorage.getItem('userActive'))
-    if (userActive && userActive.hasOwnProperty('id')) {
-      /* Abre la conexion */
-      setSockets()
-    }
-    return () => {
-      socket.close()
-    }
+    
+    if (userActive && userActive.hasOwnProperty('id')) setSockets() /* Abre la conexion */
+
+    return () => socket.close()
   }, [])
 
   useEffect(() => {

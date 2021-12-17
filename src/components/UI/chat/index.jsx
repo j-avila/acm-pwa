@@ -22,7 +22,6 @@ const ChatCard = props => {
   const hiddenFileInput = useRef(null)
   const history = useHistory()
   const dispatch = useDispatch()
-  const notification = useSelector(({ notifications }) => notifications)
   const { id, items, msgAction, chatBar } = props
   const loading = useSelector(({ requests }) => requests.loading)
   const loggedUser = useSelector(({ user }) => user)
@@ -76,16 +75,8 @@ const ChatCard = props => {
     }
   }
 
-  const handleModalAction = () => {
-    dispatch({ type: type.NOTIFICATIONS, notification: false })
-  }
-
   const handleFileClick = () => {
     hiddenFileInput.current.click()
-  }
-
-  const getFile = event => {
-    const fileUploaded = event.target.files[0]
   }
 
   // enconde img to base64
@@ -193,7 +184,7 @@ const ChatCard = props => {
               <Row key={message.id} direction={setRole(message.user)}>
                 <ChatBubble
                   direction={setRole(message.user)}
-                  isUser={message.user.code === loggedUser.code}
+                  loggedUser={loggedUser}
                   provName={message.user.name}
                 >
                   {message.message}
@@ -281,7 +272,6 @@ const ChatCard = props => {
                 !checkRole(loggedUser.user) &&
                 eventType == 'requestforattention' && (
                   <>
-                    {console.log(userLogged)}
                     {['adminacm', 'sectionm'].includes(
                       userLogged.role.type
                     ) ? null : (
@@ -324,7 +314,6 @@ const ChatCard = props => {
                   display='block'
                   background='rgba(87,162,198,1)'
                   onClick={() => handleFileClick()}
-                  onChange={e => getFile(e)}
                 >
                   <i className='fas fa-paperclip'></i>
                 </Button>
@@ -381,7 +370,7 @@ const ChatCard = props => {
               )}
             <input
               type='text'
-              value={messageObj.data.message}
+              value={messageObj.data.message || ''}
               onChange={e =>
                 setMessage({
                   ...messageObj,

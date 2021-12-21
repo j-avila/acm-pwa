@@ -27,7 +27,7 @@ export const FormIrrigator = props => {
   const [channelsList, setChannelsList] = useState([])
   const [form, setForm] = useState({
     date: moment().format('YYYY-MM-DD'),
-    hour: moment().format('HH:mm')
+    hour: moment().add(1,'hours').format('HH:00'),
   })
 
   const handleChange = e => {
@@ -82,6 +82,7 @@ export const FormIrrigator = props => {
           type='date'
           name='activation'
           value={form.date}
+          min={moment().format('YYYY-MM-DD')}
           onChange={handleChange}
         />
       </FormInput>
@@ -110,9 +111,15 @@ export const FormWatchman = props => {
   const [channelsList, setChannelsList] = useState([])
   const [form, setForm] = useState({
     date: moment().format('YYYY-MM-DD'),
-    hour: moment().format('HH:mm'),
+    hour: moment().add(1,'hours').format('HH:00'),
     association_area_code: 'watchman'
   })
+
+  const [selectedOption, setSelectedOption] = useState({
+    channel: null,
+    watchman: null,
+  })
+  const [showSelectWatchman, setSelectWatchman] = useState(false)
 
   const handleSubmit = () => {
     submitAction(form)
@@ -124,6 +131,8 @@ export const FormWatchman = props => {
   }
 
   const handleSelectChange = (list, type) => {
+    type === 'watchman' ? setSelectedOption({watchman:list}) : setSelectedOption({channel:list})
+
     let values = list?.map(item => item.value)
     setForm({ ...form, [type]: values })
   }
@@ -139,8 +148,38 @@ export const FormWatchman = props => {
 
   return (
     <FormWrapper>
-      <FormInput label='Selecciona un canal'>
+      <div style={{
+        textAlign: "left",marginBottom: "8px"
+      }}>
+        <label>
+          <input type="checkbox" id="" onChange={()=>{
+            setSelectedOption({
+              channel: null,
+              watchman: null,
+            })
+            const newForm = {...form}
+            delete newForm.channel_code
+            delete newForm.watchman
+            setForm(newForm)
+            setSelectWatchman(!showSelectWatchman)}} />
+          <span style={{marginLeft: "16px"}}>Escoger celador(es)</span>
+        </label>
+      </div>
+      {showSelectWatchman ? <FormInput  label='Selecciona los celadores a notificar'>
         <Select
+          value={selectedOption.watchman}
+          isMulti
+          options={watchList}
+          classNamePrefix='select'
+          placeholder='Todos'
+          onChange={e => handleSelectChange(e, 'watchman')}
+          components={{
+            IndicatorSeparator: () => null
+          }}
+        />
+      </FormInput> : <FormInput label='Selecciona un canal'>
+        <Select
+          value={selectedOption.channel}
           isMulti
           options={channelsList}
           classNamePrefix='select'
@@ -151,18 +190,7 @@ export const FormWatchman = props => {
           }}
         />
       </FormInput>
-      <FormInput label='Selecciona los celadores a notificar'>
-        <Select
-          isMulti
-          options={watchList}
-          classNamePrefix='select'
-          placeholder='Todos'
-          onChange={e => handleSelectChange(e, 'watchman')}
-          components={{
-            IndicatorSeparator: () => null
-          }}
-        />
-      </FormInput>
+      }
       <FormInput label='Tipo de mensaje'>
         <Select
           options={msgType}
@@ -179,6 +207,7 @@ export const FormWatchman = props => {
           type='date'
           name='date'
           value={form.date}
+          min={moment().format('YYYY-MM-DD')}
           onChange={handleChange}
         />
       </FormInput>
@@ -186,6 +215,8 @@ export const FormWatchman = props => {
         <input
           type='time'
           name='hour'
+          min={"00:00"}
+          step={"10"}
           value={form.hour}
           onChange={handleChange}
         />

@@ -114,7 +114,7 @@ export const getBio = id => async dispatch => {
 
 export const getRoles = () => async dispatch => {
   const url = `${apiUrl}/association-areas`
-  dispatch({ type: type.LOADING, loading: true })
+  //dispatch({ type: type.LOADING, loading: true })
 
   return axios
     .get(url, getAuth())
@@ -123,14 +123,14 @@ export const getRoles = () => async dispatch => {
         type: type.GET_ROLES,
         roles: data
       })
-      dispatch({ type: type.LOADING, loading: false })
+      //dispatch({ type: type.LOADING, loading: false })
     })
     .catch(err => dispatch({ type: type.ERROR, error: err }))
 }
 
 export const createVisitRequest = form => async dispatch => {
   const url = `${apiUrl}/event-books`
-  dispatch({ type: type.LOADING, loading: true })
+  //dispatch({ type: type.LOADING, loading: true })
   return axios
     .post(url, form, getAuth())
     .then(({ data }) => {
@@ -138,7 +138,7 @@ export const createVisitRequest = form => async dispatch => {
         type: type.REQUEST_VISIT,
         vistisRequest: data
       })
-      dispatch({ type: type.LOADING, loading: false })
+      //dispatch({ type: type.LOADING, loading: false })
       dispatch({
         type: type.NOTIFICATIONS,
         notification: { message: 'Solicitud enviada con éxito.' }

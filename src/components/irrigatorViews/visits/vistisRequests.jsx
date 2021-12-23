@@ -16,7 +16,6 @@ import { useHistory } from 'react-router'
 const VistisForm = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const hiddenFileInput = useRef(null)
   const visits = useSelector(({ visits }) => visits)
   const notification = useSelector(({ notifications }) => notifications)
   const user = useSelector(({ user }) => user)
@@ -25,29 +24,6 @@ const VistisForm = () => {
   const [form, setForm] = useState({})
   const [visitsList, setList] = useState()
   const [irrigators, setIrrigators] = useState([])
-
-  const subjectSelect = [
-    { label: '¿Como puedo traspasar cuotas?' },
-    { label: 'Convenios de pago' },
-    { label: 'Solicitud' },
-    { label: 'Otro' }
-  ]
-
-  // enconde img to base64
-  const handleImg = e => {
-    let file = e.target.files[0]
-
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = _handleReaderLoaded.bind(this)
-      reader.readAsBinaryString(file)
-    }
-  }
-
-  const _handleReaderLoaded = readerEvt => {
-    let binaryString = readerEvt.target.result
-    setForm({ ...form, file: btoa(binaryString) })
-  }
 
   const handleForm = e => {
     e.preventDefault()
@@ -160,13 +136,6 @@ const VistisForm = () => {
               rows='6'
               onChange={e => setForm({ ...form, content: e.target.value })}
             ></textarea>
-            <input
-              type='file'
-              style={{ display: 'none' }}
-              ref={hiddenFileInput}
-              accept='.jpeg, .png, .jpg'
-              onChange={e => handleImg(e)}
-            />
           </FormInput>
 
           <ActionArea className='actions'>

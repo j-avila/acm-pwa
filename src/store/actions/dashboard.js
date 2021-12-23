@@ -1,8 +1,15 @@
 import axios from 'axios'
+import moment from 'moment'
 import * as type from '../reducers/types'
 import { apiUrl, getAuth } from './utils'
 
 export const fetchDashboard = (code, role) => async dispatch => {
+  /* Ultima fecha de actualización de las deudas */
+  let last_update_fees = ""
+  await axios
+  .get(`${apiUrl}/file-update-controls/last-update-fees`, getAuth())
+  .then(({ data }) => last_update_fees = moment(data.createdAt).format('D MMM YYYY'))
+
   const url = code
     ? `${apiUrl}/dashboard-irrigators/${code}?_sort=createdAt:desc`
     : `${apiUrl}/dashboard-acmuser`
@@ -19,7 +26,7 @@ export const fetchDashboard = (code, role) => async dispatch => {
     .then(({ data }) => {
       dispatch({
         type: type.FETCH_DASHBOARD,
-        dash: { ...data, counter: irrigatorsCount }
+        dash: { ...data, counter: irrigatorsCount, last_update_fees }
       })
       dispatch({ type: type.LOADING, load: false })
     })

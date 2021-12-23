@@ -115,14 +115,16 @@ const Dashboard = props => {
                 <strong>Deuda total:</strong>
 
                 {dashData.fees.total.length >= 1 ? (
-                  dashData.fees.total.map(fee => (
-                    <h1>{`${fee._id}: ${fee.totalSum}`}</h1>
-                  ))
+                  dashData.fees.total.map(fee => {
+                    let totalFee = fee.totalSum
+                    if( fee._id === "UF" ) totalFee = totalFee.toFixed(6)
+                    return <h1>{`${fee._id}: ${totalFee}`}</h1>
+                  })
                 ) : (
                   <h1>0</h1>
                 )}
               </section>
-              <footer>{`Cuotas impagas: ${dashData.fees.count}`}</footer>
+              <footer>{`Actualizado: ${dashData.last_update_fees} / Cuotas impagas: ${dashData.fees.count}`}</footer>
             </Card>
 
             <Card
